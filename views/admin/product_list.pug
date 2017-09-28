@@ -1,0 +1,70 @@
+extends ./layout.pug
+block pre-include
+	title Danh sách sản phẩm
+	- var menu = 'product';
+	- var childMenu = 'product';
+
+block post-include
+	script(src=staticURI() +'/js/admin/product.js')
+	script.
+		var tblProduct = $("#table-list-product").DataTable({
+			aaSorting: [],
+			bDestroy: true,
+			rowReorder: {
+				selector: 'td:nth-child(2)'
+			},
+			responsive: true,
+			rowReorder: false,
+			fnRowCallback: function(a, b, c, d) {
+				var img = $(a).find('img')[0];
+				var dataSrc = $(img).data('src');
+				if (dataSrc) $(img).attr('src', dataSrc);
+			}
+		});
+
+block content
+	section.content-header.clearfix
+		ol.breadcrumb.col-sm-8.hidden-xs
+			li
+				a Sản phẩm
+			li
+				a(href='/admin/product') Danh sách sản phẩm
+		ol.button-right.col-sm-4.col.xs-12
+			li
+				a.btn.btn-admin.btn-update-product-odoo
+					i.fa.fa-floppy-o
+					i.fa.fa-circle-o-notch.fa-spin
+					| Cập nhật sản phẩm từ Odoo
+
+	section.content
+		.box
+			.box-body.clearfix
+				table#table-list-product.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+					thead
+						tr
+							td
+							td Barcode
+							td Tên sản phẩm
+							td Hiển thị
+							td Tồn kho
+							td Chỉnh sửa
+					tbody
+						each product in products
+							tr
+								td.image
+									if product.featured_image
+										img(src=staticURI() + "/img/no-image.png", data-src="/uploads/" + resize(product.featured_image, 100))
+									else
+										img(src=staticURI() + "/img/no-image.png")
+								td=product.barcode
+								td
+									a(href="/admin/san-pham/" + product.id target="_blank")=product.title
+								td.text-center
+									if product.display == 1
+										| Có
+									else
+										| Không
+								td.text-center=product.inventory
+								td.text-center
+									a.btn-edit(href="/admin/san-pham/" + product.id)
+										i.fa.fa-pencil-square-o

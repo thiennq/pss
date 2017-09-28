@@ -1,0 +1,73 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'mobile'
+  title Setting Mobile
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Mobile
+        
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin.btn-update-mobile-shop-info
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-shop-info
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Hotline
+              br
+              | (menu modal)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_hotline")=mobile_hotline
+          .form-group
+            label.col-sm-2.control-label Giới thiệu
+              br
+              | (trang chủ)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_shop_introduce")=mobile_shop_introduce
+          .form-group
+            label.col-sm-2.control-label Dịch vụ
+              br
+              | (trang chủ)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_shop_service")=mobile_shop_service
+          .form-group
+            label.col-sm-2.control-label Footer (Phone)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_footer_phone")=mobile_footer_phone
+          .form-group
+            label.col-sm-2.control-label Footer (Policy)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_footer_policy")=mobile_footer_policy
+          .form-group
+            label.col-sm-2.control-label Footer (Info Left)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_footer_info_left")=mobile_footer_info_left
+          .form-group
+            label.col-sm-2.control-label Footer (Info Right)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_footer_info_right")=mobile_footer_info_right
+          .form-group
+            label.col-sm-2.control-label Trang chi tiết SP
+              br
+              | (Hotline tư vấn, giờ mở cửa, đóng cửa)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_product_detail_support")=mobile_product_detail_support
+          .form-group
+            label.col-sm-2.control-label Trang chi tiết SP
+              br
+              | (Tại sao chọn chúng tôi)
+            .col-sm-10
+              textarea.form-control(rows="10" name="mobile_product_why_choose_us")=mobile_product_why_choose_us

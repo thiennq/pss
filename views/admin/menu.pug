@@ -1,0 +1,52 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'subMenu';
+  title Menu
+
+block post-include
+  script(src=staticURI() + '/js/admin/menu.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Menu
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin(href="/admin/menu/new") Tạo menu
+  section.content.clearfix
+    .box
+      .box-header
+        h3.box-title Menu Desktop
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th.col-sm-1 #
+              th.col-sm-4 Tiêu đề
+              th.col-sm-4 Link
+              th.col-sm-3 Chỉnh sửa
+          - var stt = 1
+          tbody
+            each item in data
+              tr
+                td.col-sm-1=stt++
+                td.col-sm-4.title=item.title
+                td.col-sm-5.link
+                  a(href="/" + item.link target="_blank")=item.link
+                td.col-sm-2
+                  a.btn-edit(href="/admin/menus/" + item.id title="Chỉnh sửa")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove(data-id=item.id title="Xóa")
+                    i.fa.fa-trash
+    .box
+      .box-header
+        h3.box-title Menu Mobile
+      .box-body
+        textarea.form-control(rows="10" name="menu_mobile")=menu_mobile
+        br
+        a.pull-right.btn.btn-primary.btn-save-menu-mobile Cập nhật

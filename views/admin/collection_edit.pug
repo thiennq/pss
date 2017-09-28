@@ -1,0 +1,116 @@
+extends ./layout.pug
+
+block pre-include
+  title Chỉnh sửa | 
+    =data.title
+  - var menu = 'data'
+  - var childMenu = 'collection'
+block post-include
+  script(src=staticURI() + '/js/admin/collection.js')
+  script.
+    $(document).ready(function () {
+      var parent_id = $('select[name="parent_id"]').data('value');
+      $('select[name="parent_id"]').val(parent_id);
+    });
+  
+block content
+	section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/collection') Nhóm sản phẩm
+      li
+      	a=data.title
+
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-review(href="/" + data.link, target="_blank")
+          i.fa.fa-eye
+          | Xem thử web
+      li
+        a.btn.btn-admin.btn-update-collection(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+
+  section.content
+		.box.box-info
+		  .form-horizontal.form-collection
+		    .box-body
+          .form-group
+            label.col-sm-2.control-label Nhóm sản phẩm cha
+            .col-sm-10
+              select.form-control(name="parent_id" data-value=data.parent_id)
+                option(value='-1') Chọn...
+                each item in collection
+                  option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
+          .form-group
+            label.col-sm-2.control-label Tên nhóm sản phẩm
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title" value=data.title, data-title=data.title, data-handle=data.handle)
+          .form-group
+            label.col-sm-2.control-label Handle
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="handle" value=data.handle)
+          .form-group
+            label.col-sm-2.control-label Hình đại diện
+              br
+              span.btn-remove-image(data-image='default_image.png') (Xóa)
+            form.col-sm-10.collection-image
+              if data.image
+                img.image(src="/uploads/" + resize(data.image, 240))
+              else
+                img.image(src=staticURI() + "/img/default_image.png")
+              input.upload.form-control(type="file" name="upload[]" data-type="image")
+              input(type="hidden" name="image" value=data.image)
+          .form-group
+            label.col-sm-2.control-label Banner
+              br
+              span.btn-remove-image(data-image='default_image_l.jpg') (Xóa)
+            form.col-sm-10.collection-banner
+              if data.banner
+                img.banner(src="/uploads/" + data.banner)
+              else
+                img.banner(src=staticURI() + "/img/default_image_l.jpg")
+              input.upload.form-control(type="file" name="upload[]" data-type="banner")
+              input(type="hidden" name="banner" value=data.banner)
+          .form-group
+            label.col-sm-2.control-label Mô tả
+            .col-sm-10.description(data-description=data.description)
+              <textarea class="form-control" id="collection-description" rows="5"></textarea>
+          .form-group
+            label.col-sm-2.control-label Tag
+              br
+              a.add-tag (Thêm)
+            .col-sm-10.list-tag
+              if count_arr_tag
+                each item in arr_tag
+                  .item.clearfix
+                    .col-xs-4.pd-left-0
+                      input.form-control(name="name_tag" placeholder="Du lịch" value=item.name)
+                    .col-xs-7.pd-left-0
+                      input.form-control(name="handle_tag" placeholder="http://mia.vn/tag/du-lich" value="http://mia.vn/tag/" + item.handle disabled data-handle=item.handle)
+                    .col-xs-1.pd-left-0
+                      .btn-remove(data-id=item.id)
+                        i.fa.fa-trash
+          .form-group
+            label.col-sm-2.control-label Meta title
+            .col-sm-10
+              textarea.form-control(name="meta_title")=data.meta_title
+          .form-group
+            label.col-sm-2.control-label Meta description
+            .col-sm-10
+              textarea.form-control(name="meta_description")=data.meta_description
+          .form-group
+            label.col-sm-2.control-label Chỉ hiển thị ở landing page
+            .col-sm-10
+              select.form-control(name="show_landing_page")
+                if data.show_landing_page
+                  option(value="0") Không
+                  option(value="1" selected) Có
+                else
+                  option(value="0") Không
+                  option(value="1") Có

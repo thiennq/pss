@@ -1,0 +1,29 @@
+extends ./layout.pug
+block pre-include
+  title=title
+  - metaTitle = title
+block post-include
+
+block content
+  .brand.container
+    .row
+      if device == 'desktop'
+        .col-sm-3.hidden-xs.collection-left
+          include snippet/sidebar
+      else
+        .col-xs-12.visible-xs
+          include snippet/sidebar-mobile
+      .col-sm-9.col-xs-12.collection-right
+        .row.hidden-xs
+          .col-sm-9
+            include snippet/breadcrumb
+        .list-brand.clearfix
+          if device == 'desktop'
+            - var brands = Brand();
+          else
+            - var brands = BrandatIndexPage();
+          each item in brands
+            ul
+              each i in item
+                li
+                  a(href=fullUrl("thuong-hieu/" + i.handle))=i.name

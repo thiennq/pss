@@ -1,0 +1,257 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+require_once("../models/Product.php");
+require_once("../models/Slider.php");
+require_once("../models/CollectionProduct.php");
+require_once("../models/helper.php");
+require_once("../models/Collection.php");
+
+class ProductController extends Controller {
+
+  public function smartSearch(Request $request, Response $response) {
+    $query = $request->getQueryParams();
+    $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->where('price', '>', 0)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
+    if(count($products)) {
+      return $response->withJson(array(
+        "code" => 0,
+        "data" => $products
+      ));
+    }
+    return $response->withJson(array(
+      "code" => -1,
+      "message" => "Product not available"
+    ));
+  }
+
+  public function show(Request $request, Response $response) {
+    $handle = $request->getAttribute('handle');
+    $query = $request->getQueryParams();
+    $responseData = array();
+    if(getMemcached('product_' . $handle)) $responseData =  json_decode(getMemcached('product_' . $handle), true);
+    else {
+      $product = Product::where('handle', $handle)->first();
+      if(!$product) {
+        $this->view->render($response, '404.pug');
+        return $response->withStatus(404);
+      }
+      $product->display_discount = false;
+      if($product->price_compare && $product->price_compare > $product->price) {
+        $product->discount = $product->price_compare - $product->price;
+        $product->per = ($product->discount)/($product->price_compare) * 100;
+        $product->percent = round($product->per, 0) .'%';
+        $product->display_discount = true;
+      }
+      if($product->brand) $product->brand_handle = HOST . '/thuong-hieu/' . convertHandle($product->brand);
+      $list_image = Image::getImage('product', $product->id);
+      $product->list_image = $list_image;
+
+      $collection_related = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '>', '-1')->get();
+      $collection_id_related;
+      $min_product_related = 999999;
+      foreach ($collection_related as $key => $value) {
+        $collection_id = $value->collection_id;
+        $count = CollectionProduct::where('collection_id', $collection_id)->count();
+        if($count && $count < $min_product_related) {
+          $collection_id_related = $collection_id;
+          $min_product_related = $count;
+        }
+      }
+      $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->where('collection.show_landing_page', 0)->first();
+      $collection_parent = Collection::find($collection_parent->id);
+      $product->title = $collection_parent->title . ' ' . $product->title;
+      $breadcrumb_collection = array();
+      $obj = new stdClass();
+      $obj->handle = HOST . '/' . $collection_parent->link;
+      $obj->title = $collection_parent->title;
+      if($obj->title) array_push($breadcrumb_collection, $obj);
+
+      $product_related = Product::Join('collection_product', 'collection_product.product_id', '=', 'product.id')
+        ->where('collection_product.collection_id', $collection_id_related)
+        ->where('product.display', 1)->where('product.id', '!=', $product->id)->select('product.*')->where('product.in_stock', 1)->orderBy('product.updated_at', 'desc')->take(6)->get();
+
+      $count_product_related = count($product_related);
+      if($count_product_related > 0) {
+        $products_related = Product::getInfoProduct($product_related);
+        $collection_related_link = Collection::find($collection_id_related)->link;
+      }
+
+      $product->in_stock = false;
+      $arr_branch_display = array();
+      $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
+      if(count($branch)) {
+        $product->in_stock = true;
+        foreach ($branch as $key => $value) {
+          if(!$value->branch_center) {
+            $obj = new stdClass();
+            $obj->name = $value->name;
+            $obj->address = $value->address;
+            array_push($arr_branch_display, $obj);
+          }
+        }
+      }
+      $product->count_branch_display = count($arr_branch_display);
+      $product->arr_branch_display = $arr_branch_display;
+
+      $product->count_variant = 0;
+      if($product->group_id) {
+        $product->variants = Product::where('group_id', $product->group_id)->where('display', 1)->get();
+        $product->count_variant = count($product->variants);
+      }
+
+      Product::updateView($product->id);
+
+      $meta_description = Meta::where('key', 'meta_description_product')->first();
+      $meta_description = $meta_description->value;
+      $meta_description = str_replace('{Name_Product}', $product->title, $meta_description);
+      $product->meta_description = $meta_description;
+      $product->ogImage = HOST . '/uploads/' . convertImage($product->featured_image, 240);
+
+      if ($product->dropship) {
+        if (!$product->in_stock) {
+          $product->in_stock = true;
+          $product->count_branch_display = 0;
+        }
+      }
+
+      $articleOther = Article::where('type', 'tin-tuc')->where('display', 1)->take(5)->get();
+
+      // product đã xem
+    if ($product->in_stock && $product->display) {
+      if(isset($_SESSION['seen']) && !empty($_SESSION['seen'])) {
+        if(!in_array($product->id, $_SESSION['seen'])) array_push($_SESSION['seen'], $product->id);
+      } else $_SESSION['seen'] = [$product->id];
+    }
+
+    $GLOBALS['product_id'] = $product->id;
+    if (count($_SESSION['seen'])) {
+      $product_seen = Product::where('product.display', 1)->where('product.price', '>', 0)->where('product.id', '!=', $product->id)->whereIn('id', $_SESSION['seen'])->take(6)->get();
+      $product_seen = Product::getInfoProduct($product_seen);
+    }
+
+    $responseData = array (
+      'data' => $product,
+      'breadcrumb_title' => $product->title,
+      'breadcrumb_brand' => $product->brand,
+      'breadcrumb_collection' => $breadcrumb_collection,
+      'count_product_related' => $count_product_related,
+      'product_related' => $product_related,
+      'region' => $region,
+      'collection_related_link' => $collection_related_link,
+      'articleOther' => $articleOther,
+      'product_seen' => $product_seen
+    );
+  }
+
+    return $this->view->render($response, 'product.pug', $responseData);
+  }
+
+  public function findProductModal(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $product = Product::find($id);
+    if (!$product) return 'empty';
+
+    $product->display_discount = 0;
+    if($product->price_compare && $product->price_compare > $product->price) {
+      $product->percent = 0;
+      $product->discount = $product->price_compare - $product->price;
+      $product->percent = ($product->discount / $product->price_compare) * 100;
+      $product->percent = round($product->percent, 0) .'%';
+      $product->display_discount = 1;
+    }
+
+    $product->in_stock = false;
+    $arr_branch_display = array();
+    $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
+    if(count($branch)) {
+      $product->in_stock = true;
+      foreach ($branch as $key => $value) {
+        if(!$value->branch_center) {
+          $obj = new stdClass();
+          $obj->name = $value->name;
+          $obj->address = $value->address;
+          array_push($arr_branch_display, $obj);
+        }
+      }
+    }
+    $product->count_branch_display = count($arr_branch_display);
+    $product->arr_branch_display = $arr_branch_display;
+    $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->first();
+    $collection_parent = Collection::find($collection_parent->id);
+    $product->title = $collection_parent->title . ' ' . $product->title;
+    $list_image = Image::getImage('product', $product->id);
+    $product->list_image = $list_image;
+    $product->brand_url = convertHandle($product->brand);
+
+    $product->count_variant = 0;
+    if($product->group_id) {
+      $product->variants = Product::where('group_id', $product->group_id)->where('display', 1)->get();
+      $product->count_variant = count($product->variants);
+    }
+
+    if ($product->dropship) {
+      if (!$product->in_stock) {
+        $product->in_stock = true;
+        $product->count_branch_display = 0;
+      }
+    }
+    return $this->view->render($response, 'snippet/modal-order-data.pug', [
+      'data' => $product
+    ]);
+  }
+
+  public function findProductVariant(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $product = Product::find($id);
+    if (!$product) {
+      return $response->withJson([
+        'code' => -1,
+        'message' => 'not found'
+      ]);
+    }
+
+    $product->display_discount = 0;
+    if($product->price_compare && $product->price_compare > $product->price) {
+      $product->percent = 0;
+      $product->discount = $product->price_compare - $product->price;
+      $product->percent = ($product->discount / $product->price_compare) * 100;
+      $product->percent = round($product->percent, 0) .'%';
+      $product->display_discount = 1;
+    }
+
+    $product->in_stock = false;
+    $arr_branch_display = array();
+    $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
+    if(count($branch)) {
+      $product->in_stock = true;
+      foreach ($branch as $key => $value) {
+        if(!$value->branch_center) {
+          $obj = new stdClass();
+          $obj->name = $value->name;
+          $obj->address = $value->address;
+          array_push($arr_branch_display, $obj);
+        }
+      }
+    }
+    $product->count_branch_display = count($arr_branch_display);
+    $product->arr_branch_display = $arr_branch_display;
+    $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->first();
+    $collection_parent = Collection::find($collection_parent->id);
+    $product->title = $collection_parent->title . ' ' . $product->title;
+    $list_image = Image::getImage('product', $id);
+    $product->list_image = $list_image;
+
+    if ($product->dropship) {
+      if (!$product->in_stock) {
+        $product->in_stock = true;
+        $product->count_branch_display = 0;
+      }
+    }
+    return $response->withJson([
+      'code' => 0,
+      'data' => $product
+    ]);
+  }
+}
+
+?>

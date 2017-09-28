@@ -1,0 +1,9 @@
+extends ./layout.pug
+
+block pre-include
+  title=data.title
+block content
+  .container.checkout
+    include snippet/breadcrumb
+    h3.col-xs-12.main-title=data.title
+    section.col-xs-12 #{data['content']}

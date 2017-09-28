@@ -1,0 +1,77 @@
+extends ./layout.pug
+
+block pre-include
+  title Chỉnh sửa | 
+    =data.name
+  - var menu = 'product'
+  - var childMenu = 'brand'
+block post-include
+  script(src=staticURI() + '/js/admin/brand.js')
+
+block content
+	section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thương hiệu
+      li
+      	a=data.name
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-review(href="/thuong-hieu/" + data.handle, target="_blank")
+          i.fa.fa-eye
+          | Xem trên web
+      li
+        a.btn.btn-admin.btn-update-brand(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .box.box-info
+      .form-horizontal.form-collection
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tên thương hiệu
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="name" value=data.name)
+          .form-group
+            label.col-sm-2.control-label Hình đại diện
+            form.col-sm-10.collection-image
+              if data.image
+                img.image(src="/uploads/" + resize(data.image, 240))
+              else
+                img.image(src="/images/default_image.png")
+              input.upload.form-control(type="file" name="upload[]" data-type="image")
+              input(type="hidden" name="image" value=data.image)
+          .form-group
+            label.col-sm-2.control-label Mô tả
+            .col-sm-10
+              textarea#brand-description=data.description
+          .form-group
+            label.col-sm-2.control-label Meta title
+            .col-sm-10
+              textarea.form-control(name="meta_title")=data.meta_title
+          .form-group
+            label.col-sm-2.control-label Meta description
+            .col-sm-10
+              textarea.form-control(name="meta_description")=data.meta_description
+          .form-group
+            label.col-sm-2.control-label Thương hiệu nổi bật
+            .col-sm-10
+              select.form-control(name="highlight")
+                if data.highlight
+                  option(value="0") Không
+                  option(value="1" selected) Có
+                else
+                  option(value="0") Không
+                  option(value="1") Có
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                if data.display
+                  option(value="0") Không
+                  option(value="1" selected) Có
+                else
+                  option(value="0") Không
+                  option(value="1") Có

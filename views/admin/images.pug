@@ -1,0 +1,149 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'images'
+  title Hình ảnh
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8
+      li
+        a Thiết lập chung
+      li
+        a Hình ảnh
+
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-shop-info
+        .box-body
+          .tinymce-upload
+            label.btn.btn-primary.lbl-choose-image(for="input-list-images") Tải lên
+            form.form-tinymce-upload(enctype="multipart/form-data")
+              input#input-list-images(type="file" name="upload[]" accept="image/*" multiple="multiple").hidden
+            br
+            .row
+              .list-image-upload.clearfix
+                each image, index in images
+                  if index < 12
+                    .col-sm-3.item
+                      a(href="/uploads/images/" + image target="_blank")
+                        img(src="/uploads/images/" + image)
+                      span.btn-remove-image(data-image=image)
+                        i.fa.fa-times
+                  else
+                    .col-sm-3.item.hidden
+                      a(href="/uploads/images/" + image target="_blank")
+                        img(src="/uploads/images/" + image)
+                      span.btn-remove-image(data-image=image)
+                        i.fa.fa-times
+              if total > 12
+                .col-sm-12.text-center
+                  .btn.btn-primary.btn-viewmore Xem thêm
+          script.
+            $('.tinymce-upload').on('change', 'input#input-list-images', function(){
+              var ext = $(this).val().split('.').pop().toLowerCase();
+              if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
+                alert('Vui lòng chọn đúng định dạng ảnh');
+                $(this).val('');
+                return;
+              }
+              var formData = new FormData($('form.form-tinymce-upload')[0]);
+              $.ajax({
+                  type: 'POST',
+                  url: '/admin/api/uploadImageTinymce',
+                  data: formData,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  success: function(json){
+                    var list = '';
+                    $.each(json.data, function(i,e) {
+                      list += '<div class="col-sm-3 item"><a href="/uploads/images/'+e+'" target="_blank"><img src="/uploads/images/'+e+'"></a></div>';
+                    });
+                    $('.list-image-upload').prepend(list);
+                  },
+                  error: function(data){
+                    console.log(data);
+                  }
+                });
+            });
+            
+            $('.btn-viewmore').click(function() {
+              var count = 0;
+              $('.list-image-upload').find('.item.hidden').each(function(index, elem) {
+                $(this).removeClass('hidden');
+                $(this).find('img').attr('src', $(this).find('img').data('src'));
+                count++;
+                if(count == 12) return false;
+              });
+              if(!$('.list-image-upload').find('.item.hidden').length) $('.btn-viewmore').addClass('hidden');
+            });
+            
+            $(document).on('click', '.btn-remove-image', function() {
+              var img = $(this).data('image');
+              var item = $(this).closest('.item');
+              $.ajax({
+                type: 'DELETE',
+                data: {
+                  img: img
+                },
+                url: '/admin/api/images/remove',
+                success: function(json) {
+                  if(!json.code) {
+                    toastr.success('Đã xóa');
+                    item.remove();
+                  } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+                }
+              });
+            });
+
+    style.
+      .tinymce-upload {
+        padding: 15px;
+      }
+      .tinymce-upload .loading {
+        margin-left: 15px;
+      }
+      
+      .list-image-upload .item img {
+        max-width: 100%;
+        max-height: 150px;
+        border: 1px solid #ddd;
+      }
+      
+      .list-image-upload .item {
+        margin-bottom: 20px;
+        min-height: 150px;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        z-index: 888;
+      }
+      
+      .list-image-upload .item a {
+        display: block;
+      }
+
+      .lbl-choose-image {
+        cursor: pointer;
+      }
+      
+      .btn-viewmore {
+        margin: 15px 0;
+      }
+      
+      .btn-remove-image {
+        position: absolute;
+        top: 5px;
+        right: 20px;
+        font-size: 25px;
+        display: none;
+        z-index: 999;
+      }
+      
+      .list-image-upload .item:hover .btn-remove-image {
+        display: block;
+      }

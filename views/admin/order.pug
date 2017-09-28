@@ -1,0 +1,79 @@
+extends ./layout.pug
+
+block pre-include
+  title Danh sách đơn hàng
+  - var menu = 'order';
+  - var childMenu = 'order';
+block post-include
+  script.
+    initDataTable('table');
+    $('.btn-update-order-odoo').click(function() {
+      $(this).addClass('disabled');
+      $.get('/api/crawler/updateOrderState', function(json) {
+        if(!json.code) toastr.success('Cập nhật thành công');
+        else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+        setTimeout(function() {
+          location.reload();
+        }, 1500);
+      });
+    });
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Đơn hàng
+      li
+        a Danh sách đơn hàng
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin.btn-update-order-odoo
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật đơn hàng từ Odoo
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Mã đơn hàng
+              th Ngày đặt hàng
+              th Khách hàng
+              th Trạng thái
+              th Xem trên Odoo
+              th Tổng tiền
+          tbody
+            each order in orders
+              tr
+                td
+                  a(href="/admin/orders/" + order.id target="_blank").link=order.id
+                td=order.created_at
+                td=order.name
+                td
+                  if order.id_odoo == '-2'
+                    if order.order_status == "new"
+                      label.label.label-primary Dropship - Mới
+                    else
+                      if order.order_status == "done"
+                        label.label.label-success Dropship - Hoàn thành
+                      else
+                        if order.order_status == 'cancel'
+                          label.label.label-danger Dropship - Hủy
+                        else
+                          label.label.label-info Dropship - Xác nhận
+                  else
+                    if order.order_status == "new"
+                      label.label.label-primary Mới
+                    else
+                      if order.order_status == "done"
+                        label.label.label-success Hoàn thành
+                      else
+                        if order.order_status == 'cancel'
+                          label.label.label-danger Hủy
+                        else
+                          label.label.label-info Xác nhận
+                td
+                  unless order.id_odoo == -1
+                    a(href='http://erp.tga.com.vn/web#id='+order.id_odoo+'&view_type=form&model=sale.order&menu_id=173&action=233', target="_blank")=order.id_odoo
+                td.right=money(order.total)

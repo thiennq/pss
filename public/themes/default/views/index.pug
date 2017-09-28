@@ -1,0 +1,115 @@
+extends ./layout.pug
+
+block pre-include
+  title=title
+  //- - var canonical = canonical(page_number, total_pages);
+  //- | #{canonical}
+  - metaTitle = title
+  if meta_description_default
+    - metaDescription = meta_description_default
+block post-include
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+  script(src=themeURI() + '/libs/owl.carousel.min.js')
+  
+block content
+  .homepage
+    .container.slider-homepage
+      .index-slider-carousel.owl-carousel
+        - var slider = slider();
+        each item in slider
+          .item
+            a(href=item.link)
+              img(src='/uploads/' + item.image, alt=item.title, title=item.title)
+    .container.category
+      - brand = brandIndex();
+      if countArr(brand)
+        .collection-group.top-brand.clearfix
+          .collection-title
+            span Thương hiệu nổi bật
+          .item.list-brand.clearfix
+            ul
+              each item in brand
+                li
+                  a(href='' title='')
+                    span.middle-inline-block
+                    img(src='/uploads/' + item.image, alt=item.name)
+      - var collectionIndex = collectionIndex();
+      if countArr(collectionIndex)
+        each item in collectionIndex
+          .collection-group.clearfix
+            .collection-title
+              span=item.title
+            .list-product-index.clearfix
+              .row
+                each product in item.products
+                  .col20.col-xs-6
+                    include snippet/product-loop
+      - var articleIndex = articleIndex();
+      - var articleFirst = articleIndex[0];
+      if countArr(articleIndex)
+        .collection-group.latest-news.clearfix
+          .collection-title
+            span Tin tức
+          .news-index
+            .row
+              .number-1-news.col-sm-6.hidden-xs
+                a.cover(href='/' + articleFirst.link)
+                  img(src='/uploads/' + resize(articleFirst.image, 640))
+              .col-sm-6.col-xs-12
+                each item, index in articleIndex
+                  if device == 'desktop'
+                    if index > 0
+                      .news.clearfix
+                        .row
+                          .col-sm-4.col-xs-5.pd-left-0.pd-right-0
+                            .left(style="background: url('/uploads/"+resize(item.image, 240)+"')")
+                          .col-sm-8.col-xs-7
+                            h3.news-title
+                              a(href='/' + item.link)=item.title
+                            .description
+                              div=item.description
+                              .bottom-line.hidden-xs
+                                a(href='/' + item.link) xem thêm &gt;
+                              .bottom-line.visible-xs
+                                a(href='/' + item.link)=item.updated_at
+                  else
+                    .news.clearfix
+                      .row
+                        .col-sm-4.col-xs-5.pd-left-0.pd-right-0
+                          .left(style="background: url('/uploads/"+resize(item.image, 240)+"')")
+                        .col-sm-8.col-xs-7
+                          h3.news-title
+                            a(href='/' + item.link)=item.title
+                          .description
+                            div=item.description
+                            .bottom-line.hidden-xs
+                              a(href='/' + item.link) xem thêm &gt;
+                            .bottom-line.visible-xs
+                              a(href='/' + item.link)=item.updated_at
+            h3.news-title.hidden-xs
+              a(href='/' + articleFirst.link)=articleFirst.title
+      .collection-group.celebs.clearfix.hidden-xs
+        .collection-title.viet-celebs
+          span Sao việt sành điệu cùng MIA.VN
+        .introduce
+          p Cảm ơn vì đã tin tưởng lựa chọn chúng tôi.
+          p Mia.vn - Hệ thống Siêu thị VALI TÚI BALO Chính hãng hàng đầu Việt NamNam
+        .celebs-list.clearfix
+          .index-slider-carousel.owl-carousel
+            - var celebrityIndex = celebrityIndex();
+            if countArr(celebrityIndex)
+              each item in celebrityIndex
+                .item-wrapper
+                  .item(style='background-image:url("/uploads/' + resize(item.image, 480) + '");')
+                  a(href=item.link)=item.name
+    .container.top-brand-footer.visible-xs
+      .title
+        span TOP BRAND
+      .col-xs-12
+        .brands
+            - var brands = BrandatIndexPage();
+            each item in brands
+              ul
+                each i in item
+                  li
+                    a(href=fullUrl("thuong-hieu/" + i.handle))=i.name

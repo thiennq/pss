@@ -1,0 +1,57 @@
+extends ./layout.pug
+
+block pre-include
+  title=data.title
+  if fb_image
+    - ogImage = fb_image
+  if data.description_seo
+    - metaDescription = data.description_seo
+  if data.meta_robots
+    - meta_robots = data.meta_robots;
+  - metaTitle = data.title
+  
+block content
+  .news-detail.container
+    include snippet/breadcrumb
+    .col-sm-8.col-xs-12.left
+      .content.row
+        h1=data.title
+        p
+          b=data.description
+        section !{data.content}
+        .author=data.author
+      .sharing.hidden-xs.row
+        .share-icon
+          .share-now CHIA SẺ NGAY 
+          .social-icon
+            span.middle-inline-block
+            i.fa.fa-facebook
+          .social-icon
+            span.middle-inline-block
+            i.fa.fa-google-plus
+      .col-sm-5.col-sm-offset-7.hidden-xs.back-to-news-page
+        a(href="/tin-tuc")
+          | &lt; QUAY VỀ DANH MỤC BÀI VIẾT
+        .clearfix
+      .relative-news.hidden-xs.row 
+        .title 
+          a BÀI VIẾT LIÊN QUAN
+            .border
+        each item in related
+          .item
+            .col-sm-2.avatar(href=fullUrl(item.link), style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
+            .col-sm-10
+              .news-title 
+                a(href=fullUrl(item.link))=item.title
+              .news-content=item.description
+    .col-sm-4.col-xs-12.right
+      .row
+        .hot-news.col-sm-12
+          .title Tin tức gần đây
+          each item in other
+            .item
+              .col-xs-5.avatar(href=fullUrl(item.link), style="background:url('/uploads/"+resize(item.image, 240)+"')" )
+              .col-xs-7.news-title
+                a(href=fullUrl(item.link))=item.title
+                .date.visible-xs=ddMMYYYY(item.updated_at)
+                .content.visible-xs=item.description

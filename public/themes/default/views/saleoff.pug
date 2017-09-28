@@ -1,0 +1,21 @@
+extends ./layout.pug
+
+block pre-include
+  title=title
+  if meta_description
+    - metaDescription = meta_description
+  if fb_image
+    - ogImage = fb_image
+
+block content
+  .saleoff.container
+    include snippet/breadcrumb
+    if (fb_image)
+      .banner
+        img(src=fb_image)
+    .list-product.row
+      each product in products
+        .product-loop.col-sm-3
+          include snippet/product-loop
+    #pagination.col-sm-12.text-right
+      

@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    link(rel="icon" href=staticURI() + "/img/favicon.png")
+    link(rel="stylesheet" href=staticURI() + '/libs/bootstrap.min.css')
+    link(rel='stylesheet', href=staticURI() + '/libs/dataTables.min.css')
+    link(rel='stylesheet', href=staticURI() + '/libs/dataTables.bootstrap.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css')
+    link(rel="stylesheet", href=staticURI() + '/libs/font-awesome.min.css')
+    link(rel='stylesheet', href=staticURI() + '/libs/toastr.min.css')
+    link(rel='stylesheet', href=staticURI() + '/libs/AdminLTE.min.css')
+    link(rel="stylesheet", href=staticURI() + "/libs/chosen.min.css")
+    link(rel="stylesheet", href=staticURI() + "/css/admin.css")
+    script(src=staticURI() + '/libs/jquery.min.js')
+    script(src=staticURI() + '/libs/bootstrap.min.js')
+    script(src=staticURI() + '/libs/toastr.min.js')
+    script(src=staticURI() + '/libs/app.min.js')
+    script(src=staticURI() + '/libs/tmpl.min.js')
+    script(src=staticURI() + '/libs/jquery.dataTables.min.js')
+    script(src=staticURI() + '/libs/dataTables.bootstrap.min.js')
+    script(src='https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js')
+    script(src='//cdn.tinymce.com/4/tinymce.min.js')
+    script(src=staticURI() +'/libs/bootstrap-select.min.js')
+    script(src=staticURI() +'/libs/chosen.jquery.min.js')
+    //- include ../../snippet/oneSignal.pug
+    block pre-include
+
+  body
+    .wrapper
+      include snippet/sidebar
+      include snippet/tmpl
+      .col-xs-12.hidden-sm.hidden-md.hidden-lg
+        include snippet/header-mobile
+      .content-wrapper
+        block content
+      include snippet/modal-change-password
+      script(src=staticURI() + '/js/admin/script.js')
+      block post-include

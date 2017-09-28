@@ -1,0 +1,72 @@
+extends ./layout.pug
+block pre-include
+  title=title
+  - var canonical = canonical(page_number, total_pages);
+  | !{canonical}
+  - metaTitle = title
+  if collection.meta_description
+    - metaDescription = data['meta_description']
+  if meta_description
+    - metaDescription = meta_description
+  if collection.banner
+    - ogImage = '/uploads/' + collection.banner
+
+block post-include
+  script(src=themeURI() + '/libs/twbsPagination.min.js')
+
+block content
+  .collection.container(data-id=collection.id)
+    input(type="hidden" name="q")
+    input(type="hidden" name="page_type", value=page_type, data-brand=brandName)
+    .row.visible-xs
+      .col-xs-12
+        include snippet/breadcrumb
+    if collection.banner
+      .row.visible-xs
+        .cover.col-xs-12
+          img(src="/uploads/" + collection.banner)
+      .cover.col-sm-12.visible-sm
+        img(src="/uploads/" + collection.banner)
+    .row
+      if device == 'desktop'
+        .col-sm-3.hidden-xs.collection-left
+          include snippet/sidebar
+      else
+        .col-xs-12.visible-xs
+          include snippet/sidebar-mobile
+      .col-sm-9.col-xs-12.collection-right
+        .row.hidden-xs
+          .col-sm-9
+            include snippet/breadcrumb
+          .col-sm-3.text-right
+            .dropdown.item-sort
+              span.dropdown-toggle(data-toggle='dropdown') Sắp xếp
+                span.caret
+              span.triangle
+              ul.dropdown-menu
+                li(data-value="price:asc")
+                  i.fa.fa-check
+                  span Giá tăng dần
+                li(data-value="price:desc")
+                  i.fa.fa-check
+                  span Giá giảm dần
+                li(data-value="view:desc")
+                  i.fa.fa-check
+                  span Xem nhiều nhất
+        .list-filter.col-xs-12
+            
+        if total_pages == 0
+          .no-product.pd-left-0.col-xs-12 Không có sản phẩm nào
+        else
+          .no-product.col-xs-12.pd-left-0.hidden Không có sản phẩm nào
+          .list-product.clearfix
+            .row
+              each product in list_product
+                .col-md-3.col-sm-4.col-xs-6
+                  include snippet/product-loop
+          if total_pages > 1
+            .collection-pagination.clearfix
+              #pagination.col-sm-12.text-right(data-page_number=page_number data-total=total_pages)
+      if collection.description
+        .col-xs-12.hidden-xs
+          .content !{collection.description}

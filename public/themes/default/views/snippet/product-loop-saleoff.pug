@@ -1,0 +1,12 @@
+.item-product-loop.clearfix
+  span.sale SALE!
+  - var image = resize(product['featured_image'], 240);
+  //- img(src="/images/product_loading.gif", data-src="/uploads/#{image}", alt="#{image}")
+  img(src="/images/product_loading.gif", data-src="/images/balo_saleoff.png", alt="#{image}")
+  a.brand(href="#")=product.product_vendor
+  a.title(href=product.handle)=product.title
+  .price
+    if product.price_compare
+      span.price-compare=money(product.price_compare)
+    span.main-price=money(product.price)
+  a.btn-add-product THÊM VÀO GIỎ HÀNG

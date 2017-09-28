@@ -1,0 +1,47 @@
+extends ./layout.pug
+
+block pre-include
+  title Nhóm sản phẩm
+  - var menu = 'product'
+  - var childMenu = 'collection'
+  
+block post-include
+  script(src=staticURI() + '/js/admin/collection.js')
+
+block content
+	section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/collection') Nhóm sản phẩm
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin(href="/admin/collection/new") Tạo nhóm sản phẩm
+  section.content
+		.box		  
+		  .box-body
+		    table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+		      thead
+		        tr
+		        	th
+		          th Tên nhóm sản phẩm
+              th Link
+              th Xóa
+		      tbody
+            each collection in collections
+              tr
+                td.col-sm-1.image
+                  if collection.image
+                    img(src="/uploads/" + collection.image)
+                  else
+                    img(src=staticURI() + "/img/no-image.png", alt="Image")
+                td.col-sm-5
+                  a(href="/admin/collections/" + collection.id, target="_blank")= collection.title
+                td.col-sm-5
+                  a(href="/" + collection.link, target="_blank")= collection.link
+                td.col-sm-1
+                  a.btn-edit(href="/admin/collections/" + collection.id)
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-collection(data-id=collection.id)
+                    i.fa.fa-trash

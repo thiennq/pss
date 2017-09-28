@@ -1,0 +1,139 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'staff';
+  - var childMenu = 'staff';
+  title Quản lý người dùng
+  link(rel='stylesheet', href='/include/dataTables.bootstrap.css')
+
+block post-include
+  script(src='/include/jquery.dataTables.min.js')
+  script(src='/include/dataTables.bootstrap.min.js')
+  script(src='/js/admin/staff.js')
+  script.
+    var tblArticle = $("table").DataTable({
+      aaSorting: [],
+      bDestroy: true,
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true,
+      rowReorder: false,
+    });
+
+block content
+	section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Nhân viên
+      li
+        a Danh sách nhân viên
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-default(data-toggle="modal" data-target="#modal-add") Thêm nhân viên
+  section.content.staff
+		.box
+		  .box-body
+		    table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+		      thead
+		        tr
+		        	th Họ tên
+              th Email
+              th Phân quyền
+              th Chỉnh sửa
+		      tbody
+            each item in user
+              tr
+                td=item.fullname
+                td=item.email
+                td=item.role
+                td
+                  a.btn-edit.btn-edit-user(data-id=item.id)
+                    i.fa.fa-pencil-square-o
+                  - var checkmail = compareString(item['email'], login_email);
+                  unless checkmail
+                    a.btn-remove(data-id=item.id)
+                      i.fa.fa-trash
+      #modal-add.modal.fade(role='dialog')
+        .modal-dialog
+          form.modal-content.form-add-user
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Thêm người dùng
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Họ tên
+                    .col-sm-10
+                      input.form-control(type="text" name="fullname" placeholder="Họ tên" required)
+                  .form-group
+                    label.col-sm-2.control-label Email
+                    .col-sm-10
+                      input.form-control(type="email" name="email" placeholder="Email" required)
+                  .form-group
+                    label.col-sm-2.text-center.pd-0 Phân quyền
+                    .col-sm-10
+                      label.item-role
+                        input(type="checkbox" name="role_product" value="1")
+                        | Sản phẩm
+                      label.item-role
+                        input(type="checkbox" name="role_order" value="1")
+                        | Đơn hàng
+                      label.item-role
+                        input(type="checkbox" name="role_customer" value="1")
+                        | Khách hàng
+                      label.item-role
+                        input(type="checkbox" name="role_article" value="1")
+                        | Bài viết
+                      label.item-role
+                        input(type="checkbox" name="role_setting" value="1")
+                        | Thiết lập chung
+                      label.item-role
+                        input(type="checkbox" name="role_staff" value="1")
+                        | Nhân viên
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+              button.btn.btn-admin(type='submit') Đồng ý
+                
+      #modal-edit.modal.fade(role='dialog')
+        .modal-dialog
+          form.modal-content.form-edit-user
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Cập nhật thông tin
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Họ tên
+                    .col-sm-10
+                      input.form-control(type="text" name="fullname" required)
+                  .form-group
+                    label.col-sm-2.control-label Email
+                    .col-sm-10
+                      input.form-control(type="email" name="email" required)
+                  .form-group
+                    label.col-sm-2.text-center.pd-0 Phân quyền
+                    .col-sm-10
+                      label.item-role
+                        input(type="checkbox" name="role_product" value="1")
+                        | Sản phẩm
+                      label.item-role
+                        input(type="checkbox" name="role_order" value="1")
+                        | Đơn hàng
+                      label.item-role
+                        input(type="checkbox" name="role_customer" value="1")
+                        | Khách hàng
+                      label.item-role
+                        input(type="checkbox" name="role_article" value="1")
+                        | Bài viết
+                      label.item-role
+                        input(type="checkbox" name="role_setting" value="1")
+                        | Thiết lập chung
+                      label.item-role
+                        input(type="checkbox" name="role_staff" value="1")
+                        | Nhân viên
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-admin(type='submit') Đồng ý

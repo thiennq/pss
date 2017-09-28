@@ -1,0 +1,98 @@
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+style.
+  .tinymce-upload {
+    padding: 15px;
+  }
+  .tinymce-upload .loading {
+    margin-left: 15px;
+  }
+  
+  .list-image-upload .item img {
+    max-width: 100%;
+    max-height: 150px;
+  }
+  
+  .list-image-upload .item {
+    margin-bottom: 20px;
+    min-height: 150px;
+    cursor: pointer;
+  }
+
+  .lbl-choose-image {
+    cursor: pointer;
+  }
+  
+  .btn-viewmore {
+    margin: 15px 0;
+  }
+
+.tinymce-upload
+  label.btn.btn-primary.lbl-choose-image(for="input-list-images") Tải lên
+  form.form-tinymce-upload(enctype="multipart/form-data")
+    input#input-list-images(type="file" name="upload[]" accept="image/*" multiple="multiple").hidden
+  .list-image-upload.col-sm-12
+    each image, index in images
+      - var host = currentHost();
+      - var url = concatString(host, '/uploads/images/');
+      - var url = concatString(url, image);
+      if index < 8
+        .col-sm-3.item
+          img(src=url)
+      else
+        .col-sm-3.item.hidden
+          img(data-src=url)
+  if total > 8
+    .col-sm-12.text-center
+      .btn.btn-primary.btn-viewmore Xem thêm
+
+script.
+  $('.tinymce-upload').on('change', 'input#input-list-images', function(){
+    var ext = $(this).val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
+      alert('Vui lòng chọn đúng định dạng ảnh');
+      $(this).val('');
+      return;
+    }
+    var formData = new FormData($('form.form-tinymce-upload')[0]);
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/api/uploadImageTinymce',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(json){
+          var list = '';
+          $.each(json.data, function(i,e) {
+            var src = location.origin + '/uploads/images/' + e;
+            list += '<div class="col-sm-3 item"><img src="'+src+'"></div>';
+          });
+          $('.list-image-upload').prepend(list);
+        },
+        error: function(data){
+          console.log(data);
+        }
+      });
+  });
+  
+  $('.list-image-upload').on('click', '.item', function() {
+    var src = $(this).find('img').attr('src');
+    var args = top.tinymce.activeEditor.windowManager.getParams();
+    win = (args.window);
+    input = (args.input);
+    win.document.getElementById(input).value = src;
+    top.tinymce.activeEditor.windowManager.close();
+  });
+  
+  $('.btn-viewmore').click(function() {
+    var count = 0;
+    $('.list-image-upload').find('.item.hidden').each(function(index, elem) {
+      $(this).removeClass('hidden');
+      $(this).find('img').attr('src', $(this).find('img').data('src'));
+      count++;
+      if(count == 8) return false;
+    });
+    if(!$('.list-image-upload').find('.item.hidden').length) $('.btn-viewmore').addClass('hidden');
+  });

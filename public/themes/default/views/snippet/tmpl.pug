@@ -1,0 +1,52 @@
+script#item-image(type="text/x-tmpl").
+  <div class="image col-xs-2" data-name={%=o.name%}>
+    <img src={%=o.src%}/>
+    <span class="rotate">
+      <i class="fa fa-undo"></i>
+    </span>
+    <span class="remove">
+      <i class="fa fa-times"></i>
+    </span>
+  </div>
+
+script#search-product(type="text/x-tmpl").
+  <li>
+   <a href="/san-pham/{%=o.handle%}">
+     <img src='/uploads/{%=o.featured_image%}'>
+     <span>{%=o.title%}</span>
+     <span class="price">{%=o.price%}</span>
+      <span class="price-compare">{%=o.price_compare%}</span>
+   </a>
+  </li>
+
+script#search-article(type="text/x-tmpl").
+  <li data-id={%=o.id%}>
+    <a  class="add-article-related">{%=o.title%}</a>
+    <span>
+      <a href="/{%=o.link%}" target="_blank">
+      <i class="fa fa-link"></i></a>
+    </span>
+  </li>
+  
+script#add-article(type="text/x-tmpl").
+  <div class="item" data-id={%=o.id%}>
+    <a class="btn-remove">
+      <i class="fa fa-times"></i>
+    </a>
+    <a href="{%=o.link%}" target="_blank">{%=o.title%}</a>
+  </div>
+  
+script#add-new-tag(type="text/x-tmpl").
+  <div class="item clearfix">
+    <div class="col-xs-4 pd-left-0">
+      <input class="form-control" name="name_tag" placeholder="Du lịch">
+    </div>
+    <div class="col-xs-7 pd-left-0">
+      <input class="form-control" name="handle_tag" placeholder="https://mia.vn/tag/du-lich" disabled>
+    </div>
+    <div class="col-xs-1 pd-left-0">
+      <a class="btn-remove">
+        <i class="fa fa-trash"></i>
+      </a>
+    </div>
+  </div>

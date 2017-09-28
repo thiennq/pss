@@ -1,0 +1,82 @@
+.modal-body.clearfix
+  .col-sm-6.col-xs-12.list-image
+    .slider-large-image.text-center
+      - var firstImage = data.list_image[0];
+      - var large = resize(firstImage.name, 1024);
+      img.large-image-zoom(src="/uploads/" + large, data-zoom-image="/uploads/" + image.name alt=alt)
+    .clearfix.wrapper-slider-modal
+      .list-small-image.owl-carousel
+          each image, index in data.list_image
+            - var thumb = '/uploads/' + resize(image.name, 240);
+            - var large = '/uploads/' + resize(image.name, 1024)
+            - var alt = data.title + '-' + (index + 1);
+            .item
+              img(src=thumb, data-large=large)
+  .col-sm-6.detail.col-xs-12
+    - var link = 'san-pham/' + data.handle;
+    - var fullUrl = fullUrl(link);
+    - var brand_link = 'thuong-hieu/' + data.brand_url;
+    - var fullBrandLink = fullUrl(brand_link);
+    h1.title.main-title-product
+      a(href=fullUrl)=data.title
+    if data.brand
+      p.brand THƯƠNG HIỆU:
+        a(href=fullBrandLink)=data.brand
+    p.price
+      span.main-price.main-price-product=money(data.price)
+      span.price-compare.main-price-compare=money(data.price_compare)
+    if data.display_discount
+      p.discount.main-discount Tiết kiệm
+        span=money(data.discount)
+        |  (
+        span=data.percent
+        | )
+    else
+      p.discount.main-discount.hidden
+    if data.content
+      - var content = data.content.replace(/\n/g, '<br>');
+      .short-description.hidden-xs !{content}
+    if data.count_variant > 1
+      p.variants
+        .owl-carousel.owl-carousel-variant.owl-theme
+          each item in data.variants
+            .item.item-variant.item-variant-modal(data-id=item.id)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(item.featured_image, 240) title=item.title)
+    .dropdown.in-stock-branch
+      if data.in_stock
+        if data.count_branch_display
+          button.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+            span.caret
+          ul.dropdown-menu.list-branch
+            each item in data.arr_branch_display
+              li
+                .left
+                  img(src=staticURI() + "/img/icon_branch.png")
+                  span=item.name
+                .right=item.address
+          button.hidden.in-stock.btn Sản phẩm hiện chỉ bán online
+        else
+          button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+            span.caret
+          ul.hidden.dropdown-menu.list-branch
+            each item in data.arr_branch_display
+              li
+                .left
+                  img(src=staticURI() + "/img/icon_branch.png")
+                  span=item.name
+                .right=item.address
+          button.in-stock.btn Sản phẩm hiện chỉ bán online
+        button.out-stock.btn.hidden Đang tạm hết hàng
+      else
+        button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+          span.caret
+        ul.dropdown-menu.list-branch.hidden
+        p.in-stock.hidden Sản phẩm hiện chỉ bán online
+        button.out-stock.btn Đang tạm hết hàng
+    if data.in_stock
+      .btn-order-product.in-stock(data-id=data.id) ĐẶT MUA GIAO HÀNG TẬN NƠI
+        br
+        span (Không mua không sao)
+    else
+      .btn-order-product ĐANG TẠM HẾT HÀNG
+    a.btn-detail(href=fullUrl) CHI TIẾT SẢN PHẨM

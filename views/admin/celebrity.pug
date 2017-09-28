@@ -1,0 +1,117 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'celebrity';
+  title Người nổi tiếng
+
+block post-include
+  script(src=staticURI() + '/js/admin/celebrity.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Người nổi tiếng
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-add") Thêm người nổi tiếng
+
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Tên người nổi tiếng
+              th Hình ảnh
+              th Link
+              th Hiển thị
+              th
+          tbody
+            each celebrity in celebrities
+              tr
+                td.col-sm-2.title=celebrity.name
+                td.col-sm-5.image
+                  if celebrity.image
+                    img(src="/uploads/" + celebrity.image, alt="Image")
+                  else
+                    img(src=staticURI() + "/img/default_image.png", alt="Image")
+                td.col-sm-2.link
+                  if celebrity.link
+                    a(href=celebrity.link target="blank")=celebrity.link
+                td.col-sm-2.display=celebrity.display == 1 ? "Có" : "Không"
+                td.col-sm-2
+                  a.btn-edit-celebrity.btn-edit(data-id=celebrity.id data-toggle="modal" data-target="#modal-edit")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove-celebrity.btn-remove(data-id=celebrity.id)
+                    i.fa.fa-trash
+
+      #modal-add.modal-add.modal.fade(role='dialog')
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Thêm celebrity
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Tiêu đề 
+                    .col-sm-10
+                      input.form-control(type="text" name="name" placeholder="Tiêu đề")
+                  .form-group
+                    label.col-sm-2.control-label Hình ảnh
+                    form.col-sm-10.form-upload-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Link
+                    .col-sm-10
+                      input.form-control(type="text" name="link" placeholder="Link")
+                  .form-group
+                    label.col-sm-2.control-label Hiển thị
+                    .col-sm-10
+                      select.form-control(name="display")
+                        option(value="1") Có
+                        option(value="0") Không
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-add-celebrity(type='button') Đồng ý
+
+
+      #modal-edit.modal-edit.modal.fade(role='dialog')
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Chỉnh sửa
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Tiêu đề 
+                    .col-sm-10
+                      input.form-control(type="text" name="name")
+                  .form-group
+                    label.col-sm-2.control-label Hình ảnh
+                    form.col-sm-10.form-upload-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Link
+                    .col-sm-10
+                      input.form-control(type="text" name="link")
+                  .form-group
+                    label.col-sm-2.control-label Hiển thị
+                    .col-sm-10
+                      select.form-control(name="display")
+                        option(value="1") Có
+                        option(value="0") Không
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-update-celebrity(type='button') Cập nhật

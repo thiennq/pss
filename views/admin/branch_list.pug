@@ -1,0 +1,52 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'branch'
+  title Các chi nhánh
+
+block post-include
+  script.
+    initDataTable('table');
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8
+      li
+        a Thiết lập chung
+      li
+        a(href='/admin/branch') Danh sách các chi nhánh 
+        
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th ID
+              th Tên CN
+              th Địa chỉ
+              th Tính tồn kho
+              th Kho trung tâm
+              th Hiển thị
+          tbody
+            each item in data
+              tr
+                td=item.id
+                td
+                  a(href="/admin/branch/" + item.id target="_blank")=item.name
+                td=item.address
+                td
+                  if item.calc_inventory
+                    | Có
+                  else
+                    | Không
+                td
+                  if item.branch_center
+                    | Có
+                  else
+                    | Không
+                td
+                  if item.display
+                    | Có
+                  else
+                    | Không

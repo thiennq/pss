@@ -1,0 +1,52 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'article'
+  - var childMenu = 'landing-page'
+  title Landing Page
+
+block post-include
+  script(src=staticURI() + '/js/admin/article.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Bài viết
+      li
+        a(href='/admin/blog') Landing Page
+        
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin(href="/admin/article/new") Thêm mới
+
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th ID
+              th Tiêu đề
+              th Người tạo
+              th Ngày cập nhật
+              th Hiển thị
+              th Chỉnh sửa
+          tbody
+            - var stt = 1
+            each item in data
+              tr
+                td=item.id
+                td
+                  a(href="/admin/articles/" + item.id target="_blank")=item.title
+                td=item.author
+                td=item.updated_at
+                td
+                  if item.display == 1
+                    | Có
+                  else
+                    | Không
+                td
+                  a.btn-edit(href="/admin/articles/" + item.id, data-id=item.id, title="Chỉnh sửa")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove-page.btn-remove.btn-remove-article(data-id=item.id, title="Xóa")
+                    i.fa.fa-trash

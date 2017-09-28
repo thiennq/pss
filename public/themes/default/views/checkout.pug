@@ -1,0 +1,65 @@
+extends ./layout.pug
+
+block pre-include
+  title Đặt hàng
+block post-include
+  link(rel='stylesheet', href=staticURI() + '/libs/toastr.min.css')
+  script(src=staticURI() + '/libs/toastr.min.js')
+block content
+  .container.checkout#checkout-cart
+    .checkout-title
+      .col-xs-6.more-order
+        a(href="/saleoff") &lt;&lt; Mua thêm sản phẩm khác
+      .col-xs-6.cart GIỎ HÀNG
+      .clearfix
+    .col-xs-12.product-wrapper
+      each item in cart
+        .product-detail.row(data-id=item.product_id)
+          .image.col-xs-3(style="background:url('/uploads/"+resize(item.image, 240)+"')")
+            span.btn-remove-item-cart(data-id=item.product_id)
+              img(src=themeURI() + "/img/i-close.png")
+          .info.col-xs-9
+            .col-xs-7.product-info
+              a.product-title(href="/san-pham/" + item.handle)=item.title
+              .product-discount
+                span - Giảm thêm 5% khi mua bộ 2 vali
+                span - Giảm thêm 10% khi mua bộ 3 vali
+            .col-xs-5.product-price
+              .col-sm-6.col-xs-12.quantity-select
+                .quantity-btn.btn-minus(data-id=item.product_id, data-price=item.price)
+                  i.fa.fa-minus(aria-hidden="true")
+                input.quantity-label(name="quantity", value=item.quantity, min=1)
+                .quantity-btn.btn-plus(data-id=item.product_id, data-price=item.price)
+                  i.fa.fa-plus(aria-hidden="true")
+              .col-sm-6.col-xs-12.price
+                span.main-price.orange=money(item.subTotal)
+    .col-xs-12.total
+      .col-xs-6.total-name Tổng tiền
+      .col-xs-6.total-amount.orange=money(total)
+    .col-xs-12.col-sm-12.customer-wrapper
+      form.customer-info.clearfix
+        .row
+          .col-xs-6.name
+            input.form-control(name="name" placeholder="Họ và Tên" required)
+          .col-xs-6.phone
+            input.form-control(name="phone" placeholder="Số điện thoại" required)
+        .row
+          .col-xs-6.region
+            select.form-control(name="region")
+              option(value="" selected disabled) Tỉnh/thành phố
+              each item in region
+                option(value=item.id)=item.name
+          .col-xs-6.subregion
+            select.form-control(name="subregion")
+              option(value="" selected disabled) Quận/huyện
+        .row
+          .col-xs-12.address
+            input.form-control(name="address" placeholder="Địa chỉ giao hàng" required)
+        .row
+          .col-sm-6.col-xs-12.purchase
+            a.btn.btn-order.btn-checkout
+              span.main THANH TOÁN KHI NHẬN HÀNG
+              span.sub (Xem hàng trước, không mua không sao)
+          .col-sm-6.col-xs-12.more-order
+            a.btn.btn-more-order(href="/saleoff")
+              span MUA THÊM SẢN PHẨM KHÁC

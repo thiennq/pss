@@ -1,0 +1,99 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'article'
+  - var childMenu = 'new'
+  title Viết bài mới
+
+block post-include
+  script(src=staticURI() + '/js/admin/article.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Bài viết
+      li
+        a Viết bài mới
+
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin.btn-create-article
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-article
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tiêu đề
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title", data-title='', data-handle='', placeholder="Tiêu đề")
+          .form-group
+            label.col-sm-2.control-label Handle
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="handle")
+          .form-group
+            label.col-sm-2.control-label Loại bài viết
+            .col-sm-10
+              select.form-control(name="type")
+                option(value='tin-tuc') Tin tức
+                option(value='thong-tin') Thông tin - chính sách
+                option(value='khuyen-mai') Landing Page
+          .form-group.collection.hidden
+            label.col-sm-2.control-label Nhóm sản phẩm
+            .col-sm-10
+              select.chosen-select.form-control(name="collection")
+                each item in list_collection
+                  option(value=item.id)=item.breadcrumb
+          .form-group
+            label.col-sm-2.control-label Hình đại diện
+              img.no-border.loading(src=staticURI() + "/img/loading.gif").hidden
+            form.col-sm-10
+              img(src=staticURI() + "/img/default_image.png")
+              input.feature-image(type="file" name="upload[]").form-control
+              input(type="hidden" name="image")
+          .form-group
+            label.col-sm-2.control-label Bài viết liên quan
+            .col-sm-10
+              .list-related
+              .search-article
+                input.form-control(name="related" placeholder="Nhập tên bài viết")
+                ul
+          .form-group
+            label.col-sm-2.control-label Mô tả
+              strong.required  *
+            .col-sm-10
+              textarea.form-control(name="description")
+          .form-group
+            label.col-sm-2.control-label Mô tả SEO
+            .col-sm-10
+              textarea.form-control(name="description_seo")
+          .form-group
+            label.col-sm-2.control-label Nội dung
+              strong.required  *
+            .col-sm-10
+              textarea.form-control#article_content
+          .form-group.content-promotion.hidden
+            label.col-sm-2.control-label Nội dung bên dưới (landing page)
+              strong.required  *
+            .col-sm-10
+              textarea.form-control#article_content_promotion
+          .form-group
+            label.col-sm-2.control-label Meta robots
+            .col-sm-10
+              select.form-control(name="meta_robots")
+                option(value="index, follow") Index, Follow
+                option(value="noindex, follow") No Index, Follow
+                option(value="index, nofollow") Index, No Follow
+                option(value="noindex, nofollow") No Index, No Follow
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                option(value="1") Có
+                option(value="0") Không

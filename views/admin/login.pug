@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    title Login
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name='viewport')
+    link(rel="icon" href="/images/favicon.ico")
+    link(rel="stylesheet" href='/static/libs/bootstrap.min.css')
+    link(rel='stylesheet', href='/static/libs/AdminLTE.min.css')
+    link(rel='stylesheet', href='/static/libs/toastr.min.css')
+
+    script(src='/static/libs/jquery.min.js')
+    script(src='/static/libs/toastr.min.js')
+    style.
+      .login-box { width: 300px; margin:100px auto 0; text-align: center; }
+      .btn-login { background-color: #FD6821 !important; box-shadow: none !important; border: none !important; outline: 0 !important;}
+  body
+    .login-box
+      h3 ĐĂNG NHẬP
+      .login-box-body
+        form.form-login
+          .form-group.has-feedback
+            input.form-control(type='email', placeholder='Email' name='email' required)
+            span.glyphicon.glyphicon-envelope.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password', placeholder='Password' name='password' required)
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .row
+            .col-xs-12
+              button.btn.btn-primary.btn-block.btn-flat.btn-login(type='submit') Đăng Nhập
+    script.
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+        var email = $("input[name='email']").val();
+        var password = $("input[name='password']").val();
+        $.ajax({
+          type: 'POST',
+          url: '/admin/login',
+          data: {
+            email: email,
+            password: password
+          },
+          success: function(json) {
+            if(!json.code) {
+              location.href = json.href;
+            } else toastr.error(json.message);
+          }
+        });
+      });

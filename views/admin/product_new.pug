@@ -1,0 +1,131 @@
+extends ./layout.pug
+
+block pre-include
+  title Tạo sản phẩm
+  link(rel="stylesheet" href="/include/chosen.min.css")
+  script(src='/include/chosen.jquery.min.js')
+  - var menu = 'product';
+  - var childMenu = 'product';
+block post-include
+  script(src='//cdn.tinymce.com/4/tinymce.min.js')
+  script(src='/js/admin/product.js')
+  
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/product') Danh sách sản phẩm
+      li
+        a Tạo sản phẩm
+    ol.button-right.col-sm-6
+      li
+        a.btn.btn-admin.btn-create-product
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+
+  section.content
+    .box.box-info
+      .form-horizontal.form-product
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tên sản phẩm
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title", value='', data-title='')
+          .form-group
+            label.col-sm-2.control-label Handle
+            .col-sm-10
+              input.form-control(name="handle" disabled)
+          .form-group
+            label.col-sm-2.control-label Mô tả
+            .col-sm-10
+              textarea.form-control#product-description
+          .form-group
+            label.col-sm-2.control-label Hình đại diện
+              strong.required  *
+              img.no-border.loading(src="/images/loading.gif").hidden
+            form.col-sm-10.form-feature-product
+              img(src="/images/default_image.png")
+              input.form-control.feature-image(type="file" name="upload[]")
+              input(type="hidden" name="featured_image")
+          .form-group
+            label.col-sm-2.control-label Giá sản phẩm
+              strong.required  *
+            .col-sm-10.pd-left-0.pd-right-0
+              .col-sm-6
+                p Giá bán
+                input.form-control(type="text" name="price" placeholder="1200000")
+              .col-sm-6
+                p Giá so sánh
+                input.form-control(type="price" name="price_compare" placeholder="1500000")
+          .form-group
+            label.col-sm-2.control-label Tồn kho
+            .col-sm-10
+              .list-branch
+                .item.clearfix
+                  .col-xs-3 Chi nhánh
+                  .col-xs-2 Tồn kho
+                .item.clearfix
+                  .col-xs-3
+                    select.form-control
+                      option(value="1") Chi nhánh 1
+                  .col-xs-2
+                    input.form-control(type="number" name="inventory" value=1 min=1)
+                .item.clearfix
+                  .col-xs-3
+                    select.form-control
+                      option(value="1") Chi nhánh 1
+                  .col-xs-2
+                    input.form-control(type="number" name="inventory" value=1 min=1)
+                .item.clearfix
+                  .col-xs-3
+                    select.form-control
+                      option(value="1") Chi nhánh 1
+                  .col-xs-2
+                    input.form-control(type="number" name="inventory" value=1 min=1)
+                .item.clearfix
+                  .col-xs-3
+                    select.form-control
+                      option(value="1") Chi nhánh 1
+                  .col-xs-2
+                    input.form-control(type="number" name="inventory" value=1 min=1)
+                .item.clearfix
+                  .col-xs-3 Tổng tồn kho
+                  .col-xs-2 4
+          .form-group
+            label.col-sm-2.control-label
+              span Hình ảnh
+              img.hidden.no-border.loading(src="/images/loading.gif" style="margin-left: 5px;")
+              form(enctype="multipart/form-data").hidden
+                input#upload-list-image(type="file" name="upload[]" multiple="multiple")
+            .col-sm-10.list-variant
+              .col-sm-12.list-image
+                .col-xs-2.add-image
+                  label(for="upload-list-image")
+          .form-group
+            label.col-sm-2.control-label Thương hiệu
+            .col-sm-10
+              select.chosen-select-brand.form-control(name="brand" data-placeholder="Chọn thương hiệu...")
+                each item in brand
+                  option(value=item.id)=item.name
+              script.
+                var brands = $(".chosen-select-brand").chosen();
+
+          .form-group
+            label.col-sm-2.control-label Nhóm sản phẩm
+            .col-sm-10
+              select.form-control.chosen-select-collection(multiple name="collection" data-placeholder="Chọn nhóm sản phẩm...")
+                each collection in list_collection
+                  option(value=collection.id)=collection.breadcrumb
+                script.
+                  var collections = $(".chosen-select-collection").chosen();
+
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                option(value="0") Không
+                option(value="1") Có

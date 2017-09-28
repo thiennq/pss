@@ -1,0 +1,51 @@
+extends ./layout.pug
+
+block pre-include
+  title Khách hàng 
+    =customer_name
+  - var menu = 'customer';
+  - var childMenu = 'customer';
+block post-include
+  script.
+    initDataTable('table');
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Khách hàng
+      li
+        a=customer_name
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Mã đơn hàng
+              th Ngày đặt hàng
+              th Khách hàng
+              th Trạng thái
+              th Xem trên Odoo
+              th Tổng tiền
+          tbody
+            each order in orders
+              tr
+                td
+                  a(href="/admin/orders/" + order.id target="_blank").link=order.id
+                td=order.created_at
+                td=order.name
+                td
+                  if order.order_status == "new"
+                    label.label.label-primary Mới
+                  else
+                    if order.order_status == "done"
+                      label.label.label-success Hoàn thành
+                    else
+                      if order.order_status == 'cancel'
+                        label.label.label-danger Hủy
+                      else
+                        label.label.label-info Xác nhận
+                td
+                  a(href='http://erp.tga.com.vn/web#id='+order.id_odoo+'&view_type=form&model=sale.order&menu_id=173&action=233', target="_blank")=order.id_odoo
+                td.right=money(order.total)

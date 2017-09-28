@@ -1,0 +1,54 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'product'
+  - var childMenu = 'import'
+  title Import thông tin
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Bài viết
+      li
+        a Viết bài mới
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-article
+        .box-body
+          .form-group
+            label.col-sm-2.text-right Chọn file (.xls)
+              br
+              a(href="/excel/template.xls") File mẫu
+            .col-sm-10
+              form(enctype="multipart/form-data")
+                input#file(type="file" name="file")
+                br
+                button.btn.btn-admin.btn-import
+                  i.fa.fa-floppy-o
+                  i.fa.fa-circle-o-notch.fa-spin
+                  | Import
+  script.
+    $('form').on('submit', function(e) {
+      e.preventDefault();
+      var file_data = $('#file').prop('files')[0];
+      var form_data = new FormData();
+      form_data.append('file', file_data);
+      $(this).find('button').addClass('disabled');
+      $.ajax({
+        type: 'POST',
+        url: '/admin/api/product/import',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(json) {
+          console.log(json);
+          if(!json.code) toastr.success("Import thành công");
+          else toastr.error("Có lỗi xảy ra, xin vui lòng thử lại");
+          setTimeout(function() {
+            location.reload();
+          }, 1000);
+        }
+      });  
+    });

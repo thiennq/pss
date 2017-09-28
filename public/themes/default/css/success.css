@@ -1,0 +1,180 @@
+.success {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  width: 80% !important; }
+  .success .top-title {
+    border: 1px solid #c3c6c7;
+    text-align: center; }
+    .success .top-title img.i-check {
+      width: 60px;
+      margin-bottom: 20px;
+      margin-right: 10px; }
+    .success .top-title .title {
+      display: inline-block;
+      font-size: 30px;
+      font-weight: 600;
+      padding: 30px 0; }
+    .success .top-title .thank-for-order {
+      font-size: 18px;
+      text-transform: uppercase; }
+    .success .top-title .contact {
+      font-size: 16px;
+      text-align: justify;
+      margin: 15px 0; }
+    .success .top-title .hotline {
+      height: 70px; }
+      .success .top-title .hotline .hotline-title {
+        position: absolute;
+        left: 35%;
+        top: calc(50% - 11px);
+        font-weight: 700;
+        display: inline;
+        font-size: 16px;
+        text-transform: uppercase; }
+      .success .top-title .hotline span {
+        position: absolute;
+        left: calc(35% + 73px);
+        top: calc(50% - 22px);
+        font-size: 30px;
+        font-weight: 700; }
+  .success .order-info {
+    border-left: 1px solid #c3c6c7;
+    border-right: 1px solid #c3c6c7; }
+    .success .order-info .title {
+      margin: 15px 0;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 18px;
+      text-transform: uppercase; }
+    .success .order-info .product-detail {
+      margin-bottom: 20px; }
+      .success .order-info .product-detail .image {
+        padding: 0;
+        height: 100px;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important; }
+      .success .order-info .product-detail .info {
+        padding: 0; }
+        .success .order-info .product-detail .info .product-title {
+          font-size: 18px;
+          line-height: 18px;
+          font-weight: 600;
+          margin: 10px 0; }
+        .success .order-info .product-detail .info .product-quantity {
+          font-size: 15px;
+          margin-bottom: 5px;
+          color: #aaa; }
+      .success .order-info .product-detail .price {
+        margin-top: 10px;
+        padding: 0;
+        font-size: 18px;
+        text-align: right;
+        font-weight: bold; }
+    .success .order-info .total-cost .detail span {
+      float: right; }
+    .success .order-info .total-cost .detail .total-price {
+      font-weight: bold; }
+  .success .total {
+    border: 1px solid #c3c6c7;
+    border-bottom: none;
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: 600; }
+    .success .total .total-name {
+      text-align: left;
+      text-transform: uppercase; }
+    .success .total .total-amount {
+      text-align: right; }
+  .success .transfer-info {
+    border: 1px solid #c3c6c7; }
+    .success .transfer-info .title {
+      margin: 15px 0;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 18px;
+      text-transform: uppercase; }
+    .success .transfer-info .name {
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 600; }
+    .success .transfer-info .address, .success .transfer-info .phone {
+      font-size: 16px; }
+    .success .transfer-info .button {
+      text-align: center; }
+    .success .transfer-info .btn-more-order {
+      background-color: #1682d3;
+      color: #fff;
+      font-size: 20px;
+      padding: 20px 65px;
+      font-weight: bold;
+      margin: 30px 0; }
+  @media screen and (max-width: 767px) {
+    .success {
+      width: 100% !important;
+      padding: 0; }
+      .success .top-title {
+        border: none; }
+        .success .top-title img.i-check {
+          width: 30px;
+          margin-bottom: 5px;
+          margin-right: 6px; }
+        .success .top-title .title {
+          font-size: 16px;
+          padding: 20px 0; }
+        .success .top-title .thank-for-order {
+          font-size: 8px; }
+        .success .top-title .contact {
+          font-size: 7px;
+          text-align: center;
+          margin: 10px 0; }
+        .success .top-title .hotline {
+          margin-bottom: 13px;
+          height: 22px; }
+          .success .top-title .hotline .hotline-title {
+            font-size: 10px;
+            top: calc(50% - 7px); }
+          .success .top-title .hotline span {
+            font-size: 15px;
+            letter-spacing: 0.6px;
+            left: calc(35% + 45px);
+            top: 0px; }
+      .success .order-info {
+        border: none;
+        border-top: 1px solid #c3c6c7;
+        border-bottom: 1px solid #c3c6c7; }
+        .success .order-info .title {
+          font-size: 14px;
+          line-height: 14px; }
+        .success .order-info .product-detail {
+          margin-bottom: 10px; }
+          .success .order-info .product-detail .image {
+            height: 60px; }
+          .success .order-info .product-detail .info .product-title {
+            font-size: 10px;
+            line-height: 10px;
+            margin: 5px 0; }
+          .success .order-info .product-detail .info .product-quantity {
+            font-size: 8px;
+            margin-bottom: 1px; }
+          .success .order-info .product-detail .price {
+            margin-top: 0;
+            font-size: 13px; }
+      .success .total {
+        border: none;
+        height: 45px;
+        line-height: 45px;
+        font-size: 15px;
+        border-bottom: 1px solid #c3c6c7; }
+      .success .transfer-info {
+        border: none; }
+        .success .transfer-info .title {
+          font-size: 15px;
+          line-height: 15px; }
+        .success .transfer-info .address, .success .transfer-info .phone {
+          font-size: 13px; }
+        .success .transfer-info .btn-more-order {
+          padding: 15px 0px;
+          margin-bottom: 0;
+          display: block; } }

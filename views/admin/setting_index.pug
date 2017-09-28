@@ -1,0 +1,72 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'index';
+  title Setting | Trang chủ
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Trang chủ
+    ol.button-right.col-sm-6.col-xs-12
+      li
+        a.btn.btn-admin.btn-update-setting-index
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .box
+      .box-body
+        .form-horizontal
+          .col-xs-12
+            .form-group.clearfix
+              label.col-sm-2.control-label Nhóm sản phẩm nổi bật 1
+              form.col-sm-10
+                .row
+                  .col-xs-6
+                    input.form-control(name="index_collection_title_1", placeholder="Tiêu đề", value=index_collection_title_1)
+                  .col-xs-6
+                    select.form-control(name="index_collection_id_1", data-value=index_collection_id_1)
+                      option(value="" selected disabled) Chọn nhóm sản phẩm
+                      each item in collections
+                        option(value=item.id)=item.breadcrumb
+            .form-group.clearfix
+              label.col-sm-2.control-label Nhóm sản phẩm nổi bật 2
+              form.col-sm-10
+                .row
+                  .col-xs-6
+                    input.form-control(name="index_collection_title_2", placeholder="Tiêu đề", value=index_collection_title_2)
+                  .col-xs-6
+                    select.form-control(name="index_collection_id_2", data-value=index_collection_id_2)
+                      option(value="" selected disabled) Chọn nhóm sản phẩm
+                      each item in collections
+                        option(value=item.id)=item.breadcrumb
+            .form-group.clearfix
+              label.col-sm-2.control-label Nhóm sản phẩm nổi bật 3
+              form.col-sm-10
+                .row
+                  .col-xs-6
+                    input.form-control(name="index_collection_title_3", placeholder="Tiêu đề", value=index_collection_title_3)
+                  .col-xs-6
+                    select.form-control(name="index_collection_id_3", data-value=index_collection_id_3)
+                      option(value="" selected disabled) Chọn nhóm sản phẩm
+                      each item in collections
+                        option(value=item.id)=item.breadcrumb
+            .form-group.clearfix
+              label.col-sm-2.control-label Nhóm sản phẩm nổi bật 4
+              form.col-sm-10
+                .row
+                  .col-xs-6
+                    input.form-control(name="index_collection_title_4", placeholder="Tiêu đề", value=index_collection_title_4)
+                  .col-xs-6
+                    select.form-control(name="index_collection_id_4", data-value=index_collection_id_4)
+                      option(value="" selected disabled) Chọn nhóm sản phẩm
+                      each item in collections
+                        option(value=item.id)=item.breadcrumb

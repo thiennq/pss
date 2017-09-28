@@ -1,0 +1,53 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'product'
+  - var childMenu = 'brand'
+  title Thương hiệu
+
+block post-include
+  script(src=staticURI() + '/js/admin/brand.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8
+      li
+        a Thương hiệu
+      li
+        a Danh sách thương hiệu
+
+  section.content
+    .box
+      .box-body
+        table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th
+              th Tiêu đề
+              th Thương hiệu nổi bật
+              th Hiển thị
+              th Chỉnh sửa
+          tbody
+            each item in data
+              tr
+                td
+                  if item.image
+                    img(src="/uploads/" +item.image, alt="Image")
+                  else
+                    img(src=staticURI() + "/img/no-image.png", alt="Image")
+                td
+                  a(href="/admin/brands/" + item.id target="_blank")=item.name
+                td
+                  if item.highlight
+                    span Có
+                  else
+                    span Không
+                td
+                  if item.display
+                    span Có
+                  else
+                    span Không
+                td
+                  a.btn-edit(title="Chỉnh sửa" href="/admin/brands/" + item.id)
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-brand(data-id=item.id, title="Xóa")
+                    i.fa.fa-trash

@@ -1,0 +1,205 @@
+.homepage .list-product-index {
+  margin-top: 20px; }
+
+.homepage .category {
+  padding-top: 30px; }
+  .homepage .category .collection-group {
+    border-top: 2px solid lightgray;
+    position: relative;
+    margin-bottom: 50px; }
+    .homepage .category .collection-group .list-brand li {
+      display: inline-block;
+      width: 25%; }
+    .homepage .category .collection-group .list-brand a {
+      display: block;
+      margin-bottom: 15px;
+      text-align: center;
+      padding-left: 10px;
+      padding-right: 10px; }
+      .homepage .category .collection-group .list-brand a span.middle-inline-block {
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle; }
+      .homepage .category .collection-group .list-brand a img {
+        max-width: 80%; }
+    .homepage .category .collection-group .collection-title {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center; }
+      .homepage .category .collection-group .collection-title span {
+        font-size: 20px;
+        margin: 0;
+        background: #fff;
+        position: relative;
+        top: -15px;
+        padding: 0 10px; }
+      .homepage .category .collection-group .collection-title.viet-celebs span {
+        font-size: 27px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        bottom: -30px;
+        top: initial;
+        background: none; }
+    .homepage .category .collection-group .introduce {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 15px;
+      line-height: 18px;
+      font-weight: 400;
+      letter-spacing: .5px; }
+      .homepage .category .collection-group .introduce p:first-child {
+        margin: 0; }
+    .homepage .category .collection-group .celebs-list {
+      margin-top: 40px; }
+      .homepage .category .collection-group .celebs-list .index-slider-carousel {
+        margin: 0 -7px; }
+        .homepage .category .collection-group .celebs-list .index-slider-carousel .item-wrapper {
+          text-align: center;
+          padding: 0 7px; }
+          .homepage .category .collection-group .celebs-list .index-slider-carousel .item-wrapper a {
+            color: #000;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px; }
+        .homepage .category .collection-group .celebs-list .index-slider-carousel .item {
+          background-size: cover;
+          background-position: center;
+          padding-bottom: 140%;
+          position: relative; }
+    .homepage .category .collection-group.top-brand .item {
+      width: 60%;
+      margin: auto; }
+  .homepage .category .news-index {
+    padding: 15px 0; }
+    .homepage .category .news-index .row {
+      display: flex; }
+    .homepage .category .news-index .news-title {
+      text-transform: uppercase;
+      text-align: left;
+      margin: 5px 0; }
+      .homepage .category .news-index .news-title a {
+        color: #000;
+        font-size: 16px;
+        font-weight: 600;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis; }
+    .homepage .category .news-index .news {
+      margin-bottom: 15px; }
+      .homepage .category .news-index .news .left {
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        padding-bottom: 56%;
+        width: 100%; }
+      .homepage .category .news-index .news:last-child {
+        margin-bottom: 0; }
+      .homepage .category .news-index .news .news-title {
+        margin-top: 0; }
+      .homepage .category .news-index .news .description {
+        font-family: Roboto, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: left;
+        color: #000;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 85px;
+        position: relative; }
+        .homepage .category .news-index .news .description div {
+          max-height: 100%;
+          overflow: hidden; }
+      .homepage .category .news-index .news a {
+        line-height: 20px; }
+        .homepage .category .news-index .news a.cover {
+          display: block; }
+      .homepage .category .news-index .news .bottom-line a {
+        color: #fc2330;
+        font-style: italic;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: .5px; }
+    .homepage .category .news-index .number-1-news a.cover {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding-right: 30px; }
+      .homepage .category .news-index .number-1-news a.cover img {
+        max-height: 100%;
+        width: 100%; }
+
+.homepage .top-brand {
+  position: relative;
+  border-top: 1px solid #dadbdc; }
+  .homepage .top-brand .title {
+    position: absolute;
+    height: 25px;
+    width: 100px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    top: -13px;
+    left: calc(50% - 50px);
+    background-color: white; }
+  .homepage .top-brand .brands {
+    padding: 0 15px; }
+    .homepage .top-brand .brands ul {
+      width: 25%;
+      display: inline-block;
+      float: left; }
+      .homepage .top-brand .brands ul li {
+        width: 100%;
+        margin-bottom: 5px; }
+        .homepage .top-brand .brands ul li a {
+          font-size: 9px;
+          color: #000; }
+
+@media (max-width: 767px) {
+  .homepage > .container {
+    padding: 0; }
+  .homepage .list-product-index {
+    margin-top: 0;
+    padding: 0 15px; }
+  .homepage .category {
+    margin-top: 20px; }
+    .homepage .category .collection-group .list-brand a {
+      padding-left: 15px;
+      padding-right: 15px; }
+      .homepage .category .collection-group .list-brand a img {
+        max-width: 100%; }
+    .homepage .category .collection-group .collection-title {
+      letter-spacing: 1px; }
+    .homepage .category .collection-group.top-brand .item {
+      padding: 0 5px; }
+    .homepage .category .latest-news {
+      margin-bottom: 0; }
+    .homepage .category .news-index {
+      padding: 15px; }
+      .homepage .category .news-index .row {
+        margin-left: 0; }
+      .homepage .category .news-index .news-title a {
+        font-size: 12px;
+        -webkit-line-clamp: 2; }
+      .homepage .category .news-index .news .left {
+        padding-bottom: 70%; }
+      .homepage .category .news-index .news .description {
+        line-height: 15px;
+        font-weight: 400; }
+      .homepage .category .news-index .news a {
+        line-height: 14px;
+        letter-spacing: .5px; }
+        .homepage .category .news-index .news a.cover {
+          padding-left: 15px; }
+      .homepage .category .news-index .news .bottom-line {
+        position: absolute;
+        bottom: 10px; }
+        .homepage .category .news-index .news .bottom-line a {
+          color: #999;
+          font-size: 11px;
+          font-weight: 400; } }

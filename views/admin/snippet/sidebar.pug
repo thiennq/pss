@@ -1,0 +1,204 @@
+- var role = role();
+aside.main-sidebar
+  section.sidebar
+    ul.sidebar-menu
+      li.header
+        a.logo-admin(href="/")
+          img(src=staticURI() + '/img/eye-logo.png')
+      if role.product
+        - var itemClass = (menu == 'product' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href="#")
+            i.fa.fa-product-hunt
+            span Sản phẩm
+            i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            - var liClass = (childMenu == 'collection' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/collection')
+                i.fa.fa-circle
+                | Nhóm sản phẩm
+            - var liClass = (childMenu == 'product' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/product')
+                i.fa.fa-circle
+                | Danh sách sản phẩm
+            - var liClass = (childMenu == 'size' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/size')
+                i.fa.fa-circle
+                | Kích thước
+            - var liClass = (childMenu == 'bag' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/bag')
+                i.fa.fa-circle
+                | Ngăn đựng laptop
+            - var liClass = (childMenu == 'special' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/special')
+                i.fa.fa-circle
+                | Tính năng đặc biệt
+            - var liClass = (childMenu == 'brand' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/brand')
+                i.fa.fa-circle
+                | Thương hiệu
+            - var liClass = (childMenu == 'color' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/color')
+                i.fa.fa-circle
+                | Màu sắc
+            - var liClass = (childMenu == 'material' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/material')
+                i.fa.fa-circle
+                | Chất liệu
+            - var liClass = (childMenu == 'specification' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/specification')
+                i.fa.fa-circle
+                | Thông số kỹ thuật
+            - var liClass = (childMenu == 'price' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/price')
+                i.fa.fa-circle
+                | Bộ lọc giá
+      if role.order
+        - var itemClass = (menu == 'order' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href='/admin/order')
+            i.fa.fa-reorder
+            span Đơn hàng
+      if role.customer
+        - var itemClass = (menu == 'customer' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href="#")
+            i.fa.fa-users
+            span Khách hàng
+            i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            - var liClass = (childMenu == 'customer' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/customer', class=liClass)
+                i.fa.fa-circle
+                | Tất cả khách hàng
+            - var liClass = (childMenu == 'subscribe' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/subscribe')
+                i.fa.fa-circle
+                | Subscribe
+      if role.article
+        - var itemClass = (menu == 'article' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href='#')
+            i.fa.fa-users
+            span Bài viết
+            i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            - var liClass = (childMenu == 'news' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/article/news', class=liClass)
+                i.fa.fa-circle
+                | Tin tức
+            - var liClass = (childMenu == 'info' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/article/info')
+                i.fa.fa-circle
+                | Thông tin - Chính sách
+            - var liClass = (childMenu == 'landing-page' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/article/landing-page')
+                i.fa.fa-circle
+                | Landing page
+            - var liClass = (childMenu == 'new' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/article/new')
+                i.fa.fa-circle
+                | Viết bài mới
+      if role.setting
+        - var itemClass = (menu == 'setting' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href='#')
+            i.fa.fa-cog
+            span Thiết lập chung
+            i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            - var liClass = (childMenu == 'index' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/settings/index')
+                i.fa.fa-circle
+                | Trang chủ
+            - var liClass = (childMenu == 'desktop' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/settings/desktop")
+                i.fa.fa-circle
+                | Desktop
+            - var liClass = (childMenu == 'meta' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/settings/meta")
+                i.fa.fa-circle
+                | Title, Meta Description
+            - var liClass = (childMenu == 'slider' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/slider')
+                i.fa.fa-circle
+                | Slider
+            - var liClass = (childMenu == 'celebrity' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/celebrity')
+                i.fa.fa-circle
+                | Người nổi tiếng
+            - var liClass = (childMenu == 'video' ? 'active' : '');
+            li(class=liClass)
+              a(href='/admin/video')
+                i.fa.fa-circle
+                | Video
+            - var liClass = (childMenu == 'subMenu' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/menu")
+                i.fa.fa-circle
+                | Menu
+            - var liClass = (childMenu == 'branch' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/branch")
+                i.fa.fa-circle
+                | Chi nhánh
+            //- var liClass = (childMenu == 'shipping' ? 'active' : '');
+            //li(class=liClass)
+              a(href="/admin/shipping")
+                i.fa.fa-circle
+                | Phí vận chuyển
+            - var liClass = (childMenu == 'redirect' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/redirect")
+                i.fa.fa-circle
+                | Redirect 301
+            - var liClass = (childMenu == 'custom-css' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/custom-css")
+                i.fa.fa-circle
+                | Custom CSS
+            - var liClass = (childMenu == 'livechat' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/livechat")
+                i.fa.fa-circle
+                | LiveChat
+            - var liClass = (childMenu == 'images' ? 'active' : '');
+            li(class=liClass)
+              a(href="/admin/images")
+                i.fa.fa-circle
+                | Hình ảnh
+      if role.staff
+        - var itemClass = (menu == 'staff' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href="/admin/users")
+            i.fa.fa-product-hunt
+            span Nhân viên
+    .foot
+      .info
+        p
+          - var fullname = fullname();
+          b=fullname
+        p
+          a(data-toggle="modal" data-target="#modal-change-password" href="#" style="display:inline-block;") Đổi mật khẩu -
+          a(href='/admin/logout') &nbsp;Đăng xuất

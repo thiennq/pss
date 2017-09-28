@@ -1,0 +1,67 @@
+if total_pages
+  .filter.clearfix
+    if count_brand_filter
+      .dropdown.item.item-brand
+        span.dropdown-toggle(data-toggle='dropdown') Thương hiệu
+          span.caret
+        span.triangle
+        //- - var brands = Brand();
+        //- .dropdown-menu.col-xs-12.list-all-brand-filter
+        //-   each item, index in brands
+        //-     ul.col-xs-2
+        //-       each i in item
+        //-         li(data-id=i.name)
+        //-           img(src="/images/checkbox.jpg")
+        //-           label.checkbox
+        //-           span=i.name
+        //-       if index == 0
+        //-         li.last-item
+        //-           a.btn-filter.hidden(href="#")
+        ul.dropdown-menu.col-xs-12
+          each item in list_brand
+            li(data-id=item)
+              img(src="/images/checkbox.jpg")
+              label.checkbox
+              span=item
+          li.last-item
+            a.btn-filter.hidden(href="#")
+    if count_color_filter
+      .dropdown.item.item-color
+        span.dropdown-toggle(data-toggle='dropdown') Màu sắc
+          span.caret
+        span.triangle
+        ul.dropdown-menu
+          each item in list_color
+            li(data-id=item.name style=item.style)
+              i.fa.fa-check-circle
+          a.btn-filter.hidden(href="#")
+    .dropdown.item.item-price
+      span.dropdown-toggle(data-toggle='dropdown') Mức giá
+        span.caret
+      span.triangle
+      ul.dropdown-menu
+        li.all.active(data-value='all')
+          i.fa.fa-check
+          span Tất cả mức giá
+        - var price = getPriceFilter();
+        each item in price
+          li(data-value=item.value)
+            i.fa.fa-check
+            span=item.title
+        li.last
+          a.btn-filter.hidden(href="#")
+    .dropdown.item.item-sort
+      span.dropdown-toggle(data-toggle='dropdown') Sắp xếp
+        span.caret
+      span.triangle
+      ul.dropdown-menu
+        li(data-value="price:desc")
+          i.fa.fa-check
+          span Giá cao đến thấp
+        li(data-value="price:asc")
+          i.fa.fa-check
+          span Giá thấp đến cao
+        li(data-value="view:desc")
+          i.fa.fa-check
+          span Xem nhiều nhất
+h1(style="margin: 20px 0; font-size: 30px;")=title

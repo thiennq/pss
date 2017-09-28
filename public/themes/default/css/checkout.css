@@ -1,0 +1,357 @@
+.orange {
+  color: #fc6721; }
+
+.checkout {
+  width: 80% !important;
+  margin-top: 20px;
+  margin-bottom: 80px; }
+  .checkout .checkout-title .more-order a {
+    color: #000;
+    text-decoration: underline !important;
+    font-size: 18px; }
+  .checkout .checkout-title .cart {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: right;
+    letter-spacing: 2px; }
+  @media screen and (max-width: 767px) {
+    .checkout .checkout-title .more-order {
+      line-height: 24px; }
+      .checkout .checkout-title .more-order a {
+        font-size: 14px; }
+    .checkout .checkout-title .cart {
+      font-size: 17px;
+      letter-spacing: 1px; } }
+  .checkout .product-wrapper {
+    border: 1px solid #c3c6c7; }
+    .checkout .product-wrapper .product-detail {
+      margin: 20px 0; }
+      .checkout .product-wrapper .product-detail .image {
+        padding-bottom: 20%;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important; }
+        .checkout .product-wrapper .product-detail .image span {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          padding: 2px 6px;
+          border-radius: 12px;
+          border: 1px solid black;
+          cursor: pointer; }
+          .checkout .product-wrapper .product-detail .image span img {
+            width: 10px; }
+      .checkout .product-wrapper .product-detail .info .product-info {
+        padding: 0;
+        min-height: 140px; }
+        .checkout .product-wrapper .product-detail .info .product-info .product-title {
+          color: #000;
+          font-size: 18px;
+          line-height: 18px;
+          font-weight: 600;
+          margin: 10px 0; }
+        .checkout .product-wrapper .product-detail .info .product-info .product-discount {
+          font-size: 16px;
+          margin-top: 10px; }
+          .checkout .product-wrapper .product-detail .info .product-info .product-discount span {
+            display: block; }
+      .checkout .product-wrapper .product-detail .info .product-price {
+        padding: 0; }
+        .checkout .product-wrapper .product-detail .info .product-price .quantity-select {
+          color: #000;
+          margin-top: 10px;
+          padding: 0;
+          line-height: 26px;
+          user-select: none; }
+          .checkout .product-wrapper .product-detail .info .product-price .quantity-select input {
+            text-align: center;
+            width: 55px;
+            height: 25px;
+            border: 1px solid #d4d4d4;
+            outline: 0;
+            border-left: 0;
+            border-right: 0;
+            font-size: 18px;
+            font-weight: bold; }
+          .checkout .product-wrapper .product-detail .info .product-price .quantity-select .quantity-btn {
+            text-align: center;
+            width: 25px;
+            height: 25px;
+            display: inline-block;
+            border: 1px solid #d4d4d4;
+            cursor: pointer; }
+            .checkout .product-wrapper .product-detail .info .product-price .quantity-select .quantity-btn i {
+              position: relative;
+              top: 0px;
+              left: 1px; }
+        .checkout .product-wrapper .product-detail .info .product-price .price {
+          padding: 0;
+          margin-top: 10px;
+          text-align: right; }
+          .checkout .product-wrapper .product-detail .info .product-price .price .main-price {
+            font-size: 18px;
+            line-height: 25px;
+            font-weight: 600; }
+      .checkout .product-wrapper .product-detail:not(:last-child) {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e6e6e6; }
+    .checkout .product-wrapper .sale-off .bold {
+      font-weight: 500; }
+    .checkout .product-wrapper .sale-off .sale-off-title {
+      margin: 10px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e6e6e6; }
+      .checkout .product-wrapper .sale-off .sale-off-title .title {
+        display: inline;
+        margin-left: 30px;
+        font-size: 16px; }
+      .checkout .product-wrapper .sale-off .sale-off-title img {
+        display: none;
+        height: 23px;
+        width: 23px; }
+      .checkout .product-wrapper .sale-off .sale-off-title label {
+        display: inline-block;
+        position: absolute;
+        height: 23px;
+        width: 23px;
+        border: 1px solid #aaa;
+        margin: 0;
+        top: 8px;
+        margin-right: 5px;
+        border-radius: 3px; }
+      .checkout .product-wrapper .sale-off .sale-off-title.active img {
+        display: inline-block;
+        position: absolute;
+        top: 8px; }
+      .checkout .product-wrapper .sale-off .sale-off-title.active label {
+        border: 0; }
+    .checkout .product-wrapper .sale-off .sale-off-info {
+      min-height: 100px; }
+      .checkout .product-wrapper .sale-off .sale-off-info .image {
+        height: 100px;
+        padding: 0;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important; }
+      .checkout .product-wrapper .sale-off .sale-off-info .title {
+        padding: 0;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: left; }
+      .checkout .product-wrapper .sale-off .sale-off-info .price {
+        text-align: right; }
+        .checkout .product-wrapper .sale-off .sale-off-info .price .main-price {
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 16px; }
+        .checkout .product-wrapper .sale-off .sale-off-info .price .compare-price {
+          line-height: 14px;
+          font-size: 14px;
+          text-decoration: line-through; }
+  .checkout .total {
+    border-left: 1px solid #c3c6c7;
+    border-right: 1px solid #c3c6c7;
+    height: 60px;
+    line-height: 60px;
+    font-size: 22px;
+    font-weight: 600; }
+    .checkout .total .total-name {
+      text-align: left;
+      text-transform: uppercase; }
+    .checkout .total .total-amount {
+      text-align: right; }
+  .checkout .customer-wrapper {
+    border: 1px solid #c3c6c7; }
+    .checkout .customer-wrapper .customer-info {
+      padding: 0 15px; }
+      .checkout .customer-wrapper .customer-info input, .checkout .customer-wrapper .customer-info select {
+        height: 50px;
+        margin: 10px 0;
+        outline: 0 !important;
+        box-shadow: none !important; }
+      .checkout .customer-wrapper .customer-info .name {
+        margin-top: 10px;
+        padding-right: 10px; }
+      .checkout .customer-wrapper .customer-info .phone {
+        margin-top: 10px;
+        padding-left: 10px; }
+      .checkout .customer-wrapper .customer-info .region {
+        padding-right: 10px; }
+      .checkout .customer-wrapper .customer-info .subregion {
+        padding-left: 10px; }
+      .checkout .customer-wrapper .customer-info span {
+        display: block;
+        text-align: center; }
+      .checkout .customer-wrapper .customer-info .purchase {
+        margin-top: 10px;
+        margin-bottom: 20px; }
+        .checkout .customer-wrapper .customer-info .purchase a {
+          color: #fff;
+          display: block;
+          padding-top: 15px;
+          padding-bottom: 15px; }
+        .checkout .customer-wrapper .customer-info .purchase .btn-order {
+          background-color: #fc6721; }
+        .checkout .customer-wrapper .customer-info .purchase .main {
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 18px;
+          line-height: 18px; }
+        .checkout .customer-wrapper .customer-info .purchase .sub {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 14px;
+          font-style: italic;
+          padding-top: 4px; }
+      .checkout .customer-wrapper .customer-info .more-order {
+        margin-top: 10px;
+        margin-bottom: 20px; }
+        .checkout .customer-wrapper .customer-info .more-order a {
+          color: #fff;
+          display: block;
+          padding-top: 24px;
+          padding-bottom: 24px; }
+        .checkout .customer-wrapper .customer-info .more-order .btn-more-order {
+          background-color: #1682d3; }
+        .checkout .customer-wrapper .customer-info .more-order span {
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 18px;
+          line-height: 18px; }
+  @media screen and (max-width: 991px) {
+    .checkout {
+      width: 90% !important; }
+      .checkout .product-wrapper .product-detail .info .product-title {
+        font-size: 17px; }
+      .checkout .product-wrapper .product-detail .info .product-discount {
+        font-size: 13px; }
+      .checkout .product-wrapper .product-detail .info .product-price .quantity-select input {
+        width: 39px; }
+      .checkout .product-wrapper .sale-off .sale-off-title {
+        padding-bottom: 12px; }
+        .checkout .product-wrapper .sale-off .sale-off-title .title {
+          font-size: 15px; }
+        .checkout .product-wrapper .sale-off .sale-off-title .image {
+          height: 22px;
+          width: 22px; }
+        .checkout .product-wrapper .sale-off .sale-off-title label {
+          height: 22px;
+          width: 22px; }
+      .checkout .product-wrapper .sale-off .sale-off-info .title {
+        font-size: 17px; } }
+  @media screen and (max-width: 767px) {
+    .checkout {
+      width: 100% !important;
+      margin-bottom: 0;
+      padding: 0;
+      border: none; }
+      .checkout .product-wrapper {
+        border: none;
+        padding: 0; }
+        .checkout .product-wrapper .product-detail {
+          padding-left: 10px;
+          padding-right: 10px; }
+          .checkout .product-wrapper .product-detail .image span {
+            padding: 3px 5px;
+            border-radius: 13px;
+            font-size: 6.5px; }
+            .checkout .product-wrapper .product-detail .image span img {
+              width: 5px; }
+          .checkout .product-wrapper .product-detail .info .product-info {
+            min-height: 65px; }
+            .checkout .product-wrapper .product-detail .info .product-info .product-title {
+              font-size: 11px;
+              line-height: 12px;
+              margin: 5px 0; }
+            .checkout .product-wrapper .product-detail .info .product-info .product-discount {
+              font-size: 10px;
+              margin-top: 5px; }
+          .checkout .product-wrapper .product-detail .info .product-price .quantity-select {
+            text-align: right;
+            line-height: 12px;
+            margin-top: 8px; }
+            .checkout .product-wrapper .product-detail .info .product-price .quantity-select .quantity-btn {
+              width: 17px;
+              height: 17px;
+              line-height: 17px;
+              font-size: 9px; }
+              .checkout .product-wrapper .product-detail .info .product-price .quantity-select .quantity-btn i {
+                top: -1px;
+                left: 0px; }
+            .checkout .product-wrapper .product-detail .info .product-price .quantity-select input {
+              width: 30px;
+              height: 17px;
+              font-size: 14px; }
+          .checkout .product-wrapper .product-detail .info .product-price .price {
+            margin-top: 5px; }
+            .checkout .product-wrapper .product-detail .info .product-price .price .main-price {
+              font-size: 15px;
+              line-height: 15px; }
+          .checkout .product-wrapper .product-detail .info .sale-off {
+            padding: 0; }
+            .checkout .product-wrapper .product-detail .info .sale-off .sale-off-title {
+              margin: 6px 0;
+              padding-bottom: 5px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-title .title {
+                font-size: 8px;
+                margin-left: 20px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-title label {
+                height: 15px;
+                width: 15px;
+                top: 8px;
+                margin-right: 0; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-title img {
+                height: 15px;
+                width: 15px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-title.active img {
+                top: 8px; }
+            .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info {
+              min-height: 40px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info .image {
+                height: 40px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info .title {
+                font-size: 10px; }
+              .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info .price {
+                padding: 0; }
+                .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info .price .main-price {
+                  font-size: 12px; }
+                .checkout .product-wrapper .product-detail .info .sale-off .sale-off-info .price .compare-price {
+                  line-height: 10px;
+                  font-size: 10px; }
+      .checkout .total {
+        border: none;
+        padding: 0;
+        border-top: 1px solid #c3c6c7;
+        border-bottom: 1px solid #c3c6c7;
+        font-size: 16px;
+        height: 45px;
+        line-height: 45px; }
+      .checkout .customer-wrapper {
+        border: none;
+        padding: 0; }
+        .checkout .customer-wrapper .customer-info input {
+          height: 35px;
+          margin: 5px 0; }
+        .checkout .customer-wrapper .customer-info select {
+          height: 35px; }
+        .checkout .customer-wrapper .customer-info .name {
+          padding-right: 5px; }
+        .checkout .customer-wrapper .customer-info .phone {
+          padding-left: 5px; }
+        .checkout .customer-wrapper .customer-info .region {
+          padding-right: 5px; }
+        .checkout .customer-wrapper .customer-info .subregion {
+          padding-left: 5px;
+          padding-right: 15px; }
+        .checkout .customer-wrapper .customer-info .subsubregion {
+          padding-left: 5px; }
+        .checkout .customer-wrapper .customer-info .purchase {
+          margin-bottom: 5px; }
+          .checkout .customer-wrapper .customer-info .purchase a {
+            padding-top: 10px;
+            padding-bottom: 10px; }
+        .checkout .customer-wrapper .customer-info .more-order {
+          margin-bottom: 15px; }
+          .checkout .customer-wrapper .customer-info .more-order a {
+            padding-top: 17px;
+            padding-bottom: 17px; } }

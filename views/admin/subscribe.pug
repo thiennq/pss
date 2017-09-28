@@ -1,0 +1,28 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'customer';
+  - var childMenu = 'subscribe';
+  title Subscribe
+block post-include
+  script.
+    initDataTable('table');
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Danh sách subscribe
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Email
+              th Ngày tạo
+          tbody
+            each item in data
+              tr
+                td=item.email
+                td=item.created_at

@@ -1,0 +1,91 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'video'
+  title Danh sách video
+
+block post-include
+  script(src=staticURI() + '/js/admin/video.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Video
+        
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#addVideo-modal") Thêm mới
+
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th #
+              th Tiêu đề
+              th Link
+              th Chỉnh sửa
+          tbody
+            each video in videos
+              tr
+                td.col-sm-1=video.id
+                td.col-sm-3.title(data-value=video.title)
+                  span= video.title
+                td.col-sm-3.embed-link(data-value=video.embed_link)=video.embed_link
+                td.col-sm-3
+                  a.btn-edit.btn-edit-video(title="Chỉnh sửa" data-id=video.id)
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-video(data-id=video.id, title="Xóa")
+                    i.fa.fa-trash
+
+  #addVideo-modal.modal.fade(role='dialog')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Thêm video mới
+        .modal-body
+          .form-group.col-sm-12
+            label.col-sm-2.control-label.pd-0 Tiêu đề
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title", type="text")
+              
+          .form-group.col-sm-12
+            label.col-sm-2.control-label.pd-0 Link
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="embed_link", type="text", row=5, value="")
+          
+        .modal-footer
+          .col-sm-12
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-primary.btn-add-video(type='button') Thêm Video
+            
+  #updateVideo-modal.modal.fade(role='dialog')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Chỉnh sửa video mới
+        .modal-body
+          .form-group.col-sm-12
+            label.col-sm-2.control-label.pd-0 Tiêu đề
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title", type="text")
+              
+          .form-group.col-sm-12
+            label.col-sm-2.control-label.pd-0 Link
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="embed_link", type="text")
+          
+        .modal-footer
+          .col-sm-12
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-primary.btn-update-video(type='button') Cập nhật

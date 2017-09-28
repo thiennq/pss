@@ -1,0 +1,79 @@
+.sidebar.clearfix(data-id=collection.id)
+  - var menu_sidebar = menuSidebarCollection();
+  each item in menu_sidebar
+    .item
+      a.title-sidebar(href=item.link)
+        .i-add(style="background:url("+themeURI()+"/img/i-add.png)")
+        if item.count_child
+          .i-subtract(style="background:url("+themeURI()+"/img/i-subtract.png)")
+        =item.title
+      if item.count_child
+        .item-child
+          each child in item.childs
+            a(href=child.link)=child.title
+              |  [
+              =child.count_product
+              | ]
+  .filter-sidebar.clearfix
+    if count(list_size)
+      .item.clearfix(data-type="size")
+        a.title-filter Kích thước
+        ul.col-xs-12
+          each item in list_size
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    if count(list_brand)
+      .item.item-brand.clearfix(data-type="brand")
+        a.title-filter Thương hiệu
+        //- input.filter-brand(placeholder="Thương hiệu cần tìm ...")
+        ul.col-xs-12
+          each item in list_brand
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    if count(list_bag)
+      .item.clearfix(data-type="bag")
+        a.title-filter Ngăn đựng laptop
+        ul.col-xs-12
+          each item in list_bag
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    if count(list_material)
+      .item.clearfix(data-type="material")
+        a.title-filter Chất liệu
+        ul.col-xs-12
+          each item in list_material
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    if count(list_special)
+      .item.clearfix(data-type="special")
+        a.title-filter Tính năng đặc biệt
+        ul.col-xs-12
+          each item in list_special
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    .item.item-price.clearfix(data-type="price")
+      a.title-filter Giá tiền
+      ul.col-xs-12
+        - var price = getPriceFilter();
+        each item in price
+          li(data-value=item.value)
+            img(src=themeURI() + "/img/checkbox.jpg")
+            label.checkbox
+            span=item.title
+    if count(list_color)
+      .item.item-color.clearfix(data-type="color")
+        a.title-filter Màu sắc
+        ul.col-xs-12
+          each item in list_color
+            li(data-value=item.name style=item.style)
+              i.fa.fa-check-circle

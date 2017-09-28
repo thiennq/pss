@@ -1,0 +1,39 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'shipping';
+  title Setting | Phí vận chuyển
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Phí vận chuyển
+    ol.button-right.col-sm-6.col-xs-12
+      li
+        a.btn.btn-admin.btn-update-setting-shipping
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .box
+      .box-body
+        .form-horizontal
+          .form-group.clearfix
+            label.col-sm-2.control-label Giao hàng miễn phí
+            .col-sm-10
+              input.form-control(name="free_shipping" value=free_shipping placeholder="Giá trị đơn hàng tối thiểu")
+          .form-group.clearfix
+            label.col-sm-2.control-label Nội thành
+            .col-sm-10
+              input.form-control(name="price_urban" value=price_urban placeholder="20000")
+          .form-group.clearfix
+            label.col-sm-2.control-label Ngoại thành
+            .col-sm-10
+              input.form-control(name="price_suburban" value=price_suburban placeholder="40000")

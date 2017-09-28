@@ -1,0 +1,90 @@
+.header-mobile.hidden-sm.hidden-md
+  nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    .container
+      .navbar-header
+        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar').button-menu-mobile
+          span.sr-only Menu
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand Admin BLHH
+      #navbar.navbar-collapse.collapse(aria-expanded='false', style='height: 1px;')
+        ul.nav.navbar-nav
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Sản phẩm
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/collection') Nhóm sản phẩm
+              li
+                a(href='/admin/product') Danh sách sản phẩm
+              li
+                a(href='/admin/brand') Thương hiệu
+              li
+                a(href='/admin/color') Màu sắc
+              li
+                a(href='/admin/material') Chất liệu
+              li
+                a(href='/admin/specification') Thông số kỹ thuật
+              li
+                a(href='/admin/price') Bộ lọc giá
+            
+          li
+            a(href='/admin/order') Đơn hàng
+            
+          li
+            a(href='/admin/customer') Khách hàng
+            
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Bài viết
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/article/news') Tin tức
+              li
+                a(href='/admin/article/info') Thông tin - Chính sách
+              li
+                a(href='/admin/article/landing-page') landing page
+              li
+                a(href='/admin/article/new') Viết bài mới
+            
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Thiết lập chung
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/settings/index') Trang chủ
+              li
+                a(href='/admin/settings/desktop') Desktop
+              li
+                a(href='/admin/settings/mobile') Mobile
+              li
+                a(href='/admin/settings/meta') Title, meta description
+              li
+                a(href='/admin/slider') Slider
+              li
+                a(href='/admin/video') Video
+              li
+                a(href='/admin/menu') Menu 
+              li
+                a(href='/admin/branch') Chi nhánh
+              li
+                a(href='/admin/shipping') Phí vận chuyển
+              li
+                a(href='/admin/redirect') Redirect 301
+              li
+                a(href='/admin/custom-css') Custom css
+              li
+                a(href='/admin/livechat') Live chat
+              li
+                a(href='/admin/images') Hình ảnh
+          
+          li
+            a(href='/admin/user') Nhân viên
+          li
+            a(data-toggle="modal" data-target="#modal-change-password" href="#" ) Đổi mật khẩu
+          li
+            a(href='/admin/logout') Đăng xuất

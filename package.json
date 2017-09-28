@@ -1,0 +1,24 @@
+{
+  "name": "leminhtruyen",
+  "version": "1.0.0",
+  "description": "EYE Solution's CMS",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.0.3",
+    "gulp-install": "^1.1.0",
+    "gulp-minify": "0.0.15",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "EYE Solution",
+  "license": "ISC",
+  "dependencies": {
+    "gulp-delete-file": "^1.0.2",
+    "gulp-inject-string": "^1.1.0",
+    "gulp-insert": "^0.5.0"
+  }
+}

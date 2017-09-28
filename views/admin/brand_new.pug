@@ -1,0 +1,63 @@
+extends ./layout.pug
+
+block pre-include
+  title Tạo thương hiệu
+  - var menu = 'brand'
+  - var childMenu = 'brand_new'  
+  script(src='/include/chosen.jquery.min.js')
+block post-include
+  script(src='//cdn.tinymce.com/4/tinymce.min.js')
+  script(src='/js/admin/brand.js')
+
+block content
+	section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thương hiệu
+      li
+      	a Tạo mới
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin.btn-create-brand
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .box.box-info
+      .form-horizontal.form-collection
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tên thương hiệu
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="name")
+          .form-group
+            label.col-sm-2.control-label Hình đại diện
+            form.col-sm-10.collection-image
+              img(src="/images/default_image.png")
+              input.upload.form-control(type="file" name="upload[]" data-type="image")
+              input(type="hidden" name="image")
+          .form-group
+            label.col-sm-2.control-label Mô tả
+            .col-sm-10
+              <textarea class="form-control" id="brand-description"></textarea>
+          .form-group
+            label.col-sm-2.control-label Meta title
+            .col-sm-10
+              <textarea class="form-control" name="meta_title"></textarea>
+          .form-group
+            label.col-sm-2.control-label Meta description
+            .col-sm-10
+              <textarea class="form-control" name="meta_description"></textarea>
+          .form-group
+            label.col-sm-2.control-label Thương hiệu nổi bật
+            .col-sm-10
+              select.form-control(name="highlight")
+                option(value="0") Không
+                option(value="1") Có
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                option(value="0") Không
+                option(value="1") Có

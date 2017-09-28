@@ -1,0 +1,57 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'product';
+  - var childMenu = 'size';
+  title Kích thước
+
+block post-include
+  script(src=staticURI() + '/js/admin/size.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8
+      li
+        a Sản phẩm
+      li
+        a Size
+  section.content.clearfix
+    .col-sm-12.pd-right-0.pd-left-0
+      .box
+        .box-body
+          .form-group.clearfix
+            .col-sm-3.col-xs-6
+              input.form-control(name="name" placeholder="Kích thước")
+            .col-sm-2.col-xs-6
+              .btn.btn-primary.btn-add Thêm kích thước
+          - var count = countArr(data);
+          if count
+            .col-sm-12
+              table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+                thead
+                  tr
+                    th Kích thước
+                    th Chỉnh sửa
+                tbody
+                  each item in data
+                    tr
+                      td.name=item.name
+                      td
+                        a.btn-edit(data-id=item.id title="Chỉnh sửa")
+                          i.fa.fa-pencil-square-o
+                        a.btn-remove(data-id=item.id title="Xóa")
+                          i.fa.fa-trash
+        .modal-edit.modal.fade
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+                h4.modal-title Chỉnh sửa
+              .modal-body.clearfix
+                .form-group.clearfix
+                  .col-sm-6
+                    input.form-control(name="name" placeholder="Kích thước")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+                button.btn.btn-primary.btn-update(type='button') Cập nhật

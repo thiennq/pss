@@ -1,0 +1,77 @@
+script#search-product(type="text/x-tmpl").
+  <li>
+   <a href="/san-pham/{%=o.handle%}">
+     <img src="{%=o.featured_image%}">
+     <span>{%=o.title%}</span>
+     <span class="price">{%=o.price%}</span>
+      <span class="price-compare">{%=o.price_compare%}</span>
+   </a>
+  </li>
+
+header(data-uri=themeURI())
+  .header-menu
+    .container
+      .header-menu-top.clearfix
+        .col-sm-4.col-xs-2.pd-0.mobile-logo
+          a(href="/").logo
+            img(src=themeURI() +"/img/logo.png" alt="Mia")
+        .col-sm-8.col-xs-8.mobile-search-box
+          .row
+            form.search.col-sm-7(action=fullUrl('tim-kiem'))
+              input.form-control(type="text" placeholder="Nhập sản phẩm cần tìm" name="q" autocomplete="off")
+              img(src="/themes/default/img/search-icon.png").hidden-xs.search-icon
+              img(src="/themes/default/img/search-icon-mobile.png").visible-xs.search-icon
+              ul.search-result
+            .contact.clearfix.col-sm-5.hidden-xs
+              p GỌI MUA HÀNG 
+                span=hotline1()
+              p GÓP Ý, KHIẾU NẠI 
+                span=hotline2() 
+        .col-xs-2.visible-xs.collapsed-bars
+          img(src="/themes/default/img/collapsed-bars.png")(type='button', data-toggle='modal', data-target='#menuModal')
+      ul.main-menu.clearfix.hidden-xs
+        - var menus = Menu();
+        each menu in menus
+          li
+            a(href=fullUrl(menu.link))=menu.title
+            if menu.check_submenu
+              | !{menu.submenu}
+  .header-bottom.hidden-xs
+    .container
+      span
+        img(src=themeURI() +"/img/u1.png", alt="doi-tra")
+      span
+        img(src=themeURI() +"/img/u2.png", alt="van-chuyen")
+      span
+        img(src=themeURI() +"/img/u3.png", alt="thanh-toan")
+      span
+        img(src=themeURI() +"/img/u4.png", alt="san-pham")
+#menuModal.modal.fade(role='dialog' aria-labelledby='menuModalLabel')
+  .modal-dialog(role="document")
+    .modal-content
+      a.btn-close(data-dismiss="modal")
+        img(src=themeURI() +"/img/i-close.png" alt="close-btn")
+      a.menu.title.saleoff.clearfix(href="/giam-gia-50") SALE UP TO 50%
+      - var menu_sidebar = menuSidebarCollection();
+      each item in menu_sidebar
+        .menu.title.dropdown.clearfix
+          a(href=item.link)=item.title
+          .drop(data-toggle='dropdown')
+            img.add-btn(src=themeURI() +"/img/i-plus.png" alt="close-btn")
+            if item.count_child
+              img.minus-btn(src=themeURI() +"/img/i-min.png" alt="close-btn")
+          if item.count_child
+            ul.menu-container.dropdown-menu#vali
+              each child in item.childs
+                li 
+                  a(href=child.link)=child.title
+                    |  [
+                    =child.count_product
+                    | ]
+      .row.hotline
+        .col-xs-6.pd-right-0
+          | Gọi mua hàng &nbsp;
+          span=hotline1()
+        .col-xs-6.pd-left-0
+          | Góp ý, khiếu nại &nbsp;
+          span=hotline2()

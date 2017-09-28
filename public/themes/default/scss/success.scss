@@ -1,0 +1,236 @@
+@import "variables.scss";
+
+.success{
+  margin-top: 20px;
+  margin-bottom: 40px;
+  width: 80% !important;
+  .top-title {
+    border: 1px solid #c3c6c7;
+    text-align: center;
+    img.i-check {
+      width: 60px;
+      margin-bottom: 20px;
+      margin-right: 10px;
+    }
+    .title {
+      display: inline-block;
+      font-size: 30px;
+      font-weight: 600;
+      padding: 30px 0;
+    }
+    .thank-for-order {
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+    .contact {
+      font-size: 16px;
+      text-align: justify;
+      margin: 15px 0;
+    }
+    .hotline {
+      height: 70px;
+      .hotline-title {
+        position: absolute;
+        left: 35%;
+        top: calc(50% - 11px);
+        font-weight: 700;
+        display: inline;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+      span {
+        position: absolute;
+        left: calc(35% + 73px);
+        top: calc(50% - 22px);
+        font-size: 30px;
+        font-weight: 700;
+      }
+    }
+  }
+  .order-info {
+    border-left: 1px solid #c3c6c7;
+    border-right: 1px solid #c3c6c7;
+    .title {
+      margin: 15px 0;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 18px;
+      text-transform: uppercase;
+    }
+    .product-detail {
+      margin-bottom: 20px;
+      .image {
+        padding: 0;
+        height: 100px;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+      }
+      .info {
+        padding: 0;
+        .product-title {
+          font-size: 18px;
+          line-height: 18px;
+          font-weight: 600;
+          margin: 10px 0;
+        }
+        .product-quantity {
+          font-size: 15px;
+          margin-bottom: 5px;
+          color: $color_grey;
+        }
+      }
+      .price {
+        margin-top: 10px;
+        padding: 0;
+        font-size: 18px;
+        text-align: right;
+        font-weight: bold;
+      }
+    }
+    .total-cost {
+      .detail {
+        span {
+          float: right;
+        }
+      .total-price {
+        font-weight: bold;
+        }
+      }
+    }
+  }
+  .total {
+    border: 1px solid #c3c6c7;
+    border-bottom: none;
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: 600;
+    .total-name {
+      text-align: left;
+      text-transform: uppercase;
+    }
+    .total-amount {
+      text-align: right;
+    }
+  }
+  .transfer-info {
+    border: 1px solid #c3c6c7;
+    .title {
+      margin: 15px 0;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 18px;
+      text-transform: uppercase;
+    }
+    .name {
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .address, .phone {
+      font-size: 16px;
+    }
+    .button {
+      text-align: center;
+    }
+    .btn-more-order {
+      background-color: #1682d3;
+      color: $color_white;
+      font-size: 20px;
+      padding: 20px 65px;
+      font-weight: bold;
+      margin: 30px 0;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    width: 100% !important;
+    padding: 0;
+    .top-title {
+      border: none;
+      img.i-check {
+        width: 30px;
+        margin-bottom: 5px;
+        margin-right: 6px;
+      }
+      .title {
+        font-size: 16px;
+        padding: 20px 0;
+      }
+      .thank-for-order {
+        font-size: 8px;
+      }
+      .contact {
+        font-size: 7px;
+        text-align: center;
+        margin: 10px 0;
+      }
+      .hotline {
+        margin-bottom: 13px;
+        height: 22px;
+        .hotline-title {
+          font-size: 10px;
+          top: calc(50% - 7px);
+        }
+        span {
+          font-size: 15px;
+          letter-spacing: 0.6px;
+          left: calc(35% + 45px);
+          top: 0px;
+        }
+      }
+    }
+    .order-info {
+      border: none;
+      border-top: 1px solid #c3c6c7;
+      border-bottom: 1px solid #c3c6c7;
+      .title {
+        font-size: 14px;
+        line-height: 14px;
+      }
+      .product-detail {
+        margin-bottom: 10px;
+        .image {
+          height: 60px;
+        }
+        .info {
+          .product-title {
+            font-size: 10px;
+            line-height: 10px;
+            margin: 5px 0;
+          }
+          .product-quantity {
+            font-size: 8px;
+            margin-bottom: 1px;
+          }
+        }
+        .price {
+          margin-top: 0;
+          font-size: 13px;
+        }
+      }
+    }
+    .total {
+      border: none;
+      height: 45px;
+      line-height: 45px;
+      font-size: 15px;
+      border-bottom: 1px solid #c3c6c7;
+    }
+    .transfer-info {
+      border: none;
+      .title {
+        font-size: 15px;
+        line-height: 15px;
+      }
+      .address, .phone {
+        font-size: 13px;
+      }
+      .btn-more-order {
+        padding: 15px 0px;
+        margin-bottom: 0;
+        display: block;
+      }
+    }
+  }
+}

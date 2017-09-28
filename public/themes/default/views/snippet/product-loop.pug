@@ -1,0 +1,38 @@
+.wrapper-item-product-loop
+  .item-product-loop
+    - var link = 'san-pham/' + product['handle'];
+    - var fullUrl = fullUrl(link);
+    - var brand_link = 'thuong-hieu/' + product.brand_url;
+    - var fullBrandLink = fullUrl(brand_link);
+    if product.percent
+      span.percent.top - #{product.percent}
+    else
+      span.hidden.percent.top
+    if device == 'desktop' && product.count_variant
+      .variant-image.owl-carousel.variant-carousel
+        each item in product.variants
+          - var large = resize(item.featured_image, 240);
+          img.item.item-thumb(src="/uploads/" + large, alt=item.title, data-large="/uploads/" + large, data-title=item.title, data-handle=item.handle, data-price=money(item.price), data-price_compare=money(item.price_compare), data-display_discount = item.display_discount, data-percent=item.percent)
+    - var image = resize(product.featured_image, 240);
+    a.wrap-image(href=fullUrl)
+      - var src = themeURI() + '/img/default_image.png';
+      if product.featured_image
+        - var src = '/uploads/' + resize(product.featured_image, 240);
+      img.main-image(src=themeURI() + "/img/product_loading.gif", data-src=src, alt=product.title, data-title=product.title, data-handle=item.handle, data-price=money(product.price), data-price_compare=money(product.price_compare), data-display_discount=product.display_discount, data-percent=product.percent)
+      unless product.checkInventory
+        .out-of-stock HÀNG TẠM HẾT
+    a.brand(href=fullBrandLink)=product.brand
+      if product.percent
+        span.percent - #{product.percent}
+      else
+        span.hidden.percent
+    h3.title
+      a(href=fullUrl)=product.title
+    .price
+      span.main-price=money(product.price)
+      if product.discount
+        span.price-compare=money(product.price_compare)
+      else
+        span.price-compare
+  if device == 'desktop'
+    .btn-order(data-id=product.id) MUA NGAY

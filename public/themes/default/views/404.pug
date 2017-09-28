@@ -1,0 +1,10 @@
+extends ./layout.pug
+block pre-include
+  title Balo Hàng Hiệu - Hệ thống Shop BALO online đầu tiên tại Việt Nam | Balo hàng hiệu
+block content
+  .container.error-page.text-center
+    .col-sm-12
+      img(src=themeURI() + '/img/404.png', alt="404.png")
+    .col-sm-12.back-to-home
+      button
+        a(href=fullUrl()) Về trang chủ

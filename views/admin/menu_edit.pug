@@ -1,0 +1,62 @@
+extends ./layout.pug
+
+block pre-include
+  title Menu 
+    =data.title
+  - var menu = 'setting';
+  - var childMenu = 'subMenu';
+block post-include
+  script(src=staticURI() + '/js/admin/menu.js')
+  
+block content  
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6.hidden-xs
+      li
+        a Menu
+      li
+        a=data.title
+    ol.button-right.col-sm-6.col-xs-12
+      li
+        a.btn.btn-admin.btn-update-menu(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+
+  section.content
+    .box.box-info
+      .form-horizontal.form-product
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tiêu đề
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title" placeholder="Balo" value=data.title)
+          .form-group
+            label.col-sm-2.control-label Link
+              strong.required  *
+            .col-sm-10.link
+              .col-sm-6.key.pd-left-0
+                select.form-control(name="link_type" data-value=data.link_type)
+                  option(value="collection") Nhóm sản phẩm
+                  option(value="article") Bài viết
+                  option(value="custom") Địa chỉ web
+              .col-sm-6.value
+                if data.link_type == 'custom'
+                  input.form-control(name="link" placeholder="https://mia.vn" value=data.link)
+                  select.hidden.form-control(name="link" data-value=data.link)
+                else
+                  select.form-control(name="link" data-value=data.link)
+                    if data.link_type == 'collection'
+                      each item in list_collection
+                        option(value=item.link)=item.breadcrumb
+                    if data.link_type == 'article'
+                      each item in list_article
+                        option(value=item.handle)=item.title
+                    if data.link_type == 'blog'
+                      each item in list_blog
+                        option(value=item.handle)=item.name
+                  input.hidden.form-control(name="link" placeholder="https://mia.vn")
+          .form-group
+            label.col-sm-2.control-label Nội dung
+            .col-sm-10
+              textarea.form-control#submenu=data.submenu

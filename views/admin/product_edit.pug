@@ -1,0 +1,227 @@
+extends ./layout.pug
+
+block pre-include
+  title Chỉnh sửa | 
+    =data.title
+  - var menu = 'product';
+  - var childMenu = 'product';
+
+block post-include
+  script(src=staticURI() + '/js/admin/product.js')
+  script.
+    var list_image = $(document).find('.list-image').data('list');
+    if(list_image) {
+      var array = list_image.split(',');
+      if(array.length) $('.list-image').addClass('no-bg');
+      array.forEach(function(item){
+        if(item) {
+          $(document).find('.list-image').append('<div class="col-sm-3 item" data-name="'+item+'">'+
+            '<span class="btn-remove-image"><i class="fa fa-times"></i></span>'+
+            '<span class="btn-rotate-image"><i class="fa fa-undo"></i></span>'+
+            '<img src="/uploads/'+ resizeImage(item, '240') +'">'+
+          '</div>');
+        }
+      });
+    }
+    $(document).find('select').each(function() {
+      var data = $(this).data('value');
+      if(data) $(this).val(data);
+    });
+  
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6
+      li
+        a Sản phẩm
+      li
+        a=data.title
+    ol.button-right.col-sm-6
+      li
+        a.btn.btn-review(href="/san-pham/" + data.handle, target="_blank")
+          i.fa.fa-eye
+          | Xem trên web
+      li
+        a.btn.btn-admin.btn-update-product(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+
+  section.content
+    .box.box-info
+      .form-horizontal.form-product
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Tên sản phẩm
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="title", value=data.title, data-title=data.title, data-handle=data.handle)
+          .form-group.price
+            label.col-sm-2.control-label Giá sản phẩm
+            .col-sm-10.pd-left-0.pd-right-0
+              .col-sm-6
+                input.form-control(name="price", value=_money(data.price), placeholder="Giá sản phẩm" disabled)
+              .col-sm-6
+                input.form-control(name="price_compare", value=_money(data.price_compare), placeholder="Giá so sánh" disabled)
+          .form-group
+            label.col-sm-2.control-label Thương hiệu
+            .col-sm-10
+              select.form-control(name="brand" data-value=data.brand)
+                option(value='' disabled selected) Chọn thương hiệu
+                each item in brand
+                  option(value=item.name)=item.name
+          .form-group
+            label.col-sm-2.control-label Kích thước
+            .col-sm-10
+              select.form-control(name="size" data-value=data.size)
+                option(value='' disabled selected) Chọn kích thước
+                each item in size
+                  option(value=item.name)=item.name
+          .form-group
+            label.col-sm-2.control-label Ngăn đựng laptop
+            .col-sm-10
+              select.form-control(name="bag" data-value=data.bag)
+                option(value='' disabled selected) Chọn ngăn đựng laptop
+                each item in bag
+                  option(value=item.name)=item.name
+          .form-group
+            label.col-sm-2.control-label Chất liệu
+            .col-sm-10
+              select.form-control(name="material" data-value=data.material)
+                option(value='' disabled selected) Chọn chất liệu
+                each item in material
+                  option(value=item.name)=item.name
+          .form-group
+            label.col-sm-2.control-label Nhóm sản phẩm
+            .col-sm-10
+              .list-collection.clearfix(data-value=data.collection_id)
+                each item in list_collection
+                  label.col-xs-3
+                    input(type="checkbox" value=item.id)
+                    =item.title
+          .form-group
+            label.col-sm-2.control-label Tính năng đặc biệt
+            .col-sm-10
+              .list-special.clearfix(data-value=data.special_id)
+                each item in special
+                  label.col-xs-4
+                    input(type="checkbox" value=item.id)
+                    =item.name
+          .form-group
+            label.col-sm-2.control-label Màu sắc
+            .col-sm-10
+              .list-color.clearfix(data-value=data.color_id)
+                each item in color
+                  label.col-xs-1
+                    input(type="checkbox" value=item.id)
+                    span(style='background-color: '+item.hex+'')
+          script.
+            var color_id = $('.list-color').data('value');
+            for (var i = 0; i < color_id.length; i++) {
+              $('.list-color').find('input[type="checkbox"][value="'+color_id[i].color_id+'"]').prop('checked', true);
+            }
+            var collection_id = $('.list-collection').data('value');
+            for (var i = 0; i < collection_id.length; i++) {
+              $('.list-collection').find('input[type="checkbox"][value="'+collection_id[i].collection_id+'"]').prop('checked', true);
+            }
+            var special_id = $('.list-special').data('value');
+            for (var i = 0; i < special_id.length; i++) {
+              $('.list-special').find('input[type="checkbox"][value="'+special_id[i].special_id+'"]').prop('checked', true);
+            }
+          .form-group
+            label.col-sm-2.control-label
+              span Hình ảnh
+              img.hidden.no-border.loading(src=staticURI() + "/img/loading.gif" style="margin-left: 5px;")
+              form(enctype="multipart/form-data").hidden
+                input#upload-list-image(type="file" name="upload[]" multiple="multiple")
+            .col-sm-10.list-variant
+              .col-sm-12.list-image
+                each item in data.list_image
+                  .image.col-xs-2(data-name=item.name, data-id=item.id)
+                    - var image = resize(item['name'], 240);
+                    img(src="/uploads/" + image)
+                    //- span.rotate
+                    //-   i.fa.fa-undo
+                    span.remove(data-id=item.id)
+                      i.fa.fa-times
+                    span.move.move-prev
+                      i.fa.fa-arrow-left
+                    span.move.move-next
+                      i.fa.fa-arrow-right
+                .col-xs-2.add-image
+                  label(for="upload-list-image")
+          .form-group
+            label.col-sm-2.control-label Nội dung
+            .col-sm-10
+              textarea.form-control(name="content" rows=5 placeholder="- Nhựa ABS tổng hợp \n - Dây kéo đôi \n- Thương hiệu Anh Quốc")=data.content
+          .form-group
+            label.col-sm-2.control-label Mô tả
+            .col-sm-10
+              textarea.form-control#product-description=data.description
+          .form-group
+            label.col-sm-2.control-label Thông số kỹ thuật
+            .col-sm-10.specification(data-init=table_specification, data-value=data.specification)
+              textarea.form-control#product-specification=data.specification
+          .form-group
+            label.col-sm-2.control-label Ngày cập nhật
+              br
+              | (yyyy-mm-dd h:m:s)
+            .col-sm-10
+              input.form-control(name="updated_at" value=data.updated_at)
+          .form-group
+            label.col-sm-2.control-label Group ID
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="group_id", value=data.group_id)
+          .form-group
+            label.col-sm-2.control-label Barcode
+              strong.required  *
+            .col-sm-10
+              input.form-control(name="barcode", value=data.barcode)
+          .form-group
+            label.col-sm-2.control-label Handle
+            .col-sm-10
+              input.form-control(name="handle", value=data.handle, disabled)
+          .form-group
+            label.col-sm-2.control-label Tồn kho
+            .col-sm-10
+              .list-branch
+                if data.check_inventory
+                  each item in data.inventory
+                    .item.clearfix
+                      .col-xs-2(data-id=item.id)=item.name
+                      .col-xs-1=item.inventory
+                  hr.col-xs-2.line
+                .item.clearfix
+                  .col-xs-2 Tổng tồn kho
+                  .col-xs-1=data.total_inventory
+          .form-group
+            label.col-sm-2.control-label Meta robots
+            .col-sm-10
+              select.form-control(name="meta_robots" data-value=data.meta_robots)
+                option(value="index, follow") Index, Follow
+                option(value="noindex, follow") No Index, Follow
+                option(value="index, nofollow") Index, No Follow
+                option(value="noindex, nofollow") No Index, No Follow
+          script.
+            var meta = $('select[name="meta_robots"]').data('value');
+            $('select[name="meta_robots"]').val(meta);
+          .form-group
+            label.col-sm-2.control-label Dropship
+            .col-sm-10
+              select.form-control(name="dropship")
+                if data.dropship
+                  option(value="0") Không
+                  option(value="1" selected) Có
+                else
+                  option(value="0") Không
+                  option(value="1") Có
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                if data.display
+                  option(value="0") Không
+                  option(value="1" selected) Có
+                else
+                  option(value="0") Không
+                  option(value="1") Có

@@ -1,0 +1,15 @@
+.breadcrumb
+  ul
+    li
+      a(href=fullUrl()) Trang chủ
+    li
+      span &gt;
+    if breadcrumb_collection
+      each item in breadcrumb_collection
+        if item.title
+          li
+            a(href=item.handle)=item.title
+          li
+            span &gt;
+    li
+      a=breadcrumb_title

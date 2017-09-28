@@ -1,0 +1,142 @@
+extends ./layout.pug
+
+block pre-include
+	title Đơn hàng | 
+		=order.id
+	- var menu = 'order';
+	- var childMenu = 'order';
+block post-include
+	script(src=staticURI() + '/js/admin/order.js')
+	script.
+		var init_payment = $(document).find('select[name="payment_status"]').data('value');
+		$(document).find('select[name="payment_status"]').val(init_payment);
+		var init_shipping = $(document).find('select[name="shipping_status"]').data('value');
+		$(document).find('select[name="shipping_status"]').val(init_shipping);
+	script.
+		var tblOrder = $(".table-list-cart-mobile").DataTable({
+			aaSorting: [],
+			bDestroy: true,
+			responsive: true,
+			rowReorder: false,
+			paging: false,
+			searching: false,
+			bInfo: false
+    });
+
+block content
+	section.content-header.clearfix
+		ol.breadcrumb.col-sm-8.hidden-xs
+			li
+				a(href="/admin/order") Đơn hàng
+			li
+				a Chi tiết đơn hàng
+			li
+				a=order.id
+		ol.button-right.col-sm-4.col.xs-12
+			if odoo
+				li
+					a.btn.btn-review.btn-update-state(data-id=order.id)
+						i.fa.fa-save
+						| Cập nhật đơn hàng
+				li
+					a.btn.btn-review(href='http://erp.tga.com.vn/web#id='+order.id_odoo+'&view_type=form&model=sale.order&menu_id=173&action=233', target="_blank")
+						i.fa.fa-eye
+						| Xem trên Odoo
+	section.content
+		.box.clearfix
+			.box-header.with-border
+				h3.box-title Thông tin đơn hàng
+			.box-body
+				table.table.table-bordered.table-list-cart.hidden-xs
+					tr
+						th Hình ảnh
+						th Tên sản phẩm
+						th Số lượng
+						th Đơn giá
+						th Tổng cộng
+					each item in cart
+						tr
+							td
+								img(src="/uploads/" + resize(item.image, 240))
+							td.product-title
+								a(href="/san-pham/" + item.handle target="_blank")=item.title
+							td=item.quantity
+							td=item.price
+							td=item.price
+				table.table.table-bordered.table-list-cart-mobile.hidden-lg.hidden-sm.hidden-md.display.nowrap(cellspacing="0" width="100%")
+					thead
+						tr
+							th Hình ảnh
+							th Tên sản phẩm
+							th Số lượng
+							th Đơn giá
+							th Tổng cộng
+					tbody
+						each item in cart
+							tr
+								td
+									- var thumb = resize(item['image'], 50);
+									img(src="/uploads/" + resize(item.image, 50))
+								td.product-title
+									a(href="/san-pham/" + item.handle target="_blank")=item.title
+									p=item.variant_title
+								td=item.quantity
+								td=item.price
+								td=item.price 
+				.col-sm-12.info-order
+					.col-sm-6.info-order-left
+						.clearfix
+							.col-sm-5.col-xs-6 Ngày tạo
+							.col-sm-6.col-xs-6=order.created_at
+						.clearfix
+							.col-sm-5.col-xs-6 Phương thức thanh toán
+							.col-sm-6.col-xs-6=order.payment_method
+						.clearfix
+							.col-sm-5.col-xs-6 Trạng thái
+							.col-sm-6.col-xs-6
+								select.form-control(name="order_status", data-value=order.order_status)
+									option(value="dropship") Dropship
+									option(value="new") Mới
+									option(value="sale") Xác nhận
+									option(value="done") Hoàn thành
+									option(value="cancel") Hủy
+								button.btn.btn-primary.update-order-status(data-id=order.id, style="margin-top: 10px;") Cập nhật
+								script.
+									$('select[name="order_status"]').val($('select[name="order_status"]').data('value'));
+					.col-sm-2
+					.col-sm-4.order-money
+						.clearfix
+							.col-sm-6.col-xs-6 Tạm tính
+							.col-sm-4.col-xs-6.text-right=order.subtotal
+						if order.discount
+							.clearfix
+								.col-sm-6.col-xs-6 Giảm giá
+								.col-sm-4.col-xs-6.text-right=order.discount
+						if order.shipping_price
+							.clearfix
+								.col-sm-6.col-xs-6 Phí vận chuyển
+								.col-sm-4.col-xs-6.text-right=order.shipping_price
+						.clearfix.bold
+							.col-sm-6.col-xs-6 TỔNG CỘNG
+							.col-sm-4.col-xs-6.text-right=order.total
+		.box.box-info.box-info-customer
+			.box-header.with-border
+				h3.box-title Thông tin giao hàng
+			form.form-horizontal
+				.box-body
+					.form-group
+						if customer.gender == 'male'
+							label.col-sm-2.col-xs-4 Anh:
+						else
+							label.col-sm-2.col-xs-4 Chị:
+						.col-sm-10.col-xs-8=customer.name
+					if customer.email
+						.form-group
+							label.col-sm-2.col-xs-4 Email:
+							.col-sm-10.col-xs-8=customer.email
+					.form-group
+						label.col-sm-2.col-xs-4 Số điện thoại:
+						.col-sm-10.col-xs-8=customer.phone
+					.form-group
+						label.col-sm-2.col-xs-4 Địa chỉ:
+						.col-sm-10.col-xs-8=customer.address + ', ' + customer.subregion + ', ' + customer.region

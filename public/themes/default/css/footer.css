@@ -1,0 +1,266 @@
+footer {
+  background-color: #f1f1f2; }
+  footer .hotline-n-subscribe {
+    background-color: #FD6821;
+    color: black; }
+    footer .hotline-n-subscribe .hotlines .hotline {
+      margin: 20px 0;
+      height: 55px;
+      background-repeat: no-repeat !important;
+      background-position: center center !important;
+      background-size: contain !important; }
+    footer .hotline-n-subscribe .subscribe {
+      position: relative;
+      text-align: left;
+      padding: 15px 0;
+      padding-left: 30px; }
+      footer .hotline-n-subscribe .subscribe .receive-info {
+        padding-left: 0;
+        margin-bottom: 5px;
+        color: white;
+        text-transform: uppercase;
+        font-size: 24px;
+        line-height: 25px; }
+      footer .hotline-n-subscribe .subscribe input {
+        width: 59%;
+        height: 32px;
+        outline: none;
+        border: 0; }
+      footer .hotline-n-subscribe .subscribe .btn-subscribe {
+        position: absolute;
+        left: 64%;
+        bottom: 17px;
+        padding: 5px 20px;
+        background-color: black;
+        border-radius: 5px;
+        color: white;
+        box-shadow: none;
+        outline: 0;
+        border: 0; }
+    @media screen and (max-width: 1199px) {
+      footer .hotline-n-subscribe .hotlines {
+        padding-left: 0; }
+        footer .hotline-n-subscribe .hotlines .hotline {
+          height: 50px; }
+      footer .hotline-n-subscribe .subscribe {
+        padding-left: 30px; }
+        footer .hotline-n-subscribe .subscribe .receive-info {
+          font-size: 21px;
+          line-height: 21px; }
+        footer .hotline-n-subscribe .subscribe input {
+          width: 65%;
+          height: 31px; }
+        footer .hotline-n-subscribe .subscribe .btn-subscribe {
+          padding: 4px 17px;
+          bottom: 18px;
+          left: 69%; } }
+    @media screen and (max-width: 991px) {
+      footer .hotline-n-subscribe .container {
+        width: 100%; }
+      footer .hotline-n-subscribe .hotlines .hotline {
+        height: 40px;
+        margin: 20px 0; }
+      footer .hotline-n-subscribe .subscribe {
+        padding-left: 0; }
+        footer .hotline-n-subscribe .subscribe .receive-info {
+          font-size: 17px;
+          line-height: 17px; }
+        footer .hotline-n-subscribe .subscribe input {
+          height: 28px;
+          width: 57%; }
+        footer .hotline-n-subscribe .subscribe .btn-subscribe {
+          left: 58%;
+          padding: 3px 11px;
+          font-size: 12px; } }
+    @media screen and (max-width: 767px) {
+      footer .hotline-n-subscribe .hotlines .hotline {
+        height: 27px;
+        margin: 15px 0; }
+      footer .hotline-n-subscribe .subscribe {
+        display: none; } }
+  footer .menu-policy {
+    margin: 20px 0; }
+    footer .menu-policy .mailings .mailing {
+      margin-bottom: 15px; }
+      footer .menu-policy .mailings .mailing .mailing-title {
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        font-size: 15px; }
+      footer .menu-policy .mailings .mailing .email {
+        font-size: 14px; }
+    footer .menu-policy .policies .policy {
+      margin-bottom: 5px; }
+      footer .menu-policy .policies .policy a {
+        color: black;
+        display: block; }
+    footer .menu-policy .introduce .intro {
+      margin-bottom: 5px; }
+      footer .menu-policy .introduce .intro a {
+        color: black;
+        display: block; }
+    footer .menu-policy .social-icon .icon {
+      display: inline-block;
+      margin-right: 10px;
+      height: 40px;
+      width: 40px;
+      background-size: contain !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      margin-bottom: 5px; }
+    footer .menu-policy .social-icon .bo-cong-thuong {
+      display: inline-block;
+      height: 50px;
+      width: 130px;
+      background-size: contain !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important; }
+    @media screen and (max-width: 1119px) {
+      footer .menu-policy .social-icon .icon {
+        margin-left: 10px;
+        margin-right: 0; } }
+    @media screen and (max-width: 1024px) {
+      footer .menu-policy .social-icon .icon {
+        height: 33px;
+        width: 30px; }
+      footer .menu-policy .social-icon .bo-cong-thuong {
+        height: 35px;
+        width: 95px; } }
+    @media screen and (max-width: 991px) {
+      footer .menu-policy .mailings .mailing {
+        margin-bottom: 13px; }
+        footer .menu-policy .mailings .mailing .mailing-title {
+          font-size: 13px;
+          line-height: 15px; }
+        footer .menu-policy .mailings .mailing .email {
+          font-size: 11px;
+          line-height: 14px; } }
+    @media screen and (max-width: 767px) {
+      footer .menu-policy {
+        border-bottom: 1px solid #dadbdc;
+        padding: 0;
+        padding-bottom: 15px; }
+        footer .menu-policy .mailings {
+          padding-left: 0;
+          min-height: 120px; }
+          footer .menu-policy .mailings .mailing {
+            margin-bottom: 13px; }
+            footer .menu-policy .mailings .mailing .mailing-title {
+              text-transform: uppercase;
+              margin-bottom: 4px;
+              font-size: 13px;
+              line-height: 15px; }
+            footer .menu-policy .mailings .mailing .email {
+              font-size: 11px;
+              line-height: 16px; }
+        footer .menu-policy .policies {
+          padding-left: 0; }
+          footer .menu-policy .policies .policy {
+            font-size: 12px;
+            line-height: 16px;
+            margin-bottom: 4px; }
+        footer .menu-policy .introduce {
+          padding-left: 0; }
+          footer .menu-policy .introduce .intro {
+            font-size: 12px;
+            line-height: 16px;
+            margin-bottom: 4px; }
+        footer .menu-policy .social-icon .icon {
+          margin-left: 10px; } }
+  footer .top-brands .top-brands-title .title {
+    font-size: 17px;
+    font-weight: 600;
+    color: black;
+    text-transform: uppercase;
+    width: 150px;
+    border-bottom: 1px solid #dadbdc;
+    margin-bottom: 15px; }
+  footer .top-brands .brands {
+    padding: 0 15px; }
+    footer .top-brands .brands ul {
+      width: calc(100%/7);
+      display: inline-block;
+      float: left; }
+      footer .top-brands .brands ul li {
+        width: 100%;
+        font-size: 13px;
+        margin-bottom: 5px; }
+        footer .top-brands .brands ul li a {
+          font-size: 13px;
+          color: #000; }
+  @media screen and (max-width: 991px) {
+    footer .top-brands .top-brands-title .title {
+      font-size: 15px; }
+    footer .top-brands .brands ul {
+      width: 20%; } }
+  footer .branchs .container {
+    padding: 0; }
+  footer .branchs .group-branchs:first-child {
+    padding-top: 20px;
+    border-top: 1px solid #dadbdc; }
+  footer .branchs .group-branchs {
+    margin-top: 20px; }
+    footer .branchs .group-branchs .group-title {
+      padding: 0; }
+      footer .branchs .group-branchs .group-title .title {
+        margin-bottom: 10px;
+        width: 190px;
+        font-size: 17px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: black;
+        border-bottom: 1px solid #dadbdc; }
+    footer .branchs .group-branchs .branch {
+      padding: 0 0;
+      margin-bottom: 20px; }
+      footer .branchs .group-branchs .branch .district {
+        text-transform: uppercase;
+        font-size: 15px;
+        padding: 0 0; }
+      footer .branchs .group-branchs .branch .location {
+        position: relative;
+        font-size: 13px; }
+        footer .branchs .group-branchs .branch .location .bullet {
+          position: absolute;
+          left: 8px; }
+        footer .branchs .group-branchs .branch .location .address {
+          padding: 0 0; }
+        footer .branchs .group-branchs .branch .location .nearby {
+          padding: 0 0; }
+        footer .branchs .group-branchs .branch .location .hotline {
+          padding: 0 0;
+          font-style: italic;
+          font-weight: bold; }
+  @media screen and (max-width: 767px) {
+    footer .branchs .group-branchs:first-child {
+      border-top: none;
+      padding-top: 0; }
+    footer .branchs .group-branchs {
+      margin-top: 0; }
+      footer .branchs .group-branchs .group-title {
+        padding-left: 0; }
+        footer .branchs .group-branchs .group-title .title {
+          font-size: 17px; }
+      footer .branchs .group-branchs .branch {
+        padding-right: 6px; }
+        footer .branchs .group-branchs .branch .district {
+          font-size: 13px; }
+        footer .branchs .group-branchs .branch .location {
+          font-size: 12px;
+          padding-top: 5px;
+          padding-right: 0;
+          padding-left: 0; }
+          footer .branchs .group-branchs .branch .location .bullet {
+            left: -6px; } }
+  footer .copyright {
+    padding: 20px 0 !important;
+    border-top: 1px solid #dadbdc;
+    text-align: center;
+    color: black; }
+    footer .copyright i {
+      padding-right: 2px; }
+  @media screen and (max-width: 991px) {
+    footer .container {
+      width: 90%; } }
+  @media screen and (max-width: 767px) {
+    footer .container {
+      width: 100%; } }
