@@ -120,14 +120,20 @@ $app->group('/admin', function() use($app) {
   // Article
   $app->get('/article/new', '\AdminArticleController:create');
   $app->get('/article/news', '\AdminArticleController:showNews');
-  $app->get('/article/landing-page', '\AdminArticleController:showLandingPage');
-  $app->get('/article/info', '\AdminArticleController:showInfo');
   $app->get('/articles/{id}', '\AdminArticleController:show');
   $app->post('/article', '\AdminArticleController:store');
   $app->put('/article/{id}', '\AdminArticleController:update');
   $app->delete('/article/{id}', '\AdminArticleController:delete');
   $app->get('/article/search', '\AdminArticleController:searchArticle');
-  $app->get('/article/related/remove', '\AdminArticleController:removeArticleRelated');
+
+  // Blog
+  $app->get('/blog/new', '\AdminBlogController:create');
+  $app->get('/blogs', '\AdminBlogController:showNews');
+  $app->get('/blog/{id}', '\AdminBlogController:show');
+  $app->post('/blog', '\AdminBlogController:store');
+  $app->put('/blog/{id}', '\AdminBlogController:update');
+  $app->delete('/blog/{id}', '\AdminBlogController:delete');
+  // $app->get('/blog/search', '\AdminBlogController:searchBlog');
 
   //Setting
   $app->get('/settings/index', '\AdminSettingController:settingIndex');
