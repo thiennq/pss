@@ -42,23 +42,3 @@ $config = [
     'onesignal' => $onesignal,
     'themeDir' => 'default'
 ];
-
-function currentENV() {
-  $env = 'development';
-  if (getenv('ENV') && getenv('ENV') == 'production') {
-    $env = 'production';
-  }
-  return $env;
-}
-
-function getThemeDir() {
-  return $GLOBALS['config']['themeDir'];
-}
-
-function themeURI() {
-  return '/themes/' . $GLOBALS['config']['themeDir'] ;
-}
-
-function staticURI() {
-  return '/static';
-}
