@@ -143,7 +143,7 @@
           color: #9EE06E;
           display: none; }
         .sidebar .filter-sidebar .item-color ul li.active {
-          border: 2px solid #fc6721; }
+          border: 2px solid #101010; }
           .sidebar .filter-sidebar .item-color ul li.active i {
             display: inline-block; }
   .sidebar .filter-sidebar .item-sort {
@@ -259,7 +259,7 @@
   .sidebar-mobile .filter .btn-filter {
     display: inline-block;
     width: 100%;
-    background-color: #fc6721 !important;
+    background-color: #101010 !important;
     color: #fff;
     border-radius: 5px;
     text-align: center;
@@ -477,7 +477,7 @@
             width: 25px;
             height: 25px; } }
         .sidebar-mobile .filter .item-color .dropdown-menu li.active {
-          border: 2px solid #fc6721; }
+          border: 2px solid #101010; }
           .sidebar-mobile .filter .item-color .dropdown-menu li.active i {
             display: inline-block; }
     .sidebar-mobile .filter .item-color .btn-filter {

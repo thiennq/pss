@@ -6,7 +6,7 @@ header {
       margin-bottom: 15px; } }
   header .header-menu {
     margin: 0;
-    background: #fc6721; }
+    background: #101010; }
     header .header-menu > .container {
       position: relative; }
     header .header-menu .header-menu-top {
@@ -104,7 +104,7 @@ header {
                 top: 17px;
                 right: 10px;
                 font-size: 13px;
-                color: #fc6721;
+                color: #101010;
                 font-weight: 700;
                 letter-spacing: 1px; }
               header .header-menu .header-menu-top form.search ul.search-result li a .price-compare {
@@ -437,7 +437,7 @@ header {
           #menuModal .modal-dialog .modal-content .hotline {
             font-size: 9px; } }
         #menuModal .modal-dialog .modal-content .hotline span {
-          color: #fc6721;
+          color: #101010;
           font-size: 18px;
           position: relative;
           top: 1px; }

@@ -88,20 +88,6 @@ block content
                               a(href='/' + item.link)=item.updated_at
             h3.news-title.hidden-xs
               a(href='/' + articleFirst.link)=articleFirst.title
-      .collection-group.celebs.clearfix.hidden-xs
-        .collection-title.viet-celebs
-          span Sao việt sành điệu cùng MIA.VN
-        .introduce
-          p Cảm ơn vì đã tin tưởng lựa chọn chúng tôi.
-          p Mia.vn - Hệ thống Siêu thị VALI TÚI BALO Chính hãng hàng đầu Việt NamNam
-        .celebs-list.clearfix
-          .index-slider-carousel.owl-carousel
-            - var celebrityIndex = celebrityIndex();
-            if countArr(celebrityIndex)
-              each item in celebrityIndex
-                .item-wrapper
-                  .item(style='background-image:url("/uploads/' + resize(item.image, 480) + '");')
-                  a(href=item.link)=item.name
     .container.top-brand-footer.visible-xs
       .title
         span TOP BRAND

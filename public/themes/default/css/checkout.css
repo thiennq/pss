@@ -1,5 +1,5 @@
 .orange {
-  color: #fc6721; }
+  color: #101010; }
 
 .checkout {
   width: 80% !important;
@@ -191,7 +191,7 @@
           padding-top: 15px;
           padding-bottom: 15px; }
         .checkout .customer-wrapper .customer-info .purchase .btn-order {
-          background-color: #fc6721; }
+          background-color: #101010; }
         .checkout .customer-wrapper .customer-info .purchase .main {
           font-weight: 600;
           text-transform: uppercase;

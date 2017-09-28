@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .orange {
-  color: $color_orange;
+  color: $main_color;
 }
 .checkout {
   width: 80% !important;
@@ -249,7 +249,7 @@
           padding-bottom: 15px;
         }
         .btn-order {
-          background-color: $color_orange;
+          background-color: $main_color;
         }
         .main {
           font-weight: 600;

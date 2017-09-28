@@ -178,7 +178,7 @@
             display: none;
           }
           &.active {
-            border: 2px solid $color_orange;
+            border: 2px solid $main_color;
             i {
               display: inline-block;
             }
@@ -332,7 +332,7 @@
     .btn-filter {
       display: inline-block;
       width: 100%;
-      background-color: $color_orange !important;
+      background-color: $main_color !important;
       color: $color_white;
       border-radius: 5px;
       text-align: center;
@@ -610,7 +610,7 @@
             height: 25px;
           }
           &.active {
-            border: 2px solid $color_orange;
+            border: 2px solid $main_color;
             i {
               display: inline-block;
             }

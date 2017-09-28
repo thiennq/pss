@@ -253,7 +253,7 @@
     .btn-filter {
       display: inline-block;
       width: 100%;
-      background-color: $color_orange !important;
+      background-color: $main_color !important;
       color: $color_white;
       border-radius: 5px;
       text-align: center;
@@ -420,7 +420,7 @@
             width: 100%;
           }
           &.active {
-            border: 2px solid $color_orange;
+            border: 2px solid $main_color;
             i {
               display: inline-block;
             }

@@ -46,7 +46,7 @@
         }
         &.active {
           img {
-            border-color: $color_orange;
+            border-color: $main_color;
           }
         }
       }
@@ -192,7 +192,7 @@
       }
       .price-compare {
         font-weight: 700;
-        color: $color_orange;
+        color: $main_color;
         text-decoration: line-through;
         margin-left: 5px;
         font-size: 16px;
@@ -264,14 +264,14 @@
           padding-bottom:10px;
           .fa {
             margin-right: 5px;
-            color: $color_orange;
+            color: $main_color;
           }
         }
       }
     }
     .btn-order-product {
       padding: 15px 0;
-      background-color: $color_orange;
+      background-color: $main_color;
       color: $color_white;
       width: 100%;
       text-align: center;
@@ -402,7 +402,7 @@
             letter-spacing: 1px;
             line-height: 30px;
             margin-left: 40px;
-            color: $color_orange;
+            color: $main_color;
           }
         }
         .blank-div {

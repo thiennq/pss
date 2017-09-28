@@ -7,7 +7,7 @@ header {
   }
   .header-menu {
     margin: 0;
-    background: $color_orange;
+    background: $main_color;
     > .container {
       position: relative;
     }
@@ -117,7 +117,7 @@ header {
                   top: 17px;
                   right: 10px;
                   font-size: 13px;
-                  color: $color_orange;
+                  color: $main_color;
                   font-weight: 700;
                   letter-spacing: 1px;
                 }
@@ -533,7 +533,7 @@ header {
           font-size: 9px;
         }
         span {
-          color: $color_orange;
+          color: $main_color;
           font-size: 18px;
           position: relative;
           top: 1px;
