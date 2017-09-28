@@ -18,8 +18,8 @@ class User extends Illuminate\Database\Eloquent\Model {
       $user->password = password_hash($data->password, PASSWORD_DEFAULT);
   		$user->created_at = date('Y-m-d H:i:s');
   		$user->updated_at = date('Y-m-d H:i:s');
-      if($user->save()) return 0;
-      return -1;
+      $user->save();
+      return 0;
     }
 
     public function randomString($length) {
