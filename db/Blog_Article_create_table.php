@@ -17,7 +17,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 $Schema = $capsule->schema();
 
 $Schema->create('blog_article', function (Blueprint $table) {
-  $table->integer('id');
+  $table->increments('id');
   $table->string('article_id');
   $table->string('blog_id');
 });
