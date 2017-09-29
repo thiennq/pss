@@ -1,18 +1,18 @@
 extends ./layout.pug
 block pre-include
   - var menu = 'article'
-  - var childMenu = 'article'
+  - var childMenu = 'page'
   title Chỉnh sửa | 
     =data.title
 
 block post-include
-  script(src=staticURI() + '/js/admin/article.js')
+  script(src=staticURI() + '/js/admin/page.js')
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
-        a Bài viết
+        a Trang nội dung
       li
         a Chỉnh sửa
       li
@@ -24,14 +24,14 @@ block content
           i.fa.fa-eye
           | Xem trên web
       li
-        a.btn.btn-admin.btn-update-article(data-id=data.id)
+        a.btn.btn-admin.btn-update-page(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
 
-  section.content.article
+  section.content.page
     .box.box-info
-      .form-horizontal.form-article
+      .form-horizontal.form-page
         .box-body
           .form-group
             label.col-sm-2.control-label Tiêu đề
@@ -43,10 +43,6 @@ block content
               strong.required  *
             .col-sm-10
               input.form-control(name="handle", value=data.handle)
-          .form-group
-            label.col-sm-2.control-label Nhóm bài viết
-            .col-sm-10
-              select.form-control(name="blog")
           .form-group
             label.col-sm-2.control-label Hình đại diện
               img.no-border.loading(src="/images/loading.gif").hidden
@@ -70,7 +66,7 @@ block content
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
-              textarea.form-control#article_content(data-value=data.content)
+              textarea.form-control#page_content(data-value=data.content)
           .form-group
             label.col-sm-2.control-label Meta robots
             .col-sm-10

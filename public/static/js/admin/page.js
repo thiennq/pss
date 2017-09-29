@@ -1,113 +1,157 @@
-initTinymce('#page-content');
+initTinymce('#page_content');
+initDataTable('table');
 
-$('.btn-create-page').click(function() {
-	var btn = $(this);
-	$('input').removeClass('error');
-	var data = {};
-	data.title = $('input[name="title"]').val();
-	if(!data.title.trim().length) {
-		toastr.error('Chưa nhập tiêu đề bài viết');
+$(window).on('load', function() {
+  if($('#page_content').data('value')) tinyMCE.get('page_content').setContent($('#page_content').data('value'));
+});
+
+$(document).on('change', '.feature-image', function() {
+  console.log($(this).val());
+  if($(this).val()) {
+    if(checkExtImage($(this).val())) {
+      var form_group = $(this).closest('.form-group');
+      form_group.find('.loading').removeClass('hidden');
+      var form = $(this).closest('form');
+      var formData = new FormData(form[0]);
+      $.ajax({
+        type: 'POST',
+        url: '/admin/api/uploadImage',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(json) {
+          if(!json.code) {
+            var image = json.data[0];
+            var resize = resizeImage(image, '240');
+            var timestamp = new Date() - 0;
+            form.find('img').attr('src', '/uploads/' + resize + '?v=' + timestamp);
+            form.find('input[name="image"]').val(image);
+          } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+          form_group.find('.loading').addClass('hidden');
+        }
+      });
+    }
+  }
+});
+
+$('.btn-create-page').click(function(event) {
+  var btn = $(this);
+  $('input').removeClass('error');
+  var data = {};
+  data.title = $('input[name="title"]').val();
+  if(!data.title.trim().length) {
+    toastr.error('Chưa nhập tiêu đề');
     $('input[name="title"]').addClass('error');
-		return;
-	}
-	data.handle = $('input[name="handle"]').val();
-	data.content = tinyMCE.get('page-content').getContent();
-	if(!data.content) {
-		toastr.error('Chưa nhập nội dung bài viết');
-		return;
-	}
-	btn.addClass('disabled');
-	$.ajax({
-		type: 'POST',
-		url: '/admin/page',
-		data: data,
-		success: function(json) {
-			if(!json.code) {
-        toastr.success('Tạo bài viết thành công');
-				setTimeout(function() {
-					window.location.href = '/admin/pages/' + json.id;
-				}, 1000);
-			} else {
-        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-        btn.removeClass('disabled');
-      }
-		}
-	});
+    return;
+  }
+  data.handle = $('input[name="handle"]').val();
+  if(!data.handle.trim().length) {
+    toastr.error('Chưa nhập handle');
+    $('input[name="handle"]').addClass('error');
+    return;
+  }
+  data.image = $('input[name="image"]').val();
+  data.description = $('textarea[name="description"]').val();
+  if(!data.description) {
+    toastr.error('Chưa nhập mô tả bài viết');
+    return;
+  }
+  data.description_seo = $('textarea[name="description_seo"]').val();
+  data.content = tinyMCE.get('page_content').getContent();
+  if(!data.content) {
+    toastr.error('Chưa nhập nội dung bài viết');
+    return;
+  }
+  data.display = $('select[name="display"]').val();
+  data.display = parseInt(data.display);
+  data.meta_robots = $('select[name="meta_robots"]').val();
+
+  btn.addClass('disabled');
+
+  $.ajax({
+    type: 'POST',
+    url: '/admin/page',
+    data: data,
+    success: function(json) {
+      btn.removeClass('disabled');
+      if(!json.code) {
+        toastr.success('Thêm tin tức thành công');
+        reloadPage('/admin/page/' + json.id);
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    }
+  });
 });
 
 $('.btn-update-page').click(function() {
-	var id = $(this).data('id');
-	var data = {};
-	var btn = $(this);
-	data.title = $('input[name="title"]').val();
-	if(!data.title.trim().length) {
-		toastr.error('Chưa nhập tiêu đề bài viết');
+  var id = $(this).data('id');
+  var btn = $(this);
+  $('input').removeClass('error');
+  var data = {};
+  data.title = $('input[name="title"]').val();
+  if(!data.title.trim().length) {
+    toastr.error('Chưa nhập tiêu đề');
     $('input[name="title"]').addClass('error');
-		return;
-	}
-	data.handle = $('input[name="handle"]').val();
-	data.content = tinyMCE.get('page-content').getContent();
-	if(!data.content) {
-		toastr.error('Chưa nhập nội dung bài viết');
-		return;
-	}
-	btn.addClass('disabled');
-	$.ajax({
-		type: 'PUT',
-		url: '/admin/pages/' + id,
-		data: data,
-		success: function(json) {
-			if(!json.code) toastr.success('Cập nhật bài viết thành công');
-      else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    return;
+  }
+  data.handle = $('input[name="handle"]').val();
+  if(!data.handle.trim().length) {
+    toastr.error('Chưa nhập handle');
+    $('input[name="handle"]').addClass('error');
+    return;
+  }
+  data.image = $('input[name="image"]').val();
+  data.description = $('textarea[name="description"]').val();
+  if(!data.description) {
+    toastr.error('Chưa nhập mô tả bài viết');
+    return;
+  }
+  data.description_seo = $('textarea[name="description_seo"]').val();
+  data.content = tinyMCE.get('page_content').getContent();
+  if(!data.content) {
+    toastr.error('Chưa nhập nội dung bài viết');
+    return;
+  }
+  data.display = $('select[name="display"]').val();
+  data.meta_robots = $('select[name="meta_robots"]').val();
+
+  btn.addClass('disabled');
+
+  $.ajax({
+    type: 'PUT',
+    url: '/admin/page/' + id,
+    data: data,
+    success: function(json) {
       btn.removeClass('disabled');
-		}
-	});
+      if(!json.code) {
+        toastr.success('Cập nhật tin tức thành công');
+        reloadPage();
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    }
+  });
 });
 
-$('.btn-remove-page').click(function(){
-	var id = $(this).attr('data-id');
+
+$(document).on('click', '.btn-remove-page', function() {
+  var id = $(this).data('id');
   var tr = $(this).closest('tr');
-  var template = $(this).data('template');
-  if(confirm("Xóa bài viết?")) {
+  if (confirm('Xóa bài viết')) {
     $.ajax({
 			type: 'DELETE',
-			url: '/admin/pages/' + id,
+			url: '/admin/page/' + id,
 			success: function(json) {
 				if(!json.code) {
-					toastr.success('Xóa bài viết thành công');
-          if(template != 'edit') tblPage.row(tr).remove().draw();
-          else {
-            setTimeout(function(){
-  						window.location.href = '/admin/page';
-  					}, 1000);
-          }
-				} else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+          toastr.success('Xóa bài viết thành công');
+          tbl.row(tr).remove().draw();
+        }
+        else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
 			}
 		});
   }
-});
-
+})
 
 $(document).on('change', 'input[name="title"]', function() {
-	var title = $(this).val();
-  if(!title) {
-    toastr.error('Chưa nhập tiêu đề');
-    $(document).find('input[name="handle"]').val('');
-    return;
-  }
-  var data_title = $(this).data('title');
-  var data_handle = $(this).data('handle');
-  if(title == data_title) {
-    $(document).find('input[name="handle"]').val(data_handle);
-    return;
-  }
-  createHandle(title, function(handle) {
-    if(!handle) {
-      toastr.error('Tên bài viết đã tồn tại');
-      $(document).find('input[name="title"]').val('');
-      $(document).find('input[name="handle"]').val('');
-    }
-    else $(document).find('input[name="handle"]').val(handle);
-    $('input[name="title"]').removeClass('error');
-  });
+  var title = $(this).val();
+  var handle = convertToHandle(title);
+  $(document).find('input[name="handle"]').val(handle);
 });
