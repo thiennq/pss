@@ -8,14 +8,25 @@ require_once('Collection.php');
 
 $GLOBALS['size'] = [240, 480, 640, 1024, 2048];
 
+function checkNull($arr) {
+  foreach ($arr as $value) {
+    if (!$value) {
+      return [
+        "error" => true,
+        "field" => $value
+      ];
+    }
+  }
+  return [
+    "error" => false,
+    "field" => null
+  ];
+}
+
 
 function setMemcached($key, $value, $time=30*24*60*60) {
   global $memcached;
-  if($memcached) {
-    if ($memcached->set($key, $value, $time)) {
-    } else {
-    }
-  }
+  $memcached->set($key, $value, $time);
 }
 
 function getMemcached($key) {
@@ -35,6 +46,33 @@ function getTitleFromHandle($handle) {
   $obj = Product::where('handle', '=', $handle)->first();
   if ($obj) return $obj['title'];
   return '';
+}
+
+function handle($str) {
+  $str = trim($str);
+  $str = strtolower($str);
+  $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+  $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+  $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+  $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+  $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+  $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+  $str = preg_replace("/(đ)/", 'd', $str);
+  $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+  $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+  $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+  $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+  $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+  $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+  $str = preg_replace("/(Đ)/", 'D', $str);
+  $str = preg_replace('/[^A-Za-z0-9-]+/', '-', $str);
+  $str = str_replace(' ', '-', $str);
+  $str = str_replace('.', '-', $str);
+  $str = str_replace('--', '-', $str);
+  $str = str_replace('--', '-', $str);
+  $str = str_replace('--', '-', $str);
+  if(substr($str, -1) == '-') $str = substr($str, 0, -1);
+  return $str;
 }
 
 function convertHandle($str) {
@@ -161,7 +199,7 @@ function uploadImageTinymce(Request $request, Response $response) {
   for($i=0; $i<$total; $i++) {
     $tmp_name = $_FILES['upload']['tmp_name'][$i];
     $new_name = time().'-'.$_FILES['upload']['name'][$i];
-    $path = ROOT . '/public/uploads/images/'.$new_name;
+    $path = ROOT . '/public/images/'.$new_name;
     if ($tmp_name != ""){
       if(move_uploaded_file($tmp_name, $path)) {
         array_push($result, $new_name);

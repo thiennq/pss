@@ -138,7 +138,7 @@ class AdminSettingController extends AdminController {
   }
 
   public function getImages(Request $request, Response $response) {
-    $dir = ROOT . '/public/uploads/images';
+    $dir = ROOT . '/public/images';
     $images = scandir($dir);
     array_shift($images);
     array_shift($images);

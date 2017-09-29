@@ -16,12 +16,12 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $Schema = $capsule->schema();
 
-$Schema->create('variants', function (Blueprint $table) {
+$Schema->create('variant', function (Blueprint $table) {
     $table->increments('id');
+    $table->integer('product_id');
     $table->string('title');
     $table->integer('price');
-    // $table->integer('price_compare');
-    // $table->integer('inventory');
-    $table->integer('product_id');
+    $table->integer('price_compare');
+    $table->integer('inventory');
     $table->timestamps();
 });

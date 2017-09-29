@@ -16,7 +16,7 @@ class ControllerHelper {
       case -3:
         return [
           'code' => -3,
-          'message' => 'Error'
+          'message' => 'Server internal error'
         ];
       default:
         return [

@@ -8,44 +8,43 @@ class Product extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = 'product';
 
-    public function store($obj) {
-      $product = Product::find($obj->id);
-      if($product) {
-        $product->group_id = $obj->group_id;
-        if($product->title != $obj->title) {
-          $product->title = $obj->title;
-          $product->handle = $obj->handle;
-        }
-        $product->barcode = $obj->barcode;
-        $product->price = $obj->price;
-        $product->price_compare = $obj->price_compare;
-        $product->discount = $obj->discount ? $obj->discount : 0;
-        $product->save();
-      } else {
-        $product = new Product;
-        $product->id = $obj->id;
-        $product->group_id = ($obj->group_id) ? $obj->group_id : '';
-        $product->title = $obj->title;
-        $product->handle = $obj->handle;
-        $product->barcode = $obj->barcode ? $obj->barcode : '';
-        $product->featured_image = $obj->featured_image ? $obj->featured_image : '';
-        $product->price = $obj->price ? $obj->price : '';
-        $product->price_compare = $obj->price_compare ? $obj->price_compare : '';
-        $product->discount = $obj->discount ? $obj->discount : 0;
-        $product->description = $obj->description ? $obj->description : '';
-        $product->meta_description = $obj->meta_description ? $obj->meta_description : '';
-        $product->material = $obj->material ? $obj->material : '';
-        $product->specification = $obj->specification ? $obj->specification : '';
-        $product->brand = $obj->brand ? $obj->brand : '';
-        $product->color = $obj->color ? $obj->color : '';
-        $product->display = $obj->display ? 1 : 0;
-        $product->sell = 0;
-        $product->view = 0;
-        $product->created_at = date('Y-m-d H:i:s');
-        $product->updated_at = date('Y-m-d H:i:s');
-        $product->save();
-      }
-      return $obj->id;
+    public function store($data) {
+      $product = Product::where('title', $data['title'])->first();
+      if ($product) return -1;
+      $product = new Product;
+      $product->title = $data['title'];
+      $product->handle = convertHandle($data['title']);
+      $product->description = $data['description'] ? $data['description'] : '';
+      $product->meta_description = $data['meta_description'] ? $data['meta_description'] : '';
+      $product->display = $data['display'] ? 1 : 0;
+      $product->sell = 0;
+      $product->view = 0;
+      $product->created_at = date('Y-m-d H:i:s');
+      $product->updated_at = date('Y-m-d H:i:s');
+      $product->save();
+      return 0;
+    }
+
+    public function update($id, $data) {
+      $product = Product::find($id);
+      if (!$product) return -2;
+      $product->title = $data['title'];
+      $product->handle = convertHandle($data['title']);
+      $product->description = $data['description'] ? $data['description'] : '';
+      $product->meta_description = $data['meta_description'] ? $data['meta_description'] : '';
+      $product->display = $data['display'] ? 1 : 0;
+      $product->sell = 0;
+      $product->view = 0;
+      $product->updated_at = date('Y-m-d H:i:s');
+      $product->save();
+      return 0;
+    }
+
+    public function destroy($id) {
+      $product = Product::find($id);
+      if (!$product) return -2;
+      $product->delete();
+      return 0;
     }
 
     public function getInfoProduct($products) {

@@ -4,6 +4,7 @@ cache/*.php
 .DS_Store
 scss/scss_cache
 public/uploads
+public/images
 public/test
 public/excel
 .env
