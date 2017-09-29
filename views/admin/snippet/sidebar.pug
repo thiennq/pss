@@ -96,21 +96,21 @@ aside.main-sidebar
           span Bài viết
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          - var liClass = (childMenu == 'news' ? 'active' : '');
+          - var liClass = (childMenu == 'blog' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/blogs', class=liClass)
               i.fa.fa-circle
               | Nhóm bài viết
-          - var liClass = (childMenu == 'info' ? 'active' : '');
+          - var liClass = (childMenu == 'article' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/article/news')
+            a(href='/admin/articles', class=liClass)
               i.fa.fa-circle
               | Danh sách bài viết
-          - var liClass = (childMenu == 'landing-page' ? 'active' : '');
+          - var liClass = (childMenu == 'page' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/pages')
+            a(href='/admin/pages', class=liClass)
               i.fa.fa-circle
-              | Trang (Pages)
+              | Trang nội dung
       - var itemClass = (menu == 'setting' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')

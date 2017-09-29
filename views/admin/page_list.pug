@@ -1,28 +1,25 @@
 extends ./layout.pug
 block pre-include
   - var menu = 'article'
-  - var childMenu = 'info'
-  title Danh sách tin tức
+  - var childMenu = 'page'
+  title Trang nội dung
 
 block post-include
-  script(src=staticURI() + '/js/admin/article.js')
+  script(src=staticURI() + '/js/admin/page.js')
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
-        a Bài viết
-      li
-        a Danh sách tin tức
-        
+        a Trang nội dung
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin(href="/admin/article/new") Thêm mới
+        a.btn.btn-admin(href="/admin/page/new") Thêm mới
 
   section.content
     .box
       .box-body
-        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+        table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
           thead
             tr
               th ID
@@ -37,7 +34,7 @@ block content
               tr
                 td=item.id
                 td
-                  a(href="/admin/articles/" + item.id target="_blank")=item.title
+                  a(href="/admin/page/" + item.id target="_blank")=item.title
                 td=item.author
                 td=item.updated_at
                 td
@@ -46,7 +43,7 @@ block content
                   else
                     | Không
                 td
-                  a.btn-edit(href="/admin/articles/" + item.id, data-id=item.id, title="Chỉnh sửa")
+                  a.btn-edit(href="/admin/page/" + item.id, data-id=item.id, title="Chỉnh sửa")
                     i.fa.fa-pencil-square-o
-                  a.btn-remove-page.btn-remove.btn-remove-article(data-id=item.id, title="Xóa")
+                  a.btn-remove-page.btn-remove.btn-remove-page(data-id=item.id, title="Xóa")
                     i.fa.fa-trash

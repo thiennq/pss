@@ -11,7 +11,7 @@ class AdminArticleController extends AdminController {
 
   public function showNews(Request $request, Response $response) {
     $article = Article::all();
-    return $this->view->render($response, 'admin/article_news.pug', array(
+    return $this->view->render($response, 'admin/article_list.pug', array(
 			'data' => $article
     ));
   }
@@ -45,17 +45,15 @@ class AdminArticleController extends AdminController {
     $body = $request->getParsedBody();
     $article = new Article;
     $article->title = $body['title'];
-    $article->type = $body['type'];
     $article->handle = $body['handle'];
-    $article->link = $body['type'] . '/' . $body['handle'];
+    $article->link = '/' . $body['handle'];
     $article->image = $body['image'] ? renameOneImage($body['image'], $body['handle']) : '';
     $article->description = $body['description'] ? $body['description'] : '';
     $article->description_seo = $body['description_seo'] ? $body['description_seo']: '';
     $article->content = $body['content'];
-    $article->content_promotion = $body['content_promotion'];
     $article->author = $_SESSION['fullname'];
     $article->display = $body['display'];
-    $article->collection_id = $body['collection_id'];
+    $article->blog_id = $body['blog_id'];
     $article->meta_robots = $body['meta_robots'];
     $article->view = 0;
     $article->created_at = date('Y-m-d H:i:s');
@@ -81,18 +79,16 @@ class AdminArticleController extends AdminController {
     $article = Article::find($id);
     if($article) {
       $article->title = $body['title'];
-      $article->type = $body['type'];
       $article->handle = $body['handle'];
-      $link = $body['type'] . '/' . $body['handle'] . '-' . $id;
+      $link = '/' . $body['handle'] . '-' . $id;
       $article->link = $link;
       if($body['image']) $article->image = renameOneImage($body['image'], $body['handle']);
       if($body['description']) $article->description = $body['description'];
       if($body['description_seo']) $article->description_seo = $body['description_seo'];
       $article->content = $body['content'];
-      $article->content_promotion = $body['content_promotion'];
       $article->author = $_SESSION['fullname'];
       $article->display = $body['display'];
-      $article->collection_id = $body['collection_id'];
+      $article->blog_id = $body['blog_id'];
       $article->meta_robots = $body['meta_robots'];
       $article->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
       $article->save();

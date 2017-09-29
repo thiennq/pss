@@ -11,6 +11,8 @@ require_once('../controllers/AdminOrderController.php');
 require_once('../controllers/AdminCustomerController.php');
 require_once('../controllers/AdminVideoController.php');
 require_once('../controllers/AdminArticleController.php');
+require_once('../controllers/AdminBlogController.php');
+require_once('../controllers/AdminPageController.php');
 require_once('../controllers/AdminBranchController.php');
 require_once('../controllers/AdminColorController.php');
 require_once('../controllers/AdminBrandController.php');
@@ -119,12 +121,12 @@ $app->group('/admin', function() use($app) {
 
   // Article
   $app->get('/article/new', '\AdminArticleController:create');
-  $app->get('/article/news', '\AdminArticleController:showNews');
-  $app->get('/articles/{id}', '\AdminArticleController:show');
+  $app->get('/articles', '\AdminArticleController:showNews');
+  $app->get('/article/{id}', '\AdminArticleController:show');
   $app->post('/article', '\AdminArticleController:store');
   $app->put('/article/{id}', '\AdminArticleController:update');
   $app->delete('/article/{id}', '\AdminArticleController:delete');
-  $app->get('/article/search', '\AdminArticleController:searchArticle');
+  $app->get('/articles/search', '\AdminArticleController:searchArticle');
 
   // Blog
   $app->get('/blog/new', '\AdminBlogController:create');
@@ -133,7 +135,16 @@ $app->group('/admin', function() use($app) {
   $app->post('/blog', '\AdminBlogController:store');
   $app->put('/blog/{id}', '\AdminBlogController:update');
   $app->delete('/blog/{id}', '\AdminBlogController:delete');
-  // $app->get('/blog/search', '\AdminBlogController:searchBlog');
+  $app->get('/blogs/search', '\AdminBlogController:searchBlog');
+
+  // Page
+  $app->get('/page/new', '\AdminPageController:create');
+  $app->get('/pages', '\AdminPageController:showNews');
+  $app->get('/page/{id}', '\AdminPageController:show');
+  $app->post('/page', '\AdminPageController:store');
+  $app->put('/page/{id}', '\AdminPageController:update');
+  $app->delete('/page/{id}', '\AdminPageController:delete');
+  $app->get('/pages/search', '\AdminPageController:searchPage');
 
   //Setting
   $app->get('/settings/index', '\AdminSettingController:settingIndex');

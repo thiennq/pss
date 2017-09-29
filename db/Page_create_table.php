@@ -20,7 +20,14 @@ $Schema->create('page', function (Blueprint $table) {
   $table->increments('id');
   $table->string('title');
   $table->string('handle');
-  $table->text('content')->nullable();
-  $table->boolean('display')->nullable();
+  $table->string('link');
+  $table->string('image')->nullable();
+  $table->text('description')->nullable();
+  $table->text('description_seo')->nullable();
+  $table->text('content');
+  $table->text('meta_robots');
+  $table->string('author')->nullable();
+  $table->boolean('display');
+  $table->integer('view');
   $table->timestamps();
 });

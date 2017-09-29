@@ -1,29 +1,29 @@
 extends ./layout.pug
+
 block pre-include
   - var menu = 'article'
-  - var childMenu = 'article'
-  title Viết bài mới
+  - var childMenu = 'page'
+  title Tạo trang nội dung mới
 
 block post-include
-  script(src=staticURI() + '/js/admin/article.js')
+  script(src=staticURI() + '/js/admin/page.js')
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
-        a Bài viết
+        a Trang nội dung
       li
-        a Viết bài mới
-
+        a Tạo trang nội dung mới
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin.btn-create-article
+        a.btn.btn-admin.btn-create-page
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
-  section.content.article
+  section.content.page
     .box.box-info
-      .form-horizontal.form-article
+      .form-horizontal.form-page
         .box-body
           .form-group
             label.col-sm-2.control-label Tiêu đề
@@ -35,10 +35,6 @@ block content
               strong.required  *
             .col-sm-10
               input.form-control(name="handle")
-          .form-group
-            label.col-sm-2.control-label Nhóm bài viết
-            .col-sm-10
-              select.form-control(name="blog")
           .form-group
             label.col-sm-2.control-label Hình đại diện
               img.no-border.loading(src=staticURI() + "/img/loading.gif").hidden
@@ -59,7 +55,7 @@ block content
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
-              textarea.form-control#article_content
+              textarea.form-control#page_content
           .form-group
             label.col-sm-2.control-label Meta robots
             .col-sm-10
