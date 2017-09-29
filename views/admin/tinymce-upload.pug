@@ -34,7 +34,7 @@ style.
   .list-image-upload.col-sm-12
     each image, index in images
       - var host = currentHost();
-      - var url = concatString(host, '/uploads/images/');
+      - var url = concatString(host, '/images/');
       - var url = concatString(url, image);
       if index < 8
         .col-sm-3.item
@@ -45,7 +45,6 @@ style.
   if total > 8
     .col-sm-12.text-center
       .btn.btn-primary.btn-viewmore Xem thêm
-
 script.
   $('.tinymce-upload').on('change', 'input#input-list-images', function(){
     var ext = $(this).val().split('.').pop().toLowerCase();
@@ -66,7 +65,7 @@ script.
         success: function(json){
           var list = '';
           $.each(json.data, function(i,e) {
-            var src = location.origin + '/uploads/images/' + e;
+            var src = location.origin + '/images/' + e;
             list += '<div class="col-sm-3 item"><img src="'+src+'"></div>';
           });
           $('.list-image-upload').prepend(list);

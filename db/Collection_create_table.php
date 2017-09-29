@@ -28,6 +28,5 @@ $Schema->create('collection', function (Blueprint $table) {
     $table->text('description')->nullable();
     $table->text('meta_title')->nullable();
     $table->text('meta_description')->nullable();
-    $table->boolean('show_landing_page')->nullable();
     $table->timestamps();
 });

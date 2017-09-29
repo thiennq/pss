@@ -18,7 +18,7 @@ class AdminCollectionController extends AdminController {
 	}
 
 	public function create(Request $request, Response $response) {
-		$list_collection = Collection::where('parent_id', -1)->where('show_landing_page', 0)->orderBy('breadcrumb', 'asc')->get();
+		$list_collection = Collection::where('parent_id', -1)->orderBy('breadcrumb', 'asc')->get();
 		return $this->view->render($response, 'admin/collection_new.pug', array(
 			'collection' => $list_collection
 		));

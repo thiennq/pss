@@ -11,7 +11,7 @@ class CollectionController extends Controller {
   public function show(Request $request, Response $response) {
     $handle = $request->getAttribute('link');
 		if(substr($handle, -1) == '/') $handle = substr($handle, 0, -1);
-		$collection = Collection::where('show_landing_page', 0)->where('link', $handle)->first();
+		$collection = Collection::where('link', $handle)->first();
     if(!$collection) {
       $this->view->render($response, '404.pug');
       return $response->withStatus(404);

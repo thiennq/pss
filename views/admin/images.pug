@@ -29,14 +29,14 @@ block content
                 each image, index in images
                   if index < 12
                     .col-sm-3.item
-                      a(href="/uploads/images/" + image target="_blank")
-                        img(src="/uploads/images/" + image)
+                      a(href="/images/" + image target="_blank")
+                        img(src="/images/" + image)
                       span.btn-remove-image(data-image=image)
                         i.fa.fa-times
                   else
                     .col-sm-3.item.hidden
-                      a(href="/uploads/images/" + image target="_blank")
-                        img(src="/uploads/images/" + image)
+                      a(href="/images/" + image target="_blank")
+                        img(src="/images/" + image)
                       span.btn-remove-image(data-image=image)
                         i.fa.fa-times
               if total > 12
@@ -61,7 +61,7 @@ block content
                   success: function(json){
                     var list = '';
                     $.each(json.data, function(i,e) {
-                      list += '<div class="col-sm-3 item"><a href="/uploads/images/'+e+'" target="_blank"><img src="/uploads/images/'+e+'"></a></div>';
+                      list += '<div class="col-sm-3 item"><a href="/images/'+e+'" target="_blank"><img src="/images/'+e+'"></a></div>';
                     });
                     $('.list-image-upload').prepend(list);
                   },

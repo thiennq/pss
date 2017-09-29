@@ -8,14 +8,14 @@ block post-include
   script(src=staticURI() + '/js/admin/collection.js')
 
 block content
-	section.content-header.clearfix
+  section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
         a Sản phẩm
       li
         a(href='/admin/collection') Nhóm sản phẩm
       li
-      	a Tạo mới
+        a Tạo mới
     ol.button-right.col-sm-4.col.xs-12
       li
         a.btn.btn-admin.btn-create-collection
@@ -23,26 +23,21 @@ block content
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
   section.content
-    .box.box-info
+    .box
       .form-horizontal.form-collection
         .box-body
           .form-group
             label.col-sm-2.control-label Nhóm sản phẩm cha
             .col-sm-10
               select.form-control(name="parent_id")
-                option(value='-1' selected) Chọn...
+                option(value='-1' selected) Chọn nhóm sản phẩm cha...
                 each item in collection
                   option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
           .form-group
             label.col-sm-2.control-label Tên nhóm sản phẩm
               strong.required  *
             .col-sm-10
-              input.form-control(name="title", data-title='', data-handle='')
-          .form-group
-            label.col-sm-2.control-label Handle
-              strong.required  *
-            .col-sm-10
-              input.form-control(name="handle")
+              input.form-control(name="title", placeholder="VD: Nhóm sản phẩm Laptop, phụ kiện...")
           .form-group
             label.col-sm-2.control-label Hình đại diện
               br
@@ -62,23 +57,24 @@ block content
           .form-group
             label.col-sm-2.control-label Mô tả
             .col-sm-10
-              textarea.form-control#collection-description
+              textarea.form-control(name="description" placeholder="Mô tả ngắn")
           .form-group
-            label.col-sm-2.control-label Tag
-              br
-              a.add-tag (Thêm)
-            .col-sm-10.list-tag
-          .form-group
-            label.col-sm-2.control-label Meta title
+            label.col-sm-2.control-label Nội dung
             .col-sm-10
-              textarea.form-control(name="meta_title")
+              textarea.form-control#content
+    .box
+      .form-horizontal.form-collection
+        .box-body
           .form-group
-            label.col-sm-2.control-label Meta description
-            .col-sm-10
-              textarea.form-control(name="meta_description")
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
           .form-group
-            label.col-sm-2.control-label Chỉ hiển thị ở landing page
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
             .col-sm-10
-              select.form-control(name="show_landing_page")
-                option(value="0" selected) Không
-                option(value="1") Có
+              input.form-control(name="meta_title", placeholder="Laptop Sony chính hãng")
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")

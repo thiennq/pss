@@ -1,4 +1,4 @@
-initTinymce('#collection-description');
+initTinymce('#content');
 initDataTable('table');
 
 $(window).on('load', function() {
@@ -39,7 +39,6 @@ $('.btn-create-collection').click(function() {
 	data.description = tinyMCE.get('collection-description').getContent();
   data.meta_title = $('textarea[name="meta_title"]').val();
   data.meta_description = $('textarea[name="meta_description"]').val();
-  data.show_landing_page = $('select[name="show_landing_page"]').val();
   var arr_tag = [];
   $('.list-tag').find('.item').each(function() {
     var obj = {};
@@ -227,11 +226,6 @@ $(document).on('change', 'select[name="parent_id"]', function() {
   }
 });
 
-
-$('.add-tag').click(function() {
-  var item = tmpl("add-new-tag");
-  $('.list-tag').append(item);
-});
 
 $('.list-tag').on('click', '.btn-remove', function() {
   var id = $(this).data('id');
