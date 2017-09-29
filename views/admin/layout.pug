@@ -29,8 +29,7 @@ html
     script(src=staticURI() +'/libs/chosen.jquery.min.js')
     //- include ../../snippet/oneSignal.pug
     block pre-include
-
-  body
+  body(data-uri=staticURI())
     .wrapper
       include snippet/sidebar
       include snippet/tmpl

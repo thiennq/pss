@@ -29,7 +29,7 @@ class AdminProductController extends AdminController {
 		]);
 	}
 
-	public function create() {
+	public function create(Request $request, Response $response) {
 		$list_collection = Collection::orderBy('breadcrumb', 'asc')->get();
 		foreach ($list_collection as $key => $collection) {
 			$collection['breadcrumb'] = str_replace(',', '/', $collection['breadcrumb']);

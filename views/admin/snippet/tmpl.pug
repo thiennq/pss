@@ -1,6 +1,5 @@
 script#item-image(type="text/x-tmpl").
-  <div class="image col-xs-2" data-name={%=o.name%}>
-    <img src={%=o.src%}/>
+   <div class="image col-xs-2" data-index="{%=o.index%}" style="background-image:url('{%=o.src%}');">
     <span class="rotate">
       <i class="fa fa-undo"></i>
     </span>
@@ -38,5 +37,35 @@ script#add-new-tag(type="text/x-tmpl").
       <a class="btn-remove">
         <i class="fa fa-trash"></i>
       </a>
+    </div>
+  </div>
+
+script#add-variant(type="text/html").
+  <div class="variant-item clearfix variant-bonus">
+    <div class="col-sm-3">
+      <input name="variant-name" placeholder="Tên" class="form-control"/>
+    </div>
+    <div class="col-sm-3">
+      <input name="variant-price" placeholder="Giá" class="form-control"/>
+    </div>
+    <div class="col-sm-3">
+      <input name="variant-price-compare" placeholder="Giá so sánh" class="form-control"/>
+    </div>
+    <div class="col-sm-3">
+      <input type="number" name="variant-inventory" value="1" class="form-control"/>
+    </div>
+    <a class="btn-remove btn-remove-variant"><i class="fa fa-trash"></i></a>
+    <div class="col-sm-12 variant-images">
+      <label>Hình ảnh
+        <img src="{%=o.static%}/img/loading.gif" style="margin-left: 5px;" class="hidden no-border loading">
+        <form enctype="multipart/form-data" class="hidden">
+          <input class="upload-list-image" id="upload-image-variant-{%=o.id%}" type="file" name="upload[]" multiple="multiple">
+        </form>
+      </label>
+      <div class="col-sm-12 list-image">
+        <div class="col-xs-2 add-image">
+          <label for="upload-image-variant-{%=o.id%}"></label>
+        </div>
+      </div>
     </div>
   </div>

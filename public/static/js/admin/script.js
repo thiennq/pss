@@ -1,3 +1,4 @@
+var staticURI = $('body').data('uri');
 function initTinymce(item) {
   if ($(item).length) {
     tinymce.init({

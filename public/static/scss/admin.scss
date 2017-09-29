@@ -946,3 +946,18 @@ select {
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
 }
+
+.list-variant {
+  .variant-item {
+    margin-bottom: 20px;
+    .variant-images {
+      label {
+        font-weight: normal;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+.btn-add-variant {
+  cursor: pointer;
+}
