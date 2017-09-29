@@ -45,17 +45,14 @@ class AdminBlogController extends AdminController {
     $body = $request->getParsedBody();
     $Blog = new Blog;
     $Blog->title = $body['title'];
-    $Blog->type = $body['type'];
     $Blog->handle = $body['handle'];
-    $Blog->link = $body['type'] . '/' . $body['handle'];
+    $Blog->link = '/' . $body['handle'];
     $Blog->image = $body['image'] ? renameOneImage($body['image'], $body['handle']) : '';
     $Blog->description = $body['description'] ? $body['description'] : '';
     $Blog->description_seo = $body['description_seo'] ? $body['description_seo']: '';
     $Blog->content = $body['content'];
-    $Blog->content_promotion = $body['content_promotion'];
     $Blog->author = $_SESSION['fullname'];
     $Blog->display = $body['display'];
-    $Blog->collection_id = $body['collection_id'];
     $Blog->meta_robots = $body['meta_robots'];
     $Blog->view = 0;
     $Blog->created_at = date('Y-m-d H:i:s');
@@ -81,18 +78,15 @@ class AdminBlogController extends AdminController {
     $Blog = Blog::find($id);
     if($Blog) {
       $Blog->title = $body['title'];
-      $Blog->type = $body['type'];
       $Blog->handle = $body['handle'];
-      $link = $body['type'] . '/' . $body['handle'] . '-' . $id;
+      $link = '/' . $body['handle'] . '-' . $id;
       $Blog->link = $link;
       if($body['image']) $Blog->image = renameOneImage($body['image'], $body['handle']);
       if($body['description']) $Blog->description = $body['description'];
       if($body['description_seo']) $Blog->description_seo = $body['description_seo'];
       $Blog->content = $body['content'];
-      $Blog->content_promotion = $body['content_promotion'];
       $Blog->author = $_SESSION['fullname'];
       $Blog->display = $body['display'];
-      $Blog->collection_id = $body['collection_id'];
       $Blog->meta_robots = $body['meta_robots'];
       $Blog->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
       $Blog->save();
