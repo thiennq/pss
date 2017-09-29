@@ -1,74 +1,146 @@
 initTinymce('#product-description');
-initTinymce('#product-specification');
+/*initTinymce('#product-specification');
 
 $(window).on('load', function() {
   if($('.specification') && !$('.specification').data('value')) {
     var init = $('.specification').data('init');
     tinyMCE.get('product-specification').setContent(init);
   }
+});*/
+
+
+$('.btn-add-variant').click(function() {
+  var obj = {};
+  obj.id = $('.variant-item').length + 1;
+  obj.static = staticURI;
+  var variant = tmpl("add-variant", obj);
+  $('.list-append').append(variant);
 });
 
-$(document).on('change', '.feature-image', function(){
+function readURL(files, callback) {
+  function loadOne(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var imgData = reader.result;
+      output.push(imgData);
+      if (output.length == files.length) {
+        callback(output);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+  var output = [];
+  for (var i = 0; i < files.length; i++) {
+    loadOne(files[i]);
+  }
+}
+
+$(document).on('change', '.upload-list-image', function(){
   if($(this).val()) {
-    if(checkExtImage($(this).val())) {
-      var form_group = $(this).closest('.form-group');
-      form_group.find('.loading').removeClass('hidden');
-      var form = $(this).closest('form');
-      var formData = new FormData(form[0]);
-      $.ajax({
-        type: 'POST',
-        url: '/admin/api/uploadImage',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(json) {
-          if(!json.code) {
-            var image = json.data;
-            var resize = resizeImage(image, '240');
-            var timestamp = new Date() - 0;
-            form.find('img').attr('src', '/uploads/' + resize + '?v=' + timestamp);
-            form.find('input[name="featured_image"]').val(image);
-          } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-          form_group.find('.loading').addClass('hidden');
-        }
+    var variant = $(this).closest('.variant-item');
+    var files = this.files;
+    readURL(files, function(imgsData) {
+      $.each(imgsData, function(i, imgData) {
+        var obj = {};
+        obj.index = i;
+        obj.src = imgData;
+        var item_image = tmpl("item-image", obj);
+        variant.find('.add-image').before(item_image);
       });
-    }
+    });
   }
 });
 
-$(document).on('change', '#upload-list-image', function(){
-  if($(this).val()) {
-    if(checkExtImage($(this).val())) {
-      var form_group = $(this).closest('.form-group');
-      form_group.find('.loading').removeClass('hidden');
-      var form = form_group.find('form');
-      var formData = new FormData(form[0]);
-      $.ajax({
-        type: 'POST',
-        url: '/admin/api/uploadImage',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(json) {
-          if(!json.code) {
-            $.each(json.data, function(i,e) {
-              var resize = resizeImage(e, '240');
-              var timestamp = new Date() - 0;
-              var obj = {};
-              obj.src = '/uploads/' + resize + '?v=' + timestamp;
-              obj.name = e;
-              var item_image = tmpl("item-image", obj);
-              $('.list-image').find('.add-image').before(item_image);
+function uploadImg(formData, callback) {
+  $.ajax({
+    type: 'POST',
+    url: '/admin/api/uploadImage',
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function(json) {
+      callback(json);
+    }
+  });
+}
+
+function uploadImgs($form, callback) {
+  var files = $form.prop('files');
+  var formData = new FormData();
+  for (var i = 0; i < files.length; i++) {
+   var f = files[i];
+   if (!f.deleted) {
+    formData.append('upload[]', f, f.name);
+   }
+  }
+  uploadImg(formData, function(json) {
+    var list_image = [];
+    if(!json.code) {
+      obj = json.data;
+      $.each(obj, function(i,e) {
+        list_image.push(e);
+      });
+    }
+    callback(list_image);
+  });
+}
+
+$('.btn-create-product').click(function() {
+  $('.btn-create-product').addClass('disabled');
+  var product = {};
+  product.title = $('input[name="title"]').val();
+  product.collection = $('select[name="collection"]').val();
+  product.description = tinyMCE.get('product-description').getContent();
+  product.meta_description = $('textarea[name="meta-description"]').val();
+  product.meta_robots = $('select[name="meta-robots"]').val();
+  product.display = $('select[name="display"]').val();
+  $.ajax({
+    type: 'POST',
+    url: '/admin/product',
+    data: product,
+    success: function(json) {
+      if(!json.code) {
+        var $list_variant = $('.variant-item');
+        var count = 0;
+        var variant = {};
+        variant.product_id = json.data;
+        createVariant();
+        function createVariant() {
+          if (count ==  $list_variant.length) {
+            $('.btn-create-product').removeClass('disabled');
+            reloadPage();
+            return false;
+          }
+          var itemVariant = $list_variant.eq(count);
+          var $formRI = itemVariant.find('.upload-list-image');
+          count++;
+          variant.title = itemVariant.find('input[name="variant-name"]').val();
+          variant.price = itemVariant.find('input[name="variant-price"]').val();
+          variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
+          variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
+          uploadImgs($formRI, function(list_image) {
+            variant.list_image = list_image;
+            $.ajax({
+              type: 'POST',
+              url: '/admin/variant',
+              data: data,
+              success: function(json) {
+                if(!json.code) {
+                  toastr.success('Tạo variant ' +variant.title+' thành công');
+                  createProduct();
+                } else toastr.error('Tạo variant ' +variant.title+ ' thất bại');
+              }
             });
-            $('.list-image').addClass('no-bg');
-          } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-          form_group.find('.loading').addClass('hidden');
+          });
         }
-      });
+      } 
+      else {
+        $('.btn-create-product').removeClass('disabled');
+        toastr.error('Tạo sản phẩm ' +product.title+ ' thất bại');
+      } 
     }
-  }
+  });
 });
 
 $(document).on('click', '.btn-rotate-image', function(){
@@ -108,7 +180,7 @@ $('.btn-update-product').click(function(event) {
   // data.price_compare = data.price_compare.replace(/[^0-9]+/g, "");
   // data.meta_description = $('textarea[name="meta_description"]').val();
   data.description = tinyMCE.get('product-description').getContent();
-  data.specification = tinyMCE.get('product-specification').getContent();
+  // data.specification = tinyMCE.get('product-specification').getContent();
   var list_image = [];
   if($('.list-image').find('.image').length) {
     $('.list-image').find('.image').each(function(i,e) {
@@ -138,7 +210,7 @@ $('.btn-update-product').click(function(event) {
   data.bag = $('select[name="bag"]').val();
   data.display = $('select[name="display"]').val();
   data.dropship = $('select[name="dropship"]').val();
-  data.meta_robots = $('select[name="meta_robots"]').val();
+  data.meta_robots = $('select[name="meta-robots"]').val();
   data.updated_at = $('input[name="updated_at"]').val();
   if(checkDate(data.updated_at) == 'Invalid Date') {
     toastr.error('Vui lòng nhập đúng định dạng ngày giờ (yyyy-mm-dd h:m:s)');
@@ -208,7 +280,7 @@ $(document).on('change', 'input[name="title"]', function() {
 });
 
 $(document).on('click', '.btn-remove-variant', function() {
-  var item = $(this).closest('.item-variant');
+  var item = $(this).closest('.variant-item');
   var variant_id = item.data('id');
   item.remove();
   if(variant_id) {

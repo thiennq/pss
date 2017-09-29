@@ -12,6 +12,11 @@ aside.main-sidebar
           span Sản phẩm
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
+          - var liClass = (childMenu == 'new' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/product/new')
+              i.fa.fa-circle
+              | Thêm sản phẩm
           - var liClass = (childMenu == 'collection' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/collection')
