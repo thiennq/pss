@@ -51,7 +51,11 @@ $('.btn-create-article').click(function(event) {
     $('input[name="handle"]').addClass('error');
     return;
   }
-  data.blog = $('select[name="blog"]').val();
+  data.blog_id = [];
+  $('.blog-detail input[type="checkbox"]:checked').each(function(index, element) {
+    data.blog_id.push($(this).val());
+  });
+
   data.image = $('input[name="image"]').val();
   data.description = $('textarea[name="description"]').val();
   if(!data.description) {
@@ -102,7 +106,12 @@ $('.btn-update-article').click(function() {
     return;
   }
   data.image = $('input[name="image"]').val();
-  data.blog = $('select[name="blog"]').val();
+
+  data.blog_id = [];
+  $('.blog-detail input[type="checkbox"]:checked').each(function(index, element) {
+    data.blog_id.push($(this).val());
+  });
+
   data.description = $('textarea[name="description"]').val();
   if(!data.description) {
     toastr.error('Chưa nhập mô tả bài viết');

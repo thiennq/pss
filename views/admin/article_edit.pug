@@ -45,8 +45,15 @@ block content
               input.form-control(name="handle", value=data.handle)
           .form-group
             label.col-sm-2.control-label Nhóm bài viết
-            .col-sm-10
-              select.form-control(name="blog")
+            .col-sm-10.blog-detail
+              each blog in blogs
+                label.checkbox-inline
+                  - var check = false;
+                  each item in blog_article
+                    if blog.id == item.blog_id
+                      - var check = true;
+                  input(type="checkbox", value=blog.id, checked=check)
+                  =blog.title
           .form-group
             label.col-sm-2.control-label Hình đại diện
               img.no-border.loading(src="/images/loading.gif").hidden

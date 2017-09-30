@@ -8,45 +8,6 @@ class Product extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = 'product';
 
-    public function store($data) {
-      $product = Product::where('title', $data['title'])->first();
-      if ($product) return -1;
-      $product = new Product;
-      $product->title = $data['title'];
-      $product->handle = convertHandle($data['title']);
-      $product->description = $data['description'] ? $data['description'] : '';
-      $product->meta_description = $data['meta_description'] ? $data['meta_description'] : '';
-      $product->display = $data['display'] ? 1 : 0;
-      $product->sell = 0;
-      $product->view = 0;
-      $product->created_at = date('Y-m-d H:i:s');
-      $product->updated_at = date('Y-m-d H:i:s');
-      $product->save();
-      return 0;
-    }
-
-    public function update($id, $data) {
-      $product = Product::find($id);
-      if (!$product) return -2;
-      $product->title = $data['title'];
-      $product->handle = convertHandle($data['title']);
-      $product->description = $data['description'] ? $data['description'] : '';
-      $product->meta_description = $data['meta_description'] ? $data['meta_description'] : '';
-      $product->display = $data['display'] ? 1 : 0;
-      $product->sell = 0;
-      $product->view = 0;
-      $product->updated_at = date('Y-m-d H:i:s');
-      $product->save();
-      return 0;
-    }
-
-    public function destroy($id) {
-      $product = Product::find($id);
-      if (!$product) return -2;
-      $product->delete();
-      return 0;
-    }
-
     public function getInfoProduct($products) {
       foreach ($products as $key => $value) {
   			$product_id = $value['id'];
