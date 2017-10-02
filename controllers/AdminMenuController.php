@@ -34,7 +34,7 @@ class AdminMenuController extends AdminController {
 	}
 
 	public function create(Request $request, Response $response) {
-		$list_collection = Collection::where('show_landing_page', 0)->orderBy('breadcrumb', 'asc')->get();
+		$list_collection = Collection::orderBy('breadcrumb', 'asc')->get();
 		foreach ($list_collection as $key => $collection) {
 			$collection['breadcrumb'] = str_replace(',', '/', $collection['breadcrumb']);
 			$collection['breadcrumb'] = strtoupper($collection['breadcrumb']);

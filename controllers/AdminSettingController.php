@@ -6,7 +6,7 @@ require_once("../models/Meta.php");
 class AdminSettingController extends AdminController {
 
   public function settingIndex(Request $request, Response $response) {
-    $collections = Collection::where('show_landing_page', 0)->orderBy('breadcrumb', 'asc')->get();
+    $collections = Collection::orderBy('breadcrumb', 'asc')->get();
     return $this->view->render($response, 'admin/setting_index.pug', array(
       'collections' => $collections,
       'index_collection_id_1' => getMeta('index_collection_id_1'),
@@ -150,7 +150,7 @@ class AdminSettingController extends AdminController {
 
   public function removeImage(Request $request, Response $response) {
     $body = $request->getParsedBody();
-    $dir = ROOT . '/public/uploads/images/';
+    $dir = ROOT . '/public/images/';
     $src = $dir . $body['img'];
     if(unlink($src)) {
       return $response->withJson([

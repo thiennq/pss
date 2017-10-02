@@ -653,17 +653,6 @@ table img {
 .choose-image label {
   cursor: pointer; }
 
-.list-tag .item {
-  margin-bottom: 10px; }
-
-.add-tag {
-  cursor: pointer; }
-
-.add-link {
-  display: block;
-  margin-top: 5px;
-  cursor: pointer; }
-
 div.mce-fullscreen {
   z-index: 999999; }
 
@@ -716,3 +705,6 @@ select {
 
 .btn-add-variant {
   cursor: pointer; }
+
+select.input-sm {
+  line-height: initial !important; }
