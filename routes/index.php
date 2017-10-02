@@ -86,6 +86,7 @@ $app->post('/api/subscribe', '\CustomerController:subscribe');
 
 $app->get('/test/test', '\TestController:test');
 
+$app->get('/test-mail', '\TestController:sendMail');
 
 $app->get('/{params:.*}', function($request, $response, $args) {
   $link = $request->getAttribute('params');
