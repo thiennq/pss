@@ -8,6 +8,12 @@ class Product extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = 'product';
 
+    // fetch (list: page=1, perpage=50)
+    // get (id)
+    // delete (id)
+    // update (id, data)
+    // create (data)
+
     public function getInfoProduct($products) {
       foreach ($products as $key => $value) {
   			$product_id = $value['id'];
@@ -43,6 +49,12 @@ class Product extends Illuminate\Database\Eloquent\Model {
         if ($value['dropship']) $value->checkInventory = 1;
   		}
       return $products;
+    }
+
+    public function getRelatedProducts($id) {
+      return Product::Join('collection_product', 'collection_product.product_id', '=', 'product.id')
+      ->where('collection_product.collection_id', $collection_id_related)
+      ->where('product.display', 1)->where('product.id', '!=', $product->id)->select('product.*')->where('product.in_stock', 1)->orderBy('product.updated_at', 'desc')->take(6)->get();
     }
 
     public function arrayFilter($obj) {

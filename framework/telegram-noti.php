@@ -9,8 +9,9 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 $dotenv = new Dotenv\Dotenv($ROOT);
 $dotenv->load();
 
-function sendMessage($chatID, $message){
+function sendTelegram($message){
   $API_KEY = getenv('TELEGRAM_KEY');
+  $chatID = getenv('TELEGRAM_GROUPID');
   $client = new GuzzleHttp\Client([
     'curl' => [
       CURLOPT_SSL_VERIFYPEER => false

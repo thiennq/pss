@@ -39,10 +39,7 @@ $('.btn-create').click(function() {
 		url: '/admin/collection',
 		data: data,
 		success: function(json) {
-<<<<<<< HEAD
       self.removeClass('disabled');
-=======
->>>>>>> 531d8c24feb01f498b080b6e7faaad52930d40ec
 			if(!json.code) {
         toastr.success('Tạo thành công');
         reloadPage('/admin/collections/' + json.id);

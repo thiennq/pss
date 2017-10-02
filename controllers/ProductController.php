@@ -66,9 +66,7 @@ class ProductController extends Controller {
       $obj->title = $collection_parent->title;
       if($obj->title) array_push($breadcrumb_collection, $obj);
 
-      $product_related = Product::Join('collection_product', 'collection_product.product_id', '=', 'product.id')
-        ->where('collection_product.collection_id', $collection_id_related)
-        ->where('product.display', 1)->where('product.id', '!=', $product->id)->select('product.*')->where('product.in_stock', 1)->orderBy('product.updated_at', 'desc')->take(6)->get();
+      $product_related = Product::getRelatedProducts($product->id);
 
       $count_product_related = count($product_related);
       if($count_product_related > 0) {
