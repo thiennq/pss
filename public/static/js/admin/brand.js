@@ -30,7 +30,6 @@ $('.btn-create-brand').click(function() {
 				}, 1000);
 			} else {
         toastr.error('Thương hiệu đã tồn tại');
-        btn.removeClass('disabled');
       }
 		}
 	});
@@ -62,7 +61,6 @@ $('.btn-update-brand').click(function() {
 		success: function(json) {
 			if(!json.code) toastr.success('Cập nhật thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      btn.removeClass('disabled');
     }
 	});
 });

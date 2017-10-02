@@ -53,7 +53,6 @@ $('.btn-create-collection').click(function() {
 		url: '/admin/collection',
 		data: data,
 		success: function(json) {
-      btn.removeClass('disabled');
 			if(!json.code) {
         toastr.success('Tạo nhóm sản phẩm thành công');
         reloadPage('/admin/collections/' + json.id);
@@ -113,7 +112,6 @@ $('.btn-update-collection').click(function() {
 		url: '/admin/collections/' + id,
 		data: data,
 		success: function(json) {
-      btn.removeClass('disabled');
 			if(!json.code) toastr.success('Cập nhật thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
