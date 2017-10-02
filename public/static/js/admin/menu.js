@@ -97,7 +97,7 @@ $('.btn-create-menu').click(function() {
       modal.find('.btn-create-menu').removeClass('disabled');
       if(!json.code) {
         toastr.success('Tạo menu thành công');
-        reloadPage('/admin/menus/' + json.id);
+        reloadPage();
       } else if(json.code == -1) toastr.error('Tiêu đề đã tồn tại');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
@@ -106,10 +106,17 @@ $('.btn-create-menu').click(function() {
 
 $('.btn-edit-menu').click(function() {
   var id = $(this).data('id');
+  var tr = $(this).closest('tr');
   var modal = $('#modal-update');
   $.get("/admin/menu/"+id, function (json) {
     var data = json.data;
     var link_type = data.link_type;
+    if (tr.attr('data-submenu') > 0) {
+      modal.find('select[name="parent_id"]').prop('disabled', true);
+    }
+    if (tr.attr('data-parent_id') == -1) {
+      modal.find('select[name="parent_id"] option[value='+id+']').prop('disabled', true);
+    }
     modal.find('select[name="parent_id"]').val(data.parent_id);
     modal.find('input[name="title"]').val(data.title);
     modal.find('select[name="menu-type"]').val(data.link_type);
@@ -179,8 +186,12 @@ $('.btn-update-menu').click(function() {
 
 $(document).on('click', '.btn-remove-menu', function() {
   var id = $(this).data('id');
-  if(confirm("Xóa menu?")) {
+  var submenu = $(this).closest('tr').attr('data-submenu');
+  var message = (submenu > 0) ? "Khi xóa menu này, các menu con cũng sẽ bị xóa theo!\nBạn có chắc chắn muốn xóa menu?" : "Xóa menu này?";
+  if(confirm(message)) {
     var tr = $(this).closest('tr');
+    var parent_id = tr.data('parent_id');
+    var trs = $('tr[data-parent_id='+id+']');
     $.ajax({
       type: 'DELETE',
       url: '/admin/menu/' + id,
@@ -188,6 +199,16 @@ $(document).on('click', '.btn-remove-menu', function() {
         if(!json.code) {
           toastr.success('Đã xóa');
           tbl.row(tr).remove().draw();
+          if (parent_id != -1 ) {
+            tr = $('tr[data-id='+parent_id+']');
+            var submenu = tr.attr('data-submenu');
+            tr.attr('data-submenu', submenu - 1);
+          }
+          if (trs) {
+            trs.each(function (i, e) {
+              tbl.row(e).remove().draw();
+            });
+          }
         } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
     });

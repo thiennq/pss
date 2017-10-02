@@ -13,4 +13,18 @@ class Article extends Illuminate\Database\Eloquent\Model {
     $article->save();
   }
 
+  public function listAll() {
+    $data = Article::orderBy('title', 'asc')->get();
+    return $data;
+  }
+
+  public function listAllArticle() {
+    $data = Article::orderBy('title', 'asc')->where('type', 'tin-tuc')->get();
+    return $data;
+  }
+  
+  public function listAllPage() {
+    $data = Article::where('type', 'thong-tin')->orderBy('title', 'asc')->get();
+    return $data;
+  }
 }

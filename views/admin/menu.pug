@@ -4,7 +4,9 @@ block pre-include
   - var menu = 'setting';
   - var childMenu = 'subMenu';
   title Menu
-
+  script(src=staticURI() + '/libs/jquery-ui.min.js')
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
 block post-include
   script(src=staticURI() + '/js/admin/menu.js')
 
@@ -34,7 +36,11 @@ block content
           - var stt = 1
           tbody
             each item in data
-              tr(data-parent_id=-1)
+              if item.submenu 
+                - var submenu = count(item.submenu)
+              else
+                - var submenu = 0
+              tr(data-id=item.id, data-parent_id=-1, data-submenu=submenu)
                 td.col-sm-1=stt++
                 td.col-sm-3.menu-title(data-value=item.title)=item.title
                 td.col-sm-3.menu-link(data-value=item.link, data-type=item.link_type)
@@ -64,6 +70,8 @@ block content
                         i.fa.fa-pencil-square-o
                       a.btn-remove.btn-remove-menu(data-id=child.id title="Xóa")
                         i.fa.fa-trash
+        script.
+              $('tbody').sortable();
       #modal-create.modal.fade(role="dialog")
         .modal-dialog
           .modal-content
