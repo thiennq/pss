@@ -60,7 +60,7 @@ class AdminBlogController extends AdminController {
     if($Blog->save()) {
       $Blog_id = $Blog->id;
       Blog::updateLinkBlog($Blog_id);
-      setMemcached("Blog_index", '');
+      // setMemcached("blog_index", '');
       return $response->withJson(array(
         'code' => 0,
         'id' => $Blog_id
@@ -90,8 +90,8 @@ class AdminBlogController extends AdminController {
       $Blog->meta_robots = $body['meta_robots'];
       $Blog->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
       $Blog->save();
-      setMemcached("Blog_index", '');
-      setMemcached("Blog_" . $link, '');
+      // setMemcached("Blog_index", '');
+      // setMemcached("Blog_" . $link, '');
       return $response->withJson(array(
         'code' => 0,
         'message' => 'Updated'

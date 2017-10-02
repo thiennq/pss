@@ -134,11 +134,11 @@ $('.btn-create-product').click(function() {
             });
           });
         }
-      } 
+      }
       else {
         $('.btn-create-product').removeClass('disabled');
         toastr.error('Tạo sản phẩm ' +product.title+ ' thất bại');
-      } 
+      }
     }
   });
 });
@@ -223,7 +223,6 @@ $('.btn-update-product').click(function(event) {
     url: '/admin/san-pham/' + id,
     data: data,
     success: function(json) {
-      btn.removeClass('disabled');
       if(!json.code) {
         toastr.success('Cập nhật sản phẩm thành công');
         reloadPage();
@@ -256,28 +255,6 @@ $(document).on('click', '.btn-remove-product', function() {
   }
 });
 
-$(document).on('change', 'input[name="title"]', function() {
-  var title = $(this).val();
-  if(!title) {
-    toastr.error('Chưa nhập tiêu đề');
-    $(document).find('input[name="handle"]').val('');
-    return;
-  }
-  $.ajax ({
-		type : 'POST',
-    url : '/admin/api/create-handle-collection',
-		data : {
-			title: title
-		},
-		success : function(handle) {
-      if(!handle) {
-        toastr.error('Sản phẩm đã tồn tại');
-        $(document).find('input[name="title"]').addClass('exist');
-      }
-      else $(document).find('input[name="handle"]').val(handle);
-		}
-	});
-});
 
 $(document).on('click', '.btn-remove-variant', function() {
   var item = $(this).closest('.variant-item');
@@ -325,9 +302,11 @@ $('.btn-update-product-odoo').click(function() {
   $.get('/api/crawler/getAllProduct', function(json) {
     if(!json.code) toastr.success('Cập nhật thành công');
     else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    $(this).removeClass('disabled');
     setTimeout(function() {
       location.reload();
     }, 1500);
+
   });
 });
 

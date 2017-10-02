@@ -2,11 +2,16 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Article.php");
+require_once("../models/Blog.php");
+require_once("../models/BlogArticle.php");
 
 class AdminArticleController extends AdminController {
 
   public function create(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/article_new.pug');
+    $blogs = Blog::all();
+    return $this->view->render($response, 'admin/article_new.pug', array(
+      'blogs' => $blogs
+    ));
   }
 
   public function showNews(Request $request, Response $response) {
@@ -36,8 +41,12 @@ class AdminArticleController extends AdminController {
   public function show(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $article = Article::find($id);
+    $blogs = Blog::all();
+    $blog_article = BlogArticle::where('article_id', $id)->get();
     return $this->view->render($response, 'admin/article_edit.pug', array(
 			'data' => $article,
+      'blogs' => $blogs,
+      'blog_article' => $blog_article
     ));
   }
 
@@ -53,15 +62,21 @@ class AdminArticleController extends AdminController {
     $article->content = $body['content'];
     $article->author = $_SESSION['fullname'];
     $article->display = $body['display'];
+
     $article->blog_id = $body['blog_id'];
+
     $article->meta_robots = $body['meta_robots'];
     $article->view = 0;
     $article->created_at = date('Y-m-d H:i:s');
     $article->updated_at = date('Y-m-d H:i:s');
     if($article->save()) {
       $article_id = $article->id;
+      $blog_id = $article->blog_id;
+      foreach ($blog_id as $key => $blog) {
+        BlogArticle::store($blog, $article_id);
+      }
       Article::updateLinkArticle($article_id);
-      setMemcached("article_index", '');
+      // setMemcached("article_index", '');
       return $response->withJson(array(
         'code' => 0,
         'id' => $article_id
@@ -91,9 +106,19 @@ class AdminArticleController extends AdminController {
       $article->blog_id = $body['blog_id'];
       $article->meta_robots = $body['meta_robots'];
       $article->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
+
+      // error_log("blog id : " . json_encode($body['blog_id']));
+
       $article->save();
-      setMemcached("article_index", '');
-      setMemcached("article_" . $link, '');
+      // setMemcached("article_index", '');
+      // setMemcached("article_" . $link, '');
+
+      BlogArticle::removeAll($id);
+      $blog_id = $body['blog_id'];
+      foreach ($blog_id as $key => $blog) {
+        BlogArticle::store($blog, $id);
+      }
+
       return $response->withJson(array(
         'code' => 0,
         'message' => 'Updated'
@@ -110,6 +135,7 @@ class AdminArticleController extends AdminController {
     $article = Article::find($id);
     if($article) {
       $article->delete();
+      BlogArticle::removeAll($id);
       return $response->withJson(array(
         'code' => 0,
         'message' => 'Deleted'

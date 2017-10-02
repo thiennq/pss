@@ -47,7 +47,6 @@ $('.btn-update-setting-desktop').click(function() {
     success: function(json){
       if(!json.code) toastr.success('Cập nhật thông tin thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      btn.removeClass('disabled');
     }
   });
 });
@@ -71,7 +70,6 @@ $('.btn-update-setting-meta-title').click(function() {
     success: function(json){
       if(!json.code) toastr.success('Cập nhật thông tin thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      btn.removeClass('disabled');
     }
   });
 });

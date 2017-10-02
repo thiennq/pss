@@ -66,7 +66,6 @@ $app->group('/admin', function() use($app) {
   $app->post('/collection', '\AdminCollectionController:store');
   $app->put('/collections/{id}', '\AdminCollectionController:update');
   $app->delete('/collections/{id}', '\AdminCollectionController:delete');
-  $app->get('/collection/tag/delete', '\AdminCollectionController:deleteTag');
 
   $app->get('/brand', '\AdminBrandController:index');
   $app->post('/brand', '\AdminBrandController:store');
@@ -209,7 +208,6 @@ $app->group('/admin', function() use($app) {
 
   $app->get('/api/rotate', '\FunctionController:rotateImage');
   $app->get('/api/create-handle', '\FunctionController:createHandle');
-  $app->post('/api/create-handle-collection', '\FunctionController:createHandleCollection');
   $app->post('/api/create-handle-product', '\FunctionController:createHandleCollection');
   $app->get('/api/tinymce/images', '\AdminProductController:renderImageTinymce');
 

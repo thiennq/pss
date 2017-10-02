@@ -74,7 +74,6 @@ $('.btn-create-blog').click(function(event) {
     url: '/admin/blog',
     data: data,
     success: function(json) {
-      btn.removeClass('disabled');
       if(!json.code) {
         toastr.success('Thêm tin tức thành công');
         reloadPage('/admin/blog/' + json.id);
@@ -122,7 +121,6 @@ $('.btn-update-blog').click(function() {
     url: '/admin/blog/' + id,
     data: data,
     success: function(json) {
-      btn.removeClass('disabled');
       if(!json.code) {
         toastr.success('Cập nhật tin tức thành công');
         reloadPage();

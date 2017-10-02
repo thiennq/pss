@@ -94,7 +94,10 @@ $('.btn-create-menu').click(function() {
     url: '/admin/menu',
     data: data,
     success: function(json) {
+<<<<<<< HEAD
       modal.find('.btn-create-menu').removeClass('disabled');
+=======
+>>>>>>> e2e9f1456a308bd18ec4a639e55b595b2028407b
       if(!json.code) {
         toastr.success('Tạo menu thành công');
         reloadPage();
@@ -176,7 +179,6 @@ $('.btn-update-menu').click(function() {
     url: '/admin/menu/' + id,
     data: data,
     success: function(json) {
-      modal.find('.btn-create-menu').removeClass('disabled');
       if(!json.code) toastr.success('Cập nhật thành công');
       else if(json.code == -1) toastr.error('Tiêu đề đã tồn tại');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
