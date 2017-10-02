@@ -8,21 +8,6 @@ require_once('Collection.php');
 
 $GLOBALS['size'] = [240, 480, 640, 1024, 2048];
 
-function checkNull($arr) {
-  foreach ($arr as $value) {
-    if (!$value) {
-      return [
-        "error" => true,
-        "field" => $value
-      ];
-    }
-  }
-  return [
-    "error" => false,
-    "field" => null
-  ];
-}
-
 
 function setMemcached($key, $value, $time=30*24*60*60) {
   global $memcached;

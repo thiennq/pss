@@ -255,28 +255,6 @@ $(document).on('click', '.btn-remove-product', function() {
   }
 });
 
-$(document).on('change', 'input[name="title"]', function() {
-  var title = $(this).val();
-  if(!title) {
-    toastr.error('Chưa nhập tiêu đề');
-    $(document).find('input[name="handle"]').val('');
-    return;
-  }
-  $.ajax ({
-		type : 'POST',
-    url : '/admin/api/create-handle-collection',
-		data : {
-			title: title
-		},
-		success : function(handle) {
-      if(!handle) {
-        toastr.error('Sản phẩm đã tồn tại');
-        $(document).find('input[name="title"]').addClass('exist');
-      }
-      else $(document).find('input[name="handle"]').val(handle);
-		}
-	});
-});
 
 $(document).on('click', '.btn-remove-variant', function() {
   var item = $(this).closest('.variant-item');

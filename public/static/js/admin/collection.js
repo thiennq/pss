@@ -1,134 +1,111 @@
 initTinymce('#content');
 initDataTable('table');
 
-$(window).on('load', function() {
-  if($('.description').data('description')) tinyMCE.get('collection-description').setContent($('.description').data('description'));
+$(document).ready(function() {
+  var parent_id = $('select[name="parent_id"]').data('value');
+  if (parent_id) $('select[name="parent_id"]').val(parent_id);
 });
 
-$('.btn-create-collection').click(function() {
-  var btn = $(this);
+$('.btn-create').click(function() {
+  var self = $(this);
   $('input').removeClass('error');
 	var data = {};
-	data.title = $('input[name="title"]').val();
+  data.title = $('input[name="title"]').val();
 	if(!data.title.trim().length) {
-    toastr.error('Chưa nhập tiêu đề nhóm sản phẩm');
+    toastr.error('Chưa nhập tiêu đề');
     $('input[name="title"]').addClass('error');
 		return;
-	}
-  if($('input[name="title"]').hasClass('exist')) {
-    toastr.error('Nhóm sản phẩm đã tồn tại');
-		return;
   }
-	data.handle = $('input[name="handle"]').val();
-	data.breadcrumb = '';
-  data.link = '';
+  data.handle = handle(data.title);
+	data.breadcrumb = data.title;
+  data.link = data.handle;
 	data.parent_id = $('select[name="parent_id"]').val();
-	if(data.parent_id) {
-		data.breadcrumb = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-breadcrumb');
+	if(data.parent_id != "-1") {
+    data.breadcrumb = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-breadcrumb');
+    data.breadcrumb += '/' + data.title;
     data.link = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-link');
+    data.link += '/' + data.handle;
 	}
-
-	if(data.breadcrumb) data.breadcrumb += '/' + data.title;
-	else data.breadcrumb = data.title;
-
-	if(data.link) data.link += '/' + data.handle;
-	else data.link = data.handle;
 
 	data.image = $('input[name="image"]').val();
   data.banner = $('input[name="banner"]').val();
-	data.description = tinyMCE.get('collection-description').getContent();
-  data.meta_title = $('textarea[name="meta_title"]').val();
+  data.description = $('textarea[name="description"]').val();
+	data.content = tinyMCE.get('content').getContent();
+  data.meta_title = $('input[name="meta_title"]').val();
   data.meta_description = $('textarea[name="meta_description"]').val();
-  var arr_tag = [];
-  $('.list-tag').find('.item').each(function() {
-    var obj = {};
-    obj.name = $(this).find('input[name="name_tag"]').val();
-    obj.handle = $(this).find('input[name="handle_tag"]').attr('data-handle');
-    if(obj.name && obj.handle) arr_tag.push(obj);
-  });
-  data.arr_tag = arr_tag;
-  btn.addClass('disabled');
+  self.addClass('disabled');
 	$.ajax({
 		type: 'POST',
 		url: '/admin/collection',
 		data: data,
 		success: function(json) {
+<<<<<<< HEAD
+      self.removeClass('disabled');
+=======
+>>>>>>> 531d8c24feb01f498b080b6e7faaad52930d40ec
 			if(!json.code) {
-        toastr.success('Tạo nhóm sản phẩm thành công');
+        toastr.success('Tạo thành công');
         reloadPage('/admin/collections/' + json.id);
 			} else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
 		}
 	});
 });
 
-$('.btn-update-collection').click(function() {
-  var btn = $(this);
-	var id = $(this).data('id');
+$('.btn-update').click(function() {
+  var self = $(this);
+  var id = $(this).data('id');
+  $('input').removeClass('error');
 	var data = {};
-	data.title = $('input[name="title"]').val();
-	data.title = data.title.trim();
-  if(!data.title.trim().length) {
-    toastr.error('Chưa nhập tiêu đề nhóm sản phẩm');
+  data.title = $('input[name="title"]').val();
+	if(!data.title.trim().length) {
+    toastr.error('Chưa nhập tiêu đề');
     $('input[name="title"]').addClass('error');
 		return;
-	}
-  if($('input[name="title"]').hasClass('exist')) {
-    toastr.error('Nhóm sản phẩm đã tồn tại');
-		return;
   }
-
-  data.handle = $('input[name="handle"]').val();
-  data.breadcrumb = '';
-  data.link = '';
+  data.handle = handle(data.title);
+	data.breadcrumb = data.title;
+  data.link = data.handle;
 	data.parent_id = $('select[name="parent_id"]').val();
-	if(data.parent_id) {
-		data.breadcrumb = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-breadcrumb');
+	if(data.parent_id != "-1") {
+    data.breadcrumb = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-breadcrumb');
+    data.breadcrumb += '/' + data.title;
     data.link = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-link');
+    data.link += '/' + data.handle;
 	}
-
-	if(data.breadcrumb) data.breadcrumb += '/' + data.title;
-	else data.breadcrumb = data.title;
-
-	if(data.link) data.link += '/' + data.handle;
-	else data.link = data.handle;
 
 	data.image = $('input[name="image"]').val();
   data.banner = $('input[name="banner"]').val();
-	data.description = tinyMCE.get('collection-description').getContent();
-  data.meta_title = $('textarea[name="meta_title"]').val();
+  data.description = $('textarea[name="description"]').val();
+	data.content = tinyMCE.get('content').getContent();
+  data.meta_title = $('input[name="meta_title"]').val();
   data.meta_description = $('textarea[name="meta_description"]').val();
-  data.show_landing_page = $('select[name="show_landing_page"]').val();
-  var arr_tag = [];
-  $('.list-tag').find('.item').each(function() {
-    var obj = {};
-    obj.name = $(this).find('input[name="name_tag"]').val();
-    obj.handle = $(this).find('input[name="handle_tag"]').attr('data-handle');
-    if(obj.name && obj.handle) arr_tag.push(obj);
-  });
-  data.arr_tag = arr_tag;
-  btn.addClass('disabled');
+  self.addClass('disabled');
 	$.ajax({
 		type: 'PUT',
 		url: '/admin/collections/' + id,
 		data: data,
 		success: function(json) {
-			if(!json.code) toastr.success('Cập nhật thành công');
-      else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-    }
+      self.removeClass('disabled');
+			if(!json.code) {
+        toastr.success('Cập nhật thành công');
+        reloadPage();
+			} else if (json.code == -1) {
+        toastr.error('Nhóm sản phẩm đã tồn tại');
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+		}
 	});
 });
 
-$(document).on('click', '.btn-remove-collection', function() {
+$(document).on('click', '.btn-remove', function() {
 	var id = $(this).data('id');
   var tr = $(this).closest('tr');
-  var template = $(this).data('template');
   if(confirm("Xóa nhóm sản phẩm?")) {
     $.ajax({
 			type: 'DELETE',
 			url: '/admin/collections/' + id,
 			success: function(json) {
 				if(!json.code) {
-					toastr.success('Xóa nhóm sản phẩm thành công');
+					toastr.success('Xóa thành công');
           tbl.row(tr).remove().draw();
 				} else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
 			}
@@ -165,82 +142,4 @@ $(document).on('change', '.upload', function() {
       }
     });
   }
-});
-
-$(document).on('change', 'input[name="title"]', function() {
-  $(document).find('.exist').removeClass('exist');
-	var title = $(this).val();
-  if(!title) {
-    toastr.error('Chưa nhập tiêu đề');
-    $(document).find('input[name="handle"]').val('');
-    return;
-  }
-  var data_title = $(this).data('title');
-  var data_handle = $(this).data('handle');
-  if(title == data_title) {
-    $(document).find('input[name="handle"]').val(data_handle);
-    return;
-  }
-  var parent_id = $('select[name="parent_id"]').val();
-  $.ajax ({
-		type : 'POST',
-    url : '/admin/api/create-handle-collection',
-		data : {
-			title: title,
-			parent_id: parent_id
-		},
-		success : function(handle) {
-      if(!handle) {
-        toastr.error('Nhóm sản phẩm đã tồn tại');
-        $(document).find('input[name="title"]').addClass('exist');
-      }
-      else $(document).find('input[name="handle"]').val(handle);
-		}
-	});
-});
-
-$(document).on('change', 'select[name="parent_id"]', function() {
-  $(document).find('.exist').removeClass('exist');
-	var title = $(document).find('input[name="title"]').val();
-  var data_title = $(document).find('input[name="title"]').data('title');
-  var data_handle = $(document).find('input[name="title"]').data('handle');
-  var parent_id = $(this).val();
-  if(title && title != data_title) {
-    $.ajax ({
-  		type : 'POST',
-      url : '/admin/api/create-handle-collection',
-  		data : {
-  			title: title,
-  			parent_id: parent_id
-  		},
-  		success : function(handle) {
-        if(!handle) {
-          toastr.error('Nhóm sản phẩm đã tồn tại');
-          $(document).find('input[name="title"]').addClass('exist');
-        }
-        else $(document).find('input[name="handle"]').val(handle);
-  		}
-  	});
-  }
-});
-
-
-$('.list-tag').on('click', '.btn-remove', function() {
-  var id = $(this).data('id');
-  var item = $(this).closest('.item');
-  item.remove();
-  if(id) {
-    $.get('/admin/collection/tag/delete?id='+id, function(json) {
-      if(!json.code) {
-        toastr.success('Đã xóa');
-      }
-    });
-  }
-});
-
-$(document).on('change', 'input[name="name_tag"]', function() {
-  var title = $(this).val();
-  var handle = convertToHandle(title);
-  $(this).closest('.item').find('input[name="handle_tag"]').attr('data-handle', handle);
-  $(this).closest('.item').find('input[name="handle_tag"]').val('http://mia.vn/tag/' + handle);
 });

@@ -18,7 +18,7 @@ block content
         a Tạo mới
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin.btn-create-collection
+        a.btn.btn-admin.btn-create
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -30,7 +30,7 @@ block content
             label.col-sm-2.control-label Nhóm sản phẩm cha
             .col-sm-10
               select.form-control(name="parent_id")
-                option(value='-1' selected) Chọn nhóm sản phẩm cha...
+                option(value=-1 selected) Chọn nhóm sản phẩm cha...
                 each item in collection
                   option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
           .form-group
@@ -57,7 +57,7 @@ block content
           .form-group
             label.col-sm-2.control-label Mô tả
             .col-sm-10
-              textarea.form-control(name="description" placeholder="Mô tả ngắn")
+              textarea.form-control(name="description")
           .form-group
             label.col-sm-2.control-label Nội dung
             .col-sm-10
