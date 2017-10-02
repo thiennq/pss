@@ -8,38 +8,38 @@
   <body>
     <header>
       <div class="greet">
-        <p>Xin chao {customer_name}</p>
+        <p>Xin chao {{customer_name}}</p>
       </div>
       <div class="notification">
         <p>CHUC MUNG BAN DA DAT HANG THANH CONG TAI ...</p>
-        <p>Ma don hang cua ban la {order_id}</p>
+        <p>Ma don hang cua ban la {{order_id}}</p>
       </div>
     </header>
     <div class="content-wrapper">
       <div class="customer-info">
-        <p>Ho ten: {customer_name}</p>
-        <p>Email: {customer_email}</p>
-        <p>So dien thoai: {customer_phone}</p>
-        <p>Dia chi giao hang: {customer_address}</p>
+        <p>Ho ten: {{customer_name}}</p>
+        <p>Email: {{customer_email}}</p>
+        <p>So dien thoai: {{customer_phone}}</p>
+        <p>Dia chi giao hang: {{customer_address}}</p>
       </div>
       <div class="order-info">
         <p>THONG TIN DON HANG</p>
         <!-- each order in orders -->
         <table>
           <tr>
-            <th>{order_title}</th>
+            <th>{{order_title}}</th>
           </tr>
           <tr>
-            <td>{order_id}</td>
-            <td>{order_quantity}</td>
-            <td>{order_price}</td>
-            <td>{order_subtotal}</td>
+            <td>{{order_id}}</td>
+            <td>{{order_quantity}}</td>
+            <td>{{order_price}}</td>
+            <td>{{order_subtotal}}</td>
           </tr>
         </table>
         <div class="total-price">
-          <p>Tong cong: {total}</p>
-          <p>Shipping: {shipping}</p>
-          <p>Thanh tien: {money}</p>
+          <p>Tong cong: {{total}}</p>
+          <p>Shipping: {{shipping}}</p>
+          <p>Thanh tien: {{money}}</p>
         </div>
       </div>
     </div>
