@@ -4,7 +4,9 @@ block pre-include
   - var menu = 'setting';
   - var childMenu = 'subMenu';
   title Menu
-
+  script(src=staticURI() + '/libs/jquery-ui.min.js')
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
 block post-include
   script(src=staticURI() + '/js/admin/menu.js')
 
@@ -17,7 +19,8 @@ block content
         a Menu
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin(href="/admin/menu/new") Tạo menu
+        //a.btn.btn-admin(href="/admin/menu/new") Tạo menu
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
   section.content.clearfix
     .box
       .box-header
@@ -33,16 +36,128 @@ block content
           - var stt = 1
           tbody
             each item in data
-              tr
+              if item.submenu 
+                - var submenu = count(item.submenu)
+              else
+                - var submenu = 0
+              tr(data-id=item.id, data-parent_id=-1, data-submenu=submenu)
                 td.col-sm-1=stt++
-                td.col-sm-4.title=item.title
-                td.col-sm-5.link
-                  a(href="/" + item.link target="_blank")=item.link
+                td.col-sm-3.menu-title(data-value=item.title)=item.title
+                td.col-sm-3.menu-link(data-value=item.link, data-type=item.link_type)
+                  if item.link_type == 'custom'
+                    a(href="!{item['link']}" target="_blank")=item.link
+                  else
+                    a(href="/!{item['link']}" target="_blank")=item.link
                 td.col-sm-2
-                  a.btn-edit(href="/admin/menus/" + item.id title="Chỉnh sửa")
+                  a.btn-edit.btn-edit-menu(data-id=item.id, title="Chỉnh sửa")
                     i.fa.fa-pencil-square-o
-                  a.btn-remove(data-id=item.id title="Xóa")
+                  a.btn-remove.btn-remove-menu(data-id=item.id, title="Xóa")
                     i.fa.fa-trash
+              if item.submenu
+                each child in item.submenu
+                  tr(style="background-color: #eee;", data-parent_id=item.id)
+                    td.col-sm-1=stt++
+                    td.col-sm-3.menu-title(data-value=child.title style="padding-left: 40px;")
+                      i.fa.fa-level-down(style="margin-right: 5px;")
+                      =child.title
+                    td.col-sm-3.menu-link(data-value=child.link, data-type=child.link_type)
+                      if child.link_type == 'custom'
+                        a(href="!{child['link']}" target="_blank")=child.link
+                      else
+                        a(href="/!{child['link']}" target="_blank")=child.link
+                    td.col-sm-2
+                      a.btn-edit.btn-edit-menu(data-id=child.id, title="Chỉnh sửa")
+                        i.fa.fa-pencil-square-o
+                      a.btn-remove.btn-remove-menu(data-id=child.id title="Xóa")
+                        i.fa.fa-trash
+        script.
+              $('tbody').sortable();
+      #modal-create.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Tạo menu
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Menu cha
+                  .col-sm-10
+                    select.form-control(name="parent_id")
+                      option(value="-1" selected) Không chọn menu cha
+                      each item in data
+                        if item.parent_id == -1
+                          option(value=item.id)=item.title
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Link
+                  .col-sm-10.menu-link
+                    .row
+                      .col-sm-6.key
+                        select.form-control(name="menu-type")
+                          option(value="collection" selected) Nhóm sản phẩm
+                          option(value="thong-tin") Bài viết
+                          option(value="tin-tuc") Tin tức
+                          option(value="custom") Địa chỉ web
+                      .col-sm-6.value
+                        select.form-control(name="menu-collection")
+                          each item in collection
+                            option(value=item.link)=item.breadcrumb
+                        select.hidden.form-control(name="menu-article")
+                        select.hidden.form-control(name="menu-page")
+                        input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-create-menu Tạo menu
+      #modal-update.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Cập nhật menu
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Menu cha
+                  .col-sm-10
+                    select.form-control(name="parent_id")
+                      option(value="-1") Không chọn menu cha
+                      each item in data
+                        if item.parent_id == -1
+                          option(value=item.id)=item.title
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Link
+                  .col-sm-10.menu-link
+                    .row
+                      .col-sm-6.key
+                        select.form-control(name="menu-type")
+                          option(value="collection" selected) Nhóm sản phẩm
+                          option(value="thong-tin") Bài viết
+                          option(value="tin-tuc") Tin tức
+                          option(value="custom") Địa chỉ web
+                      .col-sm-6.value
+                        select.form-control(name="menu-collection")
+                          each item in collection
+                            option(value=item.link)=item.breadcrumb
+                        select.hidden.form-control(name="menu-page")
+                          each item in page
+                            option(value=item.link)=item.title
+                        select.hidden.form-control(name="menu-article")
+                          each item in article
+                            option(value=item.link)=item.title
+                        input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-update-menu Cập nhật
     .box
       .box-header
         h3.box-title Menu Mobile

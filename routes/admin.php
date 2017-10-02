@@ -170,8 +170,7 @@ $app->group('/admin', function() use($app) {
   $app->delete('/celebrity/{id}', '\AdminCelebrityController:delete');
 
   $app->get('/menu', '\AdminMenuController:index');
-  $app->get('/menu/new', '\AdminMenuController:create');
-  $app->get('/menus/{id}', '\AdminMenuController:show');
+  $app->get('/menu/{id}', '\AdminMenuController:getMenu');
   $app->post('/menu', '\AdminMenuController:store');
   $app->delete('/menu/{id}', '\AdminMenuController:delete');
   $app->put('/menu/{id}', '\AdminMenuController:update');

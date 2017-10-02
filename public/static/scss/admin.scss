@@ -81,6 +81,15 @@ $color_sidebar: #222d32;
       margin-bottom: 0;
     }
   }
+  .box {
+    .box-body {
+      tbody {
+        tr {
+          cursor: move;
+        }
+      }
+    }
+  }
 }
 
 table.table-bordered.dataTable {
@@ -947,4 +956,9 @@ select {
 
 select.input-sm {
   line-height: initial !important;
+}
+
+option:disabled {
+  background-color: #eee;
+  cursor: not-allowed;
 }
