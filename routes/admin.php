@@ -128,10 +128,10 @@ $app->group('/admin', function() use($app) {
   $app->get('/articles/search', '\AdminArticleController:searchArticle');
 
   // Blog
-  $app->get('/blog/new', '\AdminBlogController:create');
-  $app->get('/blogs', '\AdminBlogController:showNews');
-  $app->get('/blog/{id}', '\AdminBlogController:show');
-  $app->post('/blog', '\AdminBlogController:store');
+  $app->get('/blog/new', '\AdminBlogController:new');
+  $app->get('/blogs', '\AdminBlogController:fetch');
+  $app->get('/blog/{id}', '\AdminBlogController:get');
+  $app->post('/blog', '\AdminBlogController:create');
   $app->put('/blog/{id}', '\AdminBlogController:update');
   $app->delete('/blog/{id}', '\AdminBlogController:delete');
   $app->get('/blogs/search', '\AdminBlogController:searchBlog');

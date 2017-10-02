@@ -5,14 +5,72 @@ require_once("../models/Blog.php");
 
 class AdminBlogController extends AdminController {
 
-  public function create(Request $request, Response $response) {
+  public function new(Request $request, Response $response) {
     return $this->view->render($response, 'admin/blog_new.pug');
   }
 
-  public function showNews(Request $request, Response $response) {
-    $Blog = Blog::all();
+  public function create(Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    $blog_id = Blog::create($data);
+    if ($blog_id != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'id' => $blog_id
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Error'
+    ));
+  }
+
+  public function fetch(Request $request, Response $response) {
+    $page_number = 1;
+    $params = $request->getQueryParams();
+    if($params['page']) $page_number = $params['page'];
+    $perpage = 12;
+    $data = Blog::fetch($page_number,$perpage);
     return $this->view->render($response, 'admin/blog_list.pug', array(
-			'data' => $Blog
+      'data' => $data
+    ));
+  }
+
+  public function get(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $blog = Blog::get($id);
+    return $this->view->render($response, 'admin/blog_edit.pug', array(
+			'data' => $blog,
+    ));
+  }
+
+  public function update(Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    $id = $request->getAttribute('id');
+    $blog = Blog::update($id,$data);
+    if ($blog != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'message' => 'Updated'
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Not found'
+    ));
+  }
+
+  public function delete(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $blog = Blog::delete($id);
+    if ($blog != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'message' => 'Deleted'
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Not found'
     ));
   }
 
@@ -33,91 +91,6 @@ class AdminBlogController extends AdminController {
     ));
   }
 
-  public function show(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $Blog = Blog::find($id);
-    return $this->view->render($response, 'admin/blog_edit.pug', array(
-			'data' => $Blog,
-    ));
-  }
-
-  public function store(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    $Blog = new Blog;
-    $Blog->title = $body['title'];
-    $Blog->handle = $body['handle'];
-    $Blog->link = '/' . $body['handle'];
-    $Blog->image = $body['image'] ? renameOneImage($body['image'], $body['handle']) : '';
-    $Blog->description = $body['description'] ? $body['description'] : '';
-    $Blog->description_seo = $body['description_seo'] ? $body['description_seo']: '';
-    $Blog->content = $body['content'];
-    $Blog->author = $_SESSION['fullname'];
-    $Blog->display = $body['display'];
-    $Blog->meta_robots = $body['meta_robots'];
-    $Blog->view = 0;
-    $Blog->created_at = date('Y-m-d H:i:s');
-    $Blog->updated_at = date('Y-m-d H:i:s');
-    if($Blog->save()) {
-      $Blog_id = $Blog->id;
-      Blog::updateLinkBlog($Blog_id);
-      // setMemcached("blog_index", '');
-      return $response->withJson(array(
-        'code' => 0,
-        'id' => $Blog_id
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Error'
-    ));
-  }
-
-  public function update(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    $id = $request->getAttribute('id');
-    $Blog = Blog::find($id);
-    if($Blog) {
-      $Blog->title = $body['title'];
-      $Blog->handle = $body['handle'];
-      $link = '/' . $body['handle'] . '-' . $id;
-      $Blog->link = $link;
-      if($body['image']) $Blog->image = renameOneImage($body['image'], $body['handle']);
-      if($body['description']) $Blog->description = $body['description'];
-      if($body['description_seo']) $Blog->description_seo = $body['description_seo'];
-      $Blog->content = $body['content'];
-      $Blog->author = $_SESSION['fullname'];
-      $Blog->display = $body['display'];
-      $Blog->meta_robots = $body['meta_robots'];
-      $Blog->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
-      $Blog->save();
-      // setMemcached("Blog_index", '');
-      // setMemcached("Blog_" . $link, '');
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Updated'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
-  }
-
-  public function delete(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $Blog = Blog::find($id);
-    if($Blog) {
-      $Blog->delete();
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Deleted'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
-  }
 }
 
 ?>
