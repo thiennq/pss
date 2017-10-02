@@ -52,21 +52,6 @@ class FunctionController extends Controller {
     return $handle;
   }
 
-  public function createHandleCollection(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    $title = $body['title'];
-    $parent_id = $body['parent_id'];
-    $handle = $this->convertHandle($title);
-    $link = $handle;
-    if($parent_id != -1) {
-      $collection = Collection::find($parent_id);
-      $link = $collection->$link . '/' . $handle;
-    }
-    $check = Collection::where('link', $link)->where('title', '!=', $title)->count();
-    if($check) return 0;
-    return $handle;
-  }
-
   public function createHandleProduct(Request $request, Response $response) {
     $body = $request->getParsedBody();
     $title = $body['title'];

@@ -20,12 +20,13 @@ $Schema->create('collection', function (Blueprint $table) {
     $table->increments('id');
     $table->string('parent_id');
     $table->string('title');
-    $table->string('breadcrumb')->nullable();
     $table->string('image')->nullable();
     $table->text('banner')->nullable();
     $table->string('handle')->nullable();
+    $table->string('breadcrumb')->nullable();
     $table->string('link')->nullable();
     $table->text('description')->nullable();
+    $table->text('content')->nullable();
     $table->text('meta_title')->nullable();
     $table->text('meta_description')->nullable();
     $table->timestamps();

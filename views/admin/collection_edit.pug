@@ -3,15 +3,10 @@ extends ./layout.pug
 block pre-include
   title Chỉnh sửa | 
     =data.title
-  - var menu = 'data'
+  - var menu = 'product'
   - var childMenu = 'collection'
 block post-include
   script(src=staticURI() + '/js/admin/collection.js')
-  script.
-    $(document).ready(function () {
-      var parent_id = $('select[name="parent_id"]').data('value');
-      $('select[name="parent_id"]').val(parent_id);
-    });
   
 block content
 	section.content-header.clearfix
@@ -29,7 +24,7 @@ block content
           i.fa.fa-eye
           | Xem thử web
       li
-        a.btn.btn-admin.btn-update-collection(data-id=data.id)
+        a.btn.btn-admin.btn-update(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Cập nhật
@@ -42,19 +37,14 @@ block content
             label.col-sm-2.control-label Nhóm sản phẩm cha
             .col-sm-10
               select.form-control(name="parent_id" data-value=data.parent_id)
-                option(value='-1') Chọn...
+                option(value=-1 selected) Chọn nhóm sản phẩm cha...
                 each item in collection
                   option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
           .form-group
             label.col-sm-2.control-label Tên nhóm sản phẩm
               strong.required  *
             .col-sm-10
-              input.form-control(name="title" value=data.title, data-title=data.title, data-handle=data.handle)
-          .form-group
-            label.col-sm-2.control-label Handle
-              strong.required  *
-            .col-sm-10
-              input.form-control(name="handle" value=data.handle)
+              input.form-control(name="title", placeholder="VD: Nhóm sản phẩm Laptop, phụ kiện...", value=data.title)
           .form-group
             label.col-sm-2.control-label Hình đại diện
               br
@@ -79,38 +69,25 @@ block content
               input(type="hidden" name="banner" value=data.banner)
           .form-group
             label.col-sm-2.control-label Mô tả
-            .col-sm-10.description(data-description=data.description)
-              <textarea class="form-control" id="collection-description" rows="5"></textarea>
-          .form-group
-            label.col-sm-2.control-label Tag
-              br
-              a.add-tag (Thêm)
-            .col-sm-10.list-tag
-              if count_arr_tag
-                each item in arr_tag
-                  .item.clearfix
-                    .col-xs-4.pd-left-0
-                      input.form-control(name="name_tag" placeholder="Du lịch" value=item.name)
-                    .col-xs-7.pd-left-0
-                      input.form-control(name="handle_tag" placeholder="http://mia.vn/tag/du-lich" value="http://mia.vn/tag/" + item.handle disabled data-handle=item.handle)
-                    .col-xs-1.pd-left-0
-                      .btn-remove(data-id=item.id)
-                        i.fa.fa-trash
-          .form-group
-            label.col-sm-2.control-label Meta title
             .col-sm-10
-              textarea.form-control(name="meta_title")=data.meta_title
+              textarea.form-control(name="description")=data.description
           .form-group
-            label.col-sm-2.control-label Meta description
+            label.col-sm-2.control-label Nội dung
             .col-sm-10
-              textarea.form-control(name="meta_description")=data.meta_description
+              textarea.form-control#content=data.content
+    .box
+      .form-horizontal.form-collection
+        .box-body
           .form-group
-            label.col-sm-2.control-label Chỉ hiển thị ở landing page
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
+          .form-group
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
             .col-sm-10
-              select.form-control(name="show_landing_page")
-                if data.show_landing_page
-                  option(value="0") Không
-                  option(value="1" selected) Có
-                else
-                  option(value="0") Không
-                  option(value="1") Có
+              input.form-control(name="meta_title", placeholder="Laptop Sony chính hãng" value=data.meta_title)
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")=data.meta_description
