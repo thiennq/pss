@@ -21,7 +21,6 @@ $('.form-add-user').on('submit', function(e) {
           window.location.reload();
         }, 1000);
       }
-      $('.btn-admin').removeClass('disabled');
     }
   });
 });

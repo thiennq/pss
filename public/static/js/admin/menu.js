@@ -49,7 +49,6 @@ $('.btn-create-menu').click(function() {
     url: '/admin/menu',
     data: data,
     success: function(json) {
-      $(document).find('.disabled').removeClass('disabled');
       if(!json.code) {
         toastr.success('Tạo menu thành công');
         reloadPage('/admin/menus/' + json.id);
@@ -83,7 +82,6 @@ $('.btn-update-menu').click(function() {
     url: '/admin/menu/' + id,
     data: data,
     success: function(json) {
-      $(document).find('.disabled').removeClass('disabled');
       if(!json.code) toastr.success('Cập nhật thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
