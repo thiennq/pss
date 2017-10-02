@@ -1,0 +1,47 @@
+html,body {
+  height: 100%;
+  font-family:Arial;
+  font-size:14px;
+}
+* {
+  margin:0;
+  padding: 0;
+}
+
+#container {
+  margin: 20px;
+}
+#greet {
+  padding:10px;
+}
+#notification {
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  text-align: center;
+  padding:30px;
+}
+#account_info {
+  padding:20px 0;
+}
+#create_pass {
+  width:auto;
+  background-color: #efefef;
+  border:1px solid #efefef;
+  margin-bottom: 20px;
+}
+.passlink {
+  background-color:#FFF;
+  word-wrap: break-word;
+}
+#footer {
+  border-bottom: 1px solid #efefef;
+  padding:20px;
+  border-top:1px solid #efefef;
+  text-align:center;
+}
+.pad {
+  padding:10px;
+}
+.noti {
+  font-size:16px;
+}
