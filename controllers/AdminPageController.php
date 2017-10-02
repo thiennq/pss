@@ -60,7 +60,7 @@ class AdminPageController extends AdminController {
     if($Page->save()) {
       $Page_id = $Page->id;
       Page::updateLinkPage($Page_id);
-      setMemcached("Page_index", '');
+      // setMemcached("Page_index", '');
       return $response->withJson(array(
         'code' => 0,
         'id' => $Page_id
@@ -90,8 +90,8 @@ class AdminPageController extends AdminController {
       $Page->meta_robots = $body['meta_robots'];
       $Page->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
       $Page->save();
-      setMemcached("Page_index", '');
-      setMemcached("Page_" . $link, '');
+      // setMemcached("Page_index", '');
+      // setMemcached("Page_" . $link, '');
       return $response->withJson(array(
         'code' => 0,
         'message' => 'Updated'

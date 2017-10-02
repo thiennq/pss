@@ -134,11 +134,11 @@ $('.btn-create-product').click(function() {
             });
           });
         }
-      } 
+      }
       else {
         $('.btn-create-product').removeClass('disabled');
         toastr.error('Tạo sản phẩm ' +product.title+ ' thất bại');
-      } 
+      }
     }
   });
 });
@@ -223,7 +223,6 @@ $('.btn-update-product').click(function(event) {
     url: '/admin/san-pham/' + id,
     data: data,
     success: function(json) {
-      btn.removeClass('disabled');
       if(!json.code) {
         toastr.success('Cập nhật sản phẩm thành công');
         reloadPage();
@@ -303,9 +302,11 @@ $('.btn-update-product-odoo').click(function() {
   $.get('/api/crawler/getAllProduct', function(json) {
     if(!json.code) toastr.success('Cập nhật thành công');
     else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    $(this).removeClass('disabled');
     setTimeout(function() {
       location.reload();
     }, 1500);
+
   });
 });
 
