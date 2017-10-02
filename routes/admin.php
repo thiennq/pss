@@ -27,6 +27,7 @@ require_once('../controllers/FunctionController.php');
 require_once('../controllers/AdminPriceController.php');
 require_once('../controllers/AdminRedirectController.php');
 require_once('../controllers/AdminCelebrityController.php');
+require_once('../controllers/TestController.php');
 require_once("../models/User.php");
 
 $role = $_SESSION['role'];
@@ -50,7 +51,6 @@ $app->group('/admin', function() use($app) {
 
   $app->post('/api/uploadImage', 'uploadImage');
   $app->post('/api/uploadImageTinymce', 'uploadImageTinymce');
-
 
   //Product
 

@@ -21,6 +21,25 @@ class TestController extends Controller {
     }
   }
 
+  public function sendMail() {
+    $to = 'duynhan.nguyenhoang@gmail.com';
+    $subject = 'Test Mail';
+    $variables = array();
+    $variables['customer_name'] = 'Nhan';
+    $variables['customer_email'] = 'nhan@abcxyz.com';
+    $variables['create-pass-link'] = 'gmail.com';
+    $template = file_get_contents('../framework/mail-template/forget-pw.html');
+    foreach ($variables as $key => $value) {
+      $template = str_replace('{{'.$key.'}}', $value, $template);
+    }
+    $header = 'reply from: Nhan';
+    error_log($to);
+    error_log($subject);
+    error_log($header);
+    error_log($template);
+    PHPMailer($to, $subject, $template, $header);
+  }
+
   public function redirect() {
 		$path = ROOT . '/public/excel/Redirect.xlsx';
     $inputFileType = PHPExcel_IOFactory::identify($path);
@@ -46,7 +65,6 @@ class TestController extends Controller {
       }
     }
   }
-
 
   public function checkInStock() {
     $page = $_GET['page'];

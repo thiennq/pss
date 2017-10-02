@@ -284,6 +284,33 @@ function banner_default_fb() {
   return HOST . '/uploads/' . $banner->image;
 }
 
+function PHPMailer($to, $subject, $body, $text) {
+  $mail = new PHPMailer;
+  include ROOT . '/framework/phpmailer.php';
+
+  $mail->IsSMTP();
+  $mail->Host = $STMP_HOST;
+  $mail->SMTPAuth = true;
+  $mail->Username = $STMP_USERNAME;
+  $mail->Password = $STMP_PASSWORD;
+  $mail->SMTPSecure = $STMP_SECURE;
+  $mail->Port = $STMP_PORT;
+  $mail->setFrom($STMP_USERNAME, 'Admin');
+  $mail->AddAddress($to);
+  $mail->isHTML(true);
+  $mail->Subject = $subject;
+  $mail->Body    = $body;
+  $mail->AltBody = $text;
+  $mail->CharSet = "UTF-8";
+  $mail->FromName = "GYPSY";
+  if(!$mail->send())  {
+    $message = "SEND FAILED !!! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
+    return $STMP_USERNAME;
+  }
+  $message = "SEND SUCCESS ! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
+  return true;
+}
+
 // INDEX
 function slider() {
   if(getMemcached('slider')) {
@@ -337,5 +364,6 @@ function celebrityIndex() {
   setMemcached("celebrityIndex", $celebrities);
   return $celebrities;
 }
+
 
 // END INDEX
