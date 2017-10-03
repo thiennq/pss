@@ -115,7 +115,7 @@ aside.main-sidebar
       li.treeview(class=itemClass)
         a(href='#')
           i.fa.fa-cog
-          span Thiết lập chung
+          span Thiết lập
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
           - var liClass = (childMenu == 'index' ? 'active' : '');
@@ -133,6 +133,33 @@ aside.main-sidebar
             a(href="/admin/settings/meta")
               i.fa.fa-circle
               | Title, Meta Description
+          - var liClass = (childMenu == 'redirect' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/redirect")
+              i.fa.fa-circle
+              | Redirect 301
+          - var liClass = (childMenu == 'custom-css' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/custom-css")
+              i.fa.fa-circle
+              | Custom CSS
+          - var liClass = (childMenu == 'livechat' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/livechat")
+              i.fa.fa-circle
+              | LiveChat
+          - var liClass = (childMenu == 'images' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/images")
+              i.fa.fa-circle
+              | Hình ảnh
+      - var itemClass = (menu == 'extension' ? 'active' : 'item');
+      li.treeview(class=itemClass)
+        a(href='#')
+          i.fa.fa-cog
+          span Mở rộng
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
           - var liClass = (childMenu == 'slider' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/slider')
@@ -158,31 +185,6 @@ aside.main-sidebar
             a(href="/admin/branch")
               i.fa.fa-circle
               | Chi nhánh
-          //- var liClass = (childMenu == 'shipping' ? 'active' : '');
-          //li(class=liClass)
-            a(href="/admin/shipping")
-              i.fa.fa-circle
-              | Phí vận chuyển
-          - var liClass = (childMenu == 'redirect' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/redirect")
-              i.fa.fa-circle
-              | Redirect 301
-          - var liClass = (childMenu == 'custom-css' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/custom-css")
-              i.fa.fa-circle
-              | Custom CSS
-          - var liClass = (childMenu == 'livechat' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/livechat")
-              i.fa.fa-circle
-              | LiveChat
-          - var liClass = (childMenu == 'images' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/images")
-              i.fa.fa-circle
-              | Hình ảnh
       - var itemClass = (menu == 'staff' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/users")
