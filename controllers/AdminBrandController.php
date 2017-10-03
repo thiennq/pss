@@ -37,7 +37,7 @@ class AdminBrandController extends AdminController {
     $obj->display = $body['display'];
     $result = Brand::store($obj);
     if($result) {
-      setMemcached("brand_index", '');
+      // setMemcached("brand_index", '');
       return $response->withJson(array(
 				'code' => 0,
 				'message' => 'Created',
@@ -65,7 +65,7 @@ class AdminBrandController extends AdminController {
     $obj->display = $body['display'];
     $result = Brand::store($obj);
     if($result) {
-      setMemcached("brand_index", '');
+      // setMemcached("brand_index", '');
       return $response->withJson(array(
 				'code' => 0,
 				'message' => 'Updated'

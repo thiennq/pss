@@ -48,7 +48,7 @@ class ArticleController extends Controller {
         'hot_article' => $hot_article,
         'related' => $related
       );
-      setMemcached("article_" . $link, json_encode($responseData));
+      // setMemcached("article_" . $link, json_encode($responseData));
     }
     return $this->view->render($response, 'article.pug', $responseData);
   }

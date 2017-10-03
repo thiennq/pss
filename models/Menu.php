@@ -67,4 +67,23 @@ class Menu extends Illuminate\Database\Eloquent\Model {
     }
     return $menus;
   }
+
+  public function menuSidebarCollection() {
+    $menus = Collection::where('parent_id', -1)->get();
+    foreach ($menus as $key => $menu) {
+      $childs = Collection::where('parent_id', $menu->id)->get();
+      foreach ($childs as $key => $child) {
+        $child->link = '/' . $child->link;
+        $count = CollectionProduct::where('collection_id', $child->id)
+          ->join('product', 'collection_product.product_id', '=', 'product.id')->where('product.in_stock', 1)->where('product.display', 1)->count();
+        if(!$count) unset($childs[$key]);
+        else $child->count_product = $count;
+      }
+      $menu->link = '/' . $menu->link;
+      $menu->childs = $childs;
+      $menu->count_child = count($childs);
+    }
+    return $menus;
+  }
+
 }

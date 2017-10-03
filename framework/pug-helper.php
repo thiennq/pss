@@ -31,7 +31,7 @@ function Menu() {
   if(getMemcached('menus')) $menus = getMemcached('menus');
   else {
     $menus = Menu::getMenu();
-    setMemcached("menus", $menus);
+    // setMemcached("menus", $menus);
   }
   return $menus;
 }
@@ -318,7 +318,7 @@ function slider() {
   }
   else {
     $slider = Slider::where('display', 1)->get();
-    setMemcached("slider", $slider);
+    // setMemcached("slider", $slider);
   }
   return $slider;
 }
@@ -327,7 +327,7 @@ function brandIndex() {
   $test = Brand::where('display', 1)->get();
   if(getMemcached('brandIndex')) return getMemcached('brandIndex');
   $brand = Brand::where('display', 1)->where('highlight', 1)->take(8)->get();
-  setMemcached("brandIndex", $brand);
+  // setMemcached("brandIndex", $brand);
   return $brand;
 }
 
@@ -347,21 +347,21 @@ function collectionIndex() {
     $obj->products = $products;
     array_push($data, $obj);
   }
-  setMemcached("productIndex", $data);
+  // setMemcached("productIndex", $data);
   return $data;
 }
 
 function articleIndex() {
   if(getMemcached('articleIndex')) return getMemcached('articleIndex');
   $articles = Article::where('display', 1)->where('type', 'tin-tuc')->orderby('updated_at', 'desc')->take(4)->get();
-  setMemcached("articleIndex", $articles);
+  // setMemcached("articleIndex", $articles);
   return $articles;
 }
 
 function celebrityIndex() {
   if(getMemcached('celebrityIndex')) return getMemcached('celebrityIndex');
   $celebrities = Celebrity::where('display', 1)->orderby('id', 'desc')->get();
-  setMemcached("celebrityIndex", $celebrities);
+  // setMemcached("celebrityIndex", $celebrities);
   return $celebrities;
 }
 

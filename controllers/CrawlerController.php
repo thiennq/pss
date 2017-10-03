@@ -84,7 +84,7 @@ class CrawlerController extends Controller {
           $in_stock = 1;
           if(!$check) $in_stock = 0;
           Product::where('id', $index)->update(['in_stock' => $in_stock]);
-          setMemcached("product_". $Product->handle, '');
+          // setMemcached("product_". $Product->handle, '');
         }
       }
     }

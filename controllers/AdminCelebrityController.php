@@ -8,7 +8,7 @@ class AdminCelebrityController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Celebrity::all();
-    setMemcached("celebrity", '');
+    // setMemcached("celebrity", '');
     return $this->view->render($response, 'admin/celebrity.pug', array(
       'celebrities' => $data
     ));
