@@ -48,29 +48,29 @@ block content
             label.col-sm-2.control-label Phiên bản
               strong.required  *
             .col-sm-10
-              .variant-title.row
-                .col-sm-3 Tên
-                .col-sm-3 Giá bán
-                .col-sm-3 Giá so sánh
-                .col-sm-3 Tồn kho
-              .list-variant.row.clearfix.variant-bonus.list-append
+              .list-variant.clearfix.variant-bonus.list-append
                 .variant-item.clearfix
-                  .col-sm-3
-                    input.form-control(name="variant-name" placeholder="Tên")
-                  .col-sm-3
-                    input.form-control(name="variant-price", placeholder="Giá")
-                  .col-sm-3
-                    input.form-control(name="variant-price-compare", placeholder="Giá so sánh")
-                  .col-sm-3
-                    input.form-control(type="number" name="variant-inventory", value=1)
-                  .col-sm-12.variant-images
-                    label Hình ảnh
-                      img.hidden.no-border.loading(src=staticURI() + "/img/loading.gif" style="margin-left: 5px;")
-                      form(enctype="multipart/form-data").hidden
-                        input#upload-image-variant-1.upload-list-image(type="file" name="upload[]" multiple="multiple")
-                    .col-sm-12.list-image
-                      .col-xs-2.add-image
-                        label(for="upload-image-variant-1")
+                  .row
+                    .col-xs-11
+                      .row
+                        .col-sm-3
+                          input.form-control(name="variant-name" placeholder="Tên" value="Mặc định")
+                        .col-sm-3
+                          input.form-control(name="variant-price", placeholder="Giá")
+                        .col-sm-3
+                          input.form-control(name="variant-price-compare", placeholder="Giá so sánh")
+                        .col-sm-3
+                          input.form-control(type="number" name="variant-inventory", value=1)
+                    .col-xs-1
+                  .row
+                    .col-xs-11.variant-images
+                      label
+                        img.hidden.no-border.loading(src=staticURI() + "/img/loading.gif" style="margin-left: 5px;")
+                        form(enctype="multipart/form-data").hidden
+                          input#upload-image-variant-1.upload-list-image(type="file" name="upload[]" multiple="multiple")
+                      .col-xs-12.list-image
+                        .col-xs-2.add-image
+                          label(for="upload-image-variant-1")
               .btn-add-variant
                 a Thêm phiên bản
           .form-group

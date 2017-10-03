@@ -703,7 +703,7 @@ table {
       background: url('/static/img/add_image.png') center;
       background-size: cover;
       cursor: pointer;
-      height: 150px;
+      height: 135px;
       padding: 0 5px;
       position: relative;
       label {
@@ -941,11 +941,13 @@ select {
 
 .list-variant {
   .variant-item {
+    padding: 10px;
+    background-color: #f0f0f0;
     margin-bottom: 20px;
     .variant-images {
-      label {
-        font-weight: normal;
-        margin-top: 5px;
+      margin-top: 10px;
+      .list-image {
+        background-color: white;
       }
     }
   }
