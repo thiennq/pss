@@ -26,7 +26,7 @@ script#add-article(type="text/x-tmpl").
   </div>
 
 script#add-variant(type="text/html").
-  <div class="variant-item clearfix variant-bonus">
+  <div class="variant-item clearfix" data-id={%=o.id%}>
     <div class="row">
       <div class="col-xs-11">
         <div class="row">
@@ -53,7 +53,7 @@ script#add-variant(type="text/html").
         <label>
           <img src="{%=o.static%}/img/loading.gif" style="margin-left: 5px;" class="hidden no-border loading">
           <form enctype="multipart/form-data" class="hidden">
-            <input class="upload-list-image" id="upload-image-variant-{%=o.id%}" type="file" name="upload[]" multiple="multiple">
+            <input class="upload-list-image" id="upload-image-variant-{%=o.id%}" type="file" name="upload[]" data-id={%=o.id%} multiple="multiple">
           </form>
         </label>
         <div class="col-sm-12 list-image">

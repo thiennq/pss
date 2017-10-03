@@ -489,7 +489,10 @@ table img {
     position: relative;
     border: 1px solid #fff;
     text-align: center;
-    height: 150px; }
+    height: 135px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat; }
     .form-product .list-image .image span {
       display: none;
       font-size: 15px; }
