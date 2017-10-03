@@ -26,30 +26,40 @@ script#add-article(type="text/x-tmpl").
   </div>
 
 script#add-variant(type="text/html").
-  <div class="variant-item clearfix variant-bonus">
-    <div class="col-sm-3">
-      <input name="variant-name" placeholder="Tên" class="form-control"/>
+  <div class="variant-item clearfix" data-id={%=o.id%}>
+    <div class="row">
+      <div class="col-xs-11">
+        <div class="row">
+          <div class="col-sm-3">
+            <input name="variant-name" placeholder="Tên" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <input name="variant-price" placeholder="Giá" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <input name="variant-price-compare" placeholder="Giá so sánh" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <input type="number" name="variant-inventory" value="1" class="form-control"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-1">
+        <a class="btn-remove btn-remove-variant"><i class="fa fa-trash"></i></a>
+      </div>
     </div>
-    <div class="col-sm-3">
-      <input name="variant-price" placeholder="Giá" class="form-control"/>
-    </div>
-    <div class="col-sm-3">
-      <input name="variant-price-compare" placeholder="Giá so sánh" class="form-control"/>
-    </div>
-    <div class="col-sm-3">
-      <input type="number" name="variant-inventory" value="1" class="form-control"/>
-    </div>
-    <a class="btn-remove btn-remove-variant"><i class="fa fa-trash"></i></a>
-    <div class="col-sm-12 variant-images">
-      <label>Hình ảnh
-        <img src="{%=o.static%}/img/loading.gif" style="margin-left: 5px;" class="hidden no-border loading">
-        <form enctype="multipart/form-data" class="hidden">
-          <input class="upload-list-image" id="upload-image-variant-{%=o.id%}" type="file" name="upload[]" multiple="multiple">
-        </form>
-      </label>
-      <div class="col-sm-12 list-image">
-        <div class="col-xs-2 add-image">
-          <label for="upload-image-variant-{%=o.id%}"></label>
+    <div class="row">
+      <div class="col-xs-11 variant-images">
+        <label>
+          <img src="{%=o.static%}/img/loading.gif" style="margin-left: 5px;" class="hidden no-border loading">
+          <form enctype="multipart/form-data" class="hidden">
+            <input class="upload-list-image" id="upload-image-variant-{%=o.id%}" type="file" name="upload[]" data-id={%=o.id%} multiple="multiple">
+          </form>
+        </label>
+        <div class="col-sm-12 list-image">
+          <div class="col-xs-2 add-image">
+            <label for="upload-image-variant-{%=o.id%}"></label>
+          </div>
         </div>
       </div>
     </div>
