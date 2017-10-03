@@ -80,7 +80,6 @@ $app->get('/api/crawler/updateOrderState/{id}', '\CrawlerController:updateOneOrd
 $app->get('/api/crawler/getListDistrict', '\CrawlerController:getListDistrict');
 $app->get('/api/crawler/getListCity', '\CrawlerController:getListCity');
 $app->get('/api/crawler/createMeta', '\CrawlerController:createMeta');
-$app->get('/api/crawler/createOrderOdoo', '\CrawlerController:createOrderOdoo');
 
 $app->post('/api/subscribe', '\CustomerController:subscribe');
 

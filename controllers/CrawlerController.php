@@ -319,24 +319,6 @@ class CrawlerController extends Controller {
     Meta::store($key, $value);
     echo 'Created';
 	}
-
-  public function createOrderOdoo() {
-    $orders = Order::where('id_odoo', '')->get();
-    foreach ($orders as $key => $order) {
-      if($order->count_create_odoo && $order->count_create_odoo < 6) {
-        $order_odoo = Order::getInfoOdoo($order->id);
-        $odoo_id = Order::createOrderOdoo($order_odoo);
-        if($odoo_id) Order::where('id', $order->id)->update(['id_odoo' => $odoo_id]);
-        else {
-          $temp = Order::find($order->id);
-          $temp->count_create_odoo = $temp->count_create_odoo + 1;
-          $temp->save();
-          LogOrderOdoo::store($order->id, $_SESSION['error_create_odoo']);
-          Order::postTelegram($order->id, $_SESSION['error_create_odoo']);
-        }
-      }
-    }
-  }
 }
 
 ?>

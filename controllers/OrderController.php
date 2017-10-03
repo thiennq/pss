@@ -6,7 +6,6 @@ require_once("../models/Customer.php");
 require_once("../models/Cart.php");
 require_once("../models/Region.php");
 require_once("../models/Product.php");
-require_once("../models/LogOrderOdoo.php");
 require_once(ROOT.'/framework/push-noti.php');
 use GuzzleHttp\Client;
 
@@ -146,16 +145,6 @@ class OrderController extends Controller {
         }
         unset($_SESSION['cart']);
         $_SESSION['order_id'] = $order_id;
-        // $order_odoo = Order::getInfoOdoo($order_id);
-        // $odoo_id = Order::createOrderOdoo($order_odoo);
-        // if($odoo_id) Order::where('id', $order_id)->update(['id_odoo' => $odoo_id]);
-        // else {
-        //   $temp = Order::find($order->id);
-        //   $temp->count_create_odoo = $temp->count_create_odoo + 1;
-        //   $temp->save();
-        //   LogOrderOdoo::store($order_id, $_SESSION['error_create_odoo']);
-        //   Order::postTelegram($order_id, $_SESSION['error_create_odoo']);
-        // }
       }
     }
     if (count($dropship)) {

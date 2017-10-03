@@ -28,9 +28,13 @@ class ControllerHelper {
 
   public function response($code) {
     $arr = ControllerHelper::parseJson($code);
-    if ($code > 0) {
-      $arr['id'] = $code;
-    }
+    if ($code > 0) $arr['id'] = $code;
+    return $arr;
+  }
+
+  public function responseData($data) {
+    $arr = ControllerHelper::parseJson($data);
+    $arr['data'] = $data;
     return $arr;
   }
 

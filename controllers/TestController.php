@@ -1,25 +1,10 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+require_once('helper.php');
+use HelperController as Helper;
 
 class TestController extends Controller {
-
-  public function test() {
-    $page = $_GET['page'] ? $_GET['page'] : 1;
-    $perpage = $_GET['perpage'] ? $_GET['perpage'] : 100;
-    $skip = ((int) $page - 1) * $perpage;
-    $product = Product::Skip($skip)->take($perpage)->get();
-    foreach ($product as $key => $value) {
-      echo $value->handle . '</br>';
-      $product = Product::find($value->id);
-      $image = Image::where('type', 'product')->where('typeId', $value->id)->first();
-      $product->featured_image = '';
-      if ($image) {
-        $product->featured_image = $image->name;
-      }
-      $product->save();
-    }
-  }
 
   public function sendMail() {
     $to = 'duynhan.nguyenhoang@gmail.com';

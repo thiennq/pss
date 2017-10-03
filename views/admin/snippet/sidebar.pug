@@ -27,41 +27,11 @@ aside.main-sidebar
             a(href='/admin/product')
               i.fa.fa-circle
               | Danh sách sản phẩm
-          - var liClass = (childMenu == 'size' ? 'active' : '');
+          - var liClass = (childMenu == 'filter' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/size')
+            a(href='/admin/filters')
               i.fa.fa-circle
-              | Kích thước
-          - var liClass = (childMenu == 'bag' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/bag')
-              i.fa.fa-circle
-              | Ngăn đựng laptop
-          - var liClass = (childMenu == 'special' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/special')
-              i.fa.fa-circle
-              | Tính năng đặc biệt
-          - var liClass = (childMenu == 'brand' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/brand')
-              i.fa.fa-circle
-              | Thương hiệu
-          - var liClass = (childMenu == 'color' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/color')
-              i.fa.fa-circle
-              | Màu sắc
-          - var liClass = (childMenu == 'material' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/material')
-              i.fa.fa-circle
-              | Chất liệu
-          - var liClass = (childMenu == 'specification' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/specification')
-              i.fa.fa-circle
-              | Thông số kỹ thuật
+              | Thuộc tính
           - var liClass = (childMenu == 'price' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/price')

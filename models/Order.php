@@ -60,33 +60,6 @@ class Order extends Illuminate\Database\Eloquent\Model {
       return $order_odoo;
     }
 
-    public function createOrderOdoo($data) {
-      $client = new \GuzzleHttp\Client();
-      $url = 'http://erp.tga.com.vn:9002/api/order';
-      $response = $client->request('POST', $url, [
-         'json' => [ "order" => $data ]
-        ]);
-      $result = $response->getBody();
-      $_SESSION['error_create_odoo'] = $result;
-      $result = json_decode($result, true);
-      if(!$result['code']) return $result['data'];
-      return 0;
-    }
-
-    public function postTelegram($order_id, $msg) {
-      $msg = HOST . '/admin/orders/' . $order_id . "\n" .  $msg;
-      $FASTBUY_URL = "http://eyeteam.vn/fastbuy/send";
-      $GROUP = "-218162321";
-      $client = new \GuzzleHttp\Client();
-      $response = $client->request('POST', $FASTBUY_URL, [
-         'json' => [
-           "id" => $GROUP,
-           "message" => $msg
-         ]
-      ]);
-      $result = $response->getBody();
-    }
-
     public function PHPMailer($to, $subject, $body, $text) {
   		$mail = new PHPMailer;
       include ROOT.'/framework/phpmailer.php';

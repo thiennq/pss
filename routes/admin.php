@@ -14,12 +14,7 @@ require_once('../controllers/AdminArticleController.php');
 require_once('../controllers/AdminBlogController.php');
 require_once('../controllers/AdminPageController.php');
 require_once('../controllers/AdminBranchController.php');
-require_once('../controllers/AdminColorController.php');
 require_once('../controllers/AdminBrandController.php');
-require_once('../controllers/AdminMaterialController.php');
-require_once('../controllers/AdminSizeController.php');
-require_once('../controllers/AdminSpecialController.php');
-require_once('../controllers/AdminBagController.php');
 require_once('../controllers/AdminFilterController.php');
 require_once('../controllers/AdminUserController.php');
 require_once('../controllers/AdminSettingController.php');
@@ -67,38 +62,17 @@ $app->group('/admin', function() use($app) {
   $app->put('/collections/{id}', '\AdminCollectionController:update');
   $app->delete('/collections/{id}', '\AdminCollectionController:delete');
 
+  $app->get('/filters', '\AdminFilterController:index');
+  $app->post('/filters', '\AdminFilterController:store');
+  $app->get('/filters/{id}', '\AdminFilterController:get');
+  $app->put('/filters/{id}', '\AdminFilterController:update');
+  $app->delete('/filters/{id}', '\AdminFilterController:delete');
+
   $app->get('/brand', '\AdminBrandController:index');
   $app->post('/brand', '\AdminBrandController:store');
   $app->get('/brands/{id}', '\AdminBrandController:show');
   $app->put('/brand/{id}', '\AdminBrandController:update');
   $app->delete('/brand/{id}', '\AdminBrandController:delete');
-
-  $app->get('/color', '\AdminColorController:index');
-  $app->post('/color', '\AdminColorController:store');
-  $app->put('/color/{id}', '\AdminColorController:update');
-  $app->delete('/color/{id}', '\AdminColorController:delete');
-
-  $app->get('/material', '\AdminMaterialController:index');
-  $app->post('/material', '\AdminMaterialController:store');
-  $app->put('/material/{id}', '\AdminMaterialController:update');
-  $app->delete('/material/{id}', '\AdminMaterialController:delete');
-
-  $app->get('/size', '\AdminSizeController:index');
-  $app->post('/size', '\AdminSizeController:store');
-  $app->put('/size/{id}', '\AdminSizeController:update');
-  $app->delete('/size/{id}', '\AdminSizeController:delete');
-
-  $app->get('/special', '\AdminSpecialController:index');
-  $app->post('/special', '\AdminSpecialController:store');
-  $app->put('/special/{id}', '\AdminSpecialController:update');
-  $app->delete('/special/{id}', '\AdminSpecialController:delete');
-
-  $app->get('/bag', '\AdminBagController:index');
-  $app->post('/bag', '\AdminBagController:store');
-  $app->put('/bag/{id}', '\AdminBagController:update');
-  $app->delete('/bag/{id}', '\AdminBagController:delete');
-
-  $app->get('/specification', '\AdminProductController:specification');
 
   $app->get('/price', '\AdminPriceController:index');
   $app->post('/price', '\AdminPriceController:store');
