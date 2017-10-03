@@ -8,13 +8,16 @@ $(window).on('load', function() {
   }
 });*/
 
+var listFormData = [];
+listFormData.push(new FormData());
 
 $('.btn-add-variant').click(function() {
   var obj = {};
-  obj.id = $('.variant-item').length + 1;
+  obj.id = listFormData.length;
   obj.static = staticURI;
   var variant = tmpl("add-variant", obj);
   $('.list-append').append(variant);
+  listFormData.push(new FormData());
 });
 
 function readURL(files, callback) {
@@ -51,6 +54,19 @@ $(document).on('change', '.upload-list-image', function(){
   }
 });
 
+$(document).on('click', '.add-image', function () {
+  var $variant = $(this).closest('.variant-item');
+  var $form = $variant.find('.upload-list-image');
+  var files = $form.prop('files');
+  var formData = listFormData[$form.attr('data-id')];
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    if (!f.deleted) {
+      formData.append('upload[]', f, f.name);
+    }
+  }
+});
+
 function uploadImg(formData, callback) {
   $.ajax({
     type: 'POST',
@@ -67,12 +83,12 @@ function uploadImg(formData, callback) {
 
 function uploadImgs($form, callback) {
   var files = $form.prop('files');
-  var formData = new FormData();
+  var formData = listFormData[form.attr('data-id')];
   for (var i = 0; i < files.length; i++) {
-   var f = files[i];
-   if (!f.deleted) {
-    formData.append('upload[]', f, f.name);
-   }
+    var f = files[i];
+    if (!f.deleted) {
+      formData.append('upload[]', f, f.name);
+    }
   }
   uploadImg(formData, function(json) {
     var list_image = [];

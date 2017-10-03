@@ -49,7 +49,7 @@ block content
               strong.required  *
             .col-sm-10
               .list-variant.clearfix.variant-bonus.list-append
-                .variant-item.clearfix
+                .variant-item(data-id="0").clearfix
                   .row
                     .col-xs-11
                       .row
@@ -67,10 +67,10 @@ block content
                       label
                         img.hidden.no-border.loading(src=staticURI() + "/img/loading.gif" style="margin-left: 5px;")
                         form(enctype="multipart/form-data").hidden
-                          input#upload-image-variant-1.upload-list-image(type="file" name="upload[]" multiple="multiple")
+                          input#upload-image-variant-0.upload-list-image(data-id="0" type="file" name="upload[]" multiple="multiple")
                       .col-xs-12.list-image
                         .col-xs-2.add-image
-                          label(for="upload-image-variant-1")
+                          label(for="upload-image-variant-0")
               .btn-add-variant
                 a Thêm phiên bản
           .form-group
