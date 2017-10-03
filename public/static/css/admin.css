@@ -521,7 +521,7 @@ table img {
     background: url("/static/img/add_image.png") center;
     background-size: cover;
     cursor: pointer;
-    height: 150px;
+    height: 135px;
     padding: 0 5px;
     position: relative; }
     .form-product .list-image .add-image label {
@@ -700,10 +700,13 @@ select {
   -webkit-border-radius: 0px; }
 
 .list-variant .variant-item {
+  padding: 10px;
+  background-color: #f0f0f0;
   margin-bottom: 20px; }
-  .list-variant .variant-item .variant-images label {
-    font-weight: normal;
-    margin-top: 5px; }
+  .list-variant .variant-item .variant-images {
+    margin-top: 10px; }
+    .list-variant .variant-item .variant-images .list-image {
+      background-color: white; }
 
 .btn-add-variant {
   cursor: pointer; }
