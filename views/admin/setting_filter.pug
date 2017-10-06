@@ -23,28 +23,36 @@ block content
       .col-lg-4.col-md-6.col-sm-12.col-xs-12
         .filter-card.clearfix(data-id=item.id)
           .title=item.title
-            i.fa.fa-times.delete-filter(data-id=item.id)
-            i.fa.fa-edit.edit-filter(data-id=item.id)
-          if item.child
-            .option-list
+            .group-btn
+              i.fa.fa-edit.edit-filter.edit-attribute(data-id=item.id)
+              i.fa.fa-trash.delete-filter(data-id=item.id)
+          .option-list
+            if item.child
+              .clearfix
+                .col-sm-4 Tên option
+                .col-sm-4 Giá trị option
+                .col-sm-4.text-right Chỉnh sửa
               each child in item.child
-                .option-list-item.row
-                  .col-sm-4.option-value
-                    span=child.title
-                  .col-sm-4
-                    i.fa.fa-trash.delete-filter(data-id=item.id)
-                    i.fa.fa-edit.edit-filter(data-id=item.id)
-          .add-option
-            input.form-control(name="new-item" placeholder="Thêm option mới")
-            span.input-group-btn
-              button.btn.btn-default.add-new-item(data-id=item.id) Thêm
+                if child.id
+                  .clearfix
+                    .col-sm-4=child.title
+                    .col-sm-4=child.value
+                    .col-sm-4.text-right
+                      i.fa.fa-edit.edit-filter.edit-option(data-id=child.id)
+                      i.fa.fa-trash.delete-filter(data-id=child.id, data-option=1)
+          .col-xs-12.group-add-new-option
+            .input-group
+              input.form-control(type='text', name="title", placeholder="Tên option (required)")
+              input.form-control(type='text', name="value", placeholder="Giá trị (optional)")
+              .col-xs-12.text-center
+                button.btn.btn-default.add-new-option(data-parent_id=item.id) Thêm option mới
 
     #modal-add.modal.fade(role='dialog')
       .modal-dialog
         .modal-content.form-add-filter
           .modal-header
             button.close(type='button', data-dismiss='modal') ×
-            h4.modal-title Thêm thuộc tính
+            h4.modal-title Thêm
           .modal-body.clearfix
             .form-horizontal
               .box-body
@@ -58,38 +66,45 @@ block content
               i.fa.fa-floppy-o
               i.fa.fa-circle-o-notch.fa-spin
               | Lưu lại
-  #modal-edit.modal.fade(role='dialog')
-    .modal-dialog
-      form.modal-content.form-edit-filter
-        .modal-header
-          button.close(type='button', data-dismiss='modal') ×
-          h4.modal-title Chỉnh sửa thuộc tính
-        .modal-body.clearfix
-          .form-horizontal
-            .box-body
-              .form-group
-                label.col-sm-2.control-label Chủ đề
-                .col-sm-10
-                  input.form-control(type="text" name="title" placeholder="Chủ đề" required)
-                  input.form-control(type="text" name="id").hidden
-        .modal-footer
-          button.btn.btn-default(type='button', data-dismiss='modal') Đóng
-          button.btn.btn-admin(type='submit') Đồng ý
-
-  #modal-edit-option.modal.fade(role='dialog')
-    .modal-dialog
-      form.modal-content.form-edit-option
-        .modal-header
-          button.close(type='button', data-dismiss='modal') ×
-          h4.modal-title Chỉnh sửa option
-        .modal-body.clearfix
-          .form-horizontal
-            .box-body
-              .form-group
-                label.col-sm-2.control-label Giá trị
-                .col-sm-10
-                  input.form-control(type="text" name="value" placeholder="Giá trị" required)
-                  input.form-control(type="text" name="id").hidden
-        .modal-footer
-          button.btn.btn-default(type='button', data-dismiss='modal') Đóng
-          button.btn.btn-admin(type='submit') Đồng ý
+    #modal-edit.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content.form-add-filter
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Chỉnh sửa
+          .modal-body.clearfix
+            .form-horizontal
+              .box-body
+                .form-group
+                  label.col-sm-3.control-label Tên thuộc tính
+                  .col-sm-9
+                    input.form-control(type="text" name="title" placeholder="Màu sắc" required)
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-admin.btn-update
+              i.fa.fa-floppy-o
+              i.fa.fa-circle-o-notch.fa-spin
+              | Cập nhật
+    #modal-edit-option.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content.form-add-filter
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Chỉnh sửa
+          .modal-body.clearfix
+            .form-horizontal
+              .box-body
+                .form-group
+                  label.col-sm-3.control-label Tên option
+                  .col-sm-9
+                    input.form-control(type="text" name="title" placeholder="Màu sắc" required)
+                .form-group
+                  label.col-sm-3.control-label Giá trị option
+                  .col-sm-9
+                    input.form-control(type="text" name="value" placeholder="Màu sắc" required)
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-admin.btn-update
+              i.fa.fa-floppy-o
+              i.fa.fa-circle-o-notch.fa-spin
+              | Cập nhật

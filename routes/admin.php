@@ -182,7 +182,6 @@ $app->group('/admin', function() use($app) {
 
   $app->get('/api/rotate', '\FunctionController:rotateImage');
   $app->get('/api/create-handle', '\FunctionController:createHandle');
-  $app->post('/api/create-handle-product', '\FunctionController:createHandleCollection');
   $app->get('/api/tinymce/images', '\AdminProductController:renderImageTinymce');
 
 })->add(function ($request, $response, $next) {

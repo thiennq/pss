@@ -12,7 +12,8 @@ class Filter extends Illuminate\Database\Eloquent\Model {
     $data = Filter::where('parent_id', -1)->skip($skip)->take($perpage)->get();
     foreach ($data as $key => $value) {
       $id = $value->id;
-      $child = Filter::where('parent_id', $id)->get();
+      $child = Filter::where('parent_id', $id)->where('parent_id', '!=', -1)->get();
+      $value->child = 0;
       if (count($child)) $value->child = $child;
     }
     return $data;
@@ -25,7 +26,11 @@ class Filter extends Illuminate\Database\Eloquent\Model {
   }
 
   public function store($data) {
-    $filter = Filter::where('title', $data['title'])->first();
+    if ($data['parent_id']) {
+      $filter = Filter::where('title', $data['title'])->where('parent_id', '!=', -1)->first();
+    } else {
+      $filter = Filter::where('title', $data['title'])->where('parent_id', -1)->first();
+    }
     if ($filter) return -1;
     $filter = new Filter;
     $filter->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
@@ -34,6 +39,19 @@ class Filter extends Illuminate\Database\Eloquent\Model {
     $filter->created_at = date('Y-m-d H:i:s');
     $filter->updated_at = date('Y-m-d H:i:s');
     if ($filter->save()) return $filter->id;
+    return -3;
+  }
+
+  public function update($id, $data) {
+    $filter = Filter::where('title', $data['title'])->where('id', '!=', $id)->first();
+    if ($filter) return -1;
+    $filter = Filter::find($id);
+    if (!$filter) return -2;
+    $filter->title = $data['title'];
+    $filter->value = $data['value'] ? $data['value'] : '';
+    $filter->created_at = date('Y-m-d H:i:s');
+    $filter->updated_at = date('Y-m-d H:i:s');
+    if ($filter->save()) return 0;
     return -3;
   }
 

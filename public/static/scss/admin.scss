@@ -967,3 +967,53 @@ option:disabled {
   background-color: #eee;
   cursor: not-allowed;
 }
+
+.filter {
+  background-color: white;
+  .filter-card {
+    background-color: white;
+    border-radius: 2px;
+    border : 1px solid #ddd;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    .title {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+      font-size : 16px;
+      height : 40px;
+      .group-btn {
+        float: right;
+        padding-right: 15px;
+      }
+    }
+    .delete-filter {
+      cursor: pointer;
+      font-size: 20px;
+      color: red;
+    }
+    .edit-filter {
+      cursor: pointer;
+      padding-right: 5px;
+      font-size : 20px;
+      color: blue;
+      position: relative;
+      top: 1px;
+    }
+    .option-list {
+      min-height : 300px;
+      overflow: auto;
+      margin-top: 10px;
+      .clearfix {
+        margin-bottom: 10px;
+      }
+    }
+    .group-add-new-option {
+      input {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
