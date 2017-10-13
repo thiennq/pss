@@ -8,21 +8,21 @@
   <body>
     <header>
       <div class="greet">
-        <p>Xin chao {{customer_name}}</p>
+        <p>Xin chào {{customer_name}}</p>
       </div>
       <div class="notification">
-        <p>DON HANG CUA BAN VUA CHUYEN SANG TRANG THAI {order_status}</p>
+        <p>ĐƠN HÀNG CỦA BẠN VỪA CHUYỂN SANG TRẠNG THÁI {order_status}</p>
       </div>
     </header>
     <div class="content-wrapper">
       <div class="customer-info">
-        <p>Ho ten: {{customer_name}}</p>
+        <p>Họ tên: {{customer_name}}</p>
         <p>Email: {{customer_email}}</p>
-        <p>So dien thoai: {{customer_phone}}</p>
-        <p>Dia chi giao hang: {{customer_address}}</p>
+        <p>Số điện thoại: {{customer_phone}}</p>
+        <p>Địa chỉ giao hàng: {{customer_address}}</p>
       </div>
       <div class="order-info">
-        <p>THONG TIN DON HANG</p>
+        <p>THÔNG TIN ĐƠN HÀNG</p>
         <!-- each order in orders -->
         <table>
           <tr>
@@ -36,14 +36,14 @@
           </tr>
         </table>
         <div class="total-price">
-          <p>Tong cong: {{total}}</p>
+          <p>Tổng cộng: {{total}}</p>
           <p>Shipping: {{shipping}}</p>
-          <p>Thanh tien: {{money}}</p>
+          <p>Thành tiền: {{money}}</p>
         </div>
       </div>
     </div>
     <footer>
-      <p>CAM ON BAN DA DAT HANG TAI ...</p>
+      <p>CẢM ƠN BẠN ĐÃ ĐẶT HÀNG TẠI ...</p>
     </footer>
   </body>
 </html>
