@@ -27,6 +27,18 @@ function getMeta($key) {
   return $meta->value;
 }
 
+function listArticles($blogId, $pageNumber) {
+  $perPage = 2;
+  $skip = ($pageNumber - 1) * $perPage;
+  $countArticles = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId)->count();
+
+  $articles = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId)->skip($skip)->take($perPage)->orderBy('article.updated_at', 'desc')->select('article.*')->get();
+
+  $totalPages = ceil($countArticles/$perPage);
+  $articles->total_pages = $totalPages;
+  return $articles;
+}
+
 function Menu() {
   if(getMemcached('menus')) $menus = getMemcached('menus');
   else {

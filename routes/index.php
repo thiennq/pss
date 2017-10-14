@@ -11,6 +11,7 @@ require_once('../controllers/PageController.php');
 require_once('../controllers/OrderController.php');
 require_once('../controllers/CustomerController.php');
 require_once('../controllers/ArticleController.php');
+require_once('../controllers/BlogController.php');
 require_once('../controllers/FunctionController.php');
 require_once('../controllers/CrawlerController.php');
 require_once('../controllers/TestController.php');
@@ -53,6 +54,10 @@ $app->get('/giam-gia-50', '\CollectionController:discount50');
 $app->get('/san-pham/{handle}', '\ProductController:show');
 $app->get('/dat-hang-thanh-cong', '\OrderController:orderSuccess');
 $app->get('/tag/{handle}', '\CollectionController:showTag');
+
+$app->get('/blog/{handle}', '\BlogController:get');
+$app->get('/article/{link}', '\ArticleController:get');
+
 
 $app->get('/khuyen-mai/{link}', '\ArticleController:getPromotion');
 $app->get('/tin-tuc/{link}', '\ArticleController:getNews');

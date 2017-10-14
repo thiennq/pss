@@ -62,7 +62,7 @@ aside.main-sidebar
       - var itemClass = (menu == 'article' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')
-          i.fa.fa-users
+          i.fa.fa-book
           span Bài viết
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
@@ -123,10 +123,10 @@ aside.main-sidebar
             a(href="/admin/images")
               i.fa.fa-circle
               | Hình ảnh
-      - var itemClass = (menu == 'extension' ? 'active' : 'item');
+      - var itemClass = (menu == 'setting_extend' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')
-          i.fa.fa-cog
+          i.fa.fa-cogs
           span Mở rộng
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
@@ -158,7 +158,7 @@ aside.main-sidebar
       - var itemClass = (menu == 'staff' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/users")
-          i.fa.fa-product-hunt
+          i.fa.fa-user
           span Nhân viên
     .foot
       .info

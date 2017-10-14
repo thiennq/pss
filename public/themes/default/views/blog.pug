@@ -1,0 +1,52 @@
+extends ./layout.pug
+
+block pre-include
+  title=blog.title
+  if blog.image
+    - ogImage = blog.image
+  if blog.description_seo
+    - metaDescription = blog.description_seo
+  if blog.meta_robots
+    - meta_robots = blog.meta_robots;
+  - metaTitle = blog.title
+block post-include
+  script(src=themeURI() + '/libs/twbsPagination.min.js')
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+  script(src=themeURI() + '/libs/owl.carousel.min.js')
+  
+block content
+  .news-detail.container
+    include snippet/breadcrumb
+    .col-xs-12
+      .content.row
+        h1=blog.title
+        p
+          b=blog.description
+        section !{blog.content}
+        .author=blog.author
+        .list-article.clearfix.row
+          - var articles = listArticles(blog.id, page_number);
+          .col-xs-12
+            each article in articles
+              .col-xs-12
+                a.col-sm-3.col-xs-4(href=fullUrl(article.link))
+                  .row
+                    - var thumb = themeURI() + '/img/article_default.png';
+                    if article.image
+                      - var thumb = '/uploads/' + resize(article.image, 240);
+                    img(src=thumb data-src=thumb)
+                .col-sm-9.col-xs-8
+                  a(href=fullUrl(article.link))=article.title
+                  .date=ddMMYYYY(article.updated_at)
+                  .news-content=article.description
+      .sharing.hidden-xs.row
+        .share-icon
+          .share-now CHIA SẺ NGAY 
+          .social-icon
+            span.middle-inline-block
+            i.fa.fa-facebook
+          .social-icon
+            span.middle-inline-block
+            i.fa.fa-google-plus
+      if articles.total_pages > 1
+        #pagination.col-sm-12.text-right(data-page_number=page_number data-total=articles.total_pages)

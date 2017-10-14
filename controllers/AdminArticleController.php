@@ -55,7 +55,7 @@ class AdminArticleController extends AdminController {
     $article = new Article;
     $article->title = $body['title'];
     $article->handle = $body['handle'];
-    $article->link = '/' . $body['handle'];
+    $article->link = $body['handle'];
     $article->image = $body['image'] ? renameOneImage($body['image'], $body['handle']) : '';
     $article->description = $body['description'] ? $body['description'] : '';
     $article->description_seo = $body['description_seo'] ? $body['description_seo']: '';
@@ -95,7 +95,7 @@ class AdminArticleController extends AdminController {
     if($article) {
       $article->title = $body['title'];
       $article->handle = $body['handle'];
-      $link = '/' . $body['handle'] . '-' . $id;
+      $link = $body['handle'] . '-' . $id;
       $article->link = $link;
       if($body['image']) $article->image = renameOneImage($body['image'], $body['handle']);
       if($body['description']) $article->description = $body['description'];

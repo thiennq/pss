@@ -22,6 +22,7 @@ $Schema->create('article', function (Blueprint $table) {
   $table->string('title');
   $table->string('handle');
   $table->string('link');
+  $table->string('type');
   $table->string('image')->nullable();
   $table->text('description')->nullable();
   $table->text('description_seo')->nullable();
