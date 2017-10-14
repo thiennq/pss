@@ -40,6 +40,26 @@ class AdminProductController extends AdminController {
     ));
   }
 
+  public function store (Request $request, Response $response) {
+		$body = $request->getParsedBody();
+		$code = Product::store($body);
+    $arr = [
+			'title' => $body['title']
+		];
+		$checkNull = Helper::checkNull($arr);
+		if ($checkNull) {
+			return $response->withJson($checkNull, 200);
+		}
+		$result = Helper::response($code);
+    if ($result) {
+      $collections = $body['collections'];
+      foreach ($collections as $key => $collection) {
+        CollectionProduct::store($collection, $result);
+      }
+    }
+		return $response->withJson($result, 200);
+	}
+
   public function update(Request $request, Response $response) {
     try {
       $id = $request->getAttribute('id');

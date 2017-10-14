@@ -13,31 +13,9 @@ require_once('../controllers/CustomerController.php');
 require_once('../controllers/ArticleController.php');
 require_once('../controllers/BlogController.php');
 require_once('../controllers/FunctionController.php');
-require_once('../controllers/CrawlerController.php');
 require_once('../controllers/TestController.php');
 require_once('../models/helper.php');
 
-// $currentUrl = HOST . $_SERVER['REQUEST_URI'];
-// $redirect = Redirect::where('old', $currentUrl)->first();
-// if($redirect) {
-//   header("HTTP/1.1 301 Moved Permanently");
-//   header("Location: ". $redirect->new);
-//   exit();
-// }
-//
-// if(strpos($currentUrl, 'products')) {
-//   $currentUrl = str_replace('products', 'san-pham', $currentUrl);
-//   header("HTTP/1.1 301 Moved Permanently");
-//   header("Location: ". $currentUrl);
-//   exit();
-// }
-//
-// if(strlen($_SERVER['REQUEST_URI']) > 2 && substr($_SERVER['REQUEST_URI'], -1) == '/') {
-//   $currentUrl = substr($currentUrl, 0, -1);
-//   header("HTTP/1.1 301 Moved Permanently");
-//   header("Location: ". $currentUrl);
-//   exit();
-// }
 
 $app->get('/', '\IndexController:index');
 $app->get('/dat-hang', '\OrderController:checkout');
@@ -76,21 +54,15 @@ $app->delete('/api/deleteCart', '\OrderController:deleteCart');
 
 $app->get('/api/san-pham/modal/{id}', '\ProductController:findProductModal');
 $app->get('/api/san-pham/variant/{id}', '\ProductController:findProductVariant');
-$app->get('/api/crawler/getAllProduct', '\CrawlerController:getAllProduct');
-$app->get('/api/crawler/getAllBranch', '\CrawlerController:getAllBranch');
-$app->get('/api/crawler/updateInventory', '\CrawlerController:updateInventory');
-$app->get('/api/crawler/updateInventoryOneBranch', '\CrawlerController:updateInventoryOneBranch');
-$app->get('/api/crawler/updateOrderState', '\CrawlerController:updateOrderState');
-$app->get('/api/crawler/updateOrderState/{id}', '\CrawlerController:updateOneOrderState');
-$app->get('/api/crawler/getListDistrict', '\CrawlerController:getListDistrict');
-$app->get('/api/crawler/getListCity', '\CrawlerController:getListCity');
-$app->get('/api/crawler/createMeta', '\CrawlerController:createMeta');
 
 $app->post('/api/subscribe', '\CustomerController:subscribe');
 
 $app->get('/test/test', '\TestController:test');
 
 $app->get('/test-mail', '\TestController:sendMail');
+
+$app->get('/truyen', '\TestController:truyen');
+
 
 $app->get('/{params:.*}', function($request, $response, $args) {
   $link = $request->getAttribute('params');

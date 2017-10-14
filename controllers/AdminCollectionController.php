@@ -42,6 +42,13 @@ class AdminCollectionController extends AdminController {
 
 	public function store (Request $request, Response $response) {
 		$body = $request->getParsedBody();
+		$arr = [
+			'title' => $body['title']
+		];
+		$checkNull = Helper::checkNull($arr);
+		if ($checkNull) {
+			return $response->withJson($checkNull, 200);
+		}
 		$code = Collection::store($body);
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);
@@ -50,6 +57,13 @@ class AdminCollectionController extends AdminController {
 	public function update (Request $request, Response $response) {
 		$id = $request->getAttribute('id');
 		$body = $request->getParsedBody();
+		$arr = [
+			'title' => $body['title']
+		];
+		$checkNull = Helper::checkNull($arr);
+		if ($checkNull) {
+			return $response->withJson($checkNull, 200);
+		}
 		$code = Collection::update($id, $body);
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);

@@ -42,7 +42,7 @@ class ProductController extends Controller {
         $product->percent = round($product->per, 0) .'%';
         $product->display_discount = true;
       }
-      if($product->brand) $product->brand_handle = HOST . '/thuong-hieu/' . convertHandle($product->brand);
+      if($product->brand) $product->brand_handle = HOST . '/thuong-hieu/' . createHandle($product->brand);
       $list_image = Image::getImage('product', $product->id);
       $product->list_image = $list_image;
 
@@ -179,7 +179,7 @@ class ProductController extends Controller {
     $product->title = $collection_parent->title . ' ' . $product->title;
     $list_image = Image::getImage('product', $product->id);
     $product->list_image = $list_image;
-    $product->brand_url = convertHandle($product->brand);
+    $product->brand_url = createHandle($product->brand);
 
     $product->count_variant = 0;
     if($product->group_id) {

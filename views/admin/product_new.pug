@@ -18,11 +18,10 @@ block content
         a Tạo sản phẩm
     ol.button-right.col-sm-6
       li
-        a.btn.btn-admin.btn-create-product
+        a.btn.btn-admin.btn-create
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
-          | Lưu
-
+          | Lưu lại
   section.content
     .box.box-info
       .form-horizontal.form-product
@@ -31,19 +30,19 @@ block content
             label.col-sm-2.control-label Tên sản phẩm
               strong.required  *
             .col-sm-10
-              input.form-control(name="title")
+              input.form-control(name="title", placeholder="Iphone X")
           .form-group
             label.col-sm-2.control-label Nhóm sản phẩm
             .col-sm-10
-              select.form-control.chosen-select-collection(multiple name="collection" data-placeholder="Chọn nhóm sản phẩm...")
-                each collection in list_collection
-                  option(value=collection.id)=collection.breadcrumb
-                script.
-                  var collections = $(".chosen-select-collection").chosen();
+              .list-collection.clearfix(data-value=data.collection_id)
+                each item in collections
+                  label.col-xs-3
+                    input(type="checkbox" value=item.id)
+                    =item.title
           .form-group
             label.col-sm-2.control-label Mô tả
             .col-sm-10
-              textarea.form-control#product-description
+              textarea.form-control#description
           .form-group
             label.col-sm-2.control-label Phiên bản
               strong.required  *
@@ -74,20 +73,32 @@ block content
               .btn-add-variant
                 a Thêm phiên bản
           .form-group
-            label.col-sm-2.control-label Meta description
-            .col-sm-10
-              textarea.form-control(name="meta-description", value='', data-title='', rows="5")
-          .form-group
-            label.col-sm-2.control-label Meta robots
-            .col-sm-10
-              select.form-control(name="meta-robots" data-value=data.meta_robots)
-                option(value="index, follow") Index, Follow
-                option(value="noindex, follow") No Index, Follow
-                option(value="index, nofollow") Index, No Follow
-                option(value="noindex, nofollow") No Index, No Follow
-          .form-group
             label.col-sm-2.control-label Hiển thị
             .col-sm-10
               select.form-control(name="display")
                 option(value="0") Không
                 option(value="1") Có
+    .box
+      .form-horizontal
+        .box-body
+          .form-group
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
+          .form-group
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
+            .col-sm-10
+              input.form-control(name="meta_title", placeholder="Iphone X chính hãng")
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")
+          .form-group
+            label.col-sm-2.control-label Meta robots
+            .col-sm-10
+              select.form-control(name="meta_robots")
+                option(value="index, follow") Index, Follow
+                option(value="noindex, follow") No Index, Follow
+                option(value="index, nofollow") Index, No Follow
+                option(value="noindex, nofollow") No Index, No Follow
