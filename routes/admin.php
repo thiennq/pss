@@ -93,10 +93,10 @@ $app->group('/admin', function() use($app) {
   $app->get('/customer/export', '\AdminCustomerController:export');
 
   // Article
-  $app->get('/article/new', '\AdminArticleController:create');
-  $app->get('/articles', '\AdminArticleController:showNews');
-  $app->get('/article/{id}', '\AdminArticleController:show');
-  $app->post('/article', '\AdminArticleController:store');
+  $app->get('/article/new', '\AdminArticleController:new');
+  $app->get('/articles', '\AdminArticleController:fetch');
+  $app->get('/article/{id}', '\AdminArticleController:get');
+  $app->post('/article', '\AdminArticleController:create');
   $app->put('/article/{id}', '\AdminArticleController:update');
   $app->delete('/article/{id}', '\AdminArticleController:delete');
   $app->get('/articles/search', '\AdminArticleController:searchArticle');

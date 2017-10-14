@@ -39,6 +39,27 @@ function listArticles($blogId, $pageNumber) {
   return $articles;
 }
 
+function getArticleDetail($articleHandle, $articleId) {
+  $responseData = array();
+  if(getMemcached('article_' . $articleHandle)) $responseData =  json_decode(getMemcached('article_' . $articleHandle), true);
+  else {
+    $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
+
+    $related = array();
+    $arr_related = ArticleRelated::where('article_id', $id)->get();
+    // foreach ($arr_related as $key => $value) {
+    //   $item = Article::find($value->article_related);
+    //   array_push($related, $item);
+    // }
+
+    $responseData = array(
+      'hot_article' => $hot_article,
+      'related' => $related
+    );
+    return $responseData;
+  }
+}
+
 function Menu() {
   if(getMemcached('menus')) $menus = getMemcached('menus');
   else {

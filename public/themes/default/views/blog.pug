@@ -29,14 +29,14 @@ block content
           .col-xs-12
             each article in articles
               .col-xs-12
-                a.col-sm-3.col-xs-4(href=fullUrl(article.link))
+                a.col-sm-3.col-xs-4(href='/article/' + article.handle)
                   .row
                     - var thumb = themeURI() + '/img/article_default.png';
                     if article.image
                       - var thumb = '/uploads/' + resize(article.image, 240);
                     img(src=thumb data-src=thumb)
                 .col-sm-9.col-xs-8
-                  a(href=fullUrl(article.link))=article.title
+                  a(href='/article/' + article.handle)=article.title
                   .date=ddMMYYYY(article.updated_at)
                   .news-content=article.description
       .sharing.hidden-xs.row

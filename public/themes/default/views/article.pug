@@ -1,25 +1,25 @@
 extends ./layout.pug
 
 block pre-include
-  title=data.title
+  title=article.title
   if fb_image
     - ogImage = fb_image
-  if data.description_seo
-    - metaDescription = data.description_seo
-  if data.meta_robots
-    - meta_robots = data.meta_robots;
-  - metaTitle = data.title
+  if article.description_seo
+    - metaDescription = article.description_seo
+  if article.meta_robots
+    - meta_robots = article.meta_robots;
+  - metaTitle = article.title
   
 block content
   .news-detail.container
     include snippet/breadcrumb
-    .col-sm-8.col-xs-12.left
+    .col-xs-12.left
       .content.row
-        h1=data.title
+        h1=article.title
         p
-          b=data.description
-        section !{data.content}
-        .author=data.author
+          b=article.description
+        section !{article.content}
+        .author=article.author
       .sharing.hidden-xs.row
         .share-icon
           .share-now CHIA SẺ NGAY 
@@ -29,29 +29,28 @@ block content
           .social-icon
             span.middle-inline-block
             i.fa.fa-google-plus
-      .col-sm-5.col-sm-offset-7.hidden-xs.back-to-news-page
-        a(href="/tin-tuc")
-          | &lt; QUAY VỀ DANH MỤC BÀI VIẾT
-        .clearfix
-      .relative-news.hidden-xs.row 
-        .title 
-          a BÀI VIẾT LIÊN QUAN
-            .border
-        each item in related
-          .item
-            .col-sm-2.avatar(href=fullUrl(item.link), style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
-            .col-sm-10
-              .news-title 
-                a(href=fullUrl(item.link))=item.title
-              .news-content=item.description
-    .col-sm-4.col-xs-12.right
-      .row
-        .hot-news.col-sm-12
-          .title Tin tức gần đây
-          each item in other
+      - var articleDetail = getArticleDetail(article.hanle, article.id);
+      if countArr(articleDetail.related)
+        .relative-news.hidden-xs.row 
+          .title 
+            a BÀI VIẾT LIÊN QUAN
+              .border
+          each article in articleDetail.related
             .item
-              .col-xs-5.avatar(href=fullUrl(item.link), style="background:url('/uploads/"+resize(item.image, 240)+"')" )
-              .col-xs-7.news-title
-                a(href=fullUrl(item.link))=item.title
-                .date.visible-xs=ddMMYYYY(item.updated_at)
-                .content.visible-xs=item.description
+              .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
+              .col-sm-10
+                .news-title 
+                  a(href='/article/' + article.handle)=article.title
+                .news-content=article.description
+      if countArr(articleDetail.hot_article)
+        .hot-articles.hidden-xs.row 
+          .title 
+            p BÀI VIẾT NỔI BẬT
+              .border
+          each article in articleDetail.hot_article
+            .item
+              .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
+              .col-sm-10
+                .news-title 
+                  a(href='/article/' + article.handle)=article.title
+                .news-content=article.description

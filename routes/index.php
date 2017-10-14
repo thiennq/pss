@@ -34,7 +34,7 @@ $app->get('/dat-hang-thanh-cong', '\OrderController:orderSuccess');
 $app->get('/tag/{handle}', '\CollectionController:showTag');
 
 $app->get('/blog/{handle}', '\BlogController:get');
-$app->get('/article/{link}', '\ArticleController:get');
+$app->get('/article/{handle}', '\ArticleController:get');
 
 
 $app->get('/khuyen-mai/{link}', '\ArticleController:getPromotion');
