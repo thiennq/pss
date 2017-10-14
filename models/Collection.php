@@ -18,44 +18,49 @@ class Collection extends Illuminate\Database\Eloquent\Model {
     return $data;
   }
 
-    public function store($data) {
-        $collection = Collection::where('title', $data['title'])->first();
-        if ($collection) return -1;
-        $collection = new Collection;
-		$collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
-		$collection->title = $data['title'];
-		$collection->handle = $data['handle'];
-		$collection->breadcrumb = $data['breadcrumb'];
-		$collection->link = $data['link'];
-		$collection->description = $data['description'];
-		$collection->content = $data['content'];
-		$collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
-		$collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
-		$collection->meta_title = $data['meta_title'];
-		$collection->meta_description = $data['meta_description'];
-		$collection->created_at = date('Y-m-d H:i:s');
-        $collection->updated_at = date('Y-m-d H:i:s');
-        if ($collection->save()) return $collection->id;
-        return -3;
+  public function store($data) {
+    $collection = Collection::where('title', $data['title'])->first();
+    if ($collection) return -1;
+    $collection = new Collection;
+    $collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
+    $collection->title = $data['title'];
+    $collection->handle = createHandle($data['title']);
+    $collection->breadcrumb = $data['title'];
+    $collection->link = $collection->handle;
+    if ($data['parent_id']) {
+      $parent = Collection::find($data['parent_id']);
+      $collection->breadcrumb = $parent->breadcrumb . '/' . $data['title'];
+      $collection->link = $parent->link . '/' . $collection->handle;
     }
+    $collection->description = $data['description'];
+    $collection->content = $data['content'];
+    $collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
+    $collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
+    $collection->meta_title = $data['meta_title'];
+    $collection->meta_description = $data['meta_description'];
+    $collection->created_at = date('Y-m-d H:i:s');
+    $collection->updated_at = date('Y-m-d H:i:s');
+    if ($collection->save()) return $collection->id;
+    return -3;
+  }
 
     public function update($id, $data) {
         $collection = Collection::find($id);
         if (!$collection) return -2;
         $check = Collection::where('id', '!=', $id)->where('title', $data['title'])->first();
         if ($check) return -1;
-        
-		$collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
-		$collection->title = $data['title'];
-		$collection->handle = $data['handle'];
-		$collection->breadcrumb = $data['breadcrumb'];
-		$collection->link = $data['link'];
-		$collection->description = $data['description'];
-		$collection->content = $data['content'];
-		$collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
-		$collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
-		$collection->meta_title = $data['meta_title'];
-		$collection->meta_description = $data['meta_description'];
+
+    $collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
+    $collection->title = $data['title'];
+    $collection->handle = $data['handle'];
+    $collection->breadcrumb = $data['breadcrumb'];
+    $collection->link = $data['link'];
+    $collection->description = $data['description'];
+    $collection->content = $data['content'];
+    $collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
+    $collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
+    $collection->meta_title = $data['meta_title'];
+    $collection->meta_description = $data['meta_description'];
         $collection->updated_at = date('Y-m-d H:i:s');
         if ($collection->save()) return 0;
         return -3;
@@ -70,7 +75,7 @@ class Collection extends Illuminate\Database\Eloquent\Model {
             Collection::where('parent_id', $id)->update(['parent_id' => -1]);
             removeImage($image);
             removeImage($banner);
-            return 0;  
+            return 0;
         }
         return -3;
     }

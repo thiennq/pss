@@ -8,11 +8,22 @@ class Product extends Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = 'product';
 
-    // fetch (list: page=1, perpage=50)
-    // get (id)
-    // delete (id)
-    // update (id, data)
-    // create (data)
+    public function store($data) {
+      $product = Product::where('title', $data['title'])->first();
+      if (!$product) return -1;
+      $product = new Product;
+      $product->title = $data['title'];
+      $product->handle = createHandle($data['title']);
+      $product->description = $data['description'];
+      $product->display = (int) $data['display'] ? 1 : 0;
+      $product->meta_title = $data['meta_title'];
+      $product->meta_description = $data['meta_description'];
+      $product->meta_robots = $data['meta_robots'];
+      $product->created_at = date('Y-m-d H:i:s');
+      $product->updated_at = date('Y-m-d H:i:s');
+      if ($product->save()) return $product->id;
+      return -3;
+    }
 
     public function getInfoProduct($products) {
       foreach ($products as $key => $value) {
@@ -28,7 +39,7 @@ class Product extends Illuminate\Database\Eloquent\Model {
   				$value['percent'] = round($value['percent'], 0) .'%';
   				$value['display_discount'] = true;
   			}
-  			$value['brand_url'] = convertHandle($value['brand']);
+  			$value['brand_url'] = createHandle($value['brand']);
   			$value->count_variant = 0;
   			if($value->group_id) {
   				$variants = Product::where('group_id', $value->group_id)->where('display', 1)->where('in_stock', 1)->get();
@@ -55,30 +66,6 @@ class Product extends Illuminate\Database\Eloquent\Model {
       return Product::Join('collection_product', 'collection_product.product_id', '=', 'product.id')
       ->where('collection_product.collection_id', $collection_id_related)
       ->where('product.display', 1)->where('product.id', '!=', $product->id)->select('product.*')->where('product.in_stock', 1)->orderBy('product.updated_at', 'desc')->take(6)->get();
-    }
-
-    public function arrayFilter($obj) {
-      $arr = array();
-      $item = new stdClass();
-      $item->key = 'brand';
-      $item->value = $obj->brand;
-      array_push($arr, $item);
-
-      $item = new stdClass();
-      $item->key = 'color';
-      $item->value = $obj->color;
-      array_push($arr, $item);
-
-      $item = new stdClass();
-      $item->key = 'price';
-      $item->value = $obj->price;
-      array_push($arr, $item);
-
-      $item = new stdClass();
-      $item->key = 'sort';
-      $item->value = $obj->sort;
-      array_push($arr, $item);
-      return $arr;
     }
 
     public function checkFilter($obj) {

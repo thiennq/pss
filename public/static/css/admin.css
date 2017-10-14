@@ -1,5 +1,5 @@
 .error {
-  border-color: red !important; }
+  border: 1px solid red !important; }
 
 .box {
   border: 0;
@@ -450,7 +450,8 @@ table img {
   .form-product .list-special label {
     cursor: pointer;
     font-weight: normal;
-    padding-left: 0; }
+    padding-left: 0;
+    user-select: none; }
     .form-product .list-collection label input,
     .form-product .list-special label input {
       margin-right: 5px;
@@ -706,13 +707,16 @@ select {
   padding: 10px;
   background-color: #f0f0f0;
   margin-bottom: 20px; }
+  .list-variant .variant-item:last-child {
+    margin-bottom: 0; }
   .list-variant .variant-item .variant-images {
     margin-top: 10px; }
     .list-variant .variant-item .variant-images .list-image {
       background-color: white; }
 
 .btn-add-variant {
-  cursor: pointer; }
+  cursor: pointer;
+  margin-top: 10px; }
 
 select.input-sm {
   line-height: initial !important; }

@@ -54,13 +54,13 @@ class Menu extends Illuminate\Database\Eloquent\Model {
   public function getMenu() {
     $menus = Menu::where('parent_id', -1)->get();
     foreach ($menus as $menu) {
-      $menu->handle = 'menu-' . convertHandle($menu->title);
+      $menu->handle = 'menu-' . createHandle($menu->title);
       $id = $menu->id;
       $menu->submenu = 0;
       $submenu = Menu::where('parent_id', $id)->get();
       if(count($submenu)) {
         foreach ($submenu as $value) {
-          $value->handle = 'menu-' . convertHandle($value->title);
+          $value->handle = 'menu-' . createHandle($value->title);
         }
         $menu->submenu = $submenu;
       }

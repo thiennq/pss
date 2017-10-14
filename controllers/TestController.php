@@ -2,9 +2,12 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once('helper.php');
-use HelperController as Helper;
+use ControllerHelper as Helper;
 
 class TestController extends Controller {
+
+  public function truyen() {
+  }
 
   public function sendMail() {
     $to = 'duynhan.nguyenhoang@gmail.com';
@@ -132,11 +135,11 @@ class TestController extends Controller {
     foreach ($products as $key => $product) {
       echo $product->title . '--->' . $product->handle;
       echo "<br/>";
-      if($product->handle != convertHandle($product->title)) {
+      if($product->handle != createHandle($product->title)) {
         echo $product->title . '--->' . $product->handle;
         echo "<br/>";
         $count++;
-        Product::where('id', $product->id)->update(['handle' => convertHandle($product->title)]);
+        Product::where('id', $product->id)->update(['handle' => createHandle($product->title)]);
       }
     }
     echo "Total: " . $count;

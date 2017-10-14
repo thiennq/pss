@@ -77,11 +77,6 @@ function initDataTable(item) {
   }
 }
 
-
-function createHandle(str, callback) {
-  $.get('/admin/api/create-handle?q='+str, callback);
-}
-
 function checkExtImage(image) {
   var ext = image.split('.').pop().toLowerCase();
   if($.inArray(ext, ['png','jpg','jpeg', 'gif']) == -1) {

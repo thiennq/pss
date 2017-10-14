@@ -28,7 +28,7 @@ class AdminBrandController extends AdminController {
 		$body = $request->getParsedBody();
     $obj = new stdClass();
     $obj->name = $body['name'];
-    $obj->handle = convertHandle($body['name']);
+    $obj->handle = createHandle($body['name']);
     $obj->description = $body['description'];
     $obj->meta_title = $body['meta_title'];
     $obj->meta_description = $body['meta_description'];
@@ -56,7 +56,7 @@ class AdminBrandController extends AdminController {
     $obj = new stdClass();
     $obj->id = $id;
     $obj->name = $body['name'];
-    $obj->handle = convertHandle($body['name']);
+    $obj->handle = createHandle($body['name']);
     $obj->meta_title = $body['meta_title'];
     $obj->description = $body['description'];
     $obj->meta_description = $body['meta_description'];
