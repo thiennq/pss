@@ -19,23 +19,6 @@ script#search-product(type="text/x-tmpl").
    </a>
   </li>
 
-script#search-article(type="text/x-tmpl").
-  <li data-id={%=o.id%}>
-    <a  class="add-article-related">{%=o.title%}</a>
-    <span>
-      <a href="/{%=o.link%}" target="_blank">
-      <i class="fa fa-link"></i></a>
-    </span>
-  </li>
-  
-script#add-article(type="text/x-tmpl").
-  <div class="item" data-id={%=o.id%}>
-    <a class="btn-remove">
-      <i class="fa fa-times"></i>
-    </a>
-    <a href="{%=o.link%}" target="_blank">{%=o.title%}</a>
-  </div>
-  
 script#add-new-tag(type="text/x-tmpl").
   <div class="item clearfix">
     <div class="col-xs-4 pd-left-0">

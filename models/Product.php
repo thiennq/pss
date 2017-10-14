@@ -10,12 +10,14 @@ class Product extends Illuminate\Database\Eloquent\Model {
 
     public function store($data) {
       $product = Product::where('title', $data['title'])->first();
-      if (!$product) return -1;
+      if ($product) return -1;
       $product = new Product;
       $product->title = $data['title'];
       $product->handle = createHandle($data['title']);
       $product->description = $data['description'];
       $product->display = (int) $data['display'] ? 1 : 0;
+      $product->view = 0;
+      $product->sell = 0;
       $product->meta_title = $data['meta_title'];
       $product->meta_description = $data['meta_description'];
       $product->meta_robots = $data['meta_robots'];

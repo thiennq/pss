@@ -18,24 +18,14 @@ $Schema = $capsule->schema();
 
 $Schema->create('product', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('group_id')->nullable();
     $table->string('title');
     $table->string('handle');
-    $table->string('barcode');
-    $table->integer('price');
-    $table->integer('price_compare')->nullable();
-    $table->integer('discount')->nullable();
-    $table->text('content')->nullable();
     $table->text('description')->nullable();
-    $table->text('meta_description')->nullable();
-    $table->text('material')->nullable();
-    $table->text('specification')->nullable();
-    $table->string('brand')->nullable();
-    $table->string('color')->nullable();
     $table->integer('sell')->nullable();
     $table->boolean('display')->nullable();
-    $table->boolean('dropship')->nullable();
-    $table->integer('in_stock')->nullable();
     $table->integer('view')->nullable();
+    $table->text('meta_title')->nullable();
+    $table->text('meta_description')->nullable();
+    $table->text('meta_robots')->nullable();
     $table->timestamps();
 });

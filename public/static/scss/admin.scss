@@ -836,45 +836,6 @@ $color_tundora_approx: #444;
 	}
 }
 
-.article {
-  .list-related {
-    .item {
-      margin: 5px 0;
-      a.btn-remove {
-        font-size: 15px;
-        margin-right: 10px;
-      }
-    }
-  }
-  .search-article {
-    position: relative;
-    ul {
-      position: absolute;
-      left: 0;
-      top: 30px;
-      list-style-type: none;
-      padding-left: 10px;
-      margin-top: 5px;
-      background-color: $color_white;
-      z-index: 9;
-      width: 100%;
-      border: 1px solid #d2d6de;
-      padding: 0;
-      display: none;
-      li {
-        margin: 5px 0;
-        padding: 5px 10px;
-        cursor: pointer;
-        span {
-          at: right;
-          color: $color_blue;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
-
 .dataTables_info {
 	padding-left: 25px;
 }

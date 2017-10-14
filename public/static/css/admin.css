@@ -620,36 +620,6 @@ table img {
       content: close-quote;
       padding: 0; }
 
-.article .list-related .item {
-  margin: 5px 0; }
-  .article .list-related .item a.btn-remove {
-    font-size: 15px;
-    margin-right: 10px; }
-
-.article .search-article {
-  position: relative; }
-  .article .search-article ul {
-    position: absolute;
-    left: 0;
-    top: 30px;
-    list-style-type: none;
-    padding-left: 10px;
-    margin-top: 5px;
-    background-color: #fff;
-    z-index: 9;
-    width: 100%;
-    border: 1px solid #d2d6de;
-    padding: 0;
-    display: none; }
-    .article .search-article ul li {
-      margin: 5px 0;
-      padding: 5px 10px;
-      cursor: pointer; }
-      .article .search-article ul li span {
-        at: right;
-        color: #274C9C;
-        cursor: pointer; }
-
 .dataTables_info {
   padding-left: 25px; }
 

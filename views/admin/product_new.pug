@@ -13,8 +13,6 @@ block content
       li
         a Sản phẩm
       li
-        a(href='/admin/product') Danh sách sản phẩm
-      li
         a Tạo sản phẩm
     ol.button-right.col-sm-6
       li
@@ -34,7 +32,7 @@ block content
           .form-group
             label.col-sm-2.control-label Nhóm sản phẩm
             .col-sm-10
-              .list-collection.clearfix(data-value=data.collection_id)
+              .list-collection.clearfix
                 each item in collections
                   label.col-xs-3
                     input(type="checkbox" value=item.id)
@@ -53,18 +51,17 @@ block content
                     .col-xs-11
                       .row
                         .col-sm-3
-                          input.form-control(name="variant-name" placeholder="Tên" value="Mặc định")
+                          input.form-control(name="variant-title" placeholder="Tên")
                         .col-sm-3
-                          input.form-control(name="variant-price", placeholder="Giá")
+                          input.form-control(type="number", name="variant-price", placeholder="Giá", min="1")
                         .col-sm-3
-                          input.form-control(name="variant-price-compare", placeholder="Giá so sánh")
+                          input.form-control(type="number", name="variant-price-compare", placeholder="Giá so sánh", min="1")
                         .col-sm-3
-                          input.form-control(type="number" name="variant-inventory", value=1)
+                          input.form-control(type="number" name="variant-inventory", min="1")
                     .col-xs-1
                   .row
                     .col-xs-11.variant-images
                       label
-                        img.hidden.no-border.loading(src=staticURI() + "/img/loading.gif" style="margin-left: 5px;")
                         form(enctype="multipart/form-data").hidden
                           input#upload-image-variant-0.upload-list-image(data-id="0" type="file" name="upload[]" multiple="multiple")
                       .col-xs-12.list-image

@@ -2,8 +2,8 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Menu.php");
-require_once("../models/Collection.php");
-require_once("helper.php");
+require_once(ROOT . '/models/Collection.php');
+require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
 class AdminMenuController extends AdminController {

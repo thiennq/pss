@@ -61,7 +61,6 @@
   $lang['OVER_2000'] = "Trên 2.000.000 đ";
   $lang['ALL_SEX'] = "Tất cả giới tính";
   $lang['ALL_BRAND'] = "Tất cả thương hiệu";
-  $lang['ALL_PRODUCT_TYPES'] = "Tất cả loại sản phẩm";
   $lang['ALL_COLOURS'] = "Tất cả màu sắc";
   $lang['ALL_MATERIAL'] = "Tất cả chất liệu";
   $lang['ALL_ORIGIN'] = "Tất cả Xuất xứ";
@@ -122,7 +121,6 @@
   $lang['COST'] = "Giá";
   $lang['SEX'] = "Giới tính";
   $lang['BRANDS'] = "Thương hiệu";
-  $lang['PRODUCT_TYPES'] = "Loại sản phẩm";
   $lang['COLOUR'] = "Màu sắc";
   $lang['MATERIAL'] = "Chất liệu";
   $lang['ORIGIN'] = "Xuất xứ";
