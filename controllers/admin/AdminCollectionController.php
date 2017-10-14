@@ -1,10 +1,9 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-require_once("../models/Collection.php");
-require_once("../models/Product.php");
-require_once("../models/CollectionTag.php");
-require_once("helper.php");
+require_once(ROOT . '/models/Collection.php');
+require_once(ROOT . '/models/Product.php');
+require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
 class AdminCollectionController extends AdminController {

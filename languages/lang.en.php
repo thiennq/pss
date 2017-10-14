@@ -61,7 +61,6 @@ COMBENTO<?php
   $lang['OVER_2000'] = "Over 2.000.000 đ";
   $lang['ALL_SEX'] = "All gender";
   $lang['ALL_BRAND'] = "All brand";
-  $lang['ALL_PRODUCT_TYPES'] = "All types of product";
   $lang['ALL_COLOURS'] = "All colors";
   $lang['ALL_MATERIAL'] = "All material";
   $lang['ALL_ORIGIN'] = "All origin";
@@ -123,7 +122,6 @@ COMBENTO<?php
   $lang['COST'] = "Price";
   $lang['SEX'] = "Gender";
   $lang['BRANDS'] = "Brand";
-  $lang['PRODUCT_TYPES'] = "Types of product";
   $lang['COLOUR'] = "Color";
   $lang['MATERIAL'] = "Material";
   $lang['ORIGIN'] = "Origin";

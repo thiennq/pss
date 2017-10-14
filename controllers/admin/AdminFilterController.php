@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Meta.php");
 require_once("../models/Price.php");
 require_once("../models/Filter.php");
-require_once("helper.php");
+require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
 class AdminFilterController extends AdminController {

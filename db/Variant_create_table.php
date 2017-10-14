@@ -21,7 +21,7 @@ $Schema->create('variant', function (Blueprint $table) {
     $table->integer('product_id');
     $table->string('title');
     $table->integer('price');
-    $table->integer('price_compare');
+    $table->integer('price_compare')->nullable();
     $table->integer('inventory');
     $table->timestamps();
 });

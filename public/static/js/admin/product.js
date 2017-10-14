@@ -1,5 +1,17 @@
 initTinymce('#description');
 
+var collection_id = $('.list-collection').data('value');
+if (collection_id && collection_id.length) {
+  for (var i = 0; i < collection_id.length; i++) {
+    $('.list-collection').find('input[type="checkbox"][value="'+collection_id[i].collection_id+'"]').prop('checked', true);
+  }
+}
+
+$(document).find('select').each(function() {
+  var data = $(this).data('value');
+  if(data) $(this).val(data);
+});
+
 var listFormData = [];
 listFormData.push(new FormData());
 
@@ -34,7 +46,6 @@ $(document).on('change', '.upload-list-image', function(){
   if($(this).val()) {
     var variant = $(this).closest('.variant-item');
     var files = this.files;
-    console.log("files: ", files);
     readURL(files, function(imgsData) {
       $.each(imgsData, function(i, imgData) {
         var obj = {};
@@ -74,9 +85,10 @@ function uploadImg(formData, callback) {
   });
 }
 
-function uploadImgs($form, callback) {
-  var files = $form.prop('files');
-  var formData = listFormData[form.attr('data-id')];
+function uploadImgs(form, callback) {
+  var index = form.attr('data-id');
+  var files = form.prop('files');
+  var formData = listFormData[parseInt(index)];
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
     if (!f.deleted) {
@@ -126,55 +138,55 @@ $('.btn-create').click(function() {
   data.display = $('select[name="display"]').val();
   self.addClass('disabled');
   console.log(data);
-  return;
   $.ajax({
     type: 'POST',
-    url: '/admin/product',
+    url: '/admin/products',
     data: data,
     success: function(json) {
       console.log("save product: ", json);
-      if(!json.code) {
+      if (json.code == -1) {
+        toastr.error("Sản phẩm đã tồn tại");
+        self.removeClass('disabled');
+      } else if (json.code == -4) {
+        toastr.error(json.message);
+        self.removeClass('disabled');
+      } else if (json.code == -3) {
+        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+        self.removeClass('disabled');
+      } else {
         var product_id = json.id;
-        var $list_variant = $('.variant-item');
+        var list_variant = $('.variant-item');
         var count = 0;
         var variant = {};
         variant.product_id = product_id;
         createVariant();
         function createVariant() {
-          if (count ==  $list_variant.length) {
-            $('.btn-create').removeClass('disabled');
-            reloadPage();
+          if (count ==  list_variant.length) {
+            self.removeClass('disabled');
+            reloadPage('/admin/products/' + product_id);
             return false;
           }
-          var itemVariant = $list_variant.eq(count);
-          var $formRI = itemVariant.find('.upload-list-image');
-          count++;
-          variant.title = itemVariant.find('input[name="variant-name"]').val();
+          var itemVariant = list_variant.eq(count);
+          var formRI = itemVariant.find('.upload-list-image');
+          variant.title = itemVariant.find('input[name="variant-title"]').val();
           variant.price = itemVariant.find('input[name="variant-price"]').val();
           variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
           variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
-          uploadImgs($formRI, function(list_image) {
+          uploadImgs(formRI, function(list_image) {
             variant.list_image = list_image;
-            console.log(variant);
-            return;
             $.ajax({
               type: 'POST',
-              url: '/admin/variant',
-              data: data,
+              url: '/admin/variants',
+              data: variant,
               success: function(json) {
-                self.removeClass('disabled');
                 if(!json.code) {
-                  toastr.success('Tạo variant ' +variant.title+' thành công');
                   createVariant();
-                } else toastr.error('Tạo variant ' +variant.title+ ' thất bại');
+                  count++;
+                } else toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
               }
             });
           });
         }
-      }
-      else {
-        $('.btn-create-product').removeClass('disabled');
-        toastr.error('Tạo sản phẩm ' +product.title+ ' thất bại');
       }
     }
   });

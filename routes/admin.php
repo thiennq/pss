@@ -3,26 +3,27 @@ use Slim\Container as ContainerInterface;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require_once('../controllers/AdminCollectionController.php');
-require_once('../controllers/AdminProductController.php');
-require_once('../controllers/AdminSliderController.php');
-require_once('../controllers/AdminMenuController.php');
-require_once('../controllers/AdminOrderController.php');
-require_once('../controllers/AdminCustomerController.php');
-require_once('../controllers/AdminVideoController.php');
-require_once('../controllers/AdminArticleController.php');
-require_once('../controllers/AdminBlogController.php');
-require_once('../controllers/AdminPageController.php');
-require_once('../controllers/AdminBranchController.php');
-require_once('../controllers/AdminBrandController.php');
-require_once('../controllers/AdminFilterController.php');
-require_once('../controllers/AdminUserController.php');
-require_once('../controllers/AdminSettingController.php');
-require_once('../controllers/FunctionController.php');
-require_once('../controllers/AdminPriceController.php');
-require_once('../controllers/AdminRedirectController.php');
-require_once('../controllers/AdminCelebrityController.php');
+require_once('../controllers/admin/AdminCollectionController.php');
+require_once('../controllers/admin/AdminProductController.php');
+require_once('../controllers/admin/AdminVariantController.php');
+require_once('../controllers/admin/AdminSliderController.php');
+require_once('../controllers/admin/AdminMenuController.php');
+require_once('../controllers/admin/AdminOrderController.php');
+require_once('../controllers/admin/AdminCustomerController.php');
+require_once('../controllers/admin/AdminVideoController.php');
+require_once('../controllers/admin/AdminArticleController.php');
+require_once('../controllers/admin/AdminBlogController.php');
+require_once('../controllers/admin/AdminPageController.php');
+require_once('../controllers/admin/AdminBranchController.php');
+require_once('../controllers/admin/AdminBrandController.php');
+require_once('../controllers/admin/AdminFilterController.php');
+require_once('../controllers/admin/AdminUserController.php');
+require_once('../controllers/admin/AdminSettingController.php');
+require_once('../controllers/admin/AdminPriceController.php');
+require_once('../controllers/admin/AdminRedirectController.php');
+require_once('../controllers/admin/AdminCelebrityController.php');
 require_once('../controllers/TestController.php');
+require_once('../controllers/FunctionController.php');
 require_once("../models/User.php");
 
 $role = $_SESSION['role'];
@@ -48,12 +49,16 @@ $app->group('/admin', function() use($app) {
   $app->post('/api/uploadImageTinymce', 'uploadImageTinymce');
 
   //Product
-
-  $app->get('/product', '\AdminProductController:index');
-  $app->get('/san-pham/{id}', '\AdminProductController:show');
-  $app->get('/product/new', '\AdminProductController:create');
-  $app->put('/san-pham/{id}', '\AdminProductController:update');
+  $app->get('/products', '\AdminProductController:index');
+  $app->post('/products', '\AdminProductController:store');
+  $app->get('/products/new', '\AdminProductController:create');
+  $app->get('/products/{id}', '\AdminProductController:show');
+  $app->put('/products/{id}', '\AdminProductController:update');
   $app->delete('/api/product/image/{id}', '\AdminProductController:deleteImage');
+
+  $app->post('/variants', '\AdminVariantController:store');
+  $app->get('/variants/{id}', '\AdminVariantController:show');
+  $app->put('/variants/{id}', '\AdminVariantController:update');
 
   $app->get('/collection', '\AdminCollectionController:index');
   $app->get('/collections/{id}', '\AdminCollectionController:show');

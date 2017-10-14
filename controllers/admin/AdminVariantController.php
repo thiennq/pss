@@ -1,64 +1,36 @@
 <?php
-require_once("../models/Product.php");
-require_once("../models/Collection.php");
-require_once("../models/CollectionProduct.php");
-require_once("helper.php");
+require_once(ROOT . '/models/Product.php');
+require_once(ROOT . '/models/Variant.php');
+require_once(ROOT . '/models/Image.php');
+require_once(ROOT . '/controllers/helper.php');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use ControllerHelper as Helper;
 
-class AdminProductController extends AdminController {
-
-  public function index(Request $request, Response $response) {
-    $data = Product::all();
-    return $this->view->render($response, 'admin/product.pug', [
-      'data' => $data
-    ]);
-  }
-
-  public function create(Request $request, Response $response) {
-    $collections = Collection::orderBy('breadcrumb', 'asc')->get();
-    return $this->view->render($response, 'admin/product_new.pug', array(
-      'collections' => $collections
-    ));
-  }
-
-  public function show(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $data = Product::find($id);
-    if(!$data) {
-      $this->view->render($response, '404.jade');
-      return $response->withStatus(404);
-    }
-    $collections = Collection::orderBy('breadcrumb', 'asc')->get();
-    $data->variants = Variant::where('product_id', $id)->get();
-    $data->collection_id = CollectionProduct::where('product_id', $id)->get();
-
-    return $this->view->render($response, 'admin/product_edit.pug', array(
-      'data' => $data,
-      'collections' => $collections
-    ));
-  }
+class AdminVariantController extends AdminController {
 
   public function store (Request $request, Response $response) {
-		$body = $request->getParsedBody();
-		$code = Product::store($body);
+    $body = $request->getParsedBody();
     $arr = [
-			'title' => $body['title']
-		];
-		$checkNull = Helper::checkNull($arr);
-		if ($checkNull) {
-			return $response->withJson($checkNull, 200);
-		}
-		$result = Helper::response($code);
+      'product_id' => $body['product_id'],
+      'title' => $body['title'],
+      'price' => $body['price'],
+      'inventory' => $body['inventory']
+    ];
+    $checkNull = Helper::checkNull($arr);
+    if ($checkNull) {
+      return $response->withJson($checkNull, 200);
+    }
+    $code = Variant::store($body);
     if ($result) {
-      $collections = $body['collections'];
-      foreach ($collections as $key => $collection) {
-        CollectionProduct::store($collection, $result);
+      $list_image = $body['list_image'];
+      foreach ($list_image as $key => $image) {
+        Image::store($image, 'variant', $code);
       }
     }
-		return $response->withJson($result, 200);
-	}
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
+  }
 
   public function update(Request $request, Response $response) {
     try {

@@ -8,14 +8,15 @@ class Variant extends Illuminate\Database\Eloquent\Model {
   protected $table = 'variant';
 
   public function store($data) {
-    $variant = Variant::where('product_id', $data['product_id'])->where('title', $data['title'])->get();
-    if ($variant) return -1;
     $variant = new Variant;
+    $variant->product_id = $data['product_id'];
     $variant->title = $data['title'];
     $variant->price = $data['price'];
-    $variant->price_compare = $data['price_compare'] ? $data['price_compare'] : 0;
-    $variant->quantity = $data->quantity ? $data->quantity : 1;
-    $variant->save();
-    return $variant->id;
+    $variant->price_compare = $data['price_compare'];
+    $variant->inventory = $data['inventory'];
+    $variant->created_at = date('Y-m-d H:i:s');
+    $variant->updated_at = date('Y-m-d H:i:s');
+    if ($variant->save()) return $variant->id;
+    return -3;
   }
 }

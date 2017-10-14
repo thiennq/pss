@@ -6,7 +6,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once('Product.php');
 require_once('Collection.php');
 
-$GLOBALS['size'] = [240, 480, 640, 1024, 2048];
+$GLOBALS['size'] = [100, 240, 480, 640, 1024, 2048];
 
 
 function setMemcached($key, $value, $time=30*24*60*60) {

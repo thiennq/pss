@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Order.php");
 require_once("../models/Customer.php");
 require_once("../models/Cart.php");
-require_once("../models/Product.php");
+require_once(ROOT . '/models/Product.php');
 
 
 class AdminOrderController extends AdminController {
