@@ -46,6 +46,8 @@ function getArticleDetail($articleHandle, $articleId) {
     $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
 
     $related = array();
+
+    
     // $arr_related = ArticleRelated::where('article_id', $id)->get();
     // foreach ($arr_related as $key => $value) {
     //   $item = Article::find($value->article_related);
