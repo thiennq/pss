@@ -5,14 +5,72 @@ require_once("../models/Page.php");
 
 class AdminPageController extends AdminController {
 
-  public function create(Request $request, Response $response) {
+  public function new(Request $request, Response $response) {
     return $this->view->render($response, 'admin/page_new.pug');
   }
 
-  public function showNews(Request $request, Response $response) {
-    $Page = Page::all();
+  public function create(Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    $page_id = Page::create($data);
+    if ($page_id != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'id' => $page_id
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Error'
+    ));
+  }
+
+  public function fetch(Request $request, Response $response) {
+    $page_number = 1;
+    $params = $request->getQueryParams();
+    if($params['page']) $page_number = $params['page'];
+    $perpage = 12;
+    $data = Page::fetch($page_number,$perpage);
     return $this->view->render($response, 'admin/page_list.pug', array(
-			'data' => $Page
+      'data' => $data
+    ));
+  }
+
+  public function get(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $page = Page::get($id);
+    return $this->view->render($response, 'admin/page_edit.pug', array(
+			'data' => $page,
+    ));
+  }
+
+  public function update(Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    $id = $request->getAttribute('id');
+    $page = Page::update($id,$data);
+    if ($page != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'message' => 'Updated'
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Not found'
+    ));
+  }
+
+  public function delete(Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $page = Page::remove($id);
+    if ($page != -1) {
+      return $response->withJson(array(
+        'code' => 0,
+        'message' => 'Deleted'
+      ));
+    }
+    return $response->withJson(array(
+      'code' => -1,
+      'message' => 'Not found'
     ));
   }
 
@@ -33,91 +91,6 @@ class AdminPageController extends AdminController {
     ));
   }
 
-  public function show(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $Page = Page::find($id);
-    return $this->view->render($response, 'admin/page_edit.pug', array(
-			'data' => $Page,
-    ));
-  }
-
-  public function store(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    $Page = new Page;
-    $Page->title = $body['title'];
-    $Page->handle = $body['handle'];
-    $Page->link = '/' . $body['handle'];
-    $Page->image = $body['image'] ? renameOneImage($body['image'], $body['handle']) : '';
-    $Page->description = $body['description'] ? $body['description'] : '';
-    $Page->description_seo = $body['description_seo'] ? $body['description_seo']: '';
-    $Page->content = $body['content'];
-    $Page->author = $_SESSION['fullname'];
-    $Page->display = $body['display'];
-    $Page->meta_robots = $body['meta_robots'];
-    $Page->view = 0;
-    $Page->created_at = date('Y-m-d H:i:s');
-    $Page->updated_at = date('Y-m-d H:i:s');
-    if($Page->save()) {
-      $Page_id = $Page->id;
-      Page::updateLinkPage($Page_id);
-      // setMemcached("Page_index", '');
-      return $response->withJson(array(
-        'code' => 0,
-        'id' => $Page_id
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Error'
-    ));
-  }
-
-  public function update(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    $id = $request->getAttribute('id');
-    $Page = Page::find($id);
-    if($Page) {
-      $Page->title = $body['title'];
-      $Page->handle = $body['handle'];
-      $link = '/' . $body['handle'] . '-' . $id;
-      $Page->link = $link;
-      if($body['image']) $Page->image = renameOneImage($body['image'], $body['handle']);
-      if($body['description']) $Page->description = $body['description'];
-      if($body['description_seo']) $Page->description_seo = $body['description_seo'];
-      $Page->content = $body['content'];
-      $Page->author = $_SESSION['fullname'];
-      $Page->display = $body['display'];
-      $Page->meta_robots = $body['meta_robots'];
-      $Page->updated_at = $body['updated_at'] ? $body['updated_at'] : date('Y-m-d H:i:s');
-      $Page->save();
-      // setMemcached("Page_index", '');
-      // setMemcached("Page_" . $link, '');
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Updated'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
-  }
-
-  public function delete(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $Page = Page::find($id);
-    if($Page) {
-      $Page->delete();
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Deleted'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
-  }
 }
 
 ?>

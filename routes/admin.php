@@ -116,10 +116,10 @@ $app->group('/admin', function() use($app) {
   $app->get('/blogs/search', '\AdminBlogController:searchBlog');
 
   // Page
-  $app->get('/page/new', '\AdminPageController:create');
-  $app->get('/pages', '\AdminPageController:showNews');
-  $app->get('/page/{id}', '\AdminPageController:show');
-  $app->post('/page', '\AdminPageController:store');
+  $app->get('/page/new', '\AdminPageController:new');
+  $app->get('/pages', '\AdminPageController:fetch');
+  $app->get('/page/{id}', '\AdminPageController:get');
+  $app->post('/page', '\AdminPageController:create');
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
   $app->get('/pages/search', '\AdminPageController:searchPage');
