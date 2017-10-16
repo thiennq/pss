@@ -48,7 +48,7 @@ function getArticleDetail($articleHandle, $articleId) {
     $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
 
     $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->first();
-    
+
     $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
 
     error_log('ARTICLE :: ' . json_encode($related));
