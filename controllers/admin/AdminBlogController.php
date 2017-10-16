@@ -61,7 +61,7 @@ class AdminBlogController extends AdminController {
 
   public function delete(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $blog = Blog::delete($id);
+    $blog = Blog::remove($id);
     if ($blog != -1) {
       return $response->withJson(array(
         'code' => 0,
