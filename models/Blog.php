@@ -17,7 +17,6 @@
       $blog = new Blog;
       $blog->title = $data['title'];
       $blog->handle = $data['handle'];
-      $blog->link = '/' . $data['handle'];
       $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
       $blog->description_seo = $data['description_seo'] ? $data['description_seo']: '';
@@ -30,7 +29,6 @@
       $blog->updated_at = date('Y-m-d H:i:s');
       if($blog->save()) {
         $blog_id = $blog->id;
-        Blog::updateLinkBlog($blog_id);
         return $blog_id;
       }
       else return -1;
@@ -46,8 +44,6 @@
       if ($blog) {
         $blog->title = $data['title'];
         $blog->handle = $data['handle'];
-        $link = '/' . $data['handle'] . '-' . $id;
-        $blog->link = $link;
         if($data['image']) $blog->image = renameOneImage($data['image'], $data['handle']);
         if($data['description']) $blog->description = $data['description'];
         if($data['description_seo']) $blog->description_seo = $data['description_seo'];
@@ -62,7 +58,7 @@
       return -1;
     }
 
-    function delete($id) {
+    function remove($id) {
       $blog = Blog::find($id);
       if($blog) {
         $blog->delete();
@@ -71,10 +67,5 @@
       return -1;
     }
 
-    function updateLinkBlog($id) {
-      $blog = Blog::find($id);
-      $blog->link = $blog->link . '-' .$id;
-      $blog->save();
-    }
   }
 ?>

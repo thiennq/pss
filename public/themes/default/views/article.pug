@@ -12,11 +12,10 @@ block pre-include
   
 block content
   .news-detail.container
-    include snippet/breadcrumb
     .col-xs-12.left
       .content.row
-        h1=article.title
-        p
+        h1.title=article.title
+        p.description
           b=article.description
         section !{article.content}
         .author=article.author
@@ -43,9 +42,9 @@ block content
                   a(href='/article/' + article.handle)=article.title
                 .news-content=article.description
       if countArr(articleDetail.hot_article)
-        .hot-articles.hidden-xs.row 
+        .relative-news.hidden-xs.row 
           .title 
-            p BÀI VIẾT NỔI BẬT
+            a BÀI VIẾT NỔI BẬT
               .border
           each article in articleDetail.hot_article
             .item

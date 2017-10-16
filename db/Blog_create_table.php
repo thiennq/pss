@@ -20,7 +20,6 @@ $Schema->create('blog', function (Blueprint $table) {
   $table->increments('id');
   $table->string('title');
   $table->string('handle');
-  $table->string('link');
   $table->string('image')->nullable();
   $table->text('description')->nullable();
   $table->text('description_seo')->nullable();

@@ -18,27 +18,24 @@ block content
   .news-detail.container
     include snippet/breadcrumb
     .col-xs-12
-      .content.row
-        h1=blog.title
-        p
+      .content.blog.row
+        h1.title=blog.title
+        p.description
           b=blog.description
         section !{blog.content}
         .author=blog.author
-        .list-article.clearfix.row
+        .list-articles.clearfix.row
           - var articles = listArticles(blog.id, page_number);
-          .col-xs-12
-            each article in articles
-              .col-xs-12
-                a.col-sm-3.col-xs-4(href='/article/' + article.handle)
-                  .row
-                    - var thumb = themeURI() + '/img/article_default.png';
-                    if article.image
-                      - var thumb = '/uploads/' + resize(article.image, 240);
-                    img(src=thumb data-src=thumb)
-                .col-sm-9.col-xs-8
-                  a(href='/article/' + article.handle)=article.title
-                  .date=ddMMYYYY(article.updated_at)
-                  .news-content=article.description
+          each article in articles
+            - var thumb = themeURI() + '/img/article_default.png';
+            if article.image
+              - var thumb = '/uploads/' + resize(article.image, 240);
+            .col-xs-12.article
+              a.cover.col-sm-3.col-xs-4(href='/article/' + article.handle, style='background-image:url(' + thumb + ')')
+              .col-sm-9.col-xs-8
+                a(href='/article/' + article.handle)=article.title
+                .date=ddMMYYYY(article.updated_at)
+                .news-content=article.description
       .sharing.hidden-xs.row
         .share-icon
           .share-now CHIA SẺ NGAY 
