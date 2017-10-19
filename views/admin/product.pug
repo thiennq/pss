@@ -40,29 +40,27 @@ block content
 				table#table-list-product.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
 					thead
 						tr
-							td
-							td Barcode
 							td Tên sản phẩm
+							td Meta title
+							td Meta description
+							td Meta robots
 							td Hiển thị
-							td Tồn kho
 							td Chỉnh sửa
 					tbody
-						each product in products
+						each product in data
 							tr
-								td.image
-									if product.featured_image
-										img(src=staticURI() + "/img/no-image.png", data-src="/uploads/" + resize(product.featured_image, 100))
-									else
-										img(src=staticURI() + "/img/no-image.png")
-								td=product.barcode
 								td
-									a(href="/admin/san-pham/" + product.id target="_blank")=product.title
+									a(href="/admin/products/" + product.id)=product.title
+								td=product.meta_title
+								td=product.meta_description
+								td=product.meta_robots
 								td.text-center
 									if product.display == 1
 										| Có
 									else
 										| Không
-								td.text-center=product.inventory
 								td.text-center
-									a.btn-edit(href="/admin/san-pham/" + product.id)
+									a.btn-edit(href="/admin/products/" + product.id)
 										i.fa.fa-pencil-square-o
+									a.btn-remove.btn-remove-product(data-id=product.id)
+                    i.fa.fa-trash
