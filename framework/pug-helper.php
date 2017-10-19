@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once("../models/ArticleRelated.php");
+
 function currentENV() {
   $env = 'development';
   if (getenv('ENV') && getenv('ENV') == 'production') {
@@ -45,14 +47,11 @@ function getArticleDetail($articleHandle, $articleId) {
   else {
     $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
 
-    $related = array();
+    $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->first();
+    
+    $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
 
-
-    // $arr_related = ArticleRelated::where('article_id', $id)->get();
-    // foreach ($arr_related as $key => $value) {
-    //   $item = Article::find($value->article_related);
-    //   array_push($related, $item);
-    // }
+    error_log('ARTICLE :: ' . json_encode($related));
 
     $responseData = array(
       'hot_article' => $hot_article,

@@ -230,6 +230,21 @@
 .news-detail section .row {
   margin: 0; }
 
+.news-detail .blog .author {
+  text-align: right;
+  font-style: italic; }
+
+.news-detail .blog .list-articles {
+  margin-top: 30px; }
+
+.news-detail .blog .article {
+  margin-bottom: 20px; }
+
+.news-detail .blog .cover {
+  padding-bottom: 14%;
+  background-size: cover;
+  background-position: center; }
+
 .news-detail .left .content {
   margin-bottom: 20px;
   text-align: justify; }

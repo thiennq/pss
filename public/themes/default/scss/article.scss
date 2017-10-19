@@ -300,6 +300,24 @@
       margin: 0;
     }
   }
+  .blog {
+    .author {
+      text-align: right;
+      font-style: italic;
+    }
+    .list-articles {
+      margin-top: 30px;
+    }
+    .article {
+      margin-bottom: 20px;
+    }
+    .cover {
+      padding-bottom: 14%;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
   .left {
     .content {
       margin-bottom: 20px;
