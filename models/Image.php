@@ -24,16 +24,22 @@ class Image extends Illuminate\Database\Eloquent\Model {
   }
 
   public function remove($typeId) {
-    $image = Image::where('typeId', $typeId)->first();
-    if (!$image) return -2;
-    $image = Image::where('typeId', $typeId)->get();
-    if ($image->delete()) {
-      foreach ($image as $key => $value) {
-        removeImage($value->name);
-      }
+    $images = Image::where('typeId', $typeId)->get();
+    if (count($images)) return -2;
+    foreach ($images as $key => $value) {
+      removeImage($value->name);
+      Image::where('id', $value->id)->delete();
+    }
+    return 0;
+  }
+
+  public function removeImage($id, $typeId) {
+    $image = Image::where('typeId', $typeId)->where('id', $id)->first();
+    if (count($image)) return -2;
+    removeImage($image->name);
+    if(Image::where('typeId', $typeId)->where('id', $id)->delete()) {
       return 0;
     }
     return -3;
   }
-
 }
