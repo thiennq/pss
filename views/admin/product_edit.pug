@@ -16,7 +16,7 @@ block content
         a=data.title
     ol.button-right.col-sm-6
       li
-        a.btn.btn-admin.btn-update(data-id=data.id)
+        a.btn.btn-admin.btn-update-product(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Cập nhật
@@ -41,6 +41,17 @@ block content
             label.col-sm-2.control-label Mô tả
             .col-sm-10
               textarea.form-control#description=data.description
+          .form-group
+            label.col-sm-2.control-label Hình đại diện 
+              br 
+              | (chọn một hình trong variant)
+            form.col-sm-10.form-feature-product
+              if data.featured_image
+                - var featured_image = resize(data.featured_image, 240);
+                img#featured_img(data-name=data.featured_image, src="/uploads/" + featured_image)
+              else
+                img#featured_img(src=staticURI() + "/img/default_image.png")
+
           .form-group
             label.col-sm-2.control-label Phiên bản
               strong.required  *
