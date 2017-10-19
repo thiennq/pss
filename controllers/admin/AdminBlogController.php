@@ -2,6 +2,8 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Blog.php");
+require_once(ROOT . '/controllers/helper.php');
+use ControllerHelper as Helper;
 
 class AdminBlogController extends AdminController {
 
@@ -11,17 +13,9 @@ class AdminBlogController extends AdminController {
 
   public function create(Request $request, Response $response) {
     $data = $request->getParsedBody();
-    $blog_id = Blog::create($data);
-    if ($blog_id != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'id' => $blog_id
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Error'
-    ));
+    $code = Blog::create($data);
+    $result = Helper::response($code);
+		return $response->withJson($result, 200);
   }
 
   public function fetch(Request $request, Response $response) {
@@ -37,41 +31,29 @@ class AdminBlogController extends AdminController {
 
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $blog = Blog::get($id);
+    $code = Blog::get($id);
+    if ($code == -2) {
+      $result = Helper::response($code);
+      $response->withJson($result, 200);
+    }
     return $this->view->render($response, 'admin/blog_edit.pug', array(
-			'data' => $blog,
+      'data' => $code
     ));
   }
 
   public function update(Request $request, Response $response) {
     $data = $request->getParsedBody();
     $id = $request->getAttribute('id');
-    $blog = Blog::update($id,$data);
-    if ($blog != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Updated'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
+    $code = Blog::update($id,$data);
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
   }
 
   public function delete(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $blog = Blog::remove($id);
-    if ($blog != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Deleted'
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
+    $code = Blog::remove($id);
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
   }
 
   public function searchBlog(Request $request, Response $response) {

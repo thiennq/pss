@@ -11,7 +11,6 @@ class AdminFilterController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$data = Filter::fetch();
-		error_log(json_encode($data));
 		return $this->view->render($response, 'admin/setting_filter.pug', [
 			'data' => $data
 		]);
