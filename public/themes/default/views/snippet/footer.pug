@@ -14,20 +14,6 @@ footer
     .container
       -var policy = policy();
       !{policy}
-  .col-sm-12.hidden-xs.top-brands
-    .container
-      .row
-        .col-sm-12.top-brands-title
-          .title
-            | TOP BRAND
-        .col-sm-12
-          .brands
-            - var brands = Brand();
-            each item in brands
-              ul
-                each i in item
-                  li
-                    a(href=fullUrl("thuong-hieu/" + i.handle))=i.name
   .col-sm-12.branchs
     .container
       - var branchs = branchs();

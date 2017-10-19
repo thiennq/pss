@@ -207,26 +207,6 @@ function compareString($str1, $str2) {
   return false;
 }
 
-function get_text_discount() {
-  $title = Meta::where('key', 'DISCOUNT_TEXT')->first();
-  return $title['value'];
-}
-
-function get_text_discount_en() {
-  $title_en = Meta::where('key', 'DISCOUNT_TEXT_EN')->first();
-  return $title_en['value'];
-}
-
-function get_link_discount() {
-  $link = Meta::where('key', 'DISCOUNT_LINK')->first();
-  return $link['value'];
-}
-
-function get_link_discount_en() {
-  $link_en = Meta::where('key', 'DISCOUNT_LINK_EN')->first();
-  return $link_en['value'];
-}
-
 function get_google_analytics() {
   $google_analytics = Meta::where('key', 'GOOGLE_ANALYTICS')->first();
   return $google_analytics['value'];
