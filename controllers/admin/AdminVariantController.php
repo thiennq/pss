@@ -22,7 +22,7 @@ class AdminVariantController extends AdminController {
       return $response->withJson($checkNull, 200);
     }
     $code = Variant::store($body);
-    if ($result) {
+    if ($code) {
       $list_image = $body['list_image'];
       foreach ($list_image as $key => $image) {
         Image::store($image, 'variant', $code);
