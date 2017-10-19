@@ -28,43 +28,45 @@
       $blog->created_at = date('Y-m-d H:i:s');
       $blog->updated_at = date('Y-m-d H:i:s');
       if($blog->save()) {
-        $blog_id = $blog->id;
-        return $blog_id;
+        return $blog->id;
       }
-      else return -1;
+      return -3;
     }
 
     function get($id) {
       $data = Blog::find($id);
-      return $data;
+      if ($data) return $data;
+      return -2;
     }
 
     function update($id, $data) {
       $blog = Blog::find($id);
-      if ($blog) {
-        $blog->title = $data['title'];
-        $blog->handle = $data['handle'];
-        if($data['image']) $blog->image = renameOneImage($data['image'], $data['handle']);
-        if($data['description']) $blog->description = $data['description'];
-        if($data['description_seo']) $blog->description_seo = $data['description_seo'];
-        $blog->content = $data['content'];
-        $blog->author = $_SESSION['fullname'];
-        $blog->display = $data['display'];
-        $blog->meta_robots = $data['meta_robots'];
-        $blog->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
-        $blog->save();
+      if (!$blog) {
+        return -2;
+      }
+      $blog->title = $data['title'];
+      $blog->handle = $data['handle'];
+      if($data['image']) $blog->image = renameOneImage($data['image'], $data['handle']);
+      if($data['description']) $blog->description = $data['description'];
+      if($data['description_seo']) $blog->description_seo = $data['description_seo'];
+      $blog->content = $data['content'];
+      $blog->author = $_SESSION['fullname'];
+      $blog->display = $data['display'];
+      $blog->meta_robots = $data['meta_robots'];
+      $blog->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
+      if ($blog->save()) {
         return 0;
       }
-      return -1;
+      return -3;
     }
 
     function remove($id) {
       $blog = Blog::find($id);
-      if($blog) {
-        $blog->delete();
-        return 0;
+      if (!$blog) {
+        return -2;
       }
-      return -1;
+      if ($blog->delete()) return 0;
+      return -3;
     }
 
   }

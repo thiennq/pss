@@ -67,7 +67,7 @@ class AdminUserController extends AdminController {
   public function getlogin(Request $request, Response $response) {
     if(in_array('login', $_SESSION) && $_SESSION['login']){
       $href = $_SESSION['href'];
-      if(!$href) $href = '/admin/collection';
+      if(!$href) $href = '/admin/collections';
       return $response->withStatus(302)->withHeader('Location', $href);
     }
     return $this->view->render($response, 'admin/login.pug');
@@ -94,7 +94,7 @@ class AdminUserController extends AdminController {
         if($role->staff) array_push($arr_role, 'staff');
         $_SESSION['role'] = $arr_role;
         $href = '/admin/login';
-        if($role->product) $href = '/admin/collection';
+        if($role->product) $href = '/admin/collections';
         else if($role->order) $href = '/admin/order';
         else if($role->customer) $href = '/admin/customer';
         else if($role->article) $href = '/admin/article/news';

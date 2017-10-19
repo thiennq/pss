@@ -1,9 +1,25 @@
 extends ./layout.pug
 
 block pre-include
-  title=data.title
+  title=page.title
+  if page.image
+    - ogImage = page.image
+  if page.description_seo
+    - metaDescription = page.description_seo
+  if page.meta_robots
+    - meta_robots = page.meta_robots;
+  - metaTitle = page.title
+block post-include
+  script(src=themeURI() + '/libs/twbsPagination.min.js')
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+  script(src=themeURI() + '/libs/owl.carousel.min.js')
+  
 block content
-  .container.checkout
+  .news-detail.container
     include snippet/breadcrumb
-    h3.col-xs-12.main-title=data.title
-    section.col-xs-12 #{data['content']}
+    .col-xs-12
+      .content.page.row
+        h1.title=page.title
+        p.description
+          b=page.description
+        section !{page.content}

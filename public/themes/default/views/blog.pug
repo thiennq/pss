@@ -23,7 +23,6 @@ block content
         p.description
           b=blog.description
         section !{blog.content}
-        .author=blog.author
         .list-articles.clearfix.row
           - var articles = listArticles(blog.id, page_number);
           each article in articles
@@ -36,14 +35,5 @@ block content
                 a(href='/article/' + article.handle)=article.title
                 .date=ddMMYYYY(article.updated_at)
                 .news-content=article.description
-      .sharing.hidden-xs.row
-        .share-icon
-          .share-now CHIA SẺ NGAY 
-          .social-icon
-            span.middle-inline-block
-            i.fa.fa-facebook
-          .social-icon
-            span.middle-inline-block
-            i.fa.fa-google-plus
       if articles.total_pages > 1
         #pagination.col-sm-12.text-right(data-page_number=page_number data-total=articles.total_pages)
