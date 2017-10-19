@@ -60,10 +60,10 @@ $app->group('/admin', function() use($app) {
   $app->get('/variants/{id}', '\AdminVariantController:show');
   $app->put('/variants/{id}', '\AdminVariantController:update');
 
-  $app->get('/collection', '\AdminCollectionController:index');
+  $app->get('/collections', '\AdminCollectionController:index');
+  $app->get('/collections/new', '\AdminCollectionController:create');
   $app->get('/collections/{id}', '\AdminCollectionController:show');
-  $app->get('/collection/new', '\AdminCollectionController:create');
-  $app->post('/collection', '\AdminCollectionController:store');
+  $app->post('/collections', '\AdminCollectionController:store');
   $app->put('/collections/{id}', '\AdminCollectionController:update');
   $app->delete('/collections/{id}', '\AdminCollectionController:delete');
 
