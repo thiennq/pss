@@ -118,10 +118,10 @@ $('.btn-create').click(function() {
     return;
   }
   var firstVariant = $('.list-variant').find('.variant-item').eq(0);
-  var variant_name = firstVariant.find('input[name="variant-name"]').val();
+  var variant_title = firstVariant.find('input[name="variant-title"]').val();
   var variant_price = firstVariant.find('input[name="variant-price"]').val();
   var variant_inventory = firstVariant.find('input[name="variant-inventory"]').val();
-  if (!variant_name || !variant_price || !variant_inventory) {
+  if (!variant_title || !variant_price || !variant_inventory) {
     toastr.error("Sản phẩm phải có ít nhất 1 phiên bản");
     $('.list-variant').addClass('error');
     return;
@@ -174,14 +174,15 @@ $('.btn-create').click(function() {
           variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
           uploadImgs(formRI, function(list_image) {
             variant.list_image = list_image;
+            console.log('list_image',list_image);
             $.ajax({
               type: 'POST',
               url: '/admin/variants',
               data: variant,
               success: function(json) {
                 if(!json.code) {
-                  createVariant();
                   count++;
+                  createVariant();
                 } else toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
               }
             });
