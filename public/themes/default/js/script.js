@@ -10,6 +10,13 @@ $(window).on('load', function() {
   // runVariantCarousel();
 });
 
+$('ul.list-variant').on('click', '.item-variant', function(){
+  var variantId = $(this).data('id');
+  console.log(variantId);
+  $('.list-image .item').hide();
+  $('.list-image .item[data-id="'+variantId+'"]').show();
+});
+
 if($('.slider-homepage .index-slider-carousel').length) {
   $('.slider-homepage .index-slider-carousel').owlCarousel({
     nav: false,
@@ -30,7 +37,7 @@ if ($('.celebs .index-slider-carousel').length) {
 }
 
 // PRODUCT
-if ($('.product .slide-small-image.slick').length) {
+if ($('.product .slide-small-image').length) {
 
   var zoomImage = $('.large-image-zoom');
   if ($('.large-image-zoom').length) var zoomImage = zoomImage.elevateZoom();

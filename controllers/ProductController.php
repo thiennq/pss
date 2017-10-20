@@ -31,113 +31,37 @@ class ProductController extends Controller {
     if(getMemcached('product_' . $handle)) $responseData =  json_decode(getMemcached('product_' . $handle), true);
     else {
       $product = Product::where('handle', $handle)->first();
+      error_log('PRODUCT :: ' . $product);
       if(!$product) {
         $this->view->render($response, '404.pug');
         return $response->withStatus(404);
       }
-      $product->display_discount = false;
-      if($product->price_compare && $product->price_compare > $product->price) {
-        $product->discount = $product->price_compare - $product->price;
-        $product->per = ($product->discount)/($product->price_compare) * 100;
-        $product->percent = round($product->per, 0) .'%';
-        $product->display_discount = true;
+      $variants = Variant::where('product_id', $product->id)->get();
+      
+
+      $featured_images = array();
+      foreach ($variants as $key => $variant) {
+        $image = Image::where('typeId', $variant->id)->first();
+        array_push($featured_images, $image);
       }
-      if($product->brand) $product->brand_handle = HOST . '/thuong-hieu/' . createHandle($product->brand);
-      $list_image = Image::getImage('product', $product->id);
-      $product->list_image = $list_image;
+      error_log('FIRST ::' . json_encode($featured_images));
 
-      $collection_related = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '>', '-1')->get();
-      $collection_id_related;
-      $min_product_related = 999999;
-      foreach ($collection_related as $key => $value) {
-        $collection_id = $value->collection_id;
-        $count = CollectionProduct::where('collection_id', $collection_id)->count();
-        if($count && $count < $min_product_related) {
-          $collection_id_related = $collection_id;
-          $min_product_related = $count;
-        }
-      }
-      $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->where('collection.show_landing_page', 0)->first();
-      $collection_parent = Collection::find($collection_parent->id);
-      $product->title = $collection_parent->title . ' ' . $product->title;
-      $breadcrumb_collection = array();
-      $obj = new stdClass();
-      $obj->handle = HOST . '/' . $collection_parent->link;
-      $obj->title = $collection_parent->title;
-      if($obj->title) array_push($breadcrumb_collection, $obj);
+      $list_images = Variant::join('image', 'variant.id', '=', 'image.typeId')->where('variant.product_id', $product->id)->get();
+      error_log('IMAGES ::' . $list_images);
 
-      $product_related = Product::getRelatedProducts($product->id);
-
-      $count_product_related = count($product_related);
-      if($count_product_related > 0) {
-        $products_related = Product::getInfoProduct($product_related);
-        $collection_related_link = Collection::find($collection_id_related)->link;
-      }
-
-      $product->in_stock = false;
-      $arr_branch_display = array();
-      $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
-      if(count($branch)) {
-        $product->in_stock = true;
-        foreach ($branch as $key => $value) {
-          if(!$value->branch_center) {
-            $obj = new stdClass();
-            $obj->name = $value->name;
-            $obj->address = $value->address;
-            array_push($arr_branch_display, $obj);
-          }
-        }
-      }
-      $product->count_branch_display = count($arr_branch_display);
-      $product->arr_branch_display = $arr_branch_display;
-
-      $product->count_variant = 0;
-      if($product->group_id) {
-        $product->variants = Product::where('group_id', $product->group_id)->where('display', 1)->get();
-        $product->count_variant = count($product->variants);
-      }
-
-      Product::updateView($product->id);
-
-      $meta_description = Meta::where('key', 'meta_description_product')->first();
-      $meta_description = $meta_description->value;
-      $meta_description = str_replace('{Name_Product}', $product->title, $meta_description);
-      $product->meta_description = $meta_description;
-      $product->ogImage = HOST . '/uploads/' . convertImage($product->featured_image, 240);
-
-      if ($product->dropship) {
-        if (!$product->in_stock) {
-          $product->in_stock = true;
-          $product->count_branch_display = 0;
-        }
-      }
-
-      $articleOther = Article::where('type', 'tin-tuc')->where('display', 1)->take(5)->get();
-
-      // product đã xem
-    if ($product->in_stock && $product->display) {
-      if(isset($_SESSION['seen']) && !empty($_SESSION['seen'])) {
-        if(!in_array($product->id, $_SESSION['seen'])) array_push($_SESSION['seen'], $product->id);
-      } else $_SESSION['seen'] = [$product->id];
-    }
-
-    $GLOBALS['product_id'] = $product->id;
-    if (count($_SESSION['seen'])) {
-      $product_seen = Product::where('product.display', 1)->where('product.price', '>', 0)->where('product.id', '!=', $product->id)->whereIn('id', $_SESSION['seen'])->take(6)->get();
-      $product_seen = Product::getInfoProduct($product_seen);
-    }
+      // $product->display_discount = false;
+      // if($product->price_compare && $product->price_compare > $product->price) {
+      //   $product->discount = $product->price_compare - $product->price;
+      //   $product->per = ($product->discount)/($product->price_compare) * 100;
+      //   $product->percent = round($product->per, 0) .'%';
+      //   $product->display_discount = true;
+      // }
 
     $responseData = array (
       'data' => $product,
-      'breadcrumb_title' => $product->title,
-      'breadcrumb_brand' => $product->brand,
-      'breadcrumb_collection' => $breadcrumb_collection,
-      'count_product_related' => $count_product_related,
-      'product_related' => $product_related,
-      'region' => $region,
-      'collection_related_link' => $collection_related_link,
-      'articleOther' => $articleOther,
-      'product_seen' => $product_seen
+      'variants' => $variants,
+      'featured_images' => $featured_images,
+      'list_images' => $list_images
     );
   }
 

@@ -180,7 +180,6 @@ $('.btn-create').click(function() {
     url: '/admin/products',
     data: data,
     success: function(json) {
-      console.log("save product: ", json);
       if (json.code == -1) {
         toastr.error("Sản phẩm đã tồn tại");
         self.removeClass('disabled');
