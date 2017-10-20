@@ -54,6 +54,7 @@ $app->group('/admin', function() use($app) {
   $app->get('/products/new', '\AdminProductController:create');
   $app->get('/products/{id}', '\AdminProductController:show');
   $app->put('/products/{id}', '\AdminProductController:update');
+  $app->put('/products/featured-image/{id}', '\AdminProductController:updateFeaturedImage');
   $app->delete('/products/{id}', '\AdminProductController:delete');
 
   $app->post('/variants', '\AdminVariantController:store');

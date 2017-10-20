@@ -14,6 +14,7 @@ class Product extends Illuminate\Database\Eloquent\Model {
       $product = new Product;
       $product->title = $data['title'];
       $product->handle = createHandle($data['title']);
+      $product->featured_image = '';
       $product->description = $data['description'];
       $product->display = (int) $data['display'] ? 1 : 0;
       $product->view = 0;

@@ -12,10 +12,20 @@ $(document).find('select').each(function() {
   if(data) $(this).val(data);
 });
 
+
+var featureImage = {};
+  var $fImg = $('#featured_img[data-name]');
+  featureImage.image = '';
+  featureImage.uploaded = false;
+  if ($fImg.length > 0) {
+    featureImage.image = $fImg.attr('data-name') 
+    featureImage.uploaded = true;
+  } 
+
 var listFormData = [];
-for (var i = 0; i < $('.variant-item').length; i++) {
-  listFormData.push(new FormData());
-}
+  for (var i = 0; i < $('.variant-item').length; i++) {
+    listFormData.push(new FormData());
+  }
 
 $('.btn-add-variant').click(function() {
   var obj = {};
@@ -102,10 +112,36 @@ function uploadImgs(form, callback) {
     if(!json.code) {
       obj = json.data;
       $.each(obj, function(i,e) {
+        if (!featureImage.uploaded) {
+          if (e.indexOf(featureImage.image) >= 0) {
+            featureImage.image = e;
+          }
+        }
         list_image.push(e);
       });
     }
     callback(list_image);
+  });
+}
+
+function updateFeaturedImage(product_id, featured_image) {
+  $.ajax({
+    type: 'PUT',
+    url: '/admin/products/featured-image/' + product_id,
+    data: {
+      featured_image: featured_image 
+    },
+    success: function(json) {
+      if (json.code == -2) {
+        toastr.error("Sản phẩm không tồn tại, không thể cập nhật Hình đại diện");
+      } else if (json.code == -4) {
+        toastr.error(json.message);
+      } else if (json.code == -3) {
+        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+      } else {
+        console.log('Cập nhật Hình đại diện thành công');
+      }
+    }
   });
 }
 
@@ -164,6 +200,7 @@ $('.btn-create').click(function() {
         function createVariant() {
           if (count ==  list_variant.length) {
             self.removeClass('disabled');
+            updateFeaturedImage(product_id, featureImage.image);
             reloadPage('/admin/products/' + product_id);
             return false;
           }
@@ -284,6 +321,7 @@ $('.btn-update-product').click(function(event) {
         function createVariant() {
           if (count_upload ==  list_variant_upload.length) {
             self.removeClass('disabled');
+            updateFeaturedImage(variant.product_id, featureImage.image);
             reloadPage('/admin/products/' + product_id);
             return false;
           }
@@ -314,7 +352,8 @@ $('.btn-update-product').click(function(event) {
   });
 });  
 
-$(document).on('click', '.btn-rotate-image', function(){
+$(document).on('click', '.btn-rotate-image', function(e){
+  e.stopPropagation();
   var img = $(this).parent().find('img');
   var src = $(img).attr('src');
   src = src.replace('_240', '');
@@ -365,7 +404,8 @@ $(document).on('click', '.btn-remove-variant', function() {
   }
 });
 
-$(document).on('click', '.move-next', function() {
+$(document).on('click', '.move-next', function(e) {
+  e.stopPropagation();
   $(document).find('.moving').removeClass('moving');
   var item = $(this).closest('.image').addClass('moving');
   var index = $(document).find('.list-image').find(item).index();
@@ -376,7 +416,8 @@ $(document).on('click', '.move-next', function() {
   }
 });
 
-$(document).on('click', '.move-prev', function() {
+$(document).on('click', '.move-prev', function(e) {
+  e.stopPropagation();
   $(document).find('.moving').removeClass('moving');
   var item = $(this).closest('.image').addClass('moving');
   var index = $(document).find('.list-image').find(item).index();
@@ -389,8 +430,9 @@ $(document).on('click', '.move-prev', function() {
   }
 });
 
-$(document).on('click', '.remove-base64-img', function() {
-  $variant_images = $(this).parents('.variant-images');
+$(document).on('click', '.remove-base64-img', function(e) {
+  e.stopPropagation();
+  $variant_images = $(this).closest('.variant-images');
   var index = $(this).parent().attr('data-index');
   var $form = $variant_images.find('.upload-list-image');
   var files = $form.prop('files');
@@ -398,16 +440,39 @@ $(document).on('click', '.remove-base64-img', function() {
   $(this).closest('.image').remove();
 });
 
-$(document).on('click', '.remove-uploaded-img', function() {
+$(document).on('click', '.remove-uploaded-img', function(e) {
+  e.stopPropagation();
   var uploadedImg = $(this).closest('.image');
   uploadedImg.attr('data-deleted', 'true');
   uploadedImg.addClass('hidden');
 });
 
-$(document).on('change', 'input[name="updated_at"]', function() {
-  var dt = $(this).val();
-  if(checkDate(dt) == 'Invalid Date') {
-    toastr.error('Vui lòng nhập đúng định dạng ngày giờ (yyyy-mm-dd h:m:s)');
-    $(this).addClass('error');
+$('.variant-images').on('click', '.image', function(e) {
+  e.stopPropagation();
+  var self = $(this);
+  if (self.hasClass('is-featured-img')) {
+    self.removeClass('is-featured-img');
+    $('#featured_img').attr('src', staticURI + '/img/default_image.png');
+    $('#featured_img').removeAttr('data-name');
+    featureImage.image = '';
+    featureImage.uploaded = true;
+  }
+  else {
+    $('.image').removeClass('is-featured-img');
+    self.addClass('is-featured-img');
+    var background = self.css('background-image').replace('url("','').replace('")','');
+    $('#featured_img').attr('src', background);
+    if (self.attr('data-name')) {
+      $('#featured_img').attr('data-name', self.attr('data-name'));
+      featureImage.image = self.attr('data-name');
+      featureImage.uploaded = true;
+    }
+    else {
+      $variant_images = self.closest('.variant-images');
+      var index = self.attr('data-index');
+      var $form = $variant_images.find('.upload-list-image');
+      featureImage.image = $form.prop('files')[index].name;
+      featureImage.uploaded = false;
+    }
   }
 });
