@@ -157,6 +157,10 @@
         width: 20%;
         img {
           cursor: pointer;
+          margin-bottom: 5px; 
+          &.active {
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, .4);
+          }
         }
       }
     }
@@ -298,6 +302,9 @@
         font-size: 12px;
         font-weight: normal;
       }
+      &.out-of-stock {
+        background-color: #ccc;
+      }
     }
     .hotline {
       text-align: center;
@@ -325,6 +332,10 @@
           }
         }
       }
+    }
+    .quantity {
+      float: none;
+      margin: 10px 0;
     }
   }
   .product-bottom {

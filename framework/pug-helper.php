@@ -29,6 +29,14 @@ function getMeta($key) {
   return $meta->value;
 }
 
+function inInventory($productId) {
+  $inventory = Variant::where('product_id', $productId)->select('inventory')->get();
+  foreach ($inventory as $key => $value) {
+    if ($value->inventory > 0) return 1;
+  }
+  return 0;
+}
+
 function listArticles($blogId, $pageNumber) {
   $perPage = 2;
   $skip = ($pageNumber - 1) * $perPage;

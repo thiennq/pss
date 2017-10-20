@@ -12,9 +12,16 @@ $(window).on('load', function() {
 
 $('ul.list-variant').on('click', '.item-variant', function(){
   var variantId = $(this).data('id');
-  console.log(variantId);
   $('.list-image .item').hide();
   $('.list-image .item[data-id="'+variantId+'"]').show();
+  $(this).find('img').addClass('active');
+  $(this).siblings().find('img').removeClass('active');
+  $('.btn-order-product').attr('data-variant', $(this).data('id')).addClass('in-stock');
+});
+
+$(document).on('click', '.btn-order-product.in-stock', function(){
+  var quantity = $('input[name="quantity"]').val();
+  addToCart($(this).attr('data-id'), $(this).attr('data-variant'), quantity);
 });
 
 if($('.slider-homepage .index-slider-carousel').length) {
@@ -62,90 +69,6 @@ if ($('.product .slide-small-image').length) {
     zoomImage.attr('src', large);
     zoomImage.data('zoom-image', full);
     zoomImage.elevateZoom();
-  });
-
-
-  $(document).on('click', '.item-variant', function() {
-    var id = $(this).data('id');
-    $.get('/api/san-pham/variant/'+id, function(json) {
-      if (!json.code) {
-        product = json.data;
-        $(document).find('.main-title-product').html(product.title);
-        $(document).find('.main-price-product').html(formatMoney(product.price));
-        $(document).find('.main-discount').addClass('hidden');
-        $(document).find('.main-price-compare').addClass('hidden');
-        if(product.display_discount) {
-          $(document).find('.main-discount').removeClass('hidden');
-          $(document).find('.main-price-compare').removeClass('hidden');
-          $(document).find('.main-price-compare').html(formatMoney(product.price_compare));
-          $(document).find('.main-discount').html('Tiết kiệm ' + formatMoney(product.discount) + ' ('+product.percent+')');
-        }
-        $(document).find('.btn-order-product').attr('data-id', product.id);
-        var btn_order = '';
-        $('.in-stock-branch').find('button, ul, p').addClass('hidden');
-        if(product.in_stock) {
-          $('.btn-order-product').addClass('in-stock');
-          $('.btn-order-product').attr('data-id', product.id);
-          $('.btn-order-product').attr('href', '/dat-hang/' + product.id);
-          $('.btn-order-product').html('ĐẶT MUA GIAO HÀNG TẬN NƠI' + '<br/><span>(Không mua không sao)</span>');
-          if(product.count_branch_display) {
-            $('.in-stock-branch').find('.dropdown-toggle, ul').removeClass('hidden');
-            var options = '';
-            $.each(product.arr_branch_display, function(i,e) {
-              options += '<li><div class="left"><image src="'+themeURI+'/img/icon_branch.png"><span>'+e.name+'</span></div><div class="right">'+e.address+'</div></li>';
-            });
-            $('.in-stock-branch').find('ul').html(options);
-          } else $('.in-stock-branch').find('.in-stock').removeClass('hidden');
-        } else {
-          $('.btn-order-product').html('ĐANG TẠM HẾT HÀNG');
-          $('.btn-order-product').removeAttr('href');
-          $('.btn-order-product').removeClass('in-stock');
-          $('.in-stock-branch').find('.out-stock').removeClass('hidden');
-        }
-
-        if ($(window).width() > 767) {
-          var list_small_image = '';
-          var large_image = '';
-          $.each(product.list_image, function(index, elem) {
-            var thumb = resizeImage(elem.name, 240);
-            var large = resizeImage(elem.name, 1024);
-            list_small_image += '<div class="item" data-large="/uploads/'+large+'", data-full="/uploads/'+elem.name+'"><img src="/uploads/'+thumb+'"></div>';
-            if (!index) {
-              $(document).find('.zoomContainer').remove();
-              zoomImage.removeData('elevateZoom');
-              zoomImage.attr('src', '/uploads/' + large);
-              zoomImage.data('zoom-image', '/uploads/' + elem.name);
-              zoomImage.elevateZoom();
-            }
-          });
-
-          $('.slide-small-image').slick('unslick');
-          $('.product .slide-small-image').html(list_small_image);
-          $('.slide-small-image').slick({
-            lazyLoad: 'ondemand',
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            vertical: true,
-            prevArrow: '<span><i class="fa fa-angle-up"></i></span>',
-            nextArrow: '<span><i class="fa fa-angle-down"></i></span>'
-          });
-        } else {
-          var list_large_image = '';
-          $.each(product.list_image, function(index, elem) {
-            var large = resizeImage(elem.name, 1024);
-            list_large_image += '<div class="item"><img src="/uploads/'+large+'"></div>';
-          });
-          $('.slider-large-image-mobile').html('<div class="owl-carousel owl-carousel-product-mobile owl-theme">'+list_large_image+'</div>');
-          var owl_large_image = $('.owl-carousel-product-mobile').owlCarousel({
-            margin: 10,
-            nav: false,
-            dots: true,
-            lazyLoad: true,
-            items: 1
-          });
-        }
-      }
-    });
   });
 }
 
@@ -587,13 +510,6 @@ $('#modal-order').on('click', '.owl-item', function() {
   $('#modal-order').find('.slider-large-image').find('img').attr('src', src);
 });
 
-
-
-$(document).on('click', '.btn-order-product.in-stock', function() {
-  var id = $(this).attr('data-id');
-  if (id) addToCart(id);
-});
-
 $('.btn-plus').click(function() {
   var id = $(this).data('id');
   var price = $(this).data('price');
@@ -616,17 +532,19 @@ $('.btn-minus').click(function() {
   }
 });
 
-function addToCart(product_id) {
+function addToCart(product_id, variant_id, quantity) {
   $.ajax({
     type: 'POST',
     url: '/api/addToCart',
     data: {
-      product_id: product_id
+      product_id: product_id,
+      variant_id: variant_id,
+      quantity: quantity
     },
     success: function(json) {
       if (!json.code) {
-        location.href = '/dat-hang';
-      } else alert('Có lỗi xảy ra, xin vui lòng thử lại');
+        toastr.success('Thêm vào giỏ hàng thành công');
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
   });
 }

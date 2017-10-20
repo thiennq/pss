@@ -32,9 +32,8 @@ block content
                 img(src=thumb)
         if device == 'desktop'
           .col-sm-10.col-xs-12.slider-large-image.text-center
-            - var firstImage = list_images[0];
-            - var large = resize(firstImage.name, 1024);
-            img.large-image-zoom(src="/uploads/" + large, data-zoom-image="/uploads/" + firstImage.name alt=alt)
+            - var large = resize(data.featured_image, 1024);
+            img.large-image-zoom(src="/uploads/" + large, data-zoom-image="/uploads/" + data.featured_image, alt=alt)
         else
           .col-xs-12.slider-large-image.slider-large-image-mobile.text-center
             .owl-carousel.owl-carousel-product-mobile.owl-theme
@@ -73,6 +72,15 @@ block content
           each image in featured_images
             li.item-variant(data-id=image.typeId)
               img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(image.name, 240))
+              span Còn !{image.inventory} sản phẩm
+        form.quantity.col-xs-4.pd-0
+          input.form-control(placeholder="Nhập số lượng", name="quantity", required, type="number")
+        if inInventory(data.id)!=0
+          .btn-order-product(data-id=data.id, data-variant="") ĐẶT MUA GIAO HÀNG TẬN NƠI
+            br
+            span (Vui lòng chọn phiên bản)
+        else
+          .btn-order-product.out-of-stock ĐANG TẠM HẾT HÀNG
   //-       .dropdown.in-stock-branch
   //-         if data.in_stock
   //-           if data.count_branch_display
@@ -104,12 +112,7 @@ block content
   //-           ul.dropdown-menu.list-branch.hidden
   //-           p.in-stock.hidden Sản phẩm hiện chỉ bán online
   //-           button.out-stock.btn Đang tạm hết hàng
-  //-       if data.in_stock
-  //-         .btn-order-product.in-stock(data-id=data.id) ĐẶT MUA GIAO HÀNG TẬN NƠI
-  //-           br
-  //-           span (Không mua không sao)
-  //-       else
-  //-         .btn-order-product ĐANG TẠM HẾT HÀNG
+  //-       
   //-       !{desktop_product_detail_support()}
   //-     .clearfix.col-xs-12.product-bottom.row
   //-       .col-md-8.col-sm-7.col-xs-12.description
@@ -146,37 +149,34 @@ block content
   //-           .news-list
   //-             a(href="/tin-tuc") &lt;&lt;Danh mục tin tức
   //-         //- !{saleProductPolicy()}
-
-  //- if count_product_related
-  //-   .related.col-xs-12
-  //-     .container
-  //-       .related-type
-  //-         a SẢN PHẨM CÙNG LOẠI
-  //-           .border.hidden-xs
-  //-       .row.list-product-related
-  //-         each product, index in product_related
-  //-           if device == 'desktop'
-  //-             if index < 5
-  //-               .col20.col-xs-6
-  //-                 include snippet/product-loop
-  //-           else
-  //-             .col20.col-xs-6
-  //-               include snippet/product-loop
-  //- if count(product_seen)
-  //-   .related.col-xs-12
-  //-     .container
-  //-       .related-type
-  //-         a SẢN PHẨM ĐÃ XEM
-  //-           .border.hidden-xs
-  //-       .row.list-product-related
-  //-         each product, index in product_seen
-  //-           if device == 'desktop'
-  //-             if index < 5
-  //-               .col20.col-xs-6
-  //-                 include snippet/product-loop
-  //-           else
-  //-             .col20.col-xs-6
-  //-               include snippet/product-loop
+  if count(related_products)
+    .related.col-xs-12
+      .container
+        .related-type
+          a SẢN PHẨM CÙNG LOẠI
+            .border.hidden-xs
+        .row.list-product-related
+          each product in related_products
+            if device == 'desktop'
+              .col20.col-xs-6
+                include snippet/product-loop
+            else
+              .col20.col-xs-6
+                include snippet/product-loop    
+  if count(product_seen)
+    .related.col-xs-12
+      .container
+        .related-type
+          a SẢN PHẨM ĐÃ XEM
+            .border.hidden-xs
+        .row.list-product-related
+          each product, index in product_seen
+            if device == 'desktop'
+              .col20.col-xs-6
+                include snippet/product-loop
+            else
+              .col20.col-xs-6
+                include snippet/product-loop
 
   //- - var articleIndex = articleIndex();
   //- if countArr(articleIndex)

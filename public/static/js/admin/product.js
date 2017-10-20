@@ -289,7 +289,7 @@ $('.btn-update-product').click(function(event) {
           if (count_update ==  list_variant_update.length) {
             createVariant();
           }
-          var itemVariant = list_variant_update.eq(count);
+          var itemVariant = list_variant_update.eq(count_update);
           var formRI = itemVariant.find('.upload-list-image');
           variant.id = itemVariant.find('.btn-remove-variant').attr('data-id');
           variant.title = itemVariant.find('input[name="variant-title"]').val();
@@ -321,10 +321,10 @@ $('.btn-update-product').click(function(event) {
           if (count_upload ==  list_variant_upload.length) {
             self.removeClass('disabled');
             updateFeaturedImage(variant.product_id, featureImage.image);
-            reloadPage('/admin/products/' + product_id);
+            reloadPage('/admin/products/' + variant.product_id);
             return false;
           }
-          var itemVariant = list_variant_upload.eq(count);
+          var itemVariant = list_variant_upload.eq(count_upload);
           var formRI = itemVariant.find('.upload-list-image');
           variant.title = itemVariant.find('input[name="variant-title"]').val();
           variant.price = itemVariant.find('input[name="variant-price"]').val();
