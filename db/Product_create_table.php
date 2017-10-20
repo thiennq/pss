@@ -20,6 +20,7 @@ $Schema->create('product', function (Blueprint $table) {
     $table->increments('id');
     $table->string('title');
     $table->string('handle');
+    $table->string('featured_image');
     $table->text('description')->nullable();
     $table->integer('sell')->nullable();
     $table->boolean('display')->nullable();

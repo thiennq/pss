@@ -42,6 +42,12 @@ block content
             .col-sm-10
               textarea.form-control#description
           .form-group
+            label.col-sm-2.control-label Hình đại diện 
+              br 
+              | (chọn một hình trong variant)
+            form.col-sm-10.form-feature-product
+              img#featured_img(src=staticURI() + "/img/default_image.png")
+          .form-group
             label.col-sm-2.control-label Phiên bản
               strong.required  *
             .col-sm-10

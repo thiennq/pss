@@ -74,6 +74,7 @@ class AdminProductController extends AdminController {
       }
       $data->title = $body['title'];
       $data->handle = handle($body['title']);
+      $data->featured_image = '';
       $data->description = $body['description'];
       $data->meta_description = $body['meta_description'];
       $data->meta_robots = $body['meta_robots'];
@@ -125,6 +126,27 @@ class AdminProductController extends AdminController {
       "images" => $images,
       "total" => count($images)
     ));
+  }
+
+  public function updateFeaturedImage(Request $request, Response $response) {
+    try {
+      $id = $request->getAttribute('id');
+      $body = $request->getParsedBody();
+      $data = Product::find($id);
+      if (!$data) {
+        $result = Helper::response(-2);
+        return $response->withJson($result, 200);
+      }
+
+      $data->featured_image = $body['featured_image'];
+      $result = Helper::response(0);
+      return $response->withJson($result, 200);
+
+    } catch (Exception $e) {
+      $result = Helper::response(-3);
+      return $response->withJson($result, 200);
+    }
+  }
   }
 }
 
