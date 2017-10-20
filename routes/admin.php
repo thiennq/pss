@@ -54,11 +54,12 @@ $app->group('/admin', function() use($app) {
   $app->get('/products/new', '\AdminProductController:create');
   $app->get('/products/{id}', '\AdminProductController:show');
   $app->put('/products/{id}', '\AdminProductController:update');
-  $app->delete('/api/product/image/{id}', '\AdminProductController:deleteImage');
+  $app->delete('/products/{id}', '\AdminProductController:delete');
 
   $app->post('/variants', '\AdminVariantController:store');
   $app->get('/variants/{id}', '\AdminVariantController:show');
   $app->put('/variants/{id}', '\AdminVariantController:update');
+  $app->delete('/variants/{id}', '\AdminVariantController:delete');
 
   $app->get('/collections', '\AdminCollectionController:index');
   $app->get('/collections/new', '\AdminCollectionController:create');

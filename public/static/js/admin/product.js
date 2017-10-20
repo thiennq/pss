@@ -13,7 +13,9 @@ $(document).find('select').each(function() {
 });
 
 var listFormData = [];
-listFormData.push(new FormData());
+for (var i = 0; i < $('.variant-item').length; i++) {
+  listFormData.push(new FormData());
+}
 
 $('.btn-add-variant').click(function() {
   var obj = {};
@@ -137,7 +139,6 @@ $('.btn-create').click(function() {
   data.meta_robots = $('select[name="meta_robots"]').val();
   data.display = $('select[name="display"]').val();
   self.addClass('disabled');
-  console.log(data);
   $.ajax({
     type: 'POST',
     url: '/admin/products',
@@ -192,6 +193,126 @@ $('.btn-create').click(function() {
   });
 });
 
+$('.btn-update-product').click(function(event) {
+  $(document).find('.error').removeClass('error');
+  var id = $(this).attr('data-id');
+  var self = $(this);
+  var data = {};
+  data.title = $('input[name="title"]').val();
+  if (!data.title) {
+    toastr.error("Chưa nhập tiêu đề");
+    $('input[name="title"]').addClass('error');
+    return;
+  }
+  var firstVariant = $('.list-variant').find('.variant-item').eq(0);
+  var variant_title = firstVariant.find('input[name="variant-title"]').val();
+  var variant_price = firstVariant.find('input[name="variant-price"]').val();
+  var variant_inventory = firstVariant.find('input[name="variant-inventory"]').val();
+  if (!variant_title || !variant_price || !variant_inventory) {
+    toastr.error("Sản phẩm phải có ít nhất 1 phiên bản");
+    $('.list-variant').addClass('error');
+    return;
+  }
+
+  data.collections = [];
+  $('.list-collection').find('input[type="checkbox"]:checked').each(function() {
+    data.collections.push($(this).val());
+  });
+  data.description = tinyMCE.get('description').getContent();
+  data.meta_title = $('input[name="meta_title"]').val();
+  data.meta_description = $('textarea[name="meta_description"]').val();
+  data.meta_robots = $('select[name="meta_robots"]').val();
+  data.display = $('select[name="display"]').val();
+  self.addClass('disabled');
+
+  $.ajax({
+    type: 'PUT',
+    url: '/admin/products/' + id,
+    data: data,
+    success: function(json) {
+      console.log("save product: ", json);
+      if (json.code == -2) {
+        toastr.error("Sản phẩm không tồn tại");
+        self.removeClass('disabled');
+      } else if (json.code == -4) {
+        toastr.error(json.message);
+        self.removeClass('disabled');
+      } else if (json.code == -3) {
+        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+        self.removeClass('disabled');
+      } else {
+        var list_variant_update = $('.variant-item[data-update="true"]');
+        var list_variant_upload = $('.variant-item:not([data-update])');
+        var count_update = 0;
+        var count_upload = 0;
+        var variant = {};
+        variant.product_id = id;
+        updateVariant();
+        function updateVariant() {
+          if (count_update ==  list_variant_update.length) {
+            createVariant();
+          }
+          var itemVariant = list_variant_update.eq(count);
+          var formRI = itemVariant.find('.upload-list-image');
+          variant.id = itemVariant.find('.btn-remove-variant').attr('data-id');
+          variant.title = itemVariant.find('input[name="variant-title"]').val();
+          variant.price = itemVariant.find('input[name="variant-price"]').val();
+          variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
+          variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
+          image_deleted = [];
+          itemVariant.find('.image[data-deleted="true"]').each(function (i,e) {
+            image_deleted.push($(this).attr('data-id'));
+          });
+          variant.image_deleted = image_deleted;
+          uploadImgs(formRI, function(list_image) {
+            variant.list_image = list_image;
+            console.log('list_image',list_image);
+            $.ajax({
+              type: 'PUT',
+              url: '/admin/variants/' + variant.id,
+              data: variant,
+              success: function(json) {
+                if(!json.code) {
+                  count_update++;
+                  updateVariant();
+                } else toastr.error('Cập nhật phiên bản ' +variant.title+ ' thất bại');
+              }
+            });
+          });
+        }
+        function createVariant() {
+          if (count_upload ==  list_variant_upload.length) {
+            self.removeClass('disabled');
+            reloadPage('/admin/products/' + product_id);
+            return false;
+          }
+          var itemVariant = list_variant_upload.eq(count);
+          var formRI = itemVariant.find('.upload-list-image');
+          variant.title = itemVariant.find('input[name="variant-title"]').val();
+          variant.price = itemVariant.find('input[name="variant-price"]').val();
+          variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
+          variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
+          uploadImgs(formRI, function(list_image) {
+            variant.list_image = list_image;
+            console.log('list_image',list_image);
+            $.ajax({
+              type: 'POST',
+              url: '/admin/variants',
+              data: variant,
+              success: function(json) {
+                if(!json.code) {
+                  count_upload++;
+                  createVariant();
+                } else toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
+              }
+            });
+          });
+        }
+      }
+    }
+  });
+});  
+
 $(document).on('click', '.btn-rotate-image', function(){
   var img = $(this).parent().find('img');
   var src = $(img).attr('src');
@@ -204,121 +325,42 @@ $(document).on('click', '.btn-rotate-image', function(){
   });
 });
 
-$('.btn-update-product').click(function(event) {
-  var id = $(this).data('id');
-  var btn = $(this);
-  $('input').removeClass('error');
-  var data = {};
-  data.group_id = $('input[name="group_id"]').val();
-  data.barcode = $('input[name="barcode"]').val();
-  if(!data.barcode.trim().length) {
-    toastr.error('Chưa nhập Barcode');
-    $('input[name="barcode"]').addClass('error');
-    return;
-  }
-  data.title = $('input[name="title"]').val();
-  if(!data.title.trim().length) {
-    toastr.error('Chưa nhập tên sản phẩm');
-    $('input[name="title"]').addClass('error');
-    return;
-  }
-  data.handle = $('input[name="handle"]').val();
-  // data.price = $('input[name="price"]').val();
-  // data.price = data.price.replace(/[^0-9]+/g, "");
-  // data.price_compare = $('input[name="price_compare"]').val();
-  // data.price_compare = data.price_compare.replace(/[^0-9]+/g, "");
-  // data.meta_description = $('textarea[name="meta_description"]').val();
-  data.description = tinyMCE.get('description').getContent();
-  // data.specification = tinyMCE.get('product-specification').getContent();
-  var list_image = [];
-  if($('.list-image').find('.image').length) {
-    $('.list-image').find('.image').each(function(i,e) {
-      list_image.push($(this).attr('data-name'));
-    });
-  }
-  data.list_image = list_image;
-  var color_id = [];
-  var collection_id = [];
-  var special_id = [];
-  $('.list-color').find('input[type="checkbox"]:checked').each(function() {
-    color_id.push($(this).val());
-  });
-  $('.list-collection').find('input[type="checkbox"]:checked').each(function() {
-    collection_id.push($(this).val());
-  });
-  $('.list-special').find('input[type="checkbox"]:checked').each(function() {
-    special_id.push($(this).val());
-  });
-  data.collection_id = collection_id;
-  data.color_id = color_id;
-  data.special_id = special_id;
-  data.content = $('textarea[name="content"]').val();
-  data.brand = $('select[name="brand"]').val();
-  data.material = $('select[name="material"]').val();
-  data.size = $('select[name="size"]').val();
-  data.bag = $('select[name="bag"]').val();
-  data.display = $('select[name="display"]').val();
-  data.dropship = $('select[name="dropship"]').val();
-  data.meta_robots = $('select[name="meta-robots"]').val();
-  data.updated_at = $('input[name="updated_at"]').val();
-  if(checkDate(data.updated_at) == 'Invalid Date') {
-    toastr.error('Vui lòng nhập đúng định dạng ngày giờ (yyyy-mm-dd h:m:s)');
-    $('input[name="updated_at"]').addClass('error');
-    return;
-  }
-  btn.addClass('disabled');
-  $.ajax({
-    type: 'PUT',
-    url: '/admin/san-pham/' + id,
-    data: data,
-    success: function(json) {
-      if(!json.code) {
-        toastr.success('Cập nhật sản phẩm thành công');
-        reloadPage();
-      }
-      else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-    }
-  });
-});
-
 $(document).on('click', '.btn-remove-product', function() {
   var id = $(this).attr('data-id');
   var tr = $(this).closest('tr');
-  var template = $(this).data('template');
-  if(confirm("Xóa sản phẩm?")) {
+  if(confirm("Xóa sản phẩm " + tr.find('td:first-child a').html() + " ?")) {
     $.ajax({
       type: 'DELETE',
-      url: '/admin/san-pham/' + id,
+      url: '/admin/products/' + id,
       success: function(json) {
         if(!json.code) {
-          toastr.success('Xóa sản phẩm thành công');
-          if(template != 'edit') tblProduct.row(tr).remove().draw();
-          else {
-            setTimeout(function(){
-              window.location.href = '/admin/product';
-            }, 1000);
-          }
+          toastr.success('Xóa sản phẩm '+tr.find('td:first-child a').html()+' thành công');
+          tblProduct.row(tr).remove().draw();
         } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
     });
   }
 });
 
-
 $(document).on('click', '.btn-remove-variant', function() {
-  var item = $(this).closest('.variant-item');
-  var variant_id = item.data('id');
-  item.remove();
+  var itemVariant = $(this).closest('.variant-item');
+  var variant_id = $(this).attr('data-id');
   if(variant_id) {
     $.ajax({
       type: 'DELETE',
       url: '/admin/variants/' + variant_id,
       success: function(json) {
         if(!json.code) {
-          console.log('Remove variant');
+          toastr.success('Xóa phiên bản '+itemVariant.find('input[name="variant-title"]').val()+' thành công');
+          itemVariant.remove();
         }
+        else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
     });
+  }
+  else {
+    itemVariant.remove();
+    toastr.success('Xóa phiên bản thành công');
   }
 });
 
@@ -346,20 +388,19 @@ $(document).on('click', '.move-prev', function() {
   }
 });
 
+$(document).on('click', '.remove-base64-img', function() {
+  $variant_images = $(this).parents('.variant-images');
+  var index = $(this).parent().attr('data-index');
+  var $form = $variant_images.find('.upload-list-image');
+  var files = $form.prop('files');
+  files[index].deleted = true;
+  $(this).closest('.image').remove();
+});
 
-$('.list-image').on('click', '.remove', function() {
-  var id = $(this).data('id');
-  if(id) {
-    $.ajax({
-      type: 'DELETE',
-      url: '/admin/api/product/image/' + id,
-      success: function(json) {
-        if(!json.code) toastr.success('Xóa hình thành công');
-        else toastr.error('Có lỗi xảy ra, vui lòng thử lại');
-      }
-    });
-  }
-  $(this).parent().remove();
+$(document).on('click', '.remove-uploaded-img', function() {
+  var uploadedImg = $(this).closest('.image');
+  uploadedImg.attr('data-deleted', 'true');
+  uploadedImg.addClass('hidden');
 });
 
 $(document).on('change', 'input[name="updated_at"]', function() {

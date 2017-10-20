@@ -31,9 +31,12 @@ class AdminProductController extends AdminController {
       return $response->withStatus(404);
     }
     $collections = Collection::orderBy('breadcrumb', 'asc')->get();
-    $data->variants = Variant::where('product_id', $id)->get();
+    $variants = Variant::where('product_id', $id)->get();
+    foreach ($variants as $key => $variant) {
+      $variant->list_image = Image::getImage('variant', $variant->id);
+    }
+    $data->variants = $variants;
     $data->collection_id = CollectionProduct::where('product_id', $id)->get();
-
     return $this->view->render($response, 'admin/product_edit.pug', array(
       'data' => $data,
       'collections' => $collections
@@ -78,12 +81,10 @@ class AdminProductController extends AdminController {
       $data->updated_at = date('Y-m-d H:i:s');
       $data->save();
 
-      $collection_id = $body['collection_id'];
       CollectionProduct::where('product_id', $id)->delete();
-      foreach ($collection_id as $key => $value) {
-        $parent = Collection::find($value)->parent_id;
-        if($parent) CollectionProduct::store($parent, $id);
-        CollectionProduct::store($value, $id);
+      $collections = $body['collections'];
+      foreach ($collections as $key => $collection) {
+        CollectionProduct::store($collection, $id);
       }
 
       $result = Helper::response(0);

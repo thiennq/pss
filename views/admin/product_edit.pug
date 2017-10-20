@@ -16,7 +16,7 @@ block content
         a=data.title
     ol.button-right.col-sm-6
       li
-        a.btn.btn-admin.btn-update
+        a.btn.btn-admin.btn-update(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Cập nhật
@@ -46,10 +46,9 @@ block content
               strong.required  *
             .col-sm-10
               .list-variant.clearfix.variant-bonus.list-append
-                p=count(data.variants);
                 if count(data.variants)
                   each variant, index in data.variants
-                    .variant-item(data-id=index).clearfix
+                    .variant-item(data-id=index, data-update='true').clearfix
                       .row
                         .col-xs-11
                           .row
@@ -70,6 +69,13 @@ block content
                             form(enctype="multipart/form-data").hidden
                               input#upload-image-variant-0.upload-list-image(data-id="0" type="file" name="upload[]" multiple="multiple")
                           .col-xs-12.list-image
+                            each item in variant.list_image
+                              - var image = resize(item['name'], 240);
+                              .image.col-xs-2(data-name=item.name, data-upload='true', data-deleted='false', data-id=item.id, style="background-image:url('/uploads/"+image+"');") 
+                                span.rotate
+                                  i.fa.fa-undo
+                                span.remove.remove-uploaded-img(data-id=item.id)
+                                  i.fa.fa-times
                             .col-xs-2.add-image
                               label(for="upload-image-variant-0")
                 else
