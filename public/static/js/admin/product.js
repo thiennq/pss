@@ -99,14 +99,19 @@ function uploadImg(formData, callback) {
 
 function uploadImgs(form, callback) {
   var index = form.attr('data-id');
+  console.log('index', index);
   var files = form.prop('files');
   var formData = listFormData[parseInt(index)];
+  if (!formData) {
+    callback([]);
+  }
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
     if (!f.deleted) {
       formData.append('upload[]', f, f.name);
     }
   }
+  console.log('formData', formData);
   uploadImg(formData, function(json) {
     var list_image = [];
     if(!json.code) {
@@ -125,12 +130,12 @@ function uploadImgs(form, callback) {
 }
 
 function updateFeaturedImage(product_id, featured_image) {
+  data = {};
+  data.featured_image = featured_image
   $.ajax({
     type: 'PUT',
     url: '/admin/products/featured-image/' + product_id,
-    data: {
-      featured_image: featured_image 
-    },
+    data: data,
     success: function(json) {
       if (json.code == -2) {
         toastr.error("Sản phẩm không tồn tại, không thể cập nhật Hình đại diện");
@@ -211,7 +216,6 @@ $('.btn-create').click(function() {
           variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
           uploadImgs(formRI, function(list_image) {
             variant.list_image = list_image;
-            console.log('list_image',list_image);
             $.ajax({
               type: 'POST',
               url: '/admin/variants',
@@ -267,7 +271,6 @@ $('.btn-update-product').click(function(event) {
     url: '/admin/products/' + id,
     data: data,
     success: function(json) {
-      console.log("save product: ", json);
       if (json.code == -2) {
         toastr.error("Sản phẩm không tồn tại");
         self.removeClass('disabled');
@@ -285,12 +288,48 @@ $('.btn-update-product').click(function(event) {
         var variant = {};
         variant.product_id = id;
         updateVariant();
+        function createVariant() {
+          if (count_upload ==  list_variant_upload.length) {
+            self.removeClass('disabled');
+            updateFeaturedImage(variant.product_id, featureImage.image);
+            reloadPage('/admin/products/' + variant.product_id);
+            return false;
+          }
+          var itemVariant = list_variant_upload.eq(count_upload);
+          var formRI = itemVariant.find('.upload-list-image');
+          uploadImgs(formRI, function(list_image) {
+            var obj = {};
+            obj.product_id = variant.product_id;
+            obj.title = itemVariant.find('input[name="variant-title"]').val();
+            obj.price = itemVariant.find('input[name="variant-price"]').val();
+            obj.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
+            obj.inventory = itemVariant.find('input[name="variant-inventory"]').val();
+            obj.list_image = list_image;
+            $.ajax({
+              type: 'POST',
+              url: '/admin/variants',
+              data: obj,
+              success: function(json) {
+                if(!json.code) {
+                  count_upload++;
+                  createVariant();
+                } else {
+                  toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
+                  self.removeClass('disabled');
+                }
+              }
+            });
+          });
+        }
         function updateVariant() {
           if (count_update ==  list_variant_update.length) {
             createVariant();
+            return false;
           }
-          var itemVariant = list_variant_update.eq(count);
+          var itemVariant = list_variant_update.eq(count_update);
           var formRI = itemVariant.find('.upload-list-image');
+          console.log('list_variant_update', list_variant_update);
+          console.log('formRI', formRI);
           variant.id = itemVariant.find('.btn-remove-variant').attr('data-id');
           variant.title = itemVariant.find('input[name="variant-title"]').val();
           variant.price = itemVariant.find('input[name="variant-price"]').val();
@@ -313,35 +352,6 @@ $('.btn-update-product').click(function(event) {
                   count_update++;
                   updateVariant();
                 } else toastr.error('Cập nhật phiên bản ' +variant.title+ ' thất bại');
-              }
-            });
-          });
-        }
-        function createVariant() {
-          if (count_upload ==  list_variant_upload.length) {
-            self.removeClass('disabled');
-            updateFeaturedImage(variant.product_id, featureImage.image);
-            reloadPage('/admin/products/' + product_id);
-            return false;
-          }
-          var itemVariant = list_variant_upload.eq(count);
-          var formRI = itemVariant.find('.upload-list-image');
-          variant.title = itemVariant.find('input[name="variant-title"]').val();
-          variant.price = itemVariant.find('input[name="variant-price"]').val();
-          variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
-          variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
-          uploadImgs(formRI, function(list_image) {
-            variant.list_image = list_image;
-            console.log('list_image',list_image);
-            $.ajax({
-              type: 'POST',
-              url: '/admin/variants',
-              data: variant,
-              success: function(json) {
-                if(!json.code) {
-                  count_upload++;
-                  createVariant();
-                } else toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
               }
             });
           });
@@ -429,7 +439,7 @@ $(document).on('click', '.move-prev', function(e) {
   }
 });
 
-$(document).on('click', '.remove-base64-img', function(e) {
+$('.list-variant').on('click', '.remove-base64-img', function(e) {
   e.stopPropagation();
   $variant_images = $(this).closest('.variant-images');
   var index = $(this).parent().attr('data-index');
@@ -439,15 +449,14 @@ $(document).on('click', '.remove-base64-img', function(e) {
   $(this).closest('.image').remove();
 });
 
-$(document).on('click', '.remove-uploaded-img', function(e) {
+$('.list-variant').on('click', '.remove-uploaded-img', function(e) {
   e.stopPropagation();
   var uploadedImg = $(this).closest('.image');
   uploadedImg.attr('data-deleted', 'true');
   uploadedImg.addClass('hidden');
 });
 
-$('.variant-images').on('click', '.image', function(e) {
-  e.stopPropagation();
+$('.list-variant').on('click', '.image' ,function(e) {
   var self = $(this);
   if (self.hasClass('is-featured-img')) {
     self.removeClass('is-featured-img');

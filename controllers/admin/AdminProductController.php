@@ -73,7 +73,7 @@ class AdminProductController extends AdminController {
         return $response->withJson($result, 200);
       }
       $data->title = $body['title'];
-      $data->handle = handle($body['title']);
+      $data->handle = createHandle($body['title']);
       $data->featured_image = '';
       $data->description = $body['description'];
       $data->meta_description = $body['meta_description'];
@@ -138,6 +138,7 @@ class AdminProductController extends AdminController {
         return $response->withJson($result, 200);
       }
       $data->featured_image = $body['featured_image'];
+      $data->save();
       $result = Helper::response(0);
       return $response->withJson($result, 200);
     } catch (Exception $e) {

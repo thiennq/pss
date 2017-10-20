@@ -691,6 +691,7 @@ table {
         right: 5px;
         top: 5px;
         color: $color_red;
+        z-index: 1000;
       }
       .move {
         position: absolute;
@@ -916,6 +917,9 @@ select {
       margin-top: 10px;
       .list-image {
         background-color: white;
+        .is-featured-img {
+          border: 1px solid red;
+        }
       }
     }
   }

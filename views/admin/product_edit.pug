@@ -44,7 +44,7 @@ block content
           .form-group
             label.col-sm-2.control-label Hình đại diện 
               br 
-              | (chọn một hình trong variant)
+              | (chọn một hình trong hình ảnh của variant)
             form.col-sm-10.form-feature-product
               if data.featured_image
                 - var featured_image = resize(data.featured_image, 240);
@@ -78,7 +78,8 @@ block content
                         .col-xs-11.variant-images
                           label
                             form(enctype="multipart/form-data").hidden
-                              input#upload-image-variant-0.upload-list-image(data-id="0" type="file" name="upload[]" multiple="multiple")
+                              - var idIp = 'upload-image-variant-'+ index;
+                              input.upload-list-image(id=idIp, data-id=index, type="file" name="upload[]" multiple="multiple")
                           .col-xs-12.list-image
                             each item in variant.list_image
                               - var image = resize(item['name'], 240);
@@ -88,7 +89,7 @@ block content
                                 span.remove.remove-uploaded-img(data-id=item.id)
                                   i.fa.fa-times
                             .col-xs-2.add-image
-                              label(for="upload-image-variant-0")
+                              label(for="upload-image-variant-"+index)
                 else
                   .variant-item(data-id="0").clearfix
                     .row
