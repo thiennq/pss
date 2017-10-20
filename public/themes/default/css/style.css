@@ -10796,7 +10796,8 @@ footer {
             padding-bottom: 17px; } }
 
 .product, #modal-order {
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-bottom: 20px; }
   .product .large-image-zoom, #modal-order .large-image-zoom {
     width: 100% !important; }
   .product .list-image, #modal-order .list-image {
@@ -10914,6 +10915,12 @@ footer {
             display: inline-block;
             float: left;
             padding-left: 5px; }
+    .product .detail .list-variant .item-variant, #modal-order .detail .list-variant .item-variant {
+      display: inline-block;
+      margin-right: 10px;
+      width: 20%; }
+      .product .detail .list-variant .item-variant img, #modal-order .detail .list-variant .item-variant img {
+        cursor: pointer; }
     .product .detail p, #modal-order .detail p {
       margin-bottom: 5px; }
     .product .detail .title, #modal-order .detail .title {

@@ -20,194 +20,193 @@ block post-include
   
 block content
   .container.product-wrapper
-    include snippet/breadcrumb
     .product.clearfix
       .col-sm-7.col-xs-12.list-image
         .col-sm-2.hidden-xs.pd-left-0.pd-right-0
-          .slide-small-image.slick
-            each item in data.list_image
-              - var thumb = '/uploads/' + resize(item.name, 240);
-              - var large = '/uploads/' + resize(item.name, 1024);
+          .slide-small-image
+            each image in list_images
+              - var thumb = '/uploads/' + resize(image.name, 240);
+              - var large = '/uploads/' + resize(image.name, 1024);
               - var alt = data.title + '-' + (index + 1);
-              .item(data-large=large, data-full='/uploads/' + item.name)
+              .item(data-large=large, data-full='/uploads/' + image.name, data-id=image.typeId)
                 img(src=thumb)
         if device == 'desktop'
           .col-sm-10.col-xs-12.slider-large-image.text-center
-            - var firstImage = data.list_image[0];
+            - var firstImage = list_images[0];
             - var large = resize(firstImage.name, 1024);
             img.large-image-zoom(src="/uploads/" + large, data-zoom-image="/uploads/" + firstImage.name alt=alt)
         else
           .col-xs-12.slider-large-image.slider-large-image-mobile.text-center
             .owl-carousel.owl-carousel-product-mobile.owl-theme
-              each image, index in data.list_image
+              each image, index in list_images
                 - var large = resize(image.name, 1024);
                 - var alt = data.title + '-' + (index + 1);
                 .item
-                  img(src="/uploads/" + large, alt=alt)
+                  img(src="/uploads/" + large, alt=alt, data-id=image.typeId)
       .col-sm-5.detail.col-xs-12
-        if data.count_variant > 1
-          .owl-carousel.owl-carousel-variant.owl-theme.visible-xs
-            each item in data.variants
-              .item.item-variant(data-id=item.id)
-                img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(item.featured_image, 240) title=item.title)
+        .owl-carousel.owl-carousel-variant.owl-theme.visible-xs
+          each image in featured_images
+            .item.item-variant(data-id=image.id)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(image.name, 240))
         h1.title.main-title-product=data.title
-        if data.brand
-          p.brand
-            a(href=data.brand_handle)
-              | THƯƠNG HIỆU: 
-              =data.brand
+        //- if data.brand
+        //-   p.brand
+        //-     a(href=data.brand_handle)
+        //-       | THƯƠNG HIỆU: 
+        //-       =data.brand
         p.price
-          span.main-price.main-price-product=money(data.price)
-          span.price-compare.main-price-compare=money(data.price_compare)
-        if data.display_discount
-          p.discount.main-discount Tiết kiệm&nbsp;
-            span=money(data.discount)
-            |  (
-            span=data.percent
-            | )
-        else
-          p.discount.main-discount.hidden
-        - var content = data.content.replace(/\n/g, '<br>');
-        .short-description.hidden-xs !{content}
-        if data.count_variant > 1
-          .owl-carousel.owl-carousel-variant.owl-theme.hidden-xs
-            each item in data.variants
-              .item.item-variant(data-id=item.id)
-                img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(item.featured_image, 240) title=item.title)
-        .dropdown.in-stock-branch
-          if data.in_stock
-            if data.count_branch_display
-              button.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
-                span.caret
-              ul.dropdown-menu.list-branch
-                each item in data.arr_branch_display
-                  li
-                    .left
-                      img(src=themeURI() + "/img/icon_branch.png")
-                      span=item.name
-                    .right=item.address
-              button.hidden.in-stock.btn Sản phẩm hiện chỉ bán online
-            else
-              button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
-                span.caret
-              ul.hidden.dropdown-menu.list-branch
-                each item in data.arr_branch_display
-                  li
-                    .left
-                      img(src=themeURI() + "/img/icon_branch.png")
-                      span=item.name
-                    .right=item.address
-              button.in-stock.btn Sản phẩm hiện chỉ bán online
-            button.out-stock.btn.hidden Đang tạm hết hàng
-          else
-            button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
-              span.caret
-            ul.dropdown-menu.list-branch.hidden
-            p.in-stock.hidden Sản phẩm hiện chỉ bán online
-            button.out-stock.btn Đang tạm hết hàng
-        if data.in_stock
-          .btn-order-product.in-stock(data-id=data.id) ĐẶT MUA GIAO HÀNG TẬN NƠI
-            br
-            span (Không mua không sao)
-        else
-          .btn-order-product ĐANG TẠM HẾT HÀNG
-        !{desktop_product_detail_support()}
-      .clearfix.col-xs-12.product-bottom.row
-        .col-md-8.col-sm-7.col-xs-12.description
-          ul.nav.nav-tabs
-            li.col-xs-6.col-sm-3.active
-              a(data-toggle='tab', href='#nav-description') CHI TIẾT SẢN PHẨM
-              .border
-            li.col-xs-6.col-sm-3
-              a(data-toggle='tab', href='#nav-specification') THÔNG SỐ SẢN PHẨM
-              .border
-          .tab-content
-            #nav-description.tab-pane.fade.in.active
-              section !{data.description}
-            #nav-specification.tab-pane.fade
-              section !{data.specification}
-          //- section !{data['material']}
-        .col-md-4.col-sm-5.news-support.hidden-xs
-          .support
-            .content-div
-              - var sale_policy = sale_policy();
-              !{sale_policy}
-            .blank-div
-          .news
-            h4.title TIN TƯC GẦN ĐÂY
-            .content
-              .container-fluid
-                each item in articleOther
-                  .row
-                    .col-xs-4.news-image(style="background-image: url(/uploads/"+resize(item.image, 240)+")")
-                    .col-xs-8.news-see-more
-                      a(href=fullUrl(item.link)).news-title=item.title
-                      a(href=fullUrl(item.link)).bottom-line
-                        | Chi tiết&gt;&gt;
-            .news-list
-              a(href="/tin-tuc") &lt;&lt;Danh mục tin tức
-          //- !{saleProductPolicy()}
+          each variant in variants
+            p.price-version=variant.title
+            span.main-price.main-price-product=money(variant.price)
+            span.price-compare.main-price-compare=money(variant.price_compare)
+        //- if data.display_discount
+        //-   p.discount.main-discount Tiết kiệm&nbsp;
+        //-     span=money(data.discount)
+        //-     |  (
+        //-     span=data.percent
+        //-     | )
+        //- else
+        //-   p.discount.main-discount.hidden
+        //- - var content = data.content.replace(/\n/g, '<br>');
+        //- .short-description.hidden-xs !{content}
+        ul.list-variant.clearfix.hidden-xs
+          each image in featured_images
+            li.item-variant(data-id=image.typeId)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(image.name, 240))
+  //-       .dropdown.in-stock-branch
+  //-         if data.in_stock
+  //-           if data.count_branch_display
+  //-             button.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+  //-               span.caret
+  //-             ul.dropdown-menu.list-branch
+  //-               each item in data.arr_branch_display
+  //-                 li
+  //-                   .left
+  //-                     img(src=themeURI() + "/img/icon_branch.png")
+  //-                     span=item.name
+  //-                   .right=item.address
+  //-             button.hidden.in-stock.btn Sản phẩm hiện chỉ bán online
+  //-           else
+  //-             button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+  //-               span.caret
+  //-             ul.hidden.dropdown-menu.list-branch
+  //-               each item in data.arr_branch_display
+  //-                 li
+  //-                   .left
+  //-                     img(src=themeURI() + "/img/icon_branch.png")
+  //-                     span=item.name
+  //-                   .right=item.address
+  //-             button.in-stock.btn Sản phẩm hiện chỉ bán online
+  //-           button.out-stock.btn.hidden Đang tạm hết hàng
+  //-         else
+  //-           button.hidden.btn.dropdown-toggle(type='button', data-toggle='dropdown') Hiển thị các siêu thị còn hàng
+  //-             span.caret
+  //-           ul.dropdown-menu.list-branch.hidden
+  //-           p.in-stock.hidden Sản phẩm hiện chỉ bán online
+  //-           button.out-stock.btn Đang tạm hết hàng
+  //-       if data.in_stock
+  //-         .btn-order-product.in-stock(data-id=data.id) ĐẶT MUA GIAO HÀNG TẬN NƠI
+  //-           br
+  //-           span (Không mua không sao)
+  //-       else
+  //-         .btn-order-product ĐANG TẠM HẾT HÀNG
+  //-       !{desktop_product_detail_support()}
+  //-     .clearfix.col-xs-12.product-bottom.row
+  //-       .col-md-8.col-sm-7.col-xs-12.description
+  //-         ul.nav.nav-tabs
+  //-           li.col-xs-6.col-sm-3.active
+  //-             a(data-toggle='tab', href='#nav-description') CHI TIẾT SẢN PHẨM
+  //-             .border
+  //-           li.col-xs-6.col-sm-3
+  //-             a(data-toggle='tab', href='#nav-specification') THÔNG SỐ SẢN PHẨM
+  //-             .border
+  //-         .tab-content
+  //-           #nav-description.tab-pane.fade.in.active
+  //-             section !{data.description}
+  //-           #nav-specification.tab-pane.fade
+  //-             section !{data.specification}
+  //-         //- section !{data['material']}
+  //-       .col-md-4.col-sm-5.news-support.hidden-xs
+  //-         .support
+  //-           .content-div
+  //-             - var sale_policy = sale_policy();
+  //-             !{sale_policy}
+  //-           .blank-div
+  //-         .news
+  //-           h4.title TIN TƯC GẦN ĐÂY
+  //-           .content
+  //-             .container-fluid
+  //-               each item in articleOther
+  //-                 .row
+  //-                   .col-xs-4.news-image(style="background-image: url(/uploads/"+resize(item.image, 240)+")")
+  //-                   .col-xs-8.news-see-more
+  //-                     a(href=fullUrl(item.link)).news-title=item.title
+  //-                     a(href=fullUrl(item.link)).bottom-line
+  //-                       | Chi tiết&gt;&gt;
+  //-           .news-list
+  //-             a(href="/tin-tuc") &lt;&lt;Danh mục tin tức
+  //-         //- !{saleProductPolicy()}
 
-  if count_product_related
-    .related.col-xs-12
-      .container
-        .related-type
-          a SẢN PHẨM CÙNG LOẠI
-            .border.hidden-xs
-        .row.list-product-related
-          each product, index in product_related
-            if device == 'desktop'
-              if index < 5
-                .col20.col-xs-6
-                  include snippet/product-loop
-            else
-              .col20.col-xs-6
-                include snippet/product-loop
-  if count(product_seen)
-    .related.col-xs-12
-      .container
-        .related-type
-          a SẢN PHẨM ĐÃ XEM
-            .border.hidden-xs
-        .row.list-product-related
-          each product, index in product_seen
-            if device == 'desktop'
-              if index < 5
-                .col20.col-xs-6
-                  include snippet/product-loop
-            else
-              .col20.col-xs-6
-                include snippet/product-loop
+  //- if count_product_related
+  //-   .related.col-xs-12
+  //-     .container
+  //-       .related-type
+  //-         a SẢN PHẨM CÙNG LOẠI
+  //-           .border.hidden-xs
+  //-       .row.list-product-related
+  //-         each product, index in product_related
+  //-           if device == 'desktop'
+  //-             if index < 5
+  //-               .col20.col-xs-6
+  //-                 include snippet/product-loop
+  //-           else
+  //-             .col20.col-xs-6
+  //-               include snippet/product-loop
+  //- if count(product_seen)
+  //-   .related.col-xs-12
+  //-     .container
+  //-       .related-type
+  //-         a SẢN PHẨM ĐÃ XEM
+  //-           .border.hidden-xs
+  //-       .row.list-product-related
+  //-         each product, index in product_seen
+  //-           if device == 'desktop'
+  //-             if index < 5
+  //-               .col20.col-xs-6
+  //-                 include snippet/product-loop
+  //-           else
+  //-             .col20.col-xs-6
+  //-               include snippet/product-loop
 
-  - var articleIndex = articleIndex();
-  if countArr(articleIndex)
-    .related.col-xs-12.visible-xs
-      .container
-        .related-type
-          a TIN TỨC MỚI NHẤT
-            .border.hidden-xs
-        .row.list-product-related.latest-news-product
-          each item in articleIndex
-            .col-xs-12
-              .row
-                .col-xs-5.pd-left-0.pd-right-0
-                  a.cover(href='/' + item.link)
-                    img(src="/uploads/" + resize(item.image, 240))
-                .col-xs-7
-                  h3.news-title
-                    a(href='/' + item.link)=item.title
-                  .description
-                    div=item.description
-                    .bottom-line.visible-xs
-                      a(href='/' + item.link)=item.updated_at
-  .container.top-brand-footer.pd-left-0.pd-right-0.visible-xs
-    .title
-      span TOP BRAND
-    .col-xs-12
-      .brands
-          - var brands = BrandatIndexPage();
-          each item in brands
-            ul
-              each i in item
-                li
-                  a(href=fullUrl("thuong-hieu/" + i.handle))=i.name
+  //- - var articleIndex = articleIndex();
+  //- if countArr(articleIndex)
+  //-   .related.col-xs-12.visible-xs
+  //-     .container
+  //-       .related-type
+  //-         a TIN TỨC MỚI NHẤT
+  //-           .border.hidden-xs
+  //-       .row.list-product-related.latest-news-product
+  //-         each item in articleIndex
+  //-           .col-xs-12
+  //-             .row
+  //-               .col-xs-5.pd-left-0.pd-right-0
+  //-                 a.cover(href='/' + item.link)
+  //-                   img(src="/uploads/" + resize(item.image, 240))
+  //-               .col-xs-7
+  //-                 h3.news-title
+  //-                   a(href='/' + item.link)=item.title
+  //-                 .description
+  //-                   div=item.description
+  //-                   .bottom-line.visible-xs
+  //-                     a(href='/' + item.link)=item.updated_at
+  //- .container.top-brand-footer.pd-left-0.pd-right-0.visible-xs
+  //-   .title
+  //-     span TOP BRAND
+  //-   .col-xs-12
+  //-     .brands
+  //-         - var brands = BrandatIndexPage();
+  //-         each item in brands
+  //-           ul
+  //-             each i in item
+  //-               li
+  //-                 a(href=fullUrl("thuong-hieu/" + i.handle))=i.name
