@@ -54,7 +54,7 @@ block content
                     i.fa.fa-trash
               if item.submenu
                 each child in item.submenu
-                  tr(style="background-color: #eee;", data-parent_id=item.id)
+                  tr.submenu(style="background-color: #eee;", data-parent_id=item.id, data-id=child.id)
                     td.col-sm-1=stt++
                     td.col-sm-3.menu-title(data-value=child.title style="padding-left: 40px;")
                       i.fa.fa-level-down(style="margin-right: 5px;")

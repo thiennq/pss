@@ -213,3 +213,70 @@ $(document).on('click', '.btn-remove-menu', function() {
     });
   }
 });
+
+var parentIdMD = '';
+var parentIdMU = '';
+
+function checkMoveValid(index) {
+  if (parentIdMD != parentIdMU) {
+    parentIdMD = '';
+    parentIdMU = '';
+    initDataTable('table');
+    return;
+  }
+  var rows = $('tbody tr');
+  var stop = $('tbody tr[data-id=' + parentIdMD + ']').index();
+  var count = index;
+  updateMenu();
+
+  function updateMenu() {
+    if (count == stop) {
+      toastr.success('Cập nhật thành công');
+      reloadPage();
+    }
+    var row = rows.eq(count);
+    var id = row.attr('data-id');
+    var data = {};
+    data.title = row.find('.menu-title').attr('data-value');
+    data.link = row.find('.menu-link').attr('data-value');
+    data.data_type = row.find('.menu-link').attr('data-type');
+    data.parent_id = row.attr('data-parent_id');
+    $.ajax({
+      type: 'PUT',
+      url: '/admin/menu/' + id,
+      data: data,
+      success: function(json) {
+        if(!json.code) {
+          count--;
+          setTimeout(function() {
+            updateMenu();
+          }, 200);
+        } 
+        else {
+          toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+          initDataTable('table');
+        } 
+      }
+    });
+  }
+}
+
+$('.submenu').mousedown(function() {
+  parentIdMD = $(this).attr('data-parent_id');
+})
+$('.submenu').mouseup(function() {
+  var self = $(this);
+  setTimeout(function(){ 
+    var rows = $('tbody tr');
+    rows.each(function(i, e) {
+      if ($(e).attr('data-parent_id') == -1) {
+        parentIdMU = $(e).attr('data-id');
+      }
+      if ($(e).attr('data-id') == self.attr('data-id')) {
+        checkMoveValid(i);
+        return false;
+      } 
+    });
+  }, 500);
+});
+
