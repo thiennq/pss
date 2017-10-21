@@ -46,15 +46,30 @@ block content
 							td Meta description
 							td Meta robots
 							td Hiển thị
+							td Quản lý tồn kho
 							td Chỉnh sửa
 					tbody
 						each product in data
 							tr
 								td
 									a(href="/admin/products/" + product.id)=product.title
+								td.text-left
+                  if product.featured_image
+                    - var thumb = resize(product.featured_image, 60);
+                    - var linkthumb = "/uploads/" + thumb;
+                    img(src=linkthumb, data-src=linkthumb)
+                  else
+                    img(src= staticURI() + "/img/no-image.png")
+                  //a(href='/admin/products/' + product.id, target="_blank")=product.title + " - " + product.id
+
 								td=product.meta_title
 								td=product.meta_description
 								td=product.meta_robots
+								td.text-center
+									if product.inventory_management == 1
+										| Có
+									else
+										| Không
 								td.text-center
 									if product.display == 1
 										| Có

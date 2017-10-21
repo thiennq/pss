@@ -79,6 +79,7 @@ class AdminProductController extends AdminController {
       $data->meta_description = $body['meta_description'];
       $data->meta_robots = $body['meta_robots'];
       $data->display = $body['display'];
+      $data->inventory_management = $body['inventory_management'];
       $data->updated_at = date('Y-m-d H:i:s');
       $data->save();
 
