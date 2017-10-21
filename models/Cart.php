@@ -8,11 +8,11 @@ class Cart extends Illuminate\Database\Eloquent\Model {
     protected $table = 'cart';
 
     public function store($data) {
-      $product = Product::find($data->product_id);
+      $variant = Variant::where('id', $data->variant_id)->first();
       $cart = new Cart;
       $cart->order_id = $data->order_id;
-      $cart->product_id = $data->product_id;
-      $cart->price = $product->price;
+      $cart->variant_id = $data->variant_id;
+      $cart->price = $variant->price;
       $cart->quantity = $data->quantity;
       $cart->created_at = date('Y-m-d H:i:s');
       $cart->updated_at = date('Y-m-d H:i:s');

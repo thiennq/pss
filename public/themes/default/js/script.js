@@ -370,7 +370,7 @@ function calcShippingPrice() {
   }
 }
 
-$('.btn-checkout').click(function() {
+$('.btn-checkout-done').click(function() {
   var data = {};
   $(document).find('.error').removeClass('error');
   data.name = $('input[name="name"]').val();
@@ -510,28 +510,6 @@ $('#modal-order').on('click', '.owl-item', function() {
   $('#modal-order').find('.slider-large-image').find('img').attr('src', src);
 });
 
-$('.btn-plus').click(function() {
-  var id = $(this).data('id');
-  var price = $(this).data('price');
-  var input = $(this).closest('.quantity-select').find('input[name="quantity"]');
-  var quantity = parseInt(input.val()) + 1;
-  input.val(quantity);
-  var subTotal = parseInt(price) * parseInt(quantity);
-  if (id && quantity) updateCart(id, quantity, subTotal);
-});
-
-$('.btn-minus').click(function() {
-  var id = $(this).data('id');
-  var price = $(this).data('price');
-  var input = $(this).closest('.quantity-select').find('input[name="quantity"]');
-  if (input.val() > 1) {
-    var quantity = parseInt(input.val()) - 1;
-    input.val(quantity);
-    var subTotal = parseInt(price) * parseInt(quantity);
-    if (id && quantity) updateCart(id, quantity, subTotal);
-  }
-});
-
 function addToCart(variant_id, quantity) {
   $.ajax({
     type: 'POST',
@@ -581,6 +559,32 @@ $('.btn-remove-item-cart').click(function() {
         } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
     });
+  }
+});
+
+$('.btn-checkout').click(function() {
+
+});
+
+$('.btn-plus').click(function() {
+  var id = $(this).data('id');
+  var price = $(this).data('price');
+  var input = $(this).closest('.quantity-select').find('input[name="quantity"]');
+  var quantity = parseInt(input.val()) + 1;
+  input.val(quantity);
+  var subTotal = parseInt(price) * parseInt(quantity);
+  if (id && quantity) updateCart(id, quantity, subTotal);
+});
+
+$('.btn-minus').click(function() {
+  var id = $(this).data('id');
+  var price = $(this).data('price');
+  var input = $(this).closest('.quantity-select').find('input[name="quantity"]');
+  if (input.val() > 1) {
+    var quantity = parseInt(input.val()) - 1;
+    input.val(quantity);
+    var subTotal = parseInt(price) * parseInt(quantity);
+    if (id && quantity) updateCart(id, quantity, subTotal);
   }
 });
 

@@ -18,7 +18,7 @@ require_once('../models/helper.php');
 
 
 $app->get('/', '\IndexController:index');
-$app->get('/cart', '\OrderController:viewCart');
+
 $app->get('/orders/{id}', '\OrderController:show');
 $app->get('/video', '\PageController:video');
 $app->get('/saleoff', '\PageController:saleOff');
@@ -36,6 +36,8 @@ $app->get('/tag/{handle}', '\CollectionController:showTag');
 $app->get('/blog/{handle}', '\BlogController:get');
 $app->get('/article/{handle}', '\ArticleController:get');
 $app->get('/page/{handle}', '\PageController:get');
+$app->get('/cart', '\OrderController:viewCart');
+$app->get('/checkout', '\OrderController:checkOut');
 
 
 $app->get('/khuyen-mai/{link}', '\ArticleController:getPromotion');
