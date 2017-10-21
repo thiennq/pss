@@ -12,10 +12,6 @@ block content
       .col-xs-12.thank-for-order.col-xs-12 Cảm ơn quý khách hàng 
         span.orange=customer.name
         |  đã tin tưởng mua sắm tại MIA.vn
-      .col-xs-12.contact Nhân viên MIA.vn sẽ gọi điện hoặc gửi tin nhắn xác nhận đặt hàng trong vòng 30 phút. Quý khách vui lòng giữ liên lạc để quá trình đặt hàng không bị gián đoạn. Chân thành cảm ơn.
-      .col-xs-12.hotline
-        .hotline-title HOT LINE - 
-        span 18006198
     .col-xs-12.order-info
       .col-xs-12.title THÔNG TIN ĐẶT HÀNG
       each item in cart
@@ -23,6 +19,7 @@ block content
           .col-xs-2.image(style="background:url('/uploads/"+resize(item.image, 240)+"')")
           .col-xs-7.info
             .product-title=item.title
+            .product-title=item.variant
             .product-quantity 
               | - Số lượng: #{item.quantity}
           .col-xs-3.price.orange=money(item.subTotal)
@@ -36,4 +33,4 @@ block content
         .address Địa chỉ: #{customer.address}, #{customer.region}, #{customer.subregion}
         .phone Số điện thoại: #{customer.phone}
       .col-xs-12.button
-        a.btn.btn-more-order(href="/saleoff") MUA THÊM SẢN PHẨM KHÁC
+        a.btn.btn-more-order(href="/") MUA THÊM SẢN PHẨM KHÁC
