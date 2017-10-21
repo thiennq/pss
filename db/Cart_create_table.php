@@ -19,7 +19,7 @@ $Schema = $capsule->schema();
 $Schema->create('cart', function (Blueprint $table) {
     $table->increments('id');
     $table->string('order_id');
-    $table->string('product_id');
+    $table->string('variant_id');
     $table->integer('price');
     $table->integer('quantity');
     $table->timestamps();

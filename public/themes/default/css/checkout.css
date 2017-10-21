@@ -12,7 +12,6 @@
   .checkout .checkout-title .cart {
     font-size: 22px;
     font-weight: 600;
-    text-align: right;
     letter-spacing: 2px; }
   @media screen and (max-width: 767px) {
     .checkout .checkout-title .more-order {

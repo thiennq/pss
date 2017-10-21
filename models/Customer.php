@@ -22,9 +22,9 @@ class Customer extends Illuminate\Database\Eloquent\Model {
       } else {
         $customer = new Customer;
         $customer->name = $obj->name;
+        $customer->phone = $obj->phone;
         $customer->gender = $obj->gender;
         $customer->email = $obj->email;
-        $customer->phone = $obj->phone;
         $customer->address = $obj->address;
         $customer->region = $obj->region;
         $customer->subregion = $obj->subregion;
