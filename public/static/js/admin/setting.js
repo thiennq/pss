@@ -55,8 +55,6 @@ $('.btn-update-setting-desktop').click(function() {
 $('.btn-update-setting-meta-title').click(function() {
   var data = {};
   var btn = $(this);
-  data.meta_title_default = $('input[name="meta_title_default"]').val();
-  data.meta_description_default = $('textarea[name="meta_description_default"]').val();
   data.meta_title_new_product = $('input[name="meta_title_new_product"]').val();
   data.meta_description_new_product = $('textarea[name="meta_description_new_product"]').val();
   data.meta_title_saleoff = $('input[name="meta_title_saleoff"]').val();
@@ -70,6 +68,33 @@ $('.btn-update-setting-meta-title').click(function() {
     success: function(json){
       if(!json.code) toastr.success('Cập nhật thông tin thành công');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+      btn.removeClass('disabled');
+    }
+  });
+});
+
+//SEO
+$('.btn-update-setting-seo').click(function() {
+  var data = {};
+  self = $(this);
+  self.addClass('disabled');
+  data.meta_title_default = $('input[name="meta_title_default"]').val() || '';
+  data.meta_description_default = $('textarea[name="meta_description_default"]').val() || '';
+  data.facebook_pixel = $('textarea[name="facebook_pixel"]').val() || '';
+  data.facebook_image = $('input[name="facebook_image"]').val();
+  data.meta_google = $('textarea[name="meta_google"]').val() || '';
+  $.ajax({
+    type: 'PUT',
+    url: '/admin/settings/seo',
+    data: data,
+    success: function(json){
+      if(!json.code) {
+        toastr.success('Cập nhật thông tin thành công');
+      }
+      else {
+        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+      }
+      self.removeClass('disabled');
     }
   });
 });

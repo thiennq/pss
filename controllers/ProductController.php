@@ -9,21 +9,6 @@ require_once("../models/Collection.php");
 
 class ProductController extends Controller {
 
-  public function smartSearch(Request $request, Response $response) {
-    $query = $request->getQueryParams();
-    $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->where('price', '>', 0)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
-    if(count($products)) {
-      return $response->withJson(array(
-        "code" => 0,
-        "data" => $products
-      ));
-    }
-    return $response->withJson(array(
-      "code" => -1,
-      "message" => "Product not available"
-    ));
-  }
-
   public function show(Request $request, Response $response) {
     $handle = $request->getAttribute('handle');
     $query = $request->getQueryParams();

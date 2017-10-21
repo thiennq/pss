@@ -131,6 +131,26 @@ function banner_complain_footer() {
   return getMeta('banner_complain_footer');
 }
 
+function meta_title_default() {
+  return getMeta('meta_title_default');
+}
+
+function meta_description_default() {
+  return getMeta('meta_description_default');
+}
+
+function facebook_pixel() {
+  return getMeta('facebook_pixel');
+}
+
+function facebook_image() {
+  return getMeta('facebook_image');
+}
+
+function meta_google() {
+  return getMeta('meta_google');
+}
+
 function Brand() {
   $list_brand = [];
   $brands = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->groupBy('brand.name')->select('brand.handle as handle', 'brand.name as name')->get()->toArray();

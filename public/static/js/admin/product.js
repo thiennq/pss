@@ -162,6 +162,7 @@ function updateFeaturedImage(product_id, featured_image) {
   });
 }
 
+
 $('.btn-create').click(function() {
   $(document).find('.error').removeClass('error');
   var self = $(this);

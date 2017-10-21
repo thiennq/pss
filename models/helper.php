@@ -303,3 +303,30 @@ function createSitemap() {
   } else echo "An error occured, please try again later";
   fclose($file);
 }
+
+function updateStock($product_id) {
+  $product = Product::find($product_id);
+  if (!$product->inventory_management) {
+    $product->in_stock = 1; 
+  }
+  else {
+    $check = Variant::where('product_id', $product_id)->where('inventory', '>', 0)->count();
+    $product->in_stock = $check ? 1 : 0;
+  }
+  $product->save();
+}
+
+function smartSearch(Request $request, Response $response) {
+  $query = $request->getQueryParams();
+  $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
+  if(count($products)) {
+    return $response->withJson(array(
+      "code" => 0,
+      "data" => $products
+    ));
+  }
+  return $response->withJson(array(
+    "code" => -1,
+    "message" => "Product not available"
+  ));
+}
