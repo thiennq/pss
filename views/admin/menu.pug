@@ -19,7 +19,6 @@ block content
         a Menu
     ol.button-right.col-sm-4.col.xs-12
       li
-        //a.btn.btn-admin(href="/admin/menu/new") Tạo menu
         a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
   section.content.clearfix
     .box
@@ -158,10 +157,3 @@ block content
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Hủy
               button.btn.btn-primary.btn-update-menu Cập nhật
-    .box
-      .box-header
-        h3.box-title Menu Mobile
-      .box-body
-        textarea.form-control(rows="10" name="menu_mobile")=menu_mobile
-        br
-        a.pull-right.btn.btn-primary.btn-save-menu-mobile Cập nhật

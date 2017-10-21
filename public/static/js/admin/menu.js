@@ -213,17 +213,3 @@ $(document).on('click', '.btn-remove-menu', function() {
     });
   }
 });
-
-$('.btn-save-menu-mobile').click(function() {
-  var data = {};
-  data.key = 'menu_mobile';
-  data.value = $('textarea[name="menu_mobile"]').val();
-  $.ajax({
-    type: 'POST',
-    url: '/admin/meta/saveMeta',
-    data: data,
-    success: function(json) {
-      if(!json.code) toastr.success('Cập nhật thành công');
-    }
-  })
-});
