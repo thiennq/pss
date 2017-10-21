@@ -314,11 +314,6 @@ function livechat() {
   return $livechat->value;
 }
 
-function menu_mobile() {
-  $menu_mobile = Meta::where('key', 'menu_mobile')->first();
-  return $menu_mobile->value;
-}
-
 function banner_default_fb() {
   $banner = Slider::where('display', 1)->first();
   return HOST . '/uploads/' . $banner->image;

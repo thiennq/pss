@@ -25,15 +25,14 @@ class ProductController extends Controller {
     foreach ($variants as $key => $variant) {
       $image = Image::where('typeId', $variant->id)->first();
       $image = Image::join('variant', 'image.typeId', '=', 'variant.id')->where('image.id', $image->id)->first();
-      error_log('IMAGE :: ' .  $image);
       array_push($featured_images, $image);
     }
 
     $list_images = Variant::join('image', 'variant.id', '=', 'image.typeId')->where('variant.product_id', $product->id)->get();
 
     $product_collection = Product::join('collection_product', 'product.id', '=', 'collection_product.product_id')->where('collection_product.product_id', $product->id)->inRandomOrder()->first();
-    $related_products = Product::join('collection_product', 'product.id', '=', 'collection_product.product_id')->where('collection_product.collection_id', $product_collection->collection_id)->take(5)->get();
-
+    $related_products = Product::join('collection_product', 'product.id', '=', 'collection_product.product_id')->where('collection_product.collection_id', $product_collection->collection_id)->where('product.id', '!=', $product->id)->take(5)->get();
+    
     if ($product->display) {
       if(isset($_SESSION['seen']) && !empty($_SESSION['seen'])) {
         if(!in_array($product->id, $_SESSION['seen'])) array_push($_SESSION['seen'], $product->id);

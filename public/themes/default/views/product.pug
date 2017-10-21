@@ -170,7 +170,7 @@ block content
           a SẢN PHẨM ĐÃ XEM
             .border.hidden-xs
         .row.list-product-related
-          each product, index in product_seen
+          each product in product_seen
             if device == 'desktop'
               .col20.col-xs-6
                 include snippet/product-loop
