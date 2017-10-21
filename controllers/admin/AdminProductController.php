@@ -140,6 +140,7 @@ class AdminProductController extends AdminController {
       }
       $data->featured_image = $body['featured_image'];
       $data->save();
+      updateStock($id);
       $result = Helper::response(0);
       return $response->withJson($result, 200);
     } catch (Exception $e) {

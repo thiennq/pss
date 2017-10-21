@@ -8,13 +8,13 @@ html
     - var metaTitle = getMeta('meta_title_default');
     - var metaDescription = getMeta('meta_description_default');
     - var title = metaTitle;
-    - $ogType = "website"
-    - $host = 'https://' + $_SERVER['HTTP_HOST']
-    - $ogUrl = currentHost().currentUrl()
-    - $ogImage = banner_default_fb();
-    - $ogImageWidth = '500'
-    - $ogImageHeight = '500'
-    - $meta_robots = 'index, follow'
+    - var ogType = "website";
+    - var host = 'https://' + $_SERVER['HTTP_HOST'];
+    - var ogUrl = currentHost() + currentUrl();
+    - var ogImage = '/uploads/' + getMeta('facebook_image');
+    - var ogImageWidth = '500';
+    - var ogImageHeight = '500';
+    - var meta_robots = 'index, follow';
     - var env = currentENV();
     if env == 'development'
       link(rel="stylesheet", href=themeURI() + '/css/style.css')
@@ -26,19 +26,20 @@ html
     link(rel='stylesheet', href=staticURI() + '/libs/toastr.min.css')
     block pre-include
     title=title  
-    meta(name="robots" content=$meta_robots)
-    meta(property="og:type" content=$ogType)
+    meta(name="robots" content=meta_robots)
+    meta(property="og:type" content=ogType)
     meta(property="og:title" content=metaTitle)
     meta(property="og:description" content=metaDescription)
-    meta(name="description" content=$metaDescription)
-    meta(property="og:url" content=$ogUrl)
-    meta(property="og:image" content=$ogImage)
+    meta(name="description" content=metaDescription)
+    meta(property="og:url" content=ogUrl)
+    meta(property="og:image" content=ogImage)
   body
     include snippet/header
     .main-wrapper.clearfix
       block content
     include snippet/footer
     include snippet/modal-order
+    !{getMeta('facebook_pixel')}
     script(src=themeURI() + '/libs/jquery.min.js')
     script(src=staticURI() + '/libs/toastr.min.js')
     script(src=themeURI() + '/libs/tmpl.min.js')

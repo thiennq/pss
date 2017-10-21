@@ -106,8 +106,6 @@ class AdminSettingController extends AdminController {
 
   public function getMetaTitleSetting(Request $request, Response $response) {
     return $this->view->render($response, 'admin/setting_meta.pug', array(
-      'meta_title_default' => getMeta('meta_title_default'),
-      'meta_description_default' => getMeta('meta_description_default'),
       'meta_title_new_product' => getMeta('meta_title_new_product'),
       'meta_description_new_product' => getMeta('meta_description_new_product'),
       'meta_title_saleoff' => getMeta('meta_title_saleoff'),
@@ -118,13 +116,34 @@ class AdminSettingController extends AdminController {
 
   public function updateMetaTitleSetting(Request $request, Response $response) {
     $body = $request->getParsedBody();
-    Meta::store('meta_title_default', $body['meta_title_default']);
-    Meta::store('meta_description_default', $body['meta_description_default']);
     Meta::store('meta_title_new_product', $body['meta_title_new_product']);
     Meta::store('meta_description_new_product', $body['meta_description_new_product']);
     Meta::store('meta_title_saleoff', $body['meta_title_saleoff']);
     Meta::store('meta_description_saleoff', $body['meta_description_saleoff']);
     Meta::store('meta_description_product', $body['meta_description_product']);
+    return $response->withJson(array(
+      'code' => 0,
+      'message' => 'Updated'
+    ));
+  }
+
+  public function getSEOSetting(Request $request, Response $response) {
+    return $this->view->render($response, 'admin/setting_seo.pug', array(
+      'meta_title_default' => getMeta('meta_title_default'),
+      'meta_description_default' => getMeta('meta_description_default'),
+      'facebook_pixel' => getMeta('facebook_pixel'),
+      'facebook_image' => getMeta('facebook_image'),
+      'meta_google' => getMeta('meta_google'),
+    ));
+  }
+
+  public function updateSEOSetting(Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    Meta::store('meta_title_default', $body['meta_title_default']);
+    Meta::store('meta_description_default', $body['meta_description_default']);
+    Meta::store('facebook_pixel', $body['facebook_pixel']);
+    Meta::store('facebook_image', $body['facebook_image']);  
+    Meta::store('meta_google', $body['meta_google']);  
     return $response->withJson(array(
       'code' => 0,
       'message' => 'Updated'

@@ -103,6 +103,11 @@ aside.main-sidebar
             a(href="/admin/settings/meta")
               i.fa.fa-circle
               | Title, Meta Description
+          - var liClass = (childMenu == 'seo' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/settings/seo")
+              i.fa.fa-circle
+              | SEO
           - var liClass = (childMenu == 'redirect' ? 'active' : '');
           li(class=liClass)
             a(href="/admin/redirect")

@@ -5,7 +5,7 @@ block pre-include
   | !{canonical}
   - metaTitle = title
   if collection.meta_description
-    - metaDescription = data['meta_description']
+    - metaDescription = data.meta_description
   if meta_description
     - metaDescription = meta_description
   if collection.banner

@@ -16,6 +16,7 @@ class Product extends Illuminate\Database\Eloquent\Model {
       $product->handle = createHandle($data['title']);
       $product->featured_image = '';
       $product->description = $data['description'];
+      $product->in_stock = 0;
       $product->display = (int) $data['display'] ? 1 : 0;
       $product->inventory_management = (int) $data['inventory_management'] ? 1 : 0;
       $product->view = 0;
@@ -32,36 +33,17 @@ class Product extends Illuminate\Database\Eloquent\Model {
     public function getInfoProduct($products) {
       foreach ($products as $key => $value) {
   			$product_id = $value['id'];
-        $collection_parent = CollectionProduct::where('product_id', $product_id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->where('collection.show_landing_page', 0)->first();
-        if($collection_parent) $value['title'] = $collection_parent->title . ' ' . $value['title'];
-        $collection_parent = Collection::find($collection_parent->id);
+        $firstVariant = Variant::where('product_id', $value['id'])->first();
   			$value['display_discount'] = false;
         $value['percent'] = 0;
-  			if($value['price_compare'] && $value['price_compare'] > $value['price']) {
-  				$value['discount'] = $value['price_compare'] - $value['price'];
-  				$value['percent'] = ($value['discount'] / $value['price_compare']) * 100;
-  				$value['percent'] = round($value['percent'], 0) .'%';
-  				$value['display_discount'] = true;
+        $value['price'] = $firstVariant['price'];
+        $value['price_compare'] = $firstVariant['price_compare'];
+        if($firstVariant['price_compare'] && $firstVariant['price_compare'] > $firstVariant['price']) {
+          $value['discount'] = $firstVariant['price_compare'] - $firstVariant['price'];
+          $value['percent'] = ($value['discount'] / $firstVariant['price_compare']) * 100;
+          $value['percent'] = round($value['percent'], 0) .'%';
+          $value['display_discount'] = true;
   			}
-  			$value['brand_url'] = createHandle($value['brand']);
-  			$value->count_variant = 0;
-  			if($value->group_id) {
-  				$variants = Product::where('group_id', $value->group_id)->where('display', 1)->where('in_stock', 1)->get();
-          foreach ($variants as $key => $item) {
-            $item['display_discount'] = 0;
-      			if($item['price_compare'] && $item['price_compare'] > $item['price']) {
-      				$item['percent'] = 0;
-      				$item['discount'] = $item['price_compare'] - $item['price'];
-      				$item['percent'] = ($item['discount'] / $item['price_compare']) * 100;
-      				$item['percent'] = round($item['percent'], 0) .'%';
-      				$item['display_discount'] = 1;
-      			}
-          }
-  				$value->variants = $variants;
-          if(count($variants) > 1) $value->count_variant = 1;
-  			}
-        $value->checkInventory = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $value['id'])->where('inventory.inventory', '>', 0)->count();
-        if ($value['dropship']) $value->checkInventory = 1;
   		}
       return $products;
     }

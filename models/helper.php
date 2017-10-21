@@ -303,3 +303,15 @@ function createSitemap() {
   } else echo "An error occured, please try again later";
   fclose($file);
 }
+
+function updateStock($product_id) {
+  $product = Product::find($product_id);
+  if (!$product->inventory_management) {
+    $product->in_stock = 1; 
+  }
+  else {
+    $check = Variant::where('product_id', $product_id)->where('inventory', '>', 0)->count();
+    $product->in_stock = $check ? 1 : 0;
+  }
+  $product->save();
+}

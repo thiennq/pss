@@ -11,7 +11,7 @@ class ProductController extends Controller {
 
   public function smartSearch(Request $request, Response $response) {
     $query = $request->getQueryParams();
-    $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->where('price', '>', 0)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
+    $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
     if(count($products)) {
       return $response->withJson(array(
         "code" => 0,
