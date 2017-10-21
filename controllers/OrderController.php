@@ -225,12 +225,14 @@ class OrderController extends Controller {
         $customer = Customer::find($order->customer_id);
         $cart = Cart::where('order_id', $order->id)->get();
         foreach ($cart as $key => $value) {
-          $product = Product::find($value->product_id);
+          $variant = Variant::where('id', $value->variant_id)->first();
+          $product = Product::where('id', $variant->product_id)->first();
           $value->title = $product->title;
+          $value->variant = $variant->title;
           $value->handle = $product->handle;
-          $value->price = $product->price;
-          $value->image = Image::where('type', 'product')->where('typeId', $value->product_id)->first()->name;
-          $value->subTotal = (int) $product->price * (int) $value->quantity;
+          $value->price = $variant->price;
+          $value->image = $product->featured_image;
+          $value->subTotal = (int) $variant->price * (int) $value->quantity;
           $total += $value->subTotal;
           array_push($arr_cart, $value);
           unset($_SESSION['order_id']);
@@ -241,12 +243,14 @@ class OrderController extends Controller {
         $customer = Customer::find($order->customer_id);
         $cart = Cart::where('order_id', $order->id)->get();
         foreach ($cart as $key => $value) {
-          $product = Product::find($value->product_id);
+          $variant = Variant::where('id', $value->variant_id)->first();
+          $product = Product::where('id', $variant->product_id)->first();
           $value->title = $product->title;
+          $value->variant = $variant->title;
           $value->handle = $product->handle;
-          $value->price = $product->price;
-          $value->image = Image::where('type', 'product')->where('typeId', $value->product_id)->first()->name;
-          $value->subTotal = (int) $product->price * (int) $value->quantity;
+          $value->price = $variant->price;
+          $value->image = $product->featured_image;
+          $value->subTotal = (int) $variant->price * (int) $value->quantity;
           $total += $value->subTotal;
           array_push($arr_cart, $value);
           unset($_SESSION['order_id_dropship']);
