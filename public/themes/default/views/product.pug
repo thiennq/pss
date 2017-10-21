@@ -57,7 +57,7 @@ block content
           each variant in variants
             p.price-version=variant.title
             span.main-price.main-price-product=money(variant.price)
-            span.price-compare.main-price-compare=money(variant.price_compare)
+            //- span.price-compare.main-price-compare=money(variant.price_compare)
         //- if data.display_discount
         //-   p.discount.main-discount Tiết kiệm&nbsp;
         //-     span=money(data.discount)

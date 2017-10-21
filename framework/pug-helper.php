@@ -59,8 +59,6 @@ function getArticleDetail($articleHandle, $articleId) {
 
     $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
 
-    error_log('ARTICLE :: ' . json_encode($related));
-
     $responseData = array(
       'hot_article' => $hot_article,
       'related' => $related
