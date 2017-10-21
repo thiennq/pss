@@ -37,21 +37,19 @@ class AdminVariantController extends AdminController {
       $id = $request->getAttribute('id');
       $body = $request->getParsedBody();
       $variant = Variant::find($id);
-      if (!$variant) {
-        $result = Helper::response(-2);
-        return $response->withJson($result, 200);
-      }
-      $code = Variant::store($body);
-      if ($code) {
+      
+      $code = Variant::update($id, $body);
+      if (!$code) {
         $list_image = $body['list_image'];
         foreach ($list_image as $key => $image) {
-          Image::store($image, 'variant', $code);
+          Image::store($image, 'variant', $id);
+        }
+        foreach ($body['image_deleted'] as $key => $value) {
+          Image::removeImage($value, $id);
+          Image::find($value)->delete();
         }
       }
-      foreach ($body['image_deleted'] as $key => $value) {
-        Image::removeImage($value, $id);
-      }
-      $result = Helper::response(0);
+      $result = Helper::response($code);
       return $response->withJson($result, 200);
 
     } catch (Exception $e) {

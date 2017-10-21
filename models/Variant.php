@@ -20,14 +20,17 @@ class Variant extends Illuminate\Database\Eloquent\Model {
     return -3;
   }
 
-  public function update($data) {
+  public function update($id, $data) {
     $variant = Variant::find($id);
-    $data->title = $body['title'];
+    if (!$variant) {
+      return -2;
+    }
+    $variant->title = $data['title'];
     $variant->price = $data['price'];
     $variant->price_compare = $data['price_compare'];
     $variant->inventory = $data['inventory'];
-    $data->updated_at = date('Y-m-d H:i:s');
-    if ($variant->save()) return $variant->id;
+    $variant->updated_at = date('Y-m-d H:i:s');
+    if ($variant->save()) return 0;
     return -3;
   }
 }

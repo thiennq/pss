@@ -512,7 +512,8 @@ table img {
       position: absolute;
       right: 5px;
       top: 5px;
-      color: #dc4a3d; }
+      color: #dc4a3d;
+      z-index: 1000; }
     .form-product .list-image .image .move {
       position: absolute;
       left: 5px;
@@ -683,6 +684,8 @@ select {
     margin-top: 10px; }
     .list-variant .variant-item .variant-images .list-image {
       background-color: white; }
+      .list-variant .variant-item .variant-images .list-image .is-featured-img {
+        border: 1px solid red; }
 
 .btn-add-variant {
   cursor: pointer;
