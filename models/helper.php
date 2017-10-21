@@ -315,3 +315,18 @@ function updateStock($product_id) {
   }
   $product->save();
 }
+
+function smartSearch(Request $request, Response $response) {
+  $query = $request->getQueryParams();
+  $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
+  if(count($products)) {
+    return $response->withJson(array(
+      "code" => 0,
+      "data" => $products
+    ));
+  }
+  return $response->withJson(array(
+    "code" => -1,
+    "message" => "Product not available"
+  ));
+}
