@@ -276,7 +276,8 @@ header {
   header .header-bottom {
     cursor: pointer;
     margin-top: 5px;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    text-align: right; }
     header .header-bottom span {
       padding-right: 67px;
       float: left; }
@@ -296,6 +297,155 @@ header {
       @media (max-width: 991px) and (min-width: 768px) {
         header .header-bottom img {
           height: 28px; } }
+    header .header-bottom .fa-shopping-bag {
+      font-size: 30px;
+      position: relative; }
+      header .header-bottom .fa-shopping-bag span.quantity {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid #2b2b2b;
+        background-color: green;
+        color: #fff;
+        font-size: 13px;
+        position: absolute;
+        top: -5px;
+        right: -7px;
+        line-height: 17px;
+        text-align: center; }
+    header .header-bottom .minicart {
+      max-height: 360px;
+      line-height: 30px;
+      text-align: left;
+      position: absolute;
+      right: 55px;
+      top: 140px;
+      display: none;
+      background: #fff;
+      z-index: 2;
+      box-shadow: 1px 1px 8px #999; }
+      header .header-bottom .minicart:hover {
+        cursor: auto; }
+      header .header-bottom .minicart .minicart-product {
+        font-family: "Helvetica";
+        position: relative;
+        padding: 10px 10px 0 10px; }
+        header .header-bottom .minicart .minicart-product .left {
+          float: left;
+          top: 0 !important; }
+        header .header-bottom .minicart .minicart-product .right {
+          float: right; }
+        header .header-bottom .minicart .minicart-product .avatar {
+          width: 70px;
+          display: inline-block; }
+          header .header-bottom .minicart .minicart-product .avatar .product-img {
+            height: 35px;
+            background-size: contain;
+            background-position: center; }
+        header .header-bottom .minicart .minicart-product .cart-item-detail {
+          position: relative;
+          color: black;
+          margin-left: 10px;
+          display: inline-block;
+          width: calc(100% - 80px);
+          line-height: 1; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .product-variant {
+            margin-bottom: 5px;
+            font-size: 11px;
+            text-transform: none;
+            font-weight: normal;
+            text-align: left;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 12px; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .product-name-cn {
+            font-size: 13px; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .quantity-select {
+            display: inline-block; }
+            header .header-bottom .minicart .minicart-product .cart-item-detail .quantity-select .quantity-btn {
+              width: 25px;
+              height: 25px;
+              line-height: 25px;
+              padding-left: 2px;
+              display: inline-block;
+              cursor: pointer; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .price {
+            display: inline-block;
+            line-height: 25px;
+            font-size: 16px;
+            float: right; }
+          header .header-bottom .minicart .minicart-product .cart-item-detail .remove-btn {
+            position: absolute;
+            right: 0;
+            top: 0; }
+            header .header-bottom .minicart .minicart-product .cart-item-detail .remove-btn i {
+              font-size: 16px;
+              vertical-align: top; }
+            header .header-bottom .minicart .minicart-product .cart-item-detail .remove-btn:hover {
+              cursor: pointer; }
+        header .header-bottom .minicart .minicart-product:last-child {
+          padding-bottom: 10px; }
+      header .header-bottom .minicart.clicked {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.2s;
+        min-width: 300px;
+        max-width: 400px; }
+      header .header-bottom .minicart .minicart-header-wrapper input[name=cart-item-qty] {
+        font-size: 17px;
+        vertical-align: middle;
+        border: none;
+        margin-top: 0;
+        height: auto;
+        background-color: #fff !important; }
+      header .header-bottom .minicart .minicart-detail {
+        overflow-y: scroll;
+        max-height: 250px;
+        font-size: 14px; }
+      header .header-bottom .minicart .cart {
+        background-color: #fff;
+        padding: 10px 10px 0 10px;
+        color: #000; }
+        header .header-bottom .minicart .cart .total-price {
+          margin-bottom: 10px;
+          padding: 0; }
+          header .header-bottom .minicart .cart .total-price .label-text {
+            font-weight: normal;
+            font-size: 16px; }
+          header .header-bottom .minicart .cart .total-price .price {
+            font-size: 16px;
+            text-transform: none; }
+        header .header-bottom .minicart .cart .label-text {
+          display: inline-block;
+          float: left;
+          font-size: 14px; }
+        header .header-bottom .minicart .cart .price {
+          display: inline-block;
+          float: right;
+          font-size: 14px; }
+        header .header-bottom .minicart .cart .checkout-notes.l {
+          padding-right: 5px;
+          padding-left: 0;
+          background: #000; }
+        header .header-bottom .minicart .cart .checkout-notes.r {
+          padding-left: 5px;
+          padding-right: 0;
+          background: #000; }
+        header .header-bottom .minicart .cart .checkout-notes a {
+          margin-bottom: 10px;
+          color: #fff;
+          font-size: 17px; }
+        header .header-bottom .minicart .cart .btn-bento {
+          text-align: center !important;
+          line-height: 1.4;
+          color: #fff; }
+      header .header-bottom .minicart .quantity-select .quantity-btn > i {
+        margin-right: 1px;
+        margin-top: -5px; }
   header .modal-dialog {
     width: 100%;
     margin: 0;

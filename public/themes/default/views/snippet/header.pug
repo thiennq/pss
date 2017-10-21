@@ -38,14 +38,19 @@ header(data-uri=themeURI())
               | !{menu.submenu}
   .header-bottom.hidden-xs
     .container
-      span
-        img(src=themeURI() +"/img/u1.png", alt="doi-tra")
-      span
-        img(src=themeURI() +"/img/u2.png", alt="van-chuyen")
-      span
-        img(src=themeURI() +"/img/u3.png", alt="thanh-toan")
-      span
-        img(src=themeURI() +"/img/u4.png", alt="san-pham")
+      i.fa.fa-shopping-bag.fa-lg
+        span.quantity
+      .minicart
+        .minicart-header-wrapper.cart-detail
+          .minicart-detail
+          .cart.clearfix
+            .total-price.col-xs-12
+              p.label-text Tổng cộng
+              .price 0đ
+            .checkout-notes.l.col-xs-6
+              a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/cart") Xem giỏ hàng
+            .checkout-notes.r.col-xs-6
+              a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/checkout") Thanh toán
 #menuModal.modal.fade(role='dialog' aria-labelledby='menuModalLabel')
   .modal-dialog(role="document")
     .modal-content

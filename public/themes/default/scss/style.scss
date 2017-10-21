@@ -24,6 +24,11 @@ span.middle-inline-block {
   vertical-align: middle;
 }
 
+.anti-click {
+  pointer-events: none;
+  cursor: default;
+}
+
 @media (max-width: 767px) {
   .top-brand-footer {
     margin-bottom: 30px;
