@@ -104,11 +104,9 @@ class OrderController extends Controller {
       $value->subTotal = (int) $variant->price * (int) $value->quantity;
       $total += $value->subTotal;
     }
-    $region = Region::orderBy('name', 'asc')->get();
-    return $this->view->render($response, 'checkout.pug', [
+    return $this->view->render($response, 'cart.pug', [
       'cart' => $cart,
       'total' => $total,
-      'region' => $region
     ]);
     
   }
@@ -143,15 +141,16 @@ class OrderController extends Controller {
     $subTotalDropship = 0;
     foreach ($cart as $key => $value) {
       $item = new stdClass();
-      $product = Product::find($value->product_id);
-      $item->product_id = $value->product_id;
-      $item->price = $product->price;
+      $variant = Variant::where('id', $value->variant_id)->first();
+      $product = Product::find($variant->product_id);
+      $item->variant_id = $variant->id;
+      $item->price = $variant->price;
       $item->quantity = $value->quantity;
       if ($product->dropship) {
-        $subTotalDropship += (int) $product->price * (int) $value->quantity;
+        $subTotalDropship += (int) $variant->price * (int) $value->quantity;
         array_push($dropship, $item);
       } else {
-        $subTotal += (int) $product->price * (int) $value->quantity;
+        $subTotal += (int) $variant->price * (int) $value->quantity;
         array_push($details, $item);
       }
     }
@@ -193,7 +192,7 @@ class OrderController extends Controller {
     ]);
   }
 
-  public function checkout(Request $request, Response $response) {
+  public function checkOut(Request $request, Response $response) {
     $cart = $_SESSION['cart'];
     $total = 0;
     foreach ($cart as $key => $value) {

@@ -19,7 +19,6 @@ class Order extends Illuminate\Database\Eloquent\Model {
       $order->subtotal = $subTotal;
       $order->total = $total;
       $order->order_status = 'new';
-      $order->count_create_odoo = 0;
       $order->created_at = date('Y-m-d H:i:s');
       $order->updated_at = date('Y-m-d H:i:s');
       if ($order->save()) return $order->id;
