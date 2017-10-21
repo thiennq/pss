@@ -283,7 +283,7 @@ function SiteMap() {
 }
 
 function createSitemap() {
-  //SiteMap();
+  SiteMap();
   global $HOST;
   $domtree = new DOMDocument('1.0', 'UTF-8');
   $domtree->preserveWhiteSpace = false;
