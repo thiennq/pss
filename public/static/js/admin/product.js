@@ -18,9 +18,9 @@ var featureImage = {};
   featureImage.image = '';
   featureImage.uploaded = false;
   if ($fImg.length > 0) {
-    featureImage.image = $fImg.attr('data-name') 
+    featureImage.image = $fImg.attr('data-name')
     featureImage.uploaded = true;
-  } 
+  }
 
 var listFormData = [];
   for (var i = 0; i < $('.variant-item').length; i++) {
@@ -356,10 +356,39 @@ $('.btn-update-product').click(function(event) {
             });
           });
         }
+        function createVariant() {
+          if (count_upload ==  list_variant_upload.length) {
+            self.removeClass('disabled');
+            updateFeaturedImage(variant.product_id, featureImage.image);
+            reloadPage('/admin/products/' + variant.product_id);
+            return false;
+          }
+          var itemVariant = list_variant_upload.eq(count_upload);
+          var formRI = itemVariant.find('.upload-list-image');
+          variant.title = itemVariant.find('input[name="variant-title"]').val();
+          variant.price = itemVariant.find('input[name="variant-price"]').val();
+          variant.price_compare = itemVariant.find('input[name="variant-price-compare"]').val();
+          variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
+          uploadImgs(formRI, function(list_image) {
+            variant.list_image = list_image;
+            console.log('list_image',list_image);
+            $.ajax({
+              type: 'POST',
+              url: '/admin/variants',
+              data: variant,
+              success: function(json) {
+                if(!json.code) {
+                  count_upload++;
+                  createVariant();
+                } else toastr.error('Tạo phiên bản ' +variant.title+ ' thất bại');
+              }
+            });
+          });
+        }
       }
     }
   });
-});  
+});
 
 $(document).on('click', '.btn-rotate-image', function(e){
   e.stopPropagation();

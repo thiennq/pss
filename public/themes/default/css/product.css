@@ -123,7 +123,10 @@
       margin-right: 10px;
       width: 20%; }
       .product .detail .list-variant .item-variant img, #modal-order .detail .list-variant .item-variant img {
-        cursor: pointer; }
+        cursor: pointer;
+        margin-bottom: 5px; }
+        .product .detail .list-variant .item-variant img.active, #modal-order .detail .list-variant .item-variant img.active {
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4); }
     .product .detail p, #modal-order .detail p {
       margin-bottom: 5px; }
     .product .detail .title, #modal-order .detail .title {
@@ -233,6 +236,8 @@
       .product .detail .btn-order-product span, #modal-order .detail .btn-order-product span {
         font-size: 12px;
         font-weight: normal; }
+      .product .detail .btn-order-product.out-of-stock, #modal-order .detail .btn-order-product.out-of-stock {
+        background-color: #ccc; }
     .product .detail .hotline, #modal-order .detail .hotline {
       text-align: center;
       margin: 10px 0;
@@ -253,6 +258,9 @@
                 display: block; } }
         .product .detail .hotline > div:first-child p, #modal-order .detail .hotline > div:first-child p {
           border-left: 1px solid #000; }
+    .product .detail .quantity, #modal-order .detail .quantity {
+      float: none;
+      margin: 10px 0; }
   .product .product-bottom, #modal-order .product-bottom {
     padding: 30px 0; }
     .product .product-bottom .description, #modal-order .product-bottom .description {
