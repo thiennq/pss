@@ -41,12 +41,18 @@ block content
             label.col-sm-2.control-label Mô tả
             .col-sm-10
               textarea.form-control#description
-          .form-group
+          //.form-group
             label.col-sm-2.control-label Hình đại diện 
               br 
               | (chọn một hình trong variant)
             form.col-sm-10.form-feature-product
               img#featured_img(src=staticURI() + "/img/default_image.png")
+          .form-group
+            label.col-sm-2.control-label Quản lý tồn kho
+            .col-sm-10
+              select.form-control(name="inventory-management")
+                option(value="0") Không
+                option(value="1" selected) Có
           .form-group
             label.col-sm-2.control-label Phiên bản
               strong.required  *
@@ -63,7 +69,7 @@ block content
                         .col-sm-3
                           input.form-control(type="number", name="variant-price-compare", placeholder="Giá so sánh", min="1")
                         .col-sm-3
-                          input.form-control(type="number" name="variant-inventory", min="1")
+                          input.form-control(type="number" name="variant-inventory", placeholder="Tồn kho", min="1")
                     .col-xs-1
                   .row
                     .col-xs-11.variant-images
@@ -80,7 +86,7 @@ block content
             .col-sm-10
               select.form-control(name="display")
                 option(value="0") Không
-                option(value="1") Có
+                option(value="1" selected) Có
     .box
       .form-horizontal
         .box-body
