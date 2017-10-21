@@ -18,7 +18,7 @@ require_once('../models/helper.php');
 
 
 $app->get('/', '\IndexController:index');
-$app->get('/dat-hang', '\OrderController:checkout');
+$app->get('/cart', '\OrderController:viewCart');
 $app->get('/orders/{id}', '\OrderController:show');
 $app->get('/video', '\PageController:video');
 $app->get('/saleoff', '\PageController:saleOff');
