@@ -234,7 +234,7 @@ function SiteMap() {
   $sitemap->setPath($path);
   $sitemap->setFilename($filename);
   $sitemap->addItem('/' , '1.0', 'Daily');
-  $Product = Product::where('display', 1)->get();
+  $Product = Product::where('display', 1)->orderBy('updated_at', 'desc')->get();
   foreach ($Product as $key => $product) {
     $sitemap->addItem('/san-pham/' . $product['handle'] , '1.0', 'Daily', $product['updated_at']);
   }
@@ -256,27 +256,14 @@ function SiteMap() {
   unlink($path . $filename . '-index.xml');
 
   $sitemap = new Sitemap(HOST);
-  $filename = 'sitemap_brands_1';
-  unlink($path . $filename . 'xml');
-  $sitemap->setPath($path);
-  $sitemap->setFilename($filename);
-  $sitemap->addItem('/' , '1.0', 'Daily');
-  $brands = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->groupBy('brand.name')->orderBy('brand.name', 'asc')->select('brand.*')->get();
-  foreach ($brands as $key => $brand) {
-    $sitemap->addItem('/thuong-hieu/' . $brand['handle'], '0.9', 'Daily', $brand['updated_at']);
-  }
-  $sitemap->createSitemapIndex($path, 'Today');
-  unlink($path . $filename . '-index.xml');
-
-  $sitemap = new Sitemap(HOST);
   $filename = 'sitemap_news_1';
   unlink($path . $filename . 'xml');
   $sitemap->setPath($path);
   $sitemap->setFilename($filename);
   $sitemap->addItem('/' , '1.0', 'Daily');
-  $articles = Article::where('type', 'tin-tuc')->get();
+  $articles = Article::where('display', 1)->get();
   foreach ($articles as $key => $article) {
-    $sitemap->addItem('/tin-tuc/' . $article['handle'] . '-'. $article['id'], '0.9', 'Daily', $article['updated_at']);
+    $sitemap->addItem('/article/' . $article['handle'] . '-'. $article['id'], '0.9', 'Daily', $article['updated_at']);
   }
   $sitemap->createSitemapIndex($path, 'Today');
   unlink($path . $filename . '-index.xml');
@@ -292,7 +279,7 @@ function createSitemap() {
   $domAttribute = $domtree->createAttribute('xmlns');
   /* Value for the created attribute */
   $domAttribute->value = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-  
+
   /* Create the root element of the xml tree */
   $xmlRoot = $domtree->createElement("sitemapindex");
   $xmlRoot->appendChild($domAttribute);
@@ -307,18 +294,12 @@ function createSitemap() {
     $currentSitemap = $xmlRoot->appendChild($currentSitemap);
     $currentSitemap->appendChild($domtree->createElement('loc', $HOST . $prefix . $sitemap . $extension));
   }
-  /* get the xml printed, remove version line of xml file */
-  //$domtree->save($ROOT . '/public/sitemap.xml');
-  $xml_out = $domtree->saveXML($domtree->documentElement);
-  
-  //error_log('xml file ::');
-  //error_log($xml_out);
-  /*if (!file_exists(ROOT . '/public/sitemap.xml')) {
 
-  }
-  file_put_contents(ROOT . '/public/sitemap.xml',$xml_out)
-  */
+  $xml_out = $domtree->saveXML($domtree->documentElement);
   $file = fopen(ROOT . '/public/sitemap.xml',"w");
-  fwrite($file, $xml_out);
+  if (fwrite($file, $xml_out) !== FALSE) {
+    $link = HOST . '/sitemap.xml';
+    echo "Success: <a href=".$link.">".$link."</a>" ;
+  } else echo "An error occured, please try again later";
   fclose($file);
 }
