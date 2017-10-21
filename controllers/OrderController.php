@@ -18,7 +18,7 @@ class OrderController extends Controller {
       $cart = $_SESSION["cart"];
       $check_exists = false;
       foreach ($cart as $key => $item) {
-        if($item->product_id == $body['product_id'] ) {
+        if($item->product_id == $body['product_id'] && $item->variant_id == $body['variant_id']) {
           $item->quantity = (int) $item->quantity + 1;
           $check_exists = true;
         }
@@ -26,6 +26,7 @@ class OrderController extends Controller {
       if(!$check_exists) {
         $item = new stdClass();
         $item->product_id = $body['product_id'];
+        $item->variant_id = $body['variant_id'];
         $item->quantity = 1;
         array_push($cart, $item);
       }
@@ -33,6 +34,7 @@ class OrderController extends Controller {
       $cart = array();
       $item = new stdClass();
       $item->product_id = $body['product_id'];
+      $item->variant_id = $body['variant_id'];
       $item->quantity = 1;
       array_push($cart, $item);
     }

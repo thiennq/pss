@@ -39,8 +39,7 @@
     position: relative;
     cursor: pointer;
     border: 1px solid transparent;
-    padding: 45px 10px 10px;
-    border-bottom: 0; }
+    padding: 45px 10px 10px; }
     @media (max-width: 767px) {
       .wrapper-item-product-loop .item-product-loop {
         padding-top: 25px; } }
