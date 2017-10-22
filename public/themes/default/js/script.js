@@ -10,6 +10,8 @@ $(window).on('load', function() {
   // runVariantCarousel();
 });
 
+updateCartIcon();
+
 $('ul.list-variant').on('click', '.item-variant', function(){
   var variantId = $(this).data('id');
   $('.list-image .item').hide();
@@ -370,56 +372,6 @@ function calcShippingPrice() {
   }
 }
 
-$('.btn-checkout-done').click(function() {
-  var data = {};
-  $(document).find('.error').removeClass('error');
-  data.name = $('input[name="name"]').val();
-  if(!data.name) {
-    $('input[name="name"]').addClass('error');
-    toastr.error('Vui lòng nhập họ tên');
-    return false;
-  }
-  data.phone = $('input[name="phone"]').val();
-  if(!data.phone) {
-    $('input[name="phone"]').addClass('error');
-    toastr.error('Vui lòng nhập số điện thoại');
-    return false;
-  }
-  if(!validatePhone(data.phone)) {
-    toastr.error('Vui lòng nhập đúng số điện thoại');
-    return false;
-  }
-  data.region = $('select[name="region"]').val();
-  if(!data.region) {
-    $('select[name="region"]').addClass('error');
-    toastr.error('Vui lòng chọn tỉnh/thành phố');
-    return false;
-  }
-  data.address = $('input[name="address"]').val();
-  if(!data.address) {
-    $('input[name="address"]').addClass('error');
-    toastr.error('Vui lòng nhập địa chỉ');
-    return false;
-  }
-  data.subregion = $('select[name="subregion"]').val();
-  data.shipping_price = 0;
-  data.discount = 0;
-  data.payment_method = 'cod';
-  $(this).addClass('disabled');
-  $.ajax({
-    type: 'POST',
-    url: '/api/orders',
-    data: data,
-    success: function(json) {
-      if(!json.code) {
-        setTimeout(function() {
-          location.href = '/dat-hang-thanh-cong';
-        }, 1000);
-      } else toastr.error("Có lỗi xảy ra, xin vui lòng thử lại");
-    }
-  });
-});
-
 function validatePhone(phone) {
   if (phone) {
     phone = phone.replace(/\s/g, "");
@@ -521,6 +473,7 @@ function addToCart(variant_id, quantity) {
     success: function(json) {
       if (!json.code) {
         toastr.success('Thêm vào giỏ hàng thành công');
+        updateCartIcon();
       } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
   });
@@ -554,7 +507,7 @@ $('.btn-remove-item-cart').click(function() {
       },
       success: function(json) {
         if (!json.code) {
-          toastr.success('Thêm vào giỏ hàng thành công');
+          toastr.success('Đã xóa sản phẩm khỏi giỏ hàng');
           location.reload();
         } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
@@ -562,8 +515,130 @@ $('.btn-remove-item-cart').click(function() {
   }
 });
 
-$('.btn-checkout').click(function() {
+function updateCartIcon() {
+  $.ajax({
+    type : 'GET',
+    url : '/api/getInfoCart',
+    success : function(json) {
+      if (!json.code) {
+        var result = json.data;
+        var total_price = 0;
+        var total_quantity = 0;
+        if (!result.length) {
+          $('.fa-shopping-bag').addClass('anti-click');
+          $('.minicart').removeClass('clicked');
+          // closeMiniCart();
+          $('.fa-shopping-bag span.quantity').text(parseInt(total_quantity));
+          $('.fa-shopping-bag span.quantity').hide();
+          return;
+        }
+        $('.fa-shopping-bag').removeClass('anti-click');
+        $('.minicart .minicart-product').remove();
+        $.each(result, function(index, value) {
+          total_price += value.subTotal;
+          total_quantity += parseInt(value.quantity);
+          var data = {};
+          data.featured_image = resizeImage(value.image, 100);
+          data.title = value.title;
+          data.variant = value.variant;
+          data.quantity = value.quantity;
+          data.variant_id = value.variant_id;
+          data.price = value.subTotal;
+          var cart_item =
+          "<div class='minicart-product'>" +
+            "<div class='avatar left'>" +
+              "<div class='div-background product-img' style='background-image:url(/uploads/" + data.featured_image + ")'></div>" +
+            "</div>" +
+            "<div class='cart-item-detail left'>" +
+              "<div class='product-variant product-name'>"+ data.title +"</div>"  +
+              "<div class='product-variant'>"+ data.variant  +"</div>" +
+              "<div class='product-variant quantity-select'>" +
+                "<div class='quantity-btn btn-minus'><i class='fa fa-minus' aria-hidden='true'></i></div>" +
+                "<input class='' name='cart-item-qty' value="+ data.quantity +" min='1' type='number' style='background-color: #fff; text-align: center; font-weight: bold;' data-variant-id="+ data.variant_id +" />" +
+                "<div class='quantity-btn btn-plus'><i class='fa fa-plus' aria-hidden='true'></i></div>" +
+              "</div>" +
+              "<div class='product-variant price'>"+ data.price +"</div>" +
+              "<div class='remove-btn'><i class='fa fa-times remove-item-from-cart' aria-hidden='true' data-variant-id="+data.variant_id+"></i></div>" +
+            "</div>" +
+            "<div class='clearfix'></div>" +
+          "</div>";
+          $('.minicart .minicart-detail').append(cart_item);
+        });
+        $('.fa-shopping-bag span.quantity').text(parseInt(total_quantity));
+        $('.fa-shopping-bag span.quantity').show();
+        $('.minicart .cart .price').html(total_price + 'đ');
+        console.log('total-quantity : ', total_quantity);
+        console.log('total-price : ', total_price);
+      }
+    }
+  });
+}
 
+$('.minicart').on('click', '.remove-item-from-cart', function() {
+  var variantId = $(this).attr('data-variant-id');
+  $.ajax({
+    type : 'DELETE',
+    url: '/api/deleteCart',
+    data: {
+      variant_id: variantId
+    },
+    success: function(json) {
+      if (!json.code) {
+        toastr.success('Đã xóa sản phẩm khỏi giỏ hàng');
+        $('.minicart .minicart-product').remove();
+        updateCartIcon();
+        if (window.location.pathname == '/cart' || window.location.pathname == '/checkout') {
+          location.reload();
+        }
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    }
+  });
+});
+
+$('.minicart').on('click', '.btn-plus', function(){
+  var curQty = $(this).parent().find('input[name="cart-item-qty"]').val();
+  var variant_id = $(this).parent().find('input[name="cart-item-qty"]').attr('data-variant-id');
+  $(this).parent().find('input[name="cart-item-qty"]').val(parseInt(curQty) + 1).change();
+});
+$('.minicart').on('click', '.btn-minus', function(){
+  var curQty = $(this).parent().find('input[name="cart-item-qty"]').val();
+  var variant_id = $(this).parent().find('input[name="cart-item-qty"]').attr('data-variant-id');
+  if (curQty > 1) {
+    $(this).parent().find('input[name="cart-item-qty"]').val(parseInt(curQty) - 1).change();
+  }
+  else if (curQty == 1) {
+    $(this).addClass('disabled');
+  }
+});
+
+$(document).on('change', 'input[name=cart-item-qty]', function() {
+  quantity = $(this).val();
+  variant_id = $(this).attr('data-variant-id');
+  $.ajax({
+    type: 'PUT',
+    url: '/api/updateCart',
+    data: {
+      variant_id: variant_id,
+      quantity: quantity
+    },
+    success: function(json) {
+      if (!json.code) {
+        updateCartIcon();
+        if (window.location.pathname == '/cart' || window.location.pathname == '/checkout') {
+          location.reload();
+        }
+      } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    }
+  });
+});
+
+$('.fa-shopping-bag').on('click', function(){
+  var minicart = $(document).find(".minicart");
+  if (minicart.hasClass("clicked")) {
+    minicart.removeClass("clicked");
+  } else {
+    minicart.addClass("clicked");
+  }
 });
 
 $('.btn-plus').click(function() {
@@ -586,6 +661,56 @@ $('.btn-minus').click(function() {
     var subTotal = parseInt(price) * parseInt(quantity);
     if (id && quantity) updateCart(id, quantity, subTotal);
   }
+});
+
+$('.btn-checkout-done').click(function() {
+  var data = {};
+  $(document).find('.error').removeClass('error');
+  data.name = $('input[name="name"]').val();
+  if(!data.name) {
+    $('input[name="name"]').addClass('error');
+    toastr.error('Vui lòng nhập họ tên');
+    return false;
+  }
+  data.phone = $('input[name="phone"]').val();
+  if(!data.phone) {
+    $('input[name="phone"]').addClass('error');
+    toastr.error('Vui lòng nhập số điện thoại');
+    return false;
+  }
+  if(!validatePhone(data.phone)) {
+    toastr.error('Vui lòng nhập đúng số điện thoại');
+    return false;
+  }
+  data.region = $('select[name="region"]').val();
+  if(!data.region) {
+    $('select[name="region"]').addClass('error');
+    toastr.error('Vui lòng chọn tỉnh/thành phố');
+    return false;
+  }
+  data.address = $('input[name="address"]').val();
+  if(!data.address) {
+    $('input[name="address"]').addClass('error');
+    toastr.error('Vui lòng nhập địa chỉ');
+    return false;
+  }
+  data.subregion = $('select[name="subregion"]').val();
+  data.shipping_price = 0;
+  data.discount = 0;
+  data.payment_method = 'cod';
+  $(this).addClass('disabled');
+  $.ajax({
+    type: 'POST',
+    url: '/api/orders',
+    data: data,
+    success: function(json) {
+      if(!json.code) {
+        setTimeout(function() {
+          location.href = '/dat-hang-thanh-cong';
+        }, 1000);
+      } else toastr.error("Có lỗi xảy ra, xin vui lòng thử lại");
+    }
+  });
 });
 
 function runVariantCarousel() {

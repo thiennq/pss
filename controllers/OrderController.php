@@ -89,6 +89,28 @@ class OrderController extends Controller {
     ]);
   }
 
+  public function getInfoCart(Request $request, Response $response) {
+    $cart = $_SESSION['cart'];
+    $data = array();
+    $total = 0;
+    foreach ($cart as $key => $value) {
+      $variant = Variant::find($value->variant_id);
+      $product = Product::find($variant->product_id);
+      $value->title = $product->title;
+      $value->variant = $variant->title;
+      $value->handle = $product->handle;
+      $value->price = $variant->price;
+      $value->product_id = $variant->id;
+      $value->image = $product->featured_image;
+      $value->subTotal = (int) $variant->price * (int) $value->quantity;
+      $total += $value->subTotal;
+      array_push($data, $value);
+    }
+    return $response->withJson(array(
+      'data' => $data
+    ));
+  }
+
   public function viewCart(Request $request, Response $response) {
     $cart = $_SESSION['cart'];
     $total = 0;

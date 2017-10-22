@@ -24,6 +24,7 @@ block content
                 a.product-title(href="/san-pham/" + item.handle)=item.title
                 br
                 a.product-title(href="/san-pham/" + item.handle)=item.variant
+                p.product-title=item.quantity
               .col-xs-5.product-price
                 .col-sm-6.col-xs-12.price
                   span.main-price.orange=money(item.subTotal)

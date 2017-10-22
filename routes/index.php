@@ -51,6 +51,8 @@ $app->post('/api/orders', '\OrderController:store');
 $app->get('/api/website/sitemap', 'createSitemap' );
 $app->get('/api/website/initDB', '\FunctionController:initDB');
 $app->get('/404', '\ArticleController:PageNotFound');
+
+$app->get('/api/getInfoCart', '\OrderController:getInfoCart');
 $app->post('/api/addToCart', '\OrderController:addToCart');
 $app->put('/api/updateCart', '\OrderController:updateCart');
 $app->delete('/api/deleteCart', '\OrderController:deleteCart');
