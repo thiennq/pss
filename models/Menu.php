@@ -57,7 +57,7 @@ class Menu extends Illuminate\Database\Eloquent\Model {
       $menu->handle = 'menu-' . createHandle($menu->title);
       $id = $menu->id;
       $menu->submenu = 0;
-      $submenu = Menu::where('parent_id', $id)->get();
+      $submenu = Menu::where('parent_id', $id)->orderBy('updated_at', 'desc')->get();
       if(count($submenu)) {
         foreach ($submenu as $value) {
           $value->handle = 'menu-' . createHandle($value->title);
