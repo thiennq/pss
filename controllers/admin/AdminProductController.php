@@ -5,6 +5,7 @@ require_once("../models/CollectionProduct.php");
 require_once(ROOT . '/controllers/helper.php');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Illuminate\Database\Connection as DB;
 use ControllerHelper as Helper;
 
 class AdminProductController extends AdminController {

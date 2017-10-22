@@ -16,6 +16,10 @@ block content
         a=data.title
     ol.button-right.col-sm-6
       li
+        a.btn.btn-review(href="/san-pham/" + data.handle, target="_blank")
+          i.fa.fa-eye
+          | Xem trên web
+      li
         a.btn.btn-admin.btn-update-product(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
