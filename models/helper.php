@@ -374,29 +374,6 @@ function rotateImage(Request $request, Response $response) {
   return convertImage($file, $size[0]);
 }
 
-function initUser(Request $request, Response $response) {
-  $check = User::where('role', 'super')->first();
-  if($check) {
-    return $response->withJson([
-      'code' => -1,
-      'message' => 'User exist'
-    ]);
-  }
-  $user = new User;
-  $user->name = 'Super';
-  $user->email = 'admin@eyeteam.vn';
-  $user->phone = '9999999999';
-  $user->role = 'super';
-  $user->password = password_hash('eyeteam.vn', PASSWORD_DEFAULT);
-  $user->created_at = date('Y-m-d H:i:s');
-  $user->updated_at = date('Y-m-d H:i:s');
-  $user->save();
-  return $response->withJson([
-    'code' => 0,
-    'message' => 'Create user success'
-  ]);
-}
-
 function PHPMailer($to, $subject, $body, $text) {
   $mail = new PHPMailer;
   include ROOT . '/framework/phpmailer.php';

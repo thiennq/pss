@@ -36,7 +36,6 @@ $app->get('/api/san-pham/search', 'smartSearch');
 $app->get('/api/region', 'getSubRegion');
 $app->post('/api/orders', '\OrderController:store');
 $app->get('/api/website/sitemap', 'createSitemap' );
-$app->get('/api/website/initUser', 'initUser');
 
 $app->get('/api/getInfoCart', '\OrderController:getInfoCart');
 $app->post('/api/addToCart', '\OrderController:addToCart');
