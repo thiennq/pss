@@ -18,13 +18,16 @@ $Schema = $capsule->schema();
 
 $Schema->create('order', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('id_odoo')->nullable();
     $table->string('customer_id');
     $table->string('payment_method');
     $table->string('shipping_price');
     $table->string('discount');
     $table->string('order_status');
+    $table->integer('payment_status');
+    $table->integer('shipping_status');
     $table->string('subtotal');
     $table->string('total');
+    $table->text('notes')->nullable();
+    $table->text('reason_cancel')->nullable();
     $table->timestamps();
 });

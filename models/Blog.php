@@ -22,7 +22,7 @@
       $blog->image = $data['image'] ? renameOneImage($data['image'], $blog->handle) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
       $blog->content = $data['content'];
-      $blog->author = $_SESSION['fullname'];
+      $blog->author = $_SESSION['name'];
       $blog->display = $data['display'];
       $blog->view = 0;
       $blog->meta_title = $data['meta_title'] ? $data['meta_title']: '';
@@ -50,7 +50,7 @@
       $blog->image = $data['image'] ? renameOneImage($data['image'], $blog->handle) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
       $blog->content = $data['content'];
-      $blog->author = $_SESSION['fullname'];
+      $blog->author = $_SESSION['name'];
       $blog->display = $data['display'];
       $blog->meta_title = $data['meta_title'] ? $data['meta_title']: '';
       $blog->meta_description = $data['meta_description'] ? $data['meta_description']: '';

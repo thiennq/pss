@@ -4,7 +4,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Collection.php");
 require_once("../models/Product.php");
 require_once("../models/helper.php");
-require_once("../models/ProductColor.php");
 
 class CollectionController extends Controller {
 
@@ -56,23 +55,23 @@ class CollectionController extends Controller {
 		$arr_temp_color = array();
     $arr_temp_special = array();
 
-		foreach ($all_products as $key => $product) {
-			if($product->brand && !in_array($product->brand, $list_brand)) array_push($list_brand, $product->brand);
-      if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
-      if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
-      if($product->bag && !in_array($product->bag, $list_bag)) array_push($list_bag, $product->bag);
-			$product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
-				->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
-			foreach ($product_color as $key => $color) {
-				if(!in_array($color->name, $arr_temp_color)) {
-					$obj = new stdClass();
-					$obj->name = $color->name;
-					$obj->style = 'background-color: ' . $color->hex;
-					array_push($list_color, $obj);
-					array_push($arr_temp_color, $color->name);
-				}
-			}
-		}
+		// foreach ($all_products as $key => $product) {
+		// 	if($product->brand && !in_array($product->brand, $list_brand)) array_push($list_brand, $product->brand);
+    //   if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
+    //   if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
+    //   if($product->bag && !in_array($product->bag, $list_bag)) array_push($list_bag, $product->bag);
+		// 	$product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
+		// 		->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
+		// 	foreach ($product_color as $key => $color) {
+		// 		if(!in_array($color->name, $arr_temp_color)) {
+		// 			$obj = new stdClass();
+		// 			$obj->name = $color->name;
+		// 			$obj->style = 'background-color: ' . $color->hex;
+		// 			array_push($list_color, $obj);
+		// 			array_push($arr_temp_color, $color->name);
+		// 		}
+		// 	}
+		// }
     sort($list_brand);
     $title = $collection->title;
     if ($collection->meta_title) $title = $collection->meta_title;
@@ -190,22 +189,17 @@ class CollectionController extends Controller {
       if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
       if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
       if($product->bag && !in_array($product->bag, $list_bag)) array_push($list_bag, $product->bag);
-			$product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
-				->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
-			foreach ($product_color as $key => $color) {
-				if(!in_array($color->name, $arr_temp_color)) {
-					$obj = new stdClass();
-					$obj->name = $color->name;
-					$obj->style = 'background-color: ' . $color->hex;
-					array_push($list_color, $obj);
-					array_push($arr_temp_color, $color->name);
-				}
-			}
-      $product_special = ProductSpecial::Join('special', 'product_special.special_id', '=', 'special.id')
-				->where('product_special.product_id', $product->id)->select('special.name as name')->get();
-			foreach ($product_special as $key => $special) {
-        if ($special->name && !in_array($special->name, $list_special)) array_push($list_special, $special->name);
-			}
+			// $product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
+			// 	->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
+			// foreach ($product_color as $key => $color) {
+			// 	if(!in_array($color->name, $arr_temp_color)) {
+			// 		$obj = new stdClass();
+			// 		$obj->name = $color->name;
+			// 		$obj->style = 'background-color: ' . $color->hex;
+			// 		array_push($list_color, $obj);
+			// 		array_push($arr_temp_color, $color->name);
+			// 	}
+			// }
 		}
     $title = $brand->name;
     if ($brand->meta_title) $title = $brand->meta_title;

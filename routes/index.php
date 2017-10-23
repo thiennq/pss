@@ -8,10 +8,8 @@ require_once('../controllers/CollectionController.php');
 require_once('../controllers/ProductController.php');
 require_once('../controllers/PageController.php');
 require_once('../controllers/OrderController.php');
-require_once('../controllers/CustomerController.php');
 require_once('../controllers/ArticleController.php');
 require_once('../controllers/BlogController.php');
-require_once('../controllers/FunctionController.php');
 require_once('../controllers/TestController.php');
 require_once('../models/helper.php');
 
@@ -35,10 +33,10 @@ $app->get('/404', '\PageController:PageNotFound');
 
 $app->post('/api/filter', '\CollectionController:filter');
 $app->get('/api/san-pham/search', 'smartSearch');
-$app->get('/api/region', '\FunctionController::getSubRegion');
+$app->get('/api/region', 'getSubRegion');
 $app->post('/api/orders', '\OrderController:store');
 $app->get('/api/website/sitemap', 'createSitemap' );
-$app->get('/api/website/initDB', '\FunctionController:initDB');
+$app->get('/api/website/initDB', 'initDB');
 
 $app->get('/api/getInfoCart', '\OrderController:getInfoCart');
 $app->post('/api/addToCart', '\OrderController:addToCart');
@@ -46,7 +44,6 @@ $app->put('/api/updateCart', '\OrderController:updateCart');
 $app->delete('/api/deleteCart', '\OrderController:deleteCart');
 
 $app->get('/api/san-pham/variant/{id}', '\ProductController:findProductVariant');
-$app->post('/api/subscribe', '\CustomerController:subscribe');
 $app->get('/test-mail', '\TestController:sendMail');
 $app->get('/truyen', '\TestController:truyen');
 

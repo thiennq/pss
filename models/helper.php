@@ -340,3 +340,46 @@ function checkInventoryManagent($variant_id, $quantity) {
   if ($variant->inventory >= $quantity) return true;
   return false;
 }
+
+function getSubRegion(Request $request, Response $response) {
+  $query = $request->getQueryParams();
+  $region_id = $query['region_id'];
+  $subregion = SubRegion::where('region_id', $region_id)->orderBy('name', 'asc')->get();
+  $price_suburban = Meta::where('key', 'price_suburban')->first();
+  $price_suburban = (int) $price_suburban->value;
+  $price_urban = Meta::where('key', 'price_urban')->first();
+  $price_urban = (int) $price_urban->value;
+  foreach ($subregion as $key => $value) {
+    $value->shipping_price = $price_suburban;
+    if($value->urban) $value->shipping_price = $price_urban;
+  }
+  return $response->withJson(array(
+    'code' => 0,
+    'data' => $subregion
+  ));
+}
+
+function rotateImage(Request $request, Response $response) {
+  $query = $request->getQueryParams();
+  $file = $query['filename'];
+  $path = ROOT . '/public/uploads/';
+  $input = $path . $file;
+  rotate($input);
+
+  global $size;
+  for ($i=0; $i < count($size); $i++) {
+    $img = convertImage($file, $size[$i]);
+    rotate($path.$img);
+  }
+  return convertImage($file, $size[0]);
+}
+
+function initDB() {
+  $obj = new stdClass();
+  $obj->name = 'Admin';
+  $obj->email = 'admin@gmail.com';
+  $obj->phone = '0123456789';
+  $obj->role = 'admin';
+  $obj->password = 'admin';
+  User::store($obj);
+}

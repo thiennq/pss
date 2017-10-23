@@ -28,41 +28,5 @@
       if($Contact->save()) return 0;
       return -3;
     }
-
-    public function sendEmailContactUs($obj, $email) {
-      $to = $email;
-      $subject = '[COMBENTO] - Email Contact Us';
-      $body = '<h3>Bạn vừa nhận được một email từ mục liên hệ</h3>';
-      $body = $body.'<p> Nội dung : ' . $obj['message'];
-      $text = '';
-      Contact::PHPMailer($to, $subject,$body, $text, $obj['email']);
-    }
-
-    public function PHPMailer($to, $subject, $body, $text, $emailReplyTo) {
-      $mail = new PHPMailer;
-      include ROOT . '/framework/phpmailer.php';
-      $mail->isSMTP();
-      $mail->Host = $STMP_HOST;
-      $mail->SMTPAuth = true;
-      $mail->Username = $STMP_USERNAME;
-      $mail->Password = $STMP_PASSWORD;
-      $mail->SMTPSecure = $STMP_SECURE;
-      $mail->Port = $STMP_PORT;
-      error_log($emailReplyTo);
-      $mail->setFrom($STMP_USERNAME, 'Admin');
-      $mail->AddReplyTo($emailReplyTo, 'Reply to name');
-      $mail->addAddress($to);
-
-      $mail->isHTML(true);
-
-      $mail->Subject = $subject;
-      $mail->Body    = $body;
-      $mail->AltBody = $text;
-      $mail->CharSet = "UTF-8";
-      $mail->FromName = "COMBENTO";
-
-      if(!$mail->send()) return $STMP_USERNAME;
-      return true;
-  }
   }
 ?>

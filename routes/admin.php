@@ -20,9 +20,7 @@ require_once('../controllers/admin/AdminUserController.php');
 require_once('../controllers/admin/AdminSettingController.php');
 require_once('../controllers/admin/AdminPriceController.php');
 require_once('../controllers/admin/AdminRedirectController.php');
-require_once('../controllers/admin/AdminCelebrityController.php');
 require_once('../controllers/TestController.php');
-require_once('../controllers/FunctionController.php');
 require_once("../models/User.php");
 
 $role = $_SESSION['role'];
@@ -94,7 +92,6 @@ $app->group('/admin', function() use($app) {
 
   //Customer
   $app->get('/customer', '\AdminCustomerController:index');
-  $app->get('/subscribe', '\AdminCustomerController:subscribe');
   $app->get('/customer/{id}/order', '\AdminCustomerController:showOrder');
   $app->get('/customer/export', '\AdminCustomerController:export');
 
@@ -135,12 +132,6 @@ $app->group('/admin', function() use($app) {
   $app->put('/slider/{id}', '\AdminSliderController:update');
   $app->delete('/slider/{id}', '\AdminSliderController:delete');
 
-  $app->get('/celebrity', '\AdminCelebrityController:index');
-  $app->get('/celebrity/{id}', '\AdminCelebrityController:getCelebrity');
-  $app->post('/celebrity', '\AdminCelebrityController:store');
-  $app->put('/celebrity/{id}', '\AdminCelebrityController:update');
-  $app->delete('/celebrity/{id}', '\AdminCelebrityController:delete');
-
   $app->get('/menu', '\AdminMenuController:index');
   $app->get('/menu/{id}', '\AdminMenuController:getMenu');
   $app->post('/menu', '\AdminMenuController:store');
@@ -148,10 +139,8 @@ $app->group('/admin', function() use($app) {
   $app->put('/menu/{id}', '\AdminMenuController:update');
   $app->get('/menu/list-menu/{type}', '\AdminMenuController:getListMenu');
 
-  $app->get('/settings/website', '\AdminSettingController:getWebsiteSetting');
-  $app->put('/settings/website', '\AdminSettingController:updateWebsiteSetting');
-  $app->get('/settings/seo', '\AdminSettingController:getSEOSetting');
-  $app->put('/settings/seo', '\AdminSettingController:updateSEOSetting');
+  $app->get('/setting', '\AdminSettingController:setting');
+  $app->put('/setting', '\AdminSettingController:updateSetting');
   $app->get('/video', '\AdminVideoController:index');
   $app->post('/video', '\AdminVideoController:store');
   $app->put('/video/{id}', '\AdminVideoController:update');
@@ -167,7 +156,7 @@ $app->group('/admin', function() use($app) {
   $app->put('/user/{id}', '\AdminUserController:update');
   $app->delete('/user/{id}', '\AdminUserController:delete');
 
-  $app->get('/api/rotate', '\FunctionController:rotateImage');
+  $app->get('/api/rotate', 'rotateImage');
   $app->get('/api/tinymce/images', '\AdminProductController:renderImageTinymce');
 
 })->add(function ($request, $response, $next) {
@@ -178,7 +167,7 @@ $app->group('/admin', function() use($app) {
       unset($_SESSION['login']);
       unset($_SESSION['user_id']);
       unset($_SESSION['email']);
-      unset($_SESSION['fullname']);
+      unset($_SESSION['name']);
       unset($_SESSION['role']);
       return $response->withStatus(302)->withHeader('Location', '/admin/login');
     }

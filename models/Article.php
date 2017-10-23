@@ -16,7 +16,7 @@ class Article extends Illuminate\Database\Eloquent\Model {
     $article->image = $data['image'] ? renameOneImage($data['image'], $article->handle) : '';
     $article->description = $data['description'] ? $data['description'] : '';
     $article->content = $data['content'];
-    $article->author = $_SESSION['fullname'];
+    $article->author = $_SESSION['name'];
     $article->display = $data['display'];
     $article->view = 0;
     $article->meta_title = $data['meta_title'] ? $data['meta_title']: '';
@@ -48,7 +48,7 @@ class Article extends Illuminate\Database\Eloquent\Model {
     $article->image = $data['image'] ? renameOneImage($data['image'], $article->handle) : '';
     $article->description = $data['description'] ? $data['description'] : '';
     $article->content = $data['content'];
-    $article->author = $_SESSION['fullname'];
+    $article->author = $_SESSION['name'];
     $article->display = $data['display'];
     $article->meta_title = $data['meta_title'] ? $data['meta_title']: '';
     $article->meta_description = $data['meta_description'] ? $data['meta_description']: '';

@@ -1,7 +1,7 @@
 extends ./layout.pug
 block pre-include
   - var menu = 'setting'
-  - var childMenu = 'website'
+  - var childMenu = 'setting'
   title Setting Desktop
 
 block post-include
@@ -62,6 +62,33 @@ block content
                 label.col-sm-2.control-label Ngoại thành
                 .col-sm-10
                   input.form-control(name="price_suburban" value=price_suburban placeholder="40000")
+    .box
+      .box-body
+        .form-horizontal
+          .col-xs-12
+            p SEO
+            .box-body
+              .form-group
+                label.col-sm-2.control-label Meta Title
+                .col-sm-10
+                  input.form-control(name="meta_title_default" placeholder="Meta Title" value=meta_title_default)
+              .form-group
+                label.col-sm-2.control-label Meta Description
+                .col-sm-10
+                  textarea.form-control(rows="6" name="meta_description_default" placeholder="Meta Description")=meta_description_default
+              .form-group
+                label.col-sm-2.control-label Facebook Pixel
+                .col-sm-10
+                  textarea.form-control(rows="6" name="facebook_pixel" placeholder="Facebook pixel")=facebook_pixel
+              .form-group.clearfix
+                label.col-sm-2.control-label Facebook Image
+                form.col-sm-10
+                  if facebook_image
+                    img(src="/uploads/" + facebook_image, style="max-width: 100%;")
+                  else
+                    img(src=staticURI() + "/img/default_image.png", style="max-width: 100%;")
+                  input.upload.form-control(type="file" name="upload[]" data-type="image")
+                  input.upload-value(type="hidden" name="facebook_image" value=facebook_image)
     .box
       .box-body
         .form-horizontal

@@ -56,7 +56,7 @@ $(document).on('click', '.btn-edit', function() {
         console.log(json.data);
         var modal = $('#modal-edit');
         modal.find('.btn-admin').attr('data-id', json.data.id);
-        modal.find('input[name="fullname"]').val(json.data.fullname);
+        modal.find('input[name="name"]').val(json.data.name);
         modal.find('input[name="email"]').val(json.data.email);
         if(json.data.role.product) modal.find('input[name="role_product"]').prop('checked', true);
         if(json.data.role.order) modal.find('input[name="role_order"]').prop('checked', true);

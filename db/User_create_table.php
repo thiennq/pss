@@ -18,7 +18,7 @@ $Schema = $capsule->schema();
 
 $Schema->create('user', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('fullname')->nullable();
+    $table->string('name')->nullable();
     $table->string('email');
     $table->string('phone');
     $table->string('password');

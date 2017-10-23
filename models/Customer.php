@@ -12,7 +12,6 @@ class Customer extends Illuminate\Database\Eloquent\Model {
       if($customer) {
         $customer->name = $obj->name;
         $customer->email = $obj->email;
-        $customer->gender = $obj->gender;
         $customer->address = $obj->address;
         $customer->region = $obj->region;
         $customer->subregion = $obj->subregion;
@@ -23,7 +22,6 @@ class Customer extends Illuminate\Database\Eloquent\Model {
       $customer = new Customer;
       $customer->name = $obj->name;
       $customer->phone = $obj->phone;
-      $customer->gender = $obj->gender;
       $customer->email = $obj->email;
       $customer->address = $obj->address;
       $customer->region = $obj->region;

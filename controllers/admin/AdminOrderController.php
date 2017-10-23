@@ -11,7 +11,7 @@ class AdminOrderController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$orders = Order::join('customer', 'customer.id', '=', 'order.customer_id')
-							->select('order.id', 'order.created_at', 'customer.name', 'order.total', 'order.order_status', 'order.id_odoo')
+							->select('order.id', 'order.created_at', 'customer.name', 'order.total', 'order.order_status')
 							->orderBy('id', 'desc')->get();
 		return $this->view->render($response, 'admin/order.pug', array(
 			'orders' => $orders
@@ -40,13 +40,10 @@ class AdminOrderController extends AdminController {
 		$customer->subregion = $subregion->name;
 		$region = Region::find($customer->region);
 		$customer->region = $region->name;
-		$odoo = 0;
-		if ($order->id_odoo && (int) $order->id_odoo > 0) $odoo = 1;
 		return $this->view->render($response, 'admin/order_edit.pug', array(
 			'order' => $order,
 			'cart' => $cart,
-			'customer' => $customer,
-			'odoo' => $odoo
+			'customer' => $customer
 		));
 	}
 

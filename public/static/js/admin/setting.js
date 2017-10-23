@@ -6,20 +6,28 @@ $('.btn-update-setting-website').click(function() {
   data.hotline2 = $('input[name="hotline2"]').val();
   data.shop_name = $('input[name="shop_name"]').val();
   data.shop_address = $('input[name="shop_address"]').val();
+
   data.free_shipping = $('input[name="free_shipping"]').val();
   data.price_urban = $('input[name="price_urban"]').val();
   data.price_suburban = $('input[name="price_suburban"]').val();
+
+  data.meta_title_default = $('input[name="meta_title_default"]').val();
+  data.meta_description_default = $('textarea[name="meta_description_default"]').val();
+  data.facebook_pixel = $('textarea[name="facebook_pixel"]').val();
+  data.facebook_image = $('input[name="facebook_image"]').val();
+
   data.index_collection_id_1 = $('select[name="index_collection_id_1"]').val();
   data.index_collection_id_2 = $('select[name="index_collection_id_2"]').val();
   data.index_collection_id_3 = $('select[name="index_collection_id_3"]').val();
   data.index_collection_title_1 = $('input[name="index_collection_title_1"]').val();
   data.index_collection_title_2 = $('input[name="index_collection_title_2"]').val();
   data.index_collection_title_3 = $('input[name="index_collection_title_3"]').val();
+
   data.livechat = $('textarea[name="livechat"]').val();
   btn.addClass('disabled');
   $.ajax({
     type: 'PUT',
-    url: '/admin/settings/website',
+    url: '/admin/setting',
     data: data,
     success: function(json){
       btn.removeClass('disabled');
@@ -30,33 +38,6 @@ $('.btn-update-setting-website').click(function() {
     }
   });
 });
-
-
-//SEO
-$('.btn-update-setting-seo').click(function() {
-  var data = {};
-  self = $(this);
-  self.addClass('disabled');
-  data.meta_title_default = $('input[name="meta_title_default"]').val() || '';
-  data.meta_description_default = $('textarea[name="meta_description_default"]').val() || '';
-  data.facebook_pixel = $('textarea[name="facebook_pixel"]').val() || '';
-  data.facebook_image = $('input[name="facebook_image"]').val();
-  $.ajax({
-    type: 'PUT',
-    url: '/admin/settings/seo',
-    data: data,
-    success: function(json){
-      if(!json.code) {
-        toastr.success('Cập nhật thành công');
-      }
-      else {
-        toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      }
-      self.removeClass('disabled');
-    }
-  });
-});
-
 
 $(document).on('change', '.upload', function() {
   if(checkExtImage($(this).val())) {

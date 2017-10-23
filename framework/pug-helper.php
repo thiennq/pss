@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-require_once("../models/ArticleRelated.php");
-
 function currentENV() {
   $env = 'development';
   if (getenv('ENV') && getenv('ENV') == 'production') {
@@ -192,9 +190,9 @@ function _money($money) {
   return 0;
 }
 
-function fullname() {
-  $fullname = $_SESSION["fullname"];
-  return $fullname;
+function name() {
+  $name = $_SESSION["name"];
+  return $name;
 }
 
 function role() {
@@ -365,13 +363,6 @@ function articleIndex() {
   $articles = Article::where('display', 1)->where('type', 'tin-tuc')->orderby('updated_at', 'desc')->take(4)->get();
   // setMemcached("articleIndex", $articles);
   return $articles;
-}
-
-function celebrityIndex() {
-  if(getMemcached('celebrityIndex')) return getMemcached('celebrityIndex');
-  $celebrities = Celebrity::where('display', 1)->orderby('id', 'desc')->get();
-  // setMemcached("celebrityIndex", $celebrities);
-  return $celebrities;
 }
 
 

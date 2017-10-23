@@ -44,21 +44,9 @@ aside.main-sidebar
           span Đơn hàng
       - var itemClass = (menu == 'customer' ? 'active' : 'item');
       li.treeview(class=itemClass)
-        a(href="#")
+        a(href="/admin/customer")
           i.fa.fa-users
           span Khách hàng
-          i.fa.fa-angle-left.pull-right
-        ul.treeview-menu
-          - var liClass = (childMenu == 'customer' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/customer', class=liClass)
-              i.fa.fa-circle
-              | Tất cả khách hàng
-          - var liClass = (childMenu == 'subscribe' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/subscribe')
-              i.fa.fa-circle
-              | Subscribe
       - var itemClass = (menu == 'article' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')
@@ -88,16 +76,26 @@ aside.main-sidebar
           span Thiết lập
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          - var liClass = (childMenu == 'website' ? 'active' : '');
+          - var liClass = (childMenu == 'setting' ? 'active' : '');
           li(class=liClass)
-            a(href="/admin/settings/website")
+            a(href="/admin/setting")
               i.fa.fa-circle
               | Website
-          - var liClass = (childMenu == 'seo' ? 'active' : '');
+          - var liClass = (childMenu == 'menu' ? 'active' : '');
           li(class=liClass)
-            a(href="/admin/settings/seo")
+            a(href="/admin/menu")
               i.fa.fa-circle
-              | SEO
+              | Menu
+          - var liClass = (childMenu == 'slider' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/slider')
+              i.fa.fa-circle
+              | Slider
+          - var liClass = (childMenu == 'video' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/video')
+              i.fa.fa-circle
+              | Video
           - var liClass = (childMenu == 'redirect' ? 'active' : '');
           li(class=liClass)
             a(href="/admin/redirect")
@@ -108,33 +106,6 @@ aside.main-sidebar
             a(href="/admin/images")
               i.fa.fa-circle
               | Hình ảnh
-      - var itemClass = (menu == 'setting_extend' ? 'active' : 'item');
-      li.treeview(class=itemClass)
-        a(href='#')
-          i.fa.fa-cogs
-          span Mở rộng
-          i.fa.fa-angle-left.pull-right
-        ul.treeview-menu
-          - var liClass = (childMenu == 'slider' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/slider')
-              i.fa.fa-circle
-              | Slider
-          - var liClass = (childMenu == 'celebrity' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/celebrity')
-              i.fa.fa-circle
-              | Người nổi tiếng
-          - var liClass = (childMenu == 'video' ? 'active' : '');
-          li(class=liClass)
-            a(href='/admin/video')
-              i.fa.fa-circle
-              | Video
-          - var liClass = (childMenu == 'menu' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/menu")
-              i.fa.fa-circle
-              | Menu
       - var itemClass = (menu == 'staff' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/users")
@@ -143,8 +114,8 @@ aside.main-sidebar
     .foot
       .info
         p
-          - var fullname = fullname();
-          b=fullname
+          - var name = name();
+          b=name
         p
           a(data-toggle="modal" data-target="#modal-change-password" href="#" style="display:inline-block;") Đổi mật khẩu -
           a(href='/admin/logout') &nbsp;Đăng xuất

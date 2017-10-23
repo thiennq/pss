@@ -22,7 +22,7 @@
       $page->image = $data['image'] ? renameOneImage($data['image'], $page->handle) : '';
       $page->description = $data['description'] ? $data['description'] : '';
       $page->content = $data['content'];
-      $page->author = $_SESSION['fullname'];
+      $page->author = $_SESSION['name'];
       $page->display = $data['display'];
       $page->view = 0;
       $page->meta_title = $data['meta_title'];
@@ -50,7 +50,7 @@
       $page->image = $data['image'] ? renameOneImage($data['image'], $page->handle) : '';
       $page->description = $data['description'] ? $data['description'] : '';
       $page->content = $data['content'];
-      $page->author = $_SESSION['fullname'];
+      $page->author = $_SESSION['name'];
       $page->display = $data['display'];
       $page->meta_title = $data['meta_title'];
       $page->meta_description = $data['meta_description'] ? $data['meta_description']: '';

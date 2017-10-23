@@ -125,10 +125,7 @@ block content
 			form.form-horizontal
 				.box-body
 					.form-group
-						if customer.gender == 'male'
-							label.col-sm-2.col-xs-4 Anh:
-						else
-							label.col-sm-2.col-xs-4 Chị:
+						label.col-sm-2.col-xs-4 Họ tên:
 						.col-sm-10.col-xs-8=customer.name
 					if customer.email
 						.form-group

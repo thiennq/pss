@@ -11,14 +11,17 @@ class Order extends Illuminate\Database\Eloquent\Model {
 
     public function store($customer_id, $data, $subTotal, $total, $id_odoo = -1) {
       $order = new Order;
-      $order->id_odoo = $id_odoo;
       $order->customer_id = $customer_id;
       $order->payment_method = $data['payment_method'];
-      $order->discount = $data['discount'];
       $order->shipping_price = $data['shipping_price'];
+      $order->discount = $data['discount'];
       $order->subtotal = $subTotal;
       $order->total = $total;
       $order->order_status = 'new';
+      $order->payment_status = 0;
+      $order->shipping_status = 0;
+      $order->notes = $data['notes'] ? $data['notes'] : '';
+      $order->reason_cancel = '';
       $order->created_at = date('Y-m-d H:i:s');
       $order->updated_at = date('Y-m-d H:i:s');
       if ($order->save()) return $order->id;

@@ -1,7 +1,7 @@
 extends ./layout.pug
 
 block pre-include
-  - var menu = 'setting_extend';
+  - var menu = 'setting';
   - var childMenu = 'slider';
   title Slider
 
@@ -32,7 +32,7 @@ block content
               th Hiển thị
               th
           tbody
-            each slider in sliders
+            each slider in data
               tr
                 td.col-sm-2.title=slider.title
                 td.col-sm-5.image

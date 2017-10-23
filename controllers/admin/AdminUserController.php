@@ -36,7 +36,7 @@ class AdminUserController extends AdminController {
 			]);
     }
 		$user = new User;
-    $user->fullname = $body['fullname'];
+    $user->name = $body['name'];
     $user->email = $body['email'];
     $user->password = password_hash(123456, PASSWORD_DEFAULT);
 		$user->created_at = date('Y-m-d H:i:s');
@@ -51,7 +51,7 @@ class AdminUserController extends AdminController {
       $obj->setting = $body['role_setting'];
       $obj->staff = $body['role_staff'];
       Role::store($obj);
-      User::sendEmail($body['fullname'], $body['email'], 123456);
+      User::sendEmail($body['name'], $body['email'], 123456);
 			return json_encode(array(
 				'code' => 0,
 				'message' => 'Tạo tài khoản thành công'
@@ -83,7 +83,7 @@ class AdminUserController extends AdminController {
         $_SESSION['login'] = true;
         $_SESSION['user_id'] = $data->id;
         $_SESSION['email'] = $data->email;
-        $_SESSION['fullname'] = $data->fullname;
+        $_SESSION['name'] = $data->name;
         $role = Role::where('email', $data->email)->first();
         $arr_role = array();
         if($role->product) array_push($arr_role, 'product');
@@ -162,7 +162,7 @@ class AdminUserController extends AdminController {
 	        'message' => 'Exist'
 				]);
 			}
-      $user->fullname = $body['fullname'];
+      $user->name = $body['name'];
       $user->email = $body['email'];
       $user->save();
       $obj = new stdClass();

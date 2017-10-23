@@ -8,9 +8,8 @@ class AdminSliderController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$data = Slider::all();
-		// setMemcached("slider", '');
 		return $this->view->render($response, 'admin/slider.pug', array(
-			'sliders' => $data
+			'data' => $data
 		));
 	}
 

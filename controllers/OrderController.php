@@ -228,14 +228,12 @@ class OrderController extends Controller {
     $subregion = $body['subregion'];
     $address = $body['address'];
     $email = $phone . '@gmail.com';
-    $gender = 'male';
     $shipping_price = $body['shipping_price'];
     $discount = $body['discount'];
     $payment_method = $body['payment_method'];
 
     $customer = new stdClass();
     $customer->name = $name;
-    $customer->gender = $gender;
     $customer->email = $email;
     $customer->phone = $phone;
     $customer->address = $address;

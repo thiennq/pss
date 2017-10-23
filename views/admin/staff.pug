@@ -44,7 +44,7 @@ block content
 		      tbody
             each item in user
               tr
-                td=item.fullname
+                td=item.name
                 td=item.email
                 td=item.role
                 td
@@ -66,7 +66,7 @@ block content
                   .form-group
                     label.col-sm-2.control-label Họ tên
                     .col-sm-10
-                      input.form-control(type="text" name="fullname" placeholder="Họ tên" required)
+                      input.form-control(type="text" name="name" placeholder="Họ tên" required)
                   .form-group
                     label.col-sm-2.control-label Email
                     .col-sm-10
@@ -108,7 +108,7 @@ block content
                   .form-group
                     label.col-sm-2.control-label Họ tên
                     .col-sm-10
-                      input.form-control(type="text" name="fullname" required)
+                      input.form-control(type="text" name="name" required)
                   .form-group
                     label.col-sm-2.control-label Email
                     .col-sm-10
