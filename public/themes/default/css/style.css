@@ -8651,106 +8651,6 @@ header {
       color: #fc2330 !important;
       padding: 5px; }
 
-#menuModal {
-  background: rgba(0, 0, 0, 0.7); }
-  #menuModal .modal-dialog {
-    margin: 0; }
-    #menuModal .modal-dialog .modal-content {
-      width: 100%;
-      background: #E6E7E8;
-      border-radius: 0;
-      margin-top: 47px;
-      border: none;
-      padding: 10px 0;
-      position: relative; }
-      #menuModal .modal-dialog .modal-content .btn-close {
-        text-align: center;
-        display: block;
-        position: absolute;
-        right: 0;
-        top: -47px;
-        background: #E6E7E8;
-        padding: 15px; }
-        #menuModal .modal-dialog .modal-content .btn-close img {
-          width: 80%; }
-      #menuModal .modal-dialog .modal-content .title {
-        font-size: 20px;
-        letter-spacing: 1px;
-        font-weight: 700;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        padding-left: 25px;
-        border-bottom: 1px solid #aaa;
-        position: relative; }
-        #menuModal .modal-dialog .modal-content .title .drop {
-          display: inline;
-          height: 42px;
-          width: 42px;
-          position: absolute;
-          right: 20px;
-          top: -8px; }
-          #menuModal .modal-dialog .modal-content .title .drop img {
-            display: block;
-            width: 23px;
-            position: absolute; }
-            #menuModal .modal-dialog .modal-content .title .drop img.minus-btn {
-              top: 20px;
-              right: 10px;
-              display: none; }
-            #menuModal .modal-dialog .modal-content .title .drop img.add-btn {
-              top: 10px;
-              right: 10px; }
-        #menuModal .modal-dialog .modal-content .title.saleoff {
-          color: #fc2330;
-          display: block; }
-        #menuModal .modal-dialog .modal-content .title.dropdown a {
-          color: #000;
-          display: inline-block;
-          padding-right: 67%;
-          padding-bottom: 5px; }
-        #menuModal .modal-dialog .modal-content .title.dropdown .dropdown-menu {
-          width: 100%;
-          position: relative;
-          top: 5px;
-          background: inherit;
-          box-shadow: none;
-          border: none; }
-        #menuModal .modal-dialog .modal-content .title.dropdown.open img.minus-btn {
-          display: inline-block; }
-        #menuModal .modal-dialog .modal-content .title.dropdown.open img.add-btn {
-          display: none; }
-        #menuModal .modal-dialog .modal-content .title .menu-container {
-          padding: 0px 10px;
-          text-transform: initial;
-          font-weight: 500;
-          font-size: 15px;
-          font-family: 'Roboto', sans-serif; }
-          #menuModal .modal-dialog .modal-content .title .menu-container li {
-            margin-bottom: 5px; }
-      #menuModal .modal-dialog .modal-content .hotline {
-        font-size: 11px;
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: .5px;
-        text-align: center; }
-        @media screen and (max-width: 405px) and (min-width: 341px) {
-          #menuModal .modal-dialog .modal-content .hotline {
-            font-size: 10px; } }
-        @media screen and (max-width: 340px) {
-          #menuModal .modal-dialog .modal-content .hotline {
-            font-size: 9px; } }
-        #menuModal .modal-dialog .modal-content .hotline span {
-          color: #101010;
-          font-size: 18px;
-          position: relative;
-          top: 1px; }
-          @media screen and (max-width: 405px) and (min-width: 341px) {
-            #menuModal .modal-dialog .modal-content .hotline span {
-              font-size: 17px; } }
-          @media screen and (max-width: 340px) {
-            #menuModal .modal-dialog .modal-content .hotline span {
-              font-size: 16px; } }
-
 .brand .list-brand {
   padding: 0 0 20px; }
   .brand .list-brand ul {
@@ -9487,34 +9387,6 @@ footer {
     min-height: 30px;
     line-height: 30px;
     border-bottom: 0; }
-    .sidebar .item > .title-sidebar {
-      background-color: #e6e7e8;
-      display: block;
-      color: #000;
-      font-weight: bold;
-      position: relative;
-      padding-left: 30px;
-      text-transform: uppercase;
-      font-size: 15px; }
-      .sidebar .item > .title-sidebar .i-add {
-        width: 17px;
-        height: 17px;
-        background-size: contain !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        position: absolute;
-        left: 5px;
-        top: 5px; }
-      .sidebar .item > .title-sidebar .i-subtract {
-        width: 17px;
-        height: 17px;
-        background-size: contain !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        position: absolute;
-        left: 5px;
-        top: 5px;
-        display: none; }
     .sidebar .item .item-child {
       line-height: 23px;
       padding-left: 20px;
@@ -10300,18 +10172,6 @@ footer {
     top: -13px;
     left: calc(50% - 50px);
     background-color: white; }
-  .homepage .top-brand .brands {
-    padding: 0 15px; }
-    .homepage .top-brand .brands ul {
-      width: 25%;
-      display: inline-block;
-      float: left; }
-      .homepage .top-brand .brands ul li {
-        width: 100%;
-        margin-bottom: 5px; }
-        .homepage .top-brand .brands ul li a {
-          font-size: 9px;
-          color: #000; }
 
 @media (max-width: 767px) {
   .homepage > .container {
@@ -12004,32 +11864,6 @@ span.middle-inline-block {
 .anti-click {
   pointer-events: none;
   cursor: default; }
-
-@media (max-width: 767px) {
-  .top-brand-footer {
-    margin-bottom: 30px; }
-    .top-brand-footer .title {
-      text-align: center;
-      margin-bottom: 30px;
-      padding-bottom: 3px;
-      border-bottom: 1px solid gray; }
-      .top-brand-footer .title span {
-        font-size: 20px;
-        padding: 0 10px;
-        position: relative;
-        bottom: -18px;
-        background: #fff;
-        letter-spacing: 1px; }
-    .top-brand-footer .brands ul {
-      display: inline-block;
-      width: calc(100% / 4);
-      float: left; }
-      .top-brand-footer .brands ul li a {
-        color: #000;
-        font-family: 'Roboto', sans-serif;
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 1px; } }
 
 .error {
   border-color: red; }

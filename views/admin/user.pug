@@ -1,25 +1,12 @@
 extends ./layout.pug
 
 block pre-include
-  - var menu = 'staff';
-  - var childMenu = 'staff';
+  - var menu = 'user';
+  - var childMenu = 'user';
   title Quản lý người dùng
-  link(rel='stylesheet', href='/include/dataTables.bootstrap.css')
 
 block post-include
-  script(src='/include/jquery.dataTables.min.js')
-  script(src='/include/dataTables.bootstrap.min.js')
-  script(src='/js/admin/staff.js')
-  script.
-    var tblArticle = $("table").DataTable({
-      aaSorting: [],
-      bDestroy: true,
-      rowReorder: {
-        selector: 'td:nth-child(2)'
-      },
-      responsive: true,
-      rowReorder: false,
-    });
+  script(src=staticURI() +'/js/admin/user.js')
 
 block content
 	section.content-header.clearfix
@@ -31,7 +18,7 @@ block content
     ol.button-right.col-sm-4.col.xs-12
       li
         a.btn.btn-default(data-toggle="modal" data-target="#modal-add") Thêm nhân viên
-  section.content.staff
+  section.content
 		.box
 		  .box-body
 		    table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
@@ -43,17 +30,21 @@ block content
               th Chỉnh sửa
 		      tbody
             each item in user
-              tr
-                td=item.name
-                td=item.email
-                td=item.role
-                td
-                  a.btn-edit.btn-edit-user(data-id=item.id)
-                    i.fa.fa-pencil-square-o
-                  - var checkmail = compareString(item['email'], login_email);
-                  unless checkmail
-                    a.btn-remove(data-id=item.id)
-                      i.fa.fa-trash
+              unless item.role == 'super'
+                tr
+                  td=item.name
+                  td=item.email
+                  td
+                    if item.role == 'admin'
+                      label.label.label-success Administrator
+                    else
+                      label.label.label-info User
+                  td
+                    a.btn-edit.btn-edit-user(data-id=item.id)
+                      i.fa.fa-pencil-square-o
+                    if item.email != login_email
+                      a.btn-remove(data-id=item.id)
+                        i.fa.fa-trash
       #modal-add.modal.fade(role='dialog')
         .modal-dialog
           form.modal-content.form-add-user
@@ -74,24 +65,9 @@ block content
                   .form-group
                     label.col-sm-2.text-center.pd-0 Phân quyền
                     .col-sm-10
-                      label.item-role
-                        input(type="checkbox" name="role_product" value="1")
-                        | Sản phẩm
-                      label.item-role
-                        input(type="checkbox" name="role_order" value="1")
-                        | Đơn hàng
-                      label.item-role
-                        input(type="checkbox" name="role_customer" value="1")
-                        | Khách hàng
-                      label.item-role
-                        input(type="checkbox" name="role_article" value="1")
-                        | Bài viết
-                      label.item-role
-                        input(type="checkbox" name="role_setting" value="1")
-                        | Thiết lập chung
-                      label.item-role
-                        input(type="checkbox" name="role_staff" value="1")
-                        | Nhân viên
+                      select.form-control(name="role")
+                        option(value="admin") Administrator
+                        option(value="user") User
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Đóng
               button.btn.btn-admin(type='submit') Đồng ý
@@ -116,24 +92,9 @@ block content
                   .form-group
                     label.col-sm-2.text-center.pd-0 Phân quyền
                     .col-sm-10
-                      label.item-role
-                        input(type="checkbox" name="role_product" value="1")
-                        | Sản phẩm
-                      label.item-role
-                        input(type="checkbox" name="role_order" value="1")
-                        | Đơn hàng
-                      label.item-role
-                        input(type="checkbox" name="role_customer" value="1")
-                        | Khách hàng
-                      label.item-role
-                        input(type="checkbox" name="role_article" value="1")
-                        | Bài viết
-                      label.item-role
-                        input(type="checkbox" name="role_setting" value="1")
-                        | Thiết lập chung
-                      label.item-role
-                        input(type="checkbox" name="role_staff" value="1")
-                        | Nhân viên
+                      select.form-control(name="role")
+                        option(value="admin") Administrator
+                        option(value="user") User
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Hủy
               button.btn.btn-admin(type='submit') Đồng ý

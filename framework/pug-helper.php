@@ -48,32 +48,21 @@ function listArticles($blogId, $pageNumber) {
 }
 
 function getHotArticle($id) {
-  error_log($id);
-  $hot_article = Article::where('id', '!=', $id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
-  error_log(json_encode($hot_article));
-  return $hot_article;
+  $data = Article::where('id', '!=', $id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
+  return $data;
 }
 
 function getRelatedArticle($articleId) {
   $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->first();
-
   $related_article = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
-
   return $related_article;
 }
 
 function menu() {
-  if(getMemcached('menus')) $menus = getMemcached('menus');
-  else {
-    $menus = Menu::listAll();
-    setMemcached("menus", $menus);
-  }
-  return $menus;
-}
-
-function menuSidebarCollection() {
-  $menu = Menu::menuSidebarCollection();
-  return $menu;
+  if(getMemcached('menus')) return getMemcached('menus');
+  $data = Menu::fetch();
+  setMemcached("menus", $data);
+  return $data;
 }
 
 function ddMMYYYY($datetime) {
@@ -124,58 +113,6 @@ function facebook_image() {
   return getMeta('facebook_image');
 }
 
-function Brand() {
-  $list_brand = [];
-  $brands = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->groupBy('brand.name')->select('brand.handle as handle', 'brand.name as name')->get()->toArray();
-  $count_brand = count($brands);
-  $floor = floor($count_brand / 7);
-  $fmod = fmod($count_brand, 7);
-  $skip = 0;
-  $temp = 1;
-  for ($i=0; $i<7; $i++) {
-    $perpage = $floor;
-    $skip = $i * $floor;
-    $take = $floor;
-    if($fmod) {
-      $take = $take + 1;
-      $fmod--;
-      if($i) {
-        $skip = $skip + $temp;
-        $temp++;
-      }
-    } else $skip = $skip + $temp;
-    $brand = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->select('brand.handle as handle', 'brand.name as name')->skip($skip)->take($take)->groupBy('brand.name')->get();
-    array_push($list_brand, $brand);
-  }
-  return $list_brand;
-}
-
-function BrandatIndexPage() {
-  $list_brand = [];
-  $brands = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->groupBy('brand.name')->select('brand.handle as handle', 'brand.name as name')->get()->toArray();
-  $count_brand = count($brands);
-  $floor = floor($count_brand / 4);
-  $fmod = fmod($count_brand, 4);
-  $skip = 0;
-  $temp = 1;
-  for ($i=0; $i<4; $i++) {
-    $perpage = $floor;
-    $skip = $i * $floor;
-    $take = $floor;
-    if($fmod) {
-      $take = $take + 1;
-      $fmod--;
-      if($i) {
-        $skip = $skip + $temp;
-        $temp++;
-      }
-    } else $skip = $skip + $temp;
-    $brand = Brand::join('product', 'product.brand', '=', 'brand.name')->where('product.display', 1)->where('product.price', '>', 0)->select('brand.handle as handle', 'brand.name as name')->skip($skip)->take($take)->groupBy('brand.name')->get();
-    array_push($list_brand, $brand);
-  }
-  return $list_brand;
-}
-
 function countArr($arr) {
   return count($arr);
 }
@@ -185,42 +122,13 @@ function money($money) {
   return 0;
 }
 
-function _money($money) {
-  if($money) return number_format($money);
-  return 0;
-}
-
 function name() {
   $name = $_SESSION["name"];
   return $name;
 }
 
 function role() {
-  $email = $_SESSION["email"];
-  $role = Role::where('email', $email)->first();
-  return $role;
-}
-
-function compareString($str1, $str2) {
-  if ($str1 == $str2) return true;
-  return false;
-}
-
-function get_google_analytics() {
-  $google_analytics = Meta::where('key', 'GOOGLE_ANALYTICS')->first();
-  return $google_analytics['value'];
-}
-
-function get_facebook_pixels() {
-  $google_pixels = Meta::where('key', 'FACEBOOK_PIXELS')->first();
-  return $google_pixels['value'];
-}
-
-function get_google_adwords($price) {
-  $price = (float) $price - 30000;
-  $google_adwords = Meta::where('key', 'GOOGLE_ADWORDS')->first();
-  $google_adwords['value'] = str_replace('{{price}}', $price, $google_adwords['value']);
-  return $google_adwords['value'];
+  return $_SESSION['role'];
 }
 
 function currentHost() {
@@ -286,62 +194,17 @@ function livechat() {
   return getMeta('livechat');
 }
 
-function banner_default_fb() {
-  $banner = Slider::where('display', 1)->first();
-  return HOST . '/uploads/' . $banner->image;
-}
-
-function PHPMailer($to, $subject, $body, $text) {
-  $mail = new PHPMailer;
-  include ROOT . '/framework/phpmailer.php';
-
-  $mail->IsSMTP();
-  $mail->Host = $STMP_HOST;
-  $mail->SMTPAuth = true;
-  $mail->Username = $STMP_USERNAME;
-  $mail->Password = $STMP_PASSWORD;
-  $mail->SMTPSecure = $STMP_SECURE;
-  $mail->Port = $STMP_PORT;
-  $mail->setFrom($STMP_USERNAME, 'Admin');
-  $mail->AddAddress($to);
-  $mail->isHTML(true);
-  $mail->Subject = $subject;
-  $mail->Body    = $body;
-  $mail->AltBody = $text;
-  $mail->CharSet = "UTF-8";
-  $mail->FromName = "GYPSY";
-  if(!$mail->send())  {
-    $message = "SEND FAILED !!! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
-    return $STMP_USERNAME;
-  }
-  $message = "SEND SUCCESS ! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
-  return true;
-}
-
-// INDEX
 function slider() {
-  if(getMemcached('slider')) {
-    $slider = getMemcached('slider');
-  }
-  else {
-    $slider = Slider::where('display', 1)->get();
-    // setMemcached("slider", $slider);
-  }
-  return $slider;
-}
-
-function brandIndex() {
-  $test = Brand::where('display', 1)->get();
-  if(getMemcached('brandIndex')) return getMemcached('brandIndex');
-  $brand = Brand::where('display', 1)->where('highlight', 1)->take(8)->get();
-  // setMemcached("brandIndex", $brand);
-  return $brand;
+  if(getMemcached('slider')) return getMemcached('slider');
+  $data = Slider::where('display', 1)->get();
+  setMemcached("slider", $data);
+  return $data;
 }
 
 function collectionIndex() {
   if(getMemcached('productIndex')) return getMemcached('productIndex');
   $data = array();
-  for ($i=1; $i < 5; $i++) {
+  for ($i=1; $i < 4; $i++) {
     $obj = new stdClass();
     $obj->title = getMeta('index_collection_title_' . $i);
     $collection_id = getMeta('index_collection_id_' . $i);
@@ -354,16 +217,13 @@ function collectionIndex() {
     $obj->products = $products;
     array_push($data, $obj);
   }
-  // setMemcached("productIndex", $data);
+  setMemcached("productIndex", $data);
   return $data;
 }
 
 function articleIndex() {
   if(getMemcached('articleIndex')) return getMemcached('articleIndex');
   $articles = Article::where('display', 1)->where('type', 'tin-tuc')->orderby('updated_at', 'desc')->take(4)->get();
-  // setMemcached("articleIndex", $articles);
+  setMemcached("articleIndex", $articles);
   return $articles;
 }
-
-
-// END INDEX

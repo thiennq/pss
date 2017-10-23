@@ -5,18 +5,6 @@ if total_pages
         span.dropdown-toggle(data-toggle='dropdown') Thương hiệu
           span.caret
         span.triangle
-        //- - var brands = Brand();
-        //- .dropdown-menu.col-xs-12.list-all-brand-filter
-        //-   each item, index in brands
-        //-     ul.col-xs-2
-        //-       each i in item
-        //-         li(data-id=i.name)
-        //-           img(src="/images/checkbox.jpg")
-        //-           label.checkbox
-        //-           span=i.name
-        //-       if index == 0
-        //-         li.last-item
-        //-           a.btn-filter.hidden(href="#")
         ul.dropdown-menu.col-xs-12
           each item in list_brand
             li(data-id=item)

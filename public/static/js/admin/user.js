@@ -1,4 +1,4 @@
-var tbl = $("table").DataTable();
+initDataTable('table');
 
 $('.form-add-user').on('submit', function(e) {
   e.preventDefault();
@@ -53,17 +53,11 @@ $(document).on('click', '.btn-edit', function() {
     url: '/admin/user/' + id,
     success: function(json) {
       if(!json.code) {
-        console.log(json.data);
         var modal = $('#modal-edit');
         modal.find('.btn-admin').attr('data-id', json.data.id);
         modal.find('input[name="name"]').val(json.data.name);
         modal.find('input[name="email"]').val(json.data.email);
-        if(json.data.role.product) modal.find('input[name="role_product"]').prop('checked', true);
-        if(json.data.role.order) modal.find('input[name="role_order"]').prop('checked', true);
-        if(json.data.role.setting) modal.find('input[name="role_setting"]').prop('checked', true);
-        if(json.data.role.staff) modal.find('input[name="role_staff"]').prop('checked', true);
-        if(json.data.role.customer) modal.find('input[name="role_customer"]').prop('checked', true);
-        if(json.data.role.article) modal.find('input[name="role_article"]').prop('checked', true);
+        modal.find('select[name="role"]').val(json.data.role);
         modal.modal('show');
       } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }

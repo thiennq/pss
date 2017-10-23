@@ -2,14 +2,14 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/User.php");
-require_once("../models/Role.php");
-
+require_once(ROOT . '/controllers/helper.php');
+use ControllerHelper as Helper;
 
 class AdminUserController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$user = User::orderBy('updated_at', 'desc')->get();
-		return $this->view->render($response, 'admin/staff.pug', array(
+		return $this->view->render($response, 'admin/user.pug', array(
 			'login_email' => $login_email,
 			'user' => $user
 		));
@@ -18,8 +18,12 @@ class AdminUserController extends AdminController {
   public function show(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $user = User::find($id);
-    $role = Role::where('email', $user->email)->first();
-    $user->role = $role;
+		if (!$user) {
+			return $response->withJson([
+				'code' => -2,
+				'message' => 'Not found'
+			]);
+		}
     return $response->withJson([
       'code' => 0,
       'data' => $user
@@ -28,44 +32,13 @@ class AdminUserController extends AdminController {
 
   public function store (Request $request, Response $response) {
 		$body = $request->getParsedBody();
-    $user = User::where('email', $body['email'])->first();
-    if($user) {
-			return $response->withJson([
-				'code' => -1,
-				'message' => 'Exists'
-			]);
-    }
-		$user = new User;
-    $user->name = $body['name'];
-    $user->email = $body['email'];
-    $user->password = password_hash(123456, PASSWORD_DEFAULT);
-		$user->created_at = date('Y-m-d H:i:s');
-		$user->updated_at = date('Y-m-d H:i:s');
-		if($user->save()) {
-      $obj = new stdClass();
-      $obj->email = $body['email'];
-      $obj->product = $body['role_product'];
-      $obj->order = $body['role_order'];
-      $obj->customer = $body['role_customer'];
-      $obj->article = $body['role_article'];
-      $obj->setting = $body['role_setting'];
-      $obj->staff = $body['role_staff'];
-      Role::store($obj);
-      User::sendEmail($body['name'], $body['email'], 123456);
-			return json_encode(array(
-				'code' => 0,
-				'message' => 'Tạo tài khoản thành công'
-			));
-		} else {
-			return json_encode(array(
-				'code' => -2,
-				'message' => 'Có lỗi xảy ra, xin vui lòng thử lại'
-			));
-		}
+		$code = User::store($body);
+		$result = Helper::response($code);
+		return $response->withJson($result, 200);
 	}
 
   public function getlogin(Request $request, Response $response) {
-    if(in_array('login', $_SESSION) && $_SESSION['login']){
+    if(in_array('login', $_SESSION) && $_SESSION['login']) {
       $href = $_SESSION['href'];
       if(!$href) $href = '/admin/collections';
       return $response->withStatus(302)->withHeader('Location', $href);
@@ -77,28 +50,15 @@ class AdminUserController extends AdminController {
     $body = $request->getParsedBody();
 		$email = $body['email'];
 		$password = $body['password'];
-		$data = User::where('email', $email)->first();
-    if($data) {
-      if(password_verify($password, $data->password)){
+		$user = User::where('email', $email)->first();
+    if($user) {
+      if(password_verify($password, $user->password)) {
         $_SESSION['login'] = true;
-        $_SESSION['user_id'] = $data->id;
-        $_SESSION['email'] = $data->email;
-        $_SESSION['name'] = $data->name;
-        $role = Role::where('email', $data->email)->first();
-        $arr_role = array();
-        if($role->product) array_push($arr_role, 'product');
-        if($role->order) array_push($arr_role, 'order');
-        if($role->customer) array_push($arr_role, 'customer');
-        if($role->article) array_push($arr_role, 'article');
-        if($role->setting) array_push($arr_role, 'setting');
-        if($role->staff) array_push($arr_role, 'staff');
-        $_SESSION['role'] = $arr_role;
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['email'] = $user->email;
+        $_SESSION['name'] = $user->name;
+				$_SESSION['role'] = $user->role;
         $href = '/admin/login';
-        if($role->product) $href = '/admin/collections';
-        else if($role->order) $href = '/admin/order';
-        else if($role->customer) $href = '/admin/customer';
-        else if($role->article) $href = '/admin/article/news';
-        else if($role->staff) $href = '/admin/user';
         if($_SESSION['href']) $href = $_SESSION['href'];
         return $response->withJson([
           'code' => 0,
@@ -129,12 +89,12 @@ class AdminUserController extends AdminController {
     $user_id = $_SESSION["user_id"];
     $password = $body['password'];
     $new_password = $body['new_password'];
-    $User = User::find($user_id);
-    if($User) {
-      if(password_verify($password, $User->password)){
-        $User->password = password_hash($new_password, PASSWORD_DEFAULT);
-    		$User->updated_at = date('Y-m-d H:i:s');
-        $User->save();
+    $user = User::find($user_id);
+    if($user) {
+      if(password_verify($password, $user->password)){
+        $user->password = password_hash($new_password, PASSWORD_DEFAULT);
+    		$user->updated_at = date('Y-m-d H:i:s');
+        $user->save();
         return $response->withJson([
 					'code' => 0,
           'message' => 'Changed'
@@ -153,54 +113,16 @@ class AdminUserController extends AdminController {
   public function update(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $body = $request->getParsedBody();
-		$user = User::find($id);
-		if($user) {
-			$check = User::where('id', '!=', $id)->where('email', $body['email'])->first();
-			if($check) {
-				return $response->withJson([
-					'code' => -1,
-	        'message' => 'Exist'
-				]);
-			}
-      $user->name = $body['name'];
-      $user->email = $body['email'];
-      $user->save();
-      $obj = new stdClass();
-      $obj->email = $body['email'];
-      $obj->product = $body['role_product'];
-      $obj->order = $body['role_order'];
-      $obj->customer = $body['role_customer'];
-      $obj->article = $body['role_article'];
-      $obj->setting = $body['role_setting'];
-      $obj->staff = $body['role_staff'];
-      Role::store($obj);
-			return $response->withJson([
-				'code' => 0,
-        'message' => 'Updated'
-			]);
-    }
-		return $response->withJson([
-			'code' => -2,
-			'message' => 'Not found'
-		]);
+		$code = User::update($id, $body);
+		$result = Helper::response($code);
+		return $response->withJson($result, 200);
 	}
-
 
   public function delete(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-		$user = User::find($id);
-		if($user) {
-      Role::where('email', $user->email)->delete();
-      $user->delete();
-			return $response->withJson([
-				'code' => 0,
-        'message' => 'Deleted'
-			]);
-    }
-		return $response->withJson([
-			'code' => -1,
-			'message' => 'Not found'
-		]);
+		$code = User::remove($id);
+		$result = Helper::response($code);
+		return $response->withJson($result, 200);
 	}
 
 }

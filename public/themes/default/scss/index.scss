@@ -192,22 +192,6 @@
       left: calc(50% - 50px);
       background-color: white;
     }
-    .brands {
-      padding: 0 15px;
-      ul {
-        width: 25%;
-        display: inline-block;
-        float: left;
-        li {
-          width: 100%;
-          margin-bottom: 5px;
-          a {
-            font-size: 9px;
-            color: #000;
-          }
-        }
-      }
-    }
   }
 }
 @media (max-width: 767px) {

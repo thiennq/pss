@@ -22,8 +22,6 @@ header(data-uri=themeURI())
               img(src="/themes/default/img/search-icon.png").hidden-xs.search-icon
               img(src="/themes/default/img/search-icon-mobile.png").visible-xs.search-icon
               ul.search-result
-        .col-xs-2.visible-xs.collapsed-bars
-          img(src="/themes/default/img/collapsed-bars.png")(type='button', data-toggle='modal', data-target='#menuModal')
       ul.main-menu.clearfix.hidden-xs
         - var menus = menu();
         each menu in menus
@@ -50,32 +48,3 @@ header(data-uri=themeURI())
               a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/cart") Xem giỏ hàng
             .checkout-notes.r.col-xs-6
               a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/checkout") Thanh toán
-#menuModal.modal.fade(role='dialog' aria-labelledby='menuModalLabel')
-  .modal-dialog(role="document")
-    .modal-content
-      a.btn-close(data-dismiss="modal")
-        img(src=themeURI() +"/img/i-close.png" alt="close-btn")
-      a.menu.title.saleoff.clearfix(href="/giam-gia-50") SALE UP TO 50%
-      - var menu_sidebar = menuSidebarCollection();
-      each item in menu_sidebar
-        .menu.title.dropdown.clearfix
-          a(href=item.link)=item.title
-          .drop(data-toggle='dropdown')
-            img.add-btn(src=themeURI() +"/img/i-plus.png" alt="close-btn")
-            if item.count_child
-              img.minus-btn(src=themeURI() +"/img/i-min.png" alt="close-btn")
-          if item.count_child
-            ul.menu-container.dropdown-menu#vali
-              each child in item.childs
-                li 
-                  a(href=child.link)=child.title
-                    |  [
-                    =child.count_product
-                    | ]
-      .row.hotline
-        .col-xs-6.pd-right-0
-          | Gọi mua hàng &nbsp;
-          span=hotline1()
-        .col-xs-6.pd-left-0
-          | Góp ý, khiếu nại &nbsp;
-          span=hotline2()

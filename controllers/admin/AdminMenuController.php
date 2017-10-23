@@ -21,7 +21,7 @@ class AdminMenuController extends AdminController {
 	}
 
 	public function index(Request $request, Response $response) {
-		$menu = Menu::listAll();
+		$menu = Menu::fetch();
 		$blog = Blog::all();
 		$article = Article::all();
     $page = Page::all();

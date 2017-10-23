@@ -147,18 +147,6 @@
     top: -13px;
     left: calc(50% - 50px);
     background-color: white; }
-  .homepage .top-brand .brands {
-    padding: 0 15px; }
-    .homepage .top-brand .brands ul {
-      width: 25%;
-      display: inline-block;
-      float: left; }
-      .homepage .top-brand .brands ul li {
-        width: 100%;
-        margin-bottom: 5px; }
-        .homepage .top-brand .brands ul li a {
-          font-size: 9px;
-          color: #000; }
 
 @media (max-width: 767px) {
   .homepage > .container {

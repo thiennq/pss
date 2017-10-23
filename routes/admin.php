@@ -148,7 +148,7 @@ $app->group('/admin', function() use($app) {
   $app->get('/images', '\AdminSettingController:getImages');
   $app->delete('/api/images/remove', '\AdminSettingController:removeImage');
 
-  //Staff
+  //User
   $app->get('/user', '\AdminUserController:index');
   $app->get('/user/{id}', '\AdminUserController:show');
   $app->post('/user', '\AdminUserController:store');

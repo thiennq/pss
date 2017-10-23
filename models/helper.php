@@ -374,12 +374,51 @@ function rotateImage(Request $request, Response $response) {
   return convertImage($file, $size[0]);
 }
 
-function initDB() {
-  $obj = new stdClass();
-  $obj->name = 'Admin';
-  $obj->email = 'admin@gmail.com';
-  $obj->phone = '0123456789';
-  $obj->role = 'admin';
-  $obj->password = 'admin';
-  User::store($obj);
+function initUser(Request $request, Response $response) {
+  $check = User::where('role', 'super')->first();
+  if($check) {
+    return $response->withJson([
+      'code' => -1,
+      'message' => 'User exist'
+    ]);
+  }
+  $user = new User;
+  $user->name = 'Super';
+  $user->email = 'admin@eyeteam.vn';
+  $user->phone = '9999999999';
+  $user->role = 'super';
+  $user->password = password_hash('eyeteam.vn', PASSWORD_DEFAULT);
+  $user->created_at = date('Y-m-d H:i:s');
+  $user->updated_at = date('Y-m-d H:i:s');
+  $user->save();
+  return $response->withJson([
+    'code' => 0,
+    'message' => 'Create user success'
+  ]);
+}
+
+function PHPMailer($to, $subject, $body, $text) {
+  $mail = new PHPMailer;
+  include ROOT . '/framework/phpmailer.php';
+  $mail->IsSMTP();
+  $mail->Host = $STMP_HOST;
+  $mail->SMTPAuth = true;
+  $mail->Username = $STMP_USERNAME;
+  $mail->Password = $STMP_PASSWORD;
+  $mail->SMTPSecure = $STMP_SECURE;
+  $mail->Port = $STMP_PORT;
+  $mail->setFrom($STMP_USERNAME, 'Admin');
+  $mail->AddAddress($to);
+  $mail->isHTML(true);
+  $mail->Subject = $subject;
+  $mail->Body    = $body;
+  $mail->AltBody = $text;
+  $mail->CharSet = "UTF-8";
+  $mail->FromName = "GYPSY";
+  if(!$mail->send())  {
+    $message = "SEND FAILED !!! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
+    return $STMP_USERNAME;
+  }
+  $message = "SEND SUCCESS ! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
+  return true;
 }

@@ -1,19 +1,4 @@
 .sidebar.clearfix(data-id=collection.id)
-  - var menu_sidebar = menuSidebarCollection();
-  each item in menu_sidebar
-    .item
-      a.title-sidebar(href=item.link)
-        .i-add(style="background:url("+themeURI()+"/img/i-add.png)")
-        if item.count_child
-          .i-subtract(style="background:url("+themeURI()+"/img/i-subtract.png)")
-        =item.title
-      if item.count_child
-        .item-child
-          each child in item.childs
-            a(href=child.link)=child.title
-              |  [
-              =child.count_product
-              | ]
   .filter-sidebar.clearfix
     if count(list_size)
       .item.clearfix(data-type="size")

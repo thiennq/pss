@@ -593,18 +593,6 @@ div.mce-fullscreen {
 .modal .btn-admin img {
   border: 0 !important; }
 
-.staff .item-role {
-  font-weight: normal;
-  display: inline-block;
-  width: 30%;
-  padding-right: 10px;
-  margin-bottom: 10px;
-  cursor: pointer; }
-  .staff .item-role input {
-    margin-right: 5px;
-    position: relative;
-    top: 2px; }
-
 .btn-remove-image {
   cursor: pointer;
   color: red; }
