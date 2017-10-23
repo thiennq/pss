@@ -22,19 +22,14 @@ block content
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
   section.content.blog
-    .box.box-info
-      .form-horizontal.form-blog
+    .box
+      .form-horizontal
         .box-body
           .form-group
             label.col-sm-2.control-label Tiêu đề
               strong.required  *
             .col-sm-10
               input.form-control(name="title", data-title='', data-handle='', placeholder="Tiêu đề")
-          .form-group
-            label.col-sm-2.control-label Handle
-              strong.required  *
-            .col-sm-10
-              input.form-control(name="handle")
           .form-group
             label.col-sm-2.control-label Hình đại diện
               img.no-border.loading(src=staticURI() + "/img/loading.gif").hidden
@@ -44,18 +39,35 @@ block content
               input(type="hidden" name="image")
           .form-group
             label.col-sm-2.control-label Mô tả
-              strong.required  *
             .col-sm-10
               textarea.form-control(name="description")
-          .form-group
-            label.col-sm-2.control-label Meta description
-            .col-sm-10
-              textarea.form-control(name="meta_description")
           .form-group
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
               textarea.form-control#blog_content
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                option(value="1") Có
+                option(value="0") Không
+    .box
+      .form-horizontal
+        .box-body
+          .form-group
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
+          .form-group
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
+            .col-sm-10
+              input.form-control(name="meta_title", placeholder="Iphone X chính hãng")
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")
           .form-group
             label.col-sm-2.control-label Meta robots
             .col-sm-10
@@ -64,9 +76,3 @@ block content
                 option(value="noindex, follow") No Index, Follow
                 option(value="index, nofollow") Index, No Follow
                 option(value="noindex, nofollow") No Index, No Follow
-          .form-group
-            label.col-sm-2.control-label Hiển thị
-            .col-sm-10
-              select.form-control(name="display")
-                option(value="1") Có
-                option(value="0") Không

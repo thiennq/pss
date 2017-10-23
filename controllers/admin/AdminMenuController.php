@@ -10,9 +10,10 @@ class AdminMenuController extends AdminController {
 
 	public function getListMenu(Request $request, Response $response) {
 		$type = $request->getAttribute('type');
-		if($type == 'collection') $data = Collection::orderBy('breadcrumb', 'asc')->get();
-		/*else if($type == 'tin-tuc') $data = Article::listAllArticle();
-    else if($type == 'thong-tin') $data = Article::listAllPage();*/
+		if ($type == 'collection') $data = Collection::orderBy('breadcrumb', 'asc')->get();
+		else if ($type == 'blog') $data = Blog::orderBy('title', 'desc')->get();
+		else if ($type == 'article') $data = Article::orderBy('title', 'desc')->get();
+		else if ($type == 'page') $data = Page::orderBy('title', 'desc')->get();
 		return $response->withJson([
 			'code' => 0,
 			'data' => $data

@@ -4,26 +4,37 @@ $('select[name="menu-type"]').on('change', function() {
   var type = $(this).val();
   var check = false;
   if(type == 'custom') {
+    $(this).closest('.menu-link').find('input[name="menu-link"]').removeClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-collection"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-blog"]').addClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-article"]').addClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-page"]').addClass('hidden');
-    $(this).closest('.menu-link').find('input[name="menu-link"]').removeClass('hidden');
   } else if (type == 'collection') {
     $(this).closest('.menu-link').find('select[name="menu-collection"]').removeClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-blog"]').addClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-article"]').addClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-page"]').addClass('hidden');
     $(this).closest('.menu-link').find('input[name="menu-link"]').addClass('hidden');
     check = true;
-  } else if (type == 'thong-tin') {
-    $(this).closest('.menu-link').find('select[name="menu-page"]').removeClass('hidden');
-    $(this).closest('.menu-link').find('select[name="menu-article"]').addClass('hidden');
+  } else if (type == 'blog') {
+    $(this).closest('.menu-link').find('select[name="menu-blog"]').removeClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-collection"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-article"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-page"]').addClass('hidden');
     $(this).closest('.menu-link').find('input[name="menu-link"]').addClass('hidden');
     check = true;
-  } else {
+  } else if (type == 'article') {
     $(this).closest('.menu-link').find('select[name="menu-article"]').removeClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-collection"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-blog"]').addClass('hidden');
     $(this).closest('.menu-link').find('select[name="menu-page"]').addClass('hidden');
+    $(this).closest('.menu-link').find('input[name="menu-link"]').addClass('hidden');
+    check = true;
+  } else if (type == 'page') {
+    $(this).closest('.menu-link').find('select[name="menu-page"]').removeClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-collection"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-blog"]').addClass('hidden');
+    $(this).closest('.menu-link').find('select[name="menu-article"]').addClass('hidden');
     $(this).closest('.menu-link').find('input[name="menu-link"]').addClass('hidden');
     check = true;
   }
@@ -34,11 +45,14 @@ $('select[name="menu-type"]').on('change', function() {
         if(type == 'collection') {
           options += '<option value="'+e.link+'">'+e.breadcrumb+'</option>';
           $('.menu-link').find('select[name="menu-collection"]').html(options);
-        } else if(type == "tin-tuc") {
-          options += '<option value="'+e.link+'">'+e.title+'</option>';
+        } else if(type == "blog") {
+          options += '<option value="/blog/'+e.handle+'">'+e.title+'</option>';
+          $('.menu-link').find('select[name="menu-blog"]').html(options);
+        } else if(type == "article") {
+          options += '<option value="/article/'+e.handle+'">'+e.title+'</option>';
           $('.menu-link').find('select[name="menu-article"]').html(options);
-        } else if(type == "thong-tin") {
-          options += '<option value="'+e.link+'">'+e.title+'</option>';
+        } else if(type == "page") {
+          options += '<option value="/page/'+e.handle+'">'+e.title+'</option>';
           $('.menu-link').find('select[name="menu-page"]').html(options);
         }
       });
@@ -251,11 +265,11 @@ function checkMoveValid(index) {
           setTimeout(function() {
             updateMenu();
           }, 200);
-        } 
+        }
         else {
           toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
           initDataTable('table');
-        } 
+        }
       }
     });
   }
@@ -266,7 +280,7 @@ $('.submenu').mousedown(function() {
 })
 $('.submenu').mouseup(function() {
   var self = $(this);
-  setTimeout(function(){ 
+  setTimeout(function(){
     var rows = $('tbody tr');
     rows.each(function(i, e) {
       if ($(e).attr('data-parent_id') == -1) {
@@ -275,8 +289,7 @@ $('.submenu').mouseup(function() {
       if ($(e).attr('data-id') == self.attr('data-id')) {
         checkMoveValid(i);
         return false;
-      } 
+      }
     });
   }, 500);
 });
-

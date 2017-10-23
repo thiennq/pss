@@ -6,7 +6,6 @@ $(window).on('load', function() {
 });
 
 $(document).on('change', '.feature-image', function() {
-  console.log($(this).val());
   if($(this).val()) {
     if(checkExtImage($(this).val())) {
       var form_group = $(this).closest('.form-group');
@@ -147,9 +146,3 @@ $(document).on('click', '.btn-remove-blog', function() {
 		});
   }
 })
-
-$(document).on('change', 'input[name="title"]', function() {
-  var title = $(this).val();
-  var handle = convertToHandle(title);
-  $(document).find('input[name="handle"]').val(handle);
-});

@@ -22,10 +22,10 @@ $Schema->create('blog', function (Blueprint $table) {
   $table->string('handle');
   $table->string('image')->nullable();
   $table->text('description')->nullable();
-  $table->text('meta_description')->nullable();
   $table->text('content');
-  $table->text('meta_robots');
   $table->string('author')->nullable();
+  $table->text('meta_description')->nullable();
+  $table->text('meta_robots');
   $table->boolean('display');
   $table->integer('view');
   $table->timestamps();
