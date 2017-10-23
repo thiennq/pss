@@ -69,14 +69,13 @@ block content
         //- - var content = data.content.replace(/\n/g, '<br>');
         //- .short-description.hidden-xs !{content}
         ul.list-variant.clearfix.hidden-xs
-          each image in featured_images
-            li.item-variant(data-id=image.typeId)
-              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(image.name, 240))
-              span Còn !{image.inventory} sản phẩm
+          each item in variant_items
+            li.item-variant(data-id=item.typeId)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(item.name, 240))
         form.quantity.col-xs-4.pd-0
-          input.form-control(placeholder="Nhập số lượng", name="quantity", required, type="number")
+          input.form-control(placeholder="Nhập số lượng", name="quantity", type="number", min = "1", value = "1")
         if inInventory(data.id)!=0
-          .btn-order-product(data-id=data.id, data-variant="") ĐẶT MUA GIAO HÀNG TẬN NƠI
+          .btn-order-product(data-id=data.id, data-variant="") ĐẶT HÀNG
             br
             span (Vui lòng chọn phiên bản)
         else

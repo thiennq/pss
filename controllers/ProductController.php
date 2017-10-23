@@ -21,11 +21,11 @@ class ProductController extends Controller {
     $variants = Variant::where('product_id', $product->id)->get();
     
 
-    $featured_images = array();
+    $variant_items = array();
     foreach ($variants as $key => $variant) {
-      $image = Image::where('typeId', $variant->id)->first();
-      $image = Image::join('variant', 'image.typeId', '=', 'variant.id')->where('image.id', $image->id)->first();
-      array_push($featured_images, $image);
+      $item = Image::where('typeId', $variant->id)->first();
+      $item = Image::join('variant', 'image.typeId', '=', 'variant.id')->where('image.id', $item->id)->first();
+      array_push($variant_items, $item);
     }
 
     $list_images = Variant::join('image', 'variant.id', '=', 'image.typeId')->where('variant.product_id', $product->id)->get();
@@ -46,7 +46,7 @@ class ProductController extends Controller {
   $responseData = array (
     'data' => $product,
     'variants' => $variants,
-    'featured_images' => $featured_images,
+    'variant_items' => $variant_items,
     'list_images' => $list_images,
     'related_products' => $related_products,
     'product_seen' => $product_seen
