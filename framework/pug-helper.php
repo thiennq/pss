@@ -220,10 +220,3 @@ function collectionIndex() {
   setMemcached("productIndex", $data);
   return $data;
 }
-
-function articleIndex() {
-  if(getMemcached('articleIndex')) return getMemcached('articleIndex');
-  $articles = Article::where('display', 1)->where('type', 'tin-tuc')->orderby('updated_at', 'desc')->take(4)->get();
-  setMemcached("articleIndex", $articles);
-  return $articles;
-}

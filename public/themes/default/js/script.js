@@ -35,15 +35,7 @@ if($('.slider-homepage .index-slider-carousel').length) {
     animateOut: 'fadeOut'
   });
 }
-if ($('.celebs .index-slider-carousel').length) {
-  $('.celebs .index-slider-carousel').owlCarousel({
-    nav: false,
-    dots: true,
-    loop: true,
-    items: 5,
-    animateOut: 'fadeOut'
-  });
-}
+
 
 // PRODUCT
 if ($('.product .slide-small-image').length) {

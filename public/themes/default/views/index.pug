@@ -3,7 +3,7 @@ extends ./layout.pug
 block pre-include
   title=title
   - var canonical = canonical(page_number, total_pages);
-  | #{canonical}
+  | !{canonical}
   - metaTitle = title
   if meta_description_default
     - metaDescription = meta_description_default
@@ -32,47 +32,3 @@ block content
                 each product in item.products
                   .col20.col-xs-6
                     include snippet/product-loop
-      - var articleIndex = articleIndex();
-      - var articleFirst = articleIndex[0];
-      if countArr(articleIndex)
-        .collection-group.latest-news.clearfix
-          .collection-title
-            span Tin tức
-          .news-index
-            .row
-              .number-1-news.col-sm-6.hidden-xs
-                a.cover(href='/' + articleFirst.link)
-                  img(src='/uploads/' + resize(articleFirst.image, 640))
-              .col-sm-6.col-xs-12
-                each item, index in articleIndex
-                  if device == 'desktop'
-                    if index > 0
-                      .news.clearfix
-                        .row
-                          .col-sm-4.col-xs-5.pd-left-0.pd-right-0
-                            .left(style="background: url('/uploads/"+resize(item.image, 240)+"')")
-                          .col-sm-8.col-xs-7
-                            h3.news-title
-                              a(href='/' + item.link)=item.title
-                            .description
-                              div=item.description
-                              .bottom-line.hidden-xs
-                                a(href='/' + item.link) xem thêm &gt;
-                              .bottom-line.visible-xs
-                                a(href='/' + item.link)=item.updated_at
-                  else
-                    .news.clearfix
-                      .row
-                        .col-sm-4.col-xs-5.pd-left-0.pd-right-0
-                          .left(style="background: url('/uploads/"+resize(item.image, 240)+"')")
-                        .col-sm-8.col-xs-7
-                          h3.news-title
-                            a(href='/' + item.link)=item.title
-                          .description
-                            div=item.description
-                            .bottom-line.hidden-xs
-                              a(href='/' + item.link) xem thêm &gt;
-                            .bottom-line.visible-xs
-                              a(href='/' + item.link)=item.updated_at
-            h3.news-title.hidden-xs
-              a(href='/' + articleFirst.link)=articleFirst.title
