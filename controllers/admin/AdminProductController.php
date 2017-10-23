@@ -12,7 +12,7 @@ class AdminProductController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Product::all();
-    return $this->view->render($response, 'admin/product.pug', [
+    return $this->view->render($response, 'admin/product_list.pug', [
       'data' => $data
     ]);
   }

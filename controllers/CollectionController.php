@@ -35,7 +35,7 @@ class CollectionController extends Controller {
 		$page_number = 1;
 		$params = $request->getQueryParams();
 		if($params['page']) $page_number = $params['page'];
-		$perpage = 20;
+		$perpage = 2;
 		$skip = ($page_number - 1) * $perpage;
     $query = Product::join('collection_product', 'collection_product.product_id', '=', 'product.id')
               ->where('collection_product.collection_id', $collection_id)

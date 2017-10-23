@@ -332,3 +332,11 @@ function smartSearch(Request $request, Response $response) {
     "message" => "Product not available"
   ));
 }
+
+function checkInventoryManagent($variant_id, $quantity) {
+  $variant = Variant::find($variant_id);
+  $product = Product::find($variant->product_id);
+  if (!$product->inventory_management) return true;
+  if ($variant->inventory >= $quantity) return true;
+  return false;
+}

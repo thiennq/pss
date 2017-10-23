@@ -19,17 +19,42 @@ class OrderController extends Controller {
       $check_exists = false;
       foreach ($cart as $key => $item) {
         if($item->variant_id == $body['variant_id']) {
+          $body['quantity'] += $item->quantity;
+          if (!checkInventoryManagent($body['variant_id'], $body['quantity'])) {
+            $variant = Variant::find($body['variant_id']);
+            return $response->withJson([
+              "code" => -1,
+              "in_stock" => $variant->inventory,
+              "variant" => $variant->title
+            ]);
+          }
           $item->quantity = (int) $item->quantity + 1;
           $check_exists = true;
         }
       }
       if(!$check_exists) {
+        if (!checkInventoryManagent($body['variant_id'], $body['quantity'])) {
+          $variant = Variant::find($body['variant_id']);
+          return $response->withJson([
+            "code" => -1,
+            "in_stock" => $variant->inventory,
+            "variant" => $variant->title
+          ]);
+        }
         $item = new stdClass();
         $item->variant_id = $body['variant_id'];
         $item->quantity = $body['quantity'];
         array_push($cart, $item);
       }
     } else {
+      if (!checkInventoryManagent($body['variant_id'], $body['quantity'])) {
+        $variant = Variant::find($body['variant_id']);
+        return $response->withJson([
+          "code" => -1,
+          "in_stock" => $variant->inventory,
+          "variant" => $variant->title
+        ]);
+      }
       $cart = array();
       $item = new stdClass();
       $item->variant_id = $body['variant_id'];
@@ -50,6 +75,14 @@ class OrderController extends Controller {
       $total = 0;
       foreach ($cart as $key => $item) {
         if($item->variant_id == $body['variant_id'] ) {
+          if (!checkInventoryManagent($body['variant_id'], $body['quantity'])) {
+            $variant = Variant::find($body['variant_id']);
+            return $response->withJson([
+              "code" => -1,
+              "in_stock" => $variant->inventory,
+              "variant" => $variant->title
+            ]);
+          }
           $item->quantity = $body['quantity'];
         }
         $variant = Variant::where('id', $item->variant_id)->first();
@@ -103,6 +136,7 @@ class OrderController extends Controller {
       $value->product_id = $variant->id;
       $value->image = $product->featured_image;
       $value->subTotal = (int) $variant->price * (int) $value->quantity;
+      $value->in_stock = $variant->inventory;
       $total += $value->subTotal;
       array_push($data, $value);
     }

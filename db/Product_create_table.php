@@ -22,9 +22,9 @@ $Schema->create('product', function (Blueprint $table) {
     $table->string('handle');
     $table->string('featured_image')->nullable();
     $table->boolean('inventory_management')->nullable();
+    $table->boolean('in_stock')->nullable();
     $table->text('description')->nullable();
     $table->integer('sell')->nullable();
-    $table->boolean('in_stock')->nullable();
     $table->boolean('display')->nullable();
     $table->integer('view')->nullable();
     $table->text('meta_title')->nullable();

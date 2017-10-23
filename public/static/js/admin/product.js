@@ -152,8 +152,6 @@ function updateFeaturedImage(product_id, featured_image) {
         toastr.error(json.message);
       } else if (json.code == -3) {
         toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      } else {
-        console.log('Cập nhật Hình đại diện thành công');
       }
     }
   });
