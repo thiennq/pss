@@ -28,25 +28,26 @@ block content
           .social-icon
             span.middle-inline-block
             i.fa.fa-google-plus
-      - var articleDetail = getArticleDetail(article.hanle, article.id);
-      if countArr(articleDetail.related)
+      - var relatedArticles = getRelatedArticle(article.id)
+      if count(relatedArticles)
         .relative-news.hidden-xs.row 
           .title 
             a BÀI VIẾT LIÊN QUAN
               .border
-          each article in articleDetail.related
+          each article in related_article
             .item
               .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
               .col-sm-10
                 .news-title 
                   a(href='/article/' + article.handle)=article.title
                 .news-content=article.description
-      if countArr(articleDetail.hot_article)
+      - var hotArticles = getHotArticle(article.id)
+      if count(hotArticles)
         .relative-news.hidden-xs.row 
           .title 
             a BÀI VIẾT NỔI BẬT
               .border
-          each article in articleDetail.hot_article
+          each article in hot_article
             .item
               .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
               .col-sm-10

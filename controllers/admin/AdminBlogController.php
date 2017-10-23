@@ -31,10 +31,10 @@ class AdminBlogController extends AdminController {
 
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $code = Blog::get($id);
-    if ($code == -2) {
-      $result = Helper::response($code);
-      return $response->withJson($result, 200);
+    $blog = Blog::find($id);
+    if (!$blog) {
+      $this->view->render($response, '404.pug');
+      return $response->withStatus(404);
     }
     return $this->view->render($response, 'admin/blog_edit.pug', array(
       'data' => $code

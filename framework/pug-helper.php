@@ -49,17 +49,24 @@ function listArticles($blogId, $pageNumber) {
   return $articles;
 }
 
-function getArticleDetail($articleHandle, $articleId) {
-  $responseData = array();
+function getHotArticle($articleId) {
   $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
-  
+  error_log('HOT =' . $hot_article);
+  $responseData = array(
+    'hot_article' => $hot_article
+  );
+
+  error_log('RESPONSE =' . $responseData);
+  return $responseData;
+}
+
+function getRelatedArticle($articleId) {
   $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->first();
 
-  $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
+  $related_article = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
 
   $responseData = array(
-    'hot_article' => $hot_article,
-    'related' => $related
+    'related_article' => $related_article
   );
   return $responseData;
 }
