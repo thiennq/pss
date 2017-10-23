@@ -51,20 +51,17 @@ function listArticles($blogId, $pageNumber) {
 
 function getArticleDetail($articleHandle, $articleId) {
   $responseData = array();
-  if(getMemcached('article_' . $articleHandle)) $responseData =  json_decode(getMemcached('article_' . $articleHandle), true);
-  else {
-    $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
+  $hot_article = Article::where('id', '!=', $article->id)->where('display', 1)->orderBy('view', 'desc')->orderBy('updated_at', 'desc')->take(5)->get();
+  
+  $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->first();
 
-    $blogId = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.article_id', $articleId)->inRandomOrder()->first();
+  $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
 
-    $related = Article::join('blog_article', 'article.id', '=', 'blog_article.article_id')->where('blog_article.blog_id', $blogId->blog_id)->where('blog_article.article_id','!=', $articleId)->get();
-
-    $responseData = array(
-      'hot_article' => $hot_article,
-      'related' => $related
-    );
-    return $responseData;
-  }
+  $responseData = array(
+    'hot_article' => $hot_article,
+    'related' => $related
+  );
+  return $responseData;
 }
 
 function Menu() {

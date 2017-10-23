@@ -4,6 +4,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once("../models/Article.php");
 require_once("../models/Blog.php");
 require_once("../models/BlogArticle.php");
+require_once(ROOT . '/controllers/helper.php');
+use ControllerHelper as Helper;
 
 class AdminArticleController extends AdminController {
 
@@ -16,17 +18,16 @@ class AdminArticleController extends AdminController {
 
   public function create(Request $request, Response $response) {
     $data = $request->getParsedBody();
-    $article_id = Article::create($data);
-    if ($article_id != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'id' => $article_id
-      ));
+    $code = Article::create($data);
+    if ($code) {
+      $blog_id = $data['blog_id'];
+      foreach ($blog_id as $key => $value) {
+        BlogArticle::store($value, $code);; 
+      }
     }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Error'
-    ));
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
+    
   }
 
   public function fetch(Request $request, Response $response) {
@@ -55,32 +56,26 @@ class AdminArticleController extends AdminController {
   public function update(Request $request, Response $response) {
     $data = $request->getParsedBody();
     $id = $request->getAttribute('id');
-    $article = Article::update($id, $data);
-    if ($article != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Updated'
-      ));
+    $code = Article::update($id, $data);
+    if ($code) {
+      BlogArticle::removeAll($code);
+      $blog_id = $data['blog_id'];
+      foreach ($blog_id as $key => $blogId) {
+        BlogArticle::store($blogId, $code);
+      }
     }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
   }
 
   public function delete(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $article = Article::remove($id);
-    if ($article != -1) {
-      return $response->withJson(array(
-        'code' => 0,
-        'message' => 'Deleted'
-      ));
+    $code = Article::remove($id);
+    if ($code == 0) {
+      BlogArticle::removeAll($id);  
     }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Not found'
-    ));
+    $result = Helper::response($code);
+    return $response->withJson($result, 200);
   }
 
   public function searchArticle(Request $request, Response $response) {

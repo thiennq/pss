@@ -18,7 +18,6 @@ $Schema = $capsule->schema();
 
 $Schema->create('article', function (Blueprint $table) {
   $table->increments('id');
-  $table->string('blog_id');
   $table->string('title');
   $table->string('handle');
   $table->string('image')->nullable();
