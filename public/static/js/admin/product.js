@@ -24,15 +24,6 @@ $(document).find('select').each(function() {
   if(data) $(this).val(data);
 });
 
-var featureImage = {};
-var $fImg = $('#featured_img[data-name]');
-featureImage.image = '';
-featureImage.uploaded = false;
-if ($fImg.length > 0) {
-  featureImage.image = $fImg.attr('data-name')
-  featureImage.uploaded = true;
-}
-
 var listFormData = [];
 for (var i = 0; i < $('.variant-item').length; i++) {
   listFormData.push(new FormData());
@@ -154,8 +145,6 @@ function updateFeaturedImage(product_id, featured_image) {
         toastr.error(json.message);
       } else if (json.code == -3) {
         toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      } else {
-        console.log('Cập nhật Hình đại diện thành công');
       }
     }
   });
