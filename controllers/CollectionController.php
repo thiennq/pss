@@ -169,7 +169,6 @@ class CollectionController extends Controller {
     $obj->handle = 'thuong-hieu';
     $obj->title = 'Danh sách thương hiệu';
     array_push($breadcrumb_collection, $obj);
-
 		$page_number = 1;
 		if($params['page']) $page_number = $params['page'];
 		$perpage = 20;
@@ -179,17 +178,14 @@ class CollectionController extends Controller {
 		$total_pages = ceil(count($all_products) / $perpage);
     $products = $query->orderBy('product.in_stock', 'desc')->orderBy('product.updated_at', 'desc')->skip($skip)->take($perpage)->get();
 		$products = Product::getInfoProduct($products);
-
     $list_material = array();
 		$list_color = array();
     $list_special = array();
     $list_size = array();
     $list_bag = array();
     $list_brand = array($brand->name);
-
 		$arr_temp_color = array();
     $arr_temp_special = array();
-
 		foreach ($all_products as $key => $product) {
       if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
       if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
@@ -228,122 +224,6 @@ class CollectionController extends Controller {
 			'breadcrumb_collection' => $breadcrumb_collection,
       'page_type' => 'brand',
       'brandName' => $brand->name
-		));
-	}
-
-  public function discount50(Request $request, Response $response) {
-		$page_number = 1;
-		if($params['page']) $page_number = $params['page'];
-		$perpage = 20;
-		$skip = ($page_number - 1) * $perpage;
-    $query = Product::where('product.discount', '>', 0)->where('product.display', 1)->where('product.price', '>', 0);
-    $all_products = $query->select('product.*')->get();
-		$total_pages = ceil(count($all_products) / $perpage);
-    $products = $query->orderBy('product.in_stock', 'desc')->orderBy('product.updated_at', 'desc')->skip($skip)->take($perpage)->get();
-		$products = Product::getInfoProduct($products);
-
-    $list_brand = array();
-    $list_material = array();
-		$list_color = array();
-    $list_special = array();
-    $list_size = array();
-    $list_bag = array();
-
-		$arr_temp_color = array();
-    $arr_temp_special = array();
-
-		foreach ($all_products as $key => $product) {
-      if($product->brand && !in_array($product->brand, $list_brand)) array_push($list_brand, $product->brand);
-      if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
-      if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
-      if($product->bag && !in_array($product->bag, $list_bag)) array_push($list_bag, $product->bag);
-			$product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
-				->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
-			foreach ($product_color as $key => $color) {
-				if(!in_array($color->name, $arr_temp_color)) {
-					$obj = new stdClass();
-					$obj->name = $color->name;
-					$obj->style = 'background-color: ' . $color->hex;
-					array_push($list_color, $obj);
-					array_push($arr_temp_color, $color->name);
-				}
-			}
-      $product_special = ProductSpecial::Join('special', 'product_special.special_id', '=', 'special.id')
-				->where('product_special.product_id', $product->id)->select('special.name as name')->get();
-			foreach ($product_special as $key => $special) {
-        if ($special->name && !in_array($special->name, $list_special)) array_push($list_special, $special->name);
-			}
-		}
-    sort($list_brand);
-    return $this->view->render($response, 'collection.pug', array(
-      'list_product' => $products,
-      'list_material' => $list_material,
-			'list_color' => $list_color,
-      'list_brand' => $list_brand,
-      'list_size' => $list_size,
-      'list_bag' => $list_bag,
-      'list_special' => $list_special,
-			'total_pages' => $total_pages,
-			'page_number' => $page_number,
-			'breadcrumb_title' => 'Giảm giá 50%',
-		));
-	}
-
-  public function newProduct(Request $request, Response $response) {
-		$page_number = 1;
-		if($params['page']) $page_number = $params['page'];
-		$perpage = 20;
-		$skip = ($page_number - 1) * $perpage;
-    $query = Product::where('product.display', 1)->where('product.price', '>', 0);
-    $all_products = $query->select('product.*')->get();
-		$total_pages = ceil(count($all_products) / $perpage);
-    $products = $query->orderBy('product.in_stock', 'desc')->orderBy('product.updated_at', 'desc')->skip($skip)->take($perpage)->get();
-		$products = Product::getInfoProduct($products);
-
-    $list_brand = array();
-    $list_material = array();
-		$list_color = array();
-    $list_special = array();
-    $list_size = array();
-    $list_bag = array();
-
-		$arr_temp_color = array();
-    $arr_temp_special = array();
-
-		foreach ($all_products as $key => $product) {
-      if($product->brand && !in_array($product->brand, $list_brand)) array_push($list_brand, $product->brand);
-      if($product->material && !in_array($product->material, $list_material)) array_push($list_material, $product->material);
-      if($product->size && !in_array($product->size, $list_size)) array_push($list_size, $product->size);
-      if($product->bag && !in_array($product->bag, $list_bag)) array_push($list_bag, $product->bag);
-			$product_color = ProductColor::Join('color', 'product_color.color_id', '=', 'color.id')
-				->where('product_color.product_id', $product->id)->select('color.name as name', 'color.hex as hex')->get();
-			foreach ($product_color as $key => $color) {
-				if(!in_array($color->name, $arr_temp_color)) {
-					$obj = new stdClass();
-					$obj->name = $color->name;
-					$obj->style = 'background-color: ' . $color->hex;
-					array_push($list_color, $obj);
-					array_push($arr_temp_color, $color->name);
-				}
-			}
-      $product_special = ProductSpecial::Join('special', 'product_special.special_id', '=', 'special.id')
-				->where('product_special.product_id', $product->id)->select('special.name as name')->get();
-			foreach ($product_special as $key => $special) {
-        if ($special->name && !in_array($special->name, $list_special)) array_push($list_special, $special->name);
-			}
-		}
-    sort($list_brand);
-    return $this->view->render($response, 'collection.pug', array(
-      'list_product' => $products,
-      'list_material' => $list_material,
-			'list_color' => $list_color,
-      'list_brand' => $list_brand,
-      'list_size' => $list_size,
-      'list_bag' => $list_bag,
-      'list_special' => $list_special,
-			'total_pages' => $total_pages,
-			'page_number' => $page_number,
-			'breadcrumb_title' => 'Hàng mới về',
 		));
 	}
 
@@ -442,15 +322,6 @@ class CollectionController extends Controller {
 		}
 		return 'empty';
 	}
-
-
-  public function listAllBrand(Request $request, Response $response) {
-    $this->view->render($response, 'brand.pug', array(
-			'title' => 'Thương hiệu',
-			'breadcrumb_title' => 'Thương hiệu'
-		));
-		return $response;
-  }
 }
 
 ?>

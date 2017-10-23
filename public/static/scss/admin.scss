@@ -87,9 +87,9 @@ $color_sidebar: #222d32;
         z-index: 10;
         tr.submenu {
           cursor: move;
-          z-index: 20; 
+          z-index: 20;
           td {
-            z-index: 30; 
+            z-index: 30;
             a {
               z-index: 40;
               i {
@@ -556,70 +556,8 @@ table {
   }
 }
 
-.chosen-choices {
-  box-shadow: none !important;
-  outline: 0 !important;
-  border: 1px solid #d2d6de !important;
-  background: none !important;
-  height: 34px !important;
-  padding-left: 6px !important;
-  input {
-    height: 34px !important;
-    margin: 0 !important !important;
-    padding: 6px 12px 6px 0 !important;
-    font-size: 13px !important;
-    line-height: 1.42857143 !important;
-    color: #555 !important;
-  }
-}
-
-.chosen-single {
-  box-shadow: none !important;
-  outline: 0 !important;
-  border: 1px solid #d2d6de !important;
-  background: none !important;
-  height: 34px !important;
-  padding-left: 15px !important;
-  border-radius: 0 !important;
-  color: $color_black !important;
-  padding-top: 5px !important;
-  font-size: 14px !important;
-  input {
-    height: 34px !important;
-    margin: 0 !important !important;
-    padding: 6px 12px 6px 0 !important;
-    font-size: 13px !important;
-    line-height: 1.42857143 !important;
-    color: #555 !important;
-  }
-  >div {
-    display: none !important;
-  }
-}
-
-.chosen-search input {
-  height: 30px !important;
-  padding-left: 10px !important;
-  background: $color_white !important;
-}
-
-
 .form-product {
-  .list-color {
-    padding: 7px 0;
-    label {
-      cursor: pointer;
-      padding-left: 0;
-      span {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-left: 5px;
-      }
-    }
-  }
-  .list-collection,
-  .list-special {
+  .list-collection {
     padding: 5px 0;
     label {
       cursor: pointer;
@@ -632,26 +570,7 @@ table {
       }
     }
   }
-  .list-branch {
-    border: 1px solid $color_grey;
-    padding: 10px;
-    hr.line {
-      margin: 0;
-    }
-    .item {
-      padding-bottom: 5px;
-      .col-xs-2 {
-        padding-left: 0;
-      }
-      .col-xs-3 {
-        padding-left: 0;
-      }
-      &:last-child {
-        font-weight: bold;
-        padding-top: 5px;
-      }
-    }
-  }
+
   .price {
     span {
       display: inline-block;

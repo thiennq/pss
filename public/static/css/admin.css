@@ -400,86 +400,16 @@ table img {
 .form-collection .collection-banner img {
   max-width: 800px; }
 
-.chosen-choices {
-  box-shadow: none !important;
-  outline: 0 !important;
-  border: 1px solid #d2d6de !important;
-  background: none !important;
-  height: 34px !important;
-  padding-left: 6px !important; }
-  .chosen-choices input {
-    height: 34px !important;
-    margin: 0 !important !important;
-    padding: 6px 12px 6px 0 !important;
-    font-size: 13px !important;
-    line-height: 1.42857143 !important;
-    color: #555 !important; }
-
-.chosen-single {
-  box-shadow: none !important;
-  outline: 0 !important;
-  border: 1px solid #d2d6de !important;
-  background: none !important;
-  height: 34px !important;
-  padding-left: 15px !important;
-  border-radius: 0 !important;
-  color: #444 !important;
-  padding-top: 5px !important;
-  font-size: 14px !important; }
-  .chosen-single input {
-    height: 34px !important;
-    margin: 0 !important !important;
-    padding: 6px 12px 6px 0 !important;
-    font-size: 13px !important;
-    line-height: 1.42857143 !important;
-    color: #555 !important; }
-  .chosen-single > div {
-    display: none !important; }
-
-.chosen-search input {
-  height: 30px !important;
-  padding-left: 10px !important;
-  background: #fff !important; }
-
-.form-product .list-color {
-  padding: 7px 0; }
-  .form-product .list-color label {
-    cursor: pointer;
-    padding-left: 0; }
-    .form-product .list-color label span {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      margin-left: 5px; }
-
-.form-product .list-collection,
-.form-product .list-special {
+.form-product .list-collection {
   padding: 5px 0; }
-  .form-product .list-collection label,
-  .form-product .list-special label {
+  .form-product .list-collection label {
     cursor: pointer;
     font-weight: normal;
     padding-left: 0;
     user-select: none; }
-    .form-product .list-collection label input,
-    .form-product .list-special label input {
+    .form-product .list-collection label input {
       margin-right: 5px;
       position: relative; }
-
-.form-product .list-branch {
-  border: 1px solid #ccc;
-  padding: 10px; }
-  .form-product .list-branch hr.line {
-    margin: 0; }
-  .form-product .list-branch .item {
-    padding-bottom: 5px; }
-    .form-product .list-branch .item .col-xs-2 {
-      padding-left: 0; }
-    .form-product .list-branch .item .col-xs-3 {
-      padding-left: 0; }
-    .form-product .list-branch .item:last-child {
-      font-weight: bold;
-      padding-top: 5px; }
 
 .form-product .price span {
   display: inline-block;

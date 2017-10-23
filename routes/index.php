@@ -6,7 +6,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require_once('../controllers/IndexController.php');
 require_once('../controllers/CollectionController.php');
 require_once('../controllers/ProductController.php');
-require_once('../controllers/MetaController.php');
 require_once('../controllers/PageController.php');
 require_once('../controllers/OrderController.php');
 require_once('../controllers/CustomerController.php');
@@ -19,19 +18,12 @@ require_once('../models/helper.php');
 
 $app->get('/', '\IndexController:index');
 
-$app->get('/orders/{id}', '\OrderController:show');
 $app->get('/video', '\PageController:video');
 $app->get('/saleoff', '\PageController:saleOff');
 $app->get('/thuong-hieu/{name}', '\CollectionController:brand');
-$app->get('/thuong-hieu', '\CollectionController:listAllBrand');
 $app->get('/tim-kiem', '\CollectionController:search');
-$app->get('/tin-tuc', '\ArticleController:news');
-$app->get('/he-thong-cua-hang', '\PageController:branch');
-$app->get('/hang-moi-ve', '\CollectionController:newProduct');
-$app->get('/giam-gia-50', '\CollectionController:discount50');
 $app->get('/san-pham/{handle}', '\ProductController:show');
 $app->get('/dat-hang-thanh-cong', '\OrderController:orderSuccess');
-$app->get('/tag/{handle}', '\CollectionController:showTag');
 
 $app->get('/blog/{handle}', '\BlogController:get');
 $app->get('/article/{handle}', '\ArticleController:get');
@@ -39,10 +31,7 @@ $app->get('/page/{handle}', '\PageController:get');
 $app->get('/cart', '\OrderController:viewCart');
 $app->get('/checkout', '\OrderController:checkOut');
 
-
-$app->get('/khuyen-mai/{link}', '\ArticleController:getPromotion');
-$app->get('/tin-tuc/{link}', '\ArticleController:getNews');
-$app->get('/thong-tin/{link}', '\ArticleController:getInfo');
+$app->get('/404', '\PageController:PageNotFound');
 
 $app->post('/api/filter', '\CollectionController:filter');
 $app->get('/api/san-pham/search', 'smartSearch');
@@ -50,22 +39,15 @@ $app->get('/api/region', '\FunctionController::getSubRegion');
 $app->post('/api/orders', '\OrderController:store');
 $app->get('/api/website/sitemap', 'createSitemap' );
 $app->get('/api/website/initDB', '\FunctionController:initDB');
-$app->get('/404', '\ArticleController:PageNotFound');
 
 $app->get('/api/getInfoCart', '\OrderController:getInfoCart');
 $app->post('/api/addToCart', '\OrderController:addToCart');
 $app->put('/api/updateCart', '\OrderController:updateCart');
 $app->delete('/api/deleteCart', '\OrderController:deleteCart');
 
-$app->get('/api/san-pham/modal/{id}', '\ProductController:findProductModal');
 $app->get('/api/san-pham/variant/{id}', '\ProductController:findProductVariant');
-
 $app->post('/api/subscribe', '\CustomerController:subscribe');
-
-$app->get('/test/test', '\TestController:test');
-
 $app->get('/test-mail', '\TestController:sendMail');
-
 $app->get('/truyen', '\TestController:truyen');
 
 

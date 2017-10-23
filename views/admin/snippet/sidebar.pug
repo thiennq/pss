@@ -135,11 +135,6 @@ aside.main-sidebar
             a(href="/admin/menu")
               i.fa.fa-circle
               | Menu
-          - var liClass = (childMenu == 'branch' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/branch")
-              i.fa.fa-circle
-              | Chi nhánh
       - var itemClass = (menu == 'staff' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/users")

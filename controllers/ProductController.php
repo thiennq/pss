@@ -51,60 +51,6 @@ class ProductController extends Controller {
     return $this->view->render($response, 'product.pug', $responseData);
   }
 
-  public function findProductModal(Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $product = Product::find($id);
-    if (!$product) return 'empty';
-
-    $product->display_discount = 0;
-    if($product->price_compare && $product->price_compare > $product->price) {
-      $product->percent = 0;
-      $product->discount = $product->price_compare - $product->price;
-      $product->percent = ($product->discount / $product->price_compare) * 100;
-      $product->percent = round($product->percent, 0) .'%';
-      $product->display_discount = 1;
-    }
-
-    $product->in_stock = false;
-    $arr_branch_display = array();
-    $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
-    if(count($branch)) {
-      $product->in_stock = true;
-      foreach ($branch as $key => $value) {
-        if(!$value->branch_center) {
-          $obj = new stdClass();
-          $obj->name = $value->name;
-          $obj->address = $value->address;
-          array_push($arr_branch_display, $obj);
-        }
-      }
-    }
-    $product->count_branch_display = count($arr_branch_display);
-    $product->arr_branch_display = $arr_branch_display;
-    $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->first();
-    $collection_parent = Collection::find($collection_parent->id);
-    $product->title = $collection_parent->title . ' ' . $product->title;
-    $list_image = Image::getImage('product', $product->id);
-    $product->list_image = $list_image;
-    $product->brand_url = createHandle($product->brand);
-
-    $product->count_variant = 0;
-    if($product->group_id) {
-      $product->variants = Product::where('group_id', $product->group_id)->where('display', 1)->get();
-      $product->count_variant = count($product->variants);
-    }
-
-    if ($product->dropship) {
-      if (!$product->in_stock) {
-        $product->in_stock = true;
-        $product->count_branch_display = 0;
-      }
-    }
-    return $this->view->render($response, 'snippet/modal-order-data.pug', [
-      'data' => $product
-    ]);
-  }
-
   public function findProductVariant(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $product = Product::find($id);
@@ -125,33 +71,12 @@ class ProductController extends Controller {
     }
 
     $product->in_stock = false;
-    $arr_branch_display = array();
-    $branch = Inventory::join('branch', 'branch.id', '=', 'inventory.branch_id')->where('branch.calc_inventory', 1)->where('inventory.product_id', $product->id)->where('inventory.inventory', '>', 0)->select('branch.*')->get();
-    if(count($branch)) {
-      $product->in_stock = true;
-      foreach ($branch as $key => $value) {
-        if(!$value->branch_center) {
-          $obj = new stdClass();
-          $obj->name = $value->name;
-          $obj->address = $value->address;
-          array_push($arr_branch_display, $obj);
-        }
-      }
-    }
-    $product->count_branch_display = count($arr_branch_display);
-    $product->arr_branch_display = $arr_branch_display;
     $collection_parent = CollectionProduct::where('product_id', $product->id)->join('collection', 'collection.id', '=', 'collection_product.collection_id')->where('collection.parent_id', '-1')->first();
     $collection_parent = Collection::find($collection_parent->id);
     $product->title = $collection_parent->title . ' ' . $product->title;
     $list_image = Image::getImage('product', $id);
     $product->list_image = $list_image;
 
-    if ($product->dropship) {
-      if (!$product->in_stock) {
-        $product->in_stock = true;
-        $product->count_branch_display = 0;
-      }
-    }
     return $response->withJson([
       'code' => 0,
       'data' => $product

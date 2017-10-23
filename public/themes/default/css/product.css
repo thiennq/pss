@@ -1,11 +1,11 @@
-.product, #modal-order {
+.product {
   margin-top: 20px;
   margin-bottom: 20px; }
-  .product .large-image-zoom, #modal-order .large-image-zoom {
+  .product .large-image-zoom {
     width: 100% !important; }
-  .product .list-image, #modal-order .list-image {
+  .product .list-image {
     padding-left: 0; }
-    .product .list-image .slide-small-image .slick-arrow:first-child, #modal-order .list-image .slide-small-image .slick-arrow:first-child {
+    .product .list-image .slide-small-image .slick-arrow:first-child {
       display: block;
       width: 70px;
       text-align: center;
@@ -15,7 +15,7 @@
       z-index: 1;
       font-size: 25px;
       cursor: pointer; }
-    .product .list-image .slide-small-image .slick-arrow:last-child, #modal-order .list-image .slide-small-image .slick-arrow:last-child {
+    .product .list-image .slide-small-image .slick-arrow:last-child {
       display: block;
       width: 70px;
       text-align: center;
@@ -25,120 +25,66 @@
       z-index: 1;
       font-size: 25px;
       cursor: pointer; }
-    .product .list-image .slide-small-image .slick-slide, #modal-order .list-image .slide-small-image .slick-slide {
+    .product .list-image .slide-small-image .slick-slide {
       margin-bottom: 10px;
       width: 100% !important;
       cursor: pointer;
       outline: 0;
       box-shadow: none; }
-      .product .list-image .slide-small-image .slick-slide img, #modal-order .list-image .slide-small-image .slick-slide img {
+      .product .list-image .slide-small-image .slick-slide img {
         max-width: 60px;
         border: 1px solid #ddd;
         outline: 0;
         box-shadow: none; }
-      .product .list-image .slide-small-image .slick-slide.active img, #modal-order .list-image .slide-small-image .slick-slide.active img {
+      .product .list-image .slide-small-image .slick-slide.active img {
         border-color: #101010; }
-    .product .list-image .slider-large-image, #modal-order .list-image .slider-large-image {
+    .product .list-image .slider-large-image {
       position: relative;
       padding-left: 15px; }
-      .product .list-image .slider-large-image img, #modal-order .list-image .slider-large-image img {
+      .product .list-image .slider-large-image img {
         border: 1px solid lightgray;
         max-width: 100%;
         width: initial;
         margin: 0 auto; }
-    .product .list-image .bg, #modal-order .list-image .bg {
+    .product .list-image .bg {
       background-size: contain !important;
       background-repeat: no-repeat !important;
       background-position: center !important;
       cursor: pointer; }
-    .product .list-image .image-small, #modal-order .list-image .image-small {
+    .product .list-image .image-small {
       width: 100%;
       border: 1px solid #ddd;
       margin-bottom: 5px;
       cursor: pointer; }
-      .product .list-image .image-small:last-child, #modal-order .list-image .image-small:last-child {
+      .product .list-image .image-small:last-child {
         margin-bottom: 0; }
-    .product .list-image .image-large, #modal-order .list-image .image-large {
+    .product .list-image .image-large {
       width: 100%;
       padding-bottom: 100%;
       border: 1px solid #ddd; }
-  .product .detail, #modal-order .detail {
+  .product .detail {
     letter-spacing: 1px; }
-    .product .detail .in-stock-branch, #modal-order .detail .in-stock-branch {
-      margin-bottom: 10px;
-      margin-top: 35px; }
-      .product .detail .in-stock-branch button, #modal-order .detail .in-stock-branch button {
-        width: 100%;
-        border: 1px solid;
-        line-height: 25px;
-        text-align: center;
-        padding: 0;
-        background-color: #fff;
-        border-radius: 0;
-        box-shadow: none;
-        outline: 0;
-        height: 38px;
-        font-size: 14px;
-        color: #777;
-        border-color: #777;
-        font-weight: 700;
-        letter-spacing: 1px; }
-        .product .detail .in-stock-branch button .caret, #modal-order .detail .in-stock-branch button .caret {
-          margin-left: 5px; }
-      .product .detail .in-stock-branch ul, #modal-order .detail .in-stock-branch ul {
-        width: 100%;
-        border-radius: 0;
-        border: 1px solid #000;
-        margin-top: 0;
-        border-top: 0;
-        padding: 0; }
-        .product .detail .in-stock-branch ul li, #modal-order .detail .in-stock-branch ul li {
-          padding: 5px 10px;
-          cursor: pointer;
-          display: block;
-          font-size: 13px;
-          float: left;
-          width: 100%; }
-          .product .detail .in-stock-branch ul li:hover, #modal-order .detail .in-stock-branch ul li:hover {
-            background-color: #ddd; }
-          .product .detail .in-stock-branch ul li .left, #modal-order .detail .in-stock-branch ul li .left {
-            width: 65px;
-            display: inline-block;
-            float: left;
-            text-align: center; }
-            .product .detail .in-stock-branch ul li .left img, #modal-order .detail .in-stock-branch ul li .left img {
-              max-width: 25px; }
-            .product .detail .in-stock-branch ul li .left span, #modal-order .detail .in-stock-branch ul li .left span {
-              font-weight: bold;
-              display: block;
-              font-size: 9px;
-              padding-top: 3px; }
-          .product .detail .in-stock-branch ul li .right, #modal-order .detail .in-stock-branch ul li .right {
-            width: calc(100% - 65px);
-            display: inline-block;
-            float: left;
-            padding-left: 5px; }
-    .product .detail .list-variant .item-variant, #modal-order .detail .list-variant .item-variant {
+    .product .detail .list-variant .item-variant {
       display: inline-block;
       margin-right: 10px;
       width: 20%; }
-      .product .detail .list-variant .item-variant img, #modal-order .detail .list-variant .item-variant img {
+      .product .detail .list-variant .item-variant img {
         cursor: pointer;
         margin-bottom: 5px; }
-        .product .detail .list-variant .item-variant img.active, #modal-order .detail .list-variant .item-variant img.active {
+        .product .detail .list-variant .item-variant img.active {
           box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4); }
-    .product .detail p, #modal-order .detail p {
+    .product .detail p {
       margin-bottom: 5px; }
-    .product .detail .title, #modal-order .detail .title {
+    .product .detail .title {
       font-size: 20px;
       color: #000;
       font-weight: 600;
       margin-top: 0;
       margin-bottom: 5px;
       line-height: 22px; }
-      .product .detail .title a, #modal-order .detail .title a {
+      .product .detail .title a {
         color: #000; }
-    .product .detail .brand, #modal-order .detail .brand {
+    .product .detail .brand {
       text-transform: uppercase;
       font-weight: 900;
       padding-bottom: 3px;
@@ -146,80 +92,80 @@
       margin-bottom: 20px;
       font-size: 15px;
       width: 75%; }
-      .product .detail .brand a, #modal-order .detail .brand a {
+      .product .detail .brand a {
         color: #000; }
-        .product .detail .brand a:hover, #modal-order .detail .brand a:hover {
+        .product .detail .brand a:hover {
           text-decoration: underline; }
-    .product .detail .price, #modal-order .detail .price {
+    .product .detail .price {
       line-height: 25px;
       margin-bottom: 0; }
-      .product .detail .price .main-price, #modal-order .detail .price .main-price {
+      .product .detail .price .main-price {
         color: #000;
         font-size: 27px;
         font-weight: bold;
         letter-spacing: 2px; }
         @media (max-width: 991px) and (min-width: 768px) {
-          .product .detail .price .main-price, #modal-order .detail .price .main-price {
+          .product .detail .price .main-price {
             font-size: 24px; } }
-      .product .detail .price .price-compare, #modal-order .detail .price .price-compare {
+      .product .detail .price .price-compare {
         font-weight: 700;
         color: #101010;
         text-decoration: line-through;
         margin-left: 5px;
         font-size: 16px; }
-    .product .detail .discount, #modal-order .detail .discount {
+    .product .detail .discount {
       font-style: italic;
       font-size: 15px;
       font-weight: 600;
       margin-bottom: 10px; }
-    .product .detail .short-description, #modal-order .detail .short-description {
+    .product .detail .short-description {
       color: #777;
       font-size: 15px;
       margin-bottom: 25px; }
-    .product .detail .owl-carousel-variant, #modal-order .detail .owl-carousel-variant {
+    .product .detail .owl-carousel-variant {
       margin: 10px 0; }
-      .product .detail .owl-carousel-variant .owl-stage-outer, #modal-order .detail .owl-carousel-variant .owl-stage-outer {
+      .product .detail .owl-carousel-variant .owl-stage-outer {
         z-index: 99; }
-        .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage, #modal-order .detail .owl-carousel-variant .owl-stage-outer .owl-stage {
+        .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage {
           transform: translate3d(0px, 0px, 0px); }
-          .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item, #modal-order .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item {
+          .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item {
             cursor: pointer;
             padding-left: 0; }
-      .product .detail .owl-carousel-variant .owl-nav, #modal-order .detail .owl-carousel-variant .owl-nav {
+      .product .detail .owl-carousel-variant .owl-nav {
         position: absolute;
         bottom: 10px;
         width: 100%; }
-        .product .detail .owl-carousel-variant .owl-nav span, #modal-order .detail .owl-carousel-variant .owl-nav span {
+        .product .detail .owl-carousel-variant .owl-nav span {
           font-size: 18px; }
-          .product .detail .owl-carousel-variant .owl-nav span.owl-next, #modal-order .detail .owl-carousel-variant .owl-nav span.owl-next {
+          .product .detail .owl-carousel-variant .owl-nav span.owl-next {
             display: inline-block;
             float: right;
             position: relative;
             left: 5px;
             z-index: 9999; }
-            .product .detail .owl-carousel-variant .owl-nav span.owl-next img, #modal-order .detail .owl-carousel-variant .owl-nav span.owl-next img {
+            .product .detail .owl-carousel-variant .owl-nav span.owl-next img {
               max-width: 20px; }
-          .product .detail .owl-carousel-variant .owl-nav span.owl-prev, #modal-order .detail .owl-carousel-variant .owl-nav span.owl-prev {
+          .product .detail .owl-carousel-variant .owl-nav span.owl-prev {
             display: inline-block;
             position: relative;
             left: -10px;
             z-index: 9999; }
-            .product .detail .owl-carousel-variant .owl-nav span.owl-prev img, #modal-order .detail .owl-carousel-variant .owl-nav span.owl-prev img {
+            .product .detail .owl-carousel-variant .owl-nav span.owl-prev img {
               max-width: 20px; }
-          .product .detail .owl-carousel-variant .owl-nav span.disabled, #modal-order .detail .owl-carousel-variant .owl-nav span.disabled {
+          .product .detail .owl-carousel-variant .owl-nav span.disabled {
             display: none; }
-    .product .detail .introduce, #modal-order .detail .introduce {
+    .product .detail .introduce {
       margin-top: 20px;
       margin-bottom: 20px; }
-      .product .detail .introduce .title, #modal-order .detail .introduce .title {
+      .product .detail .introduce .title {
         font-size: 17px; }
-      .product .detail .introduce ul li, #modal-order .detail .introduce ul li {
+      .product .detail .introduce ul li {
         font-size: 13px;
         padding-bottom: 10px; }
-        .product .detail .introduce ul li .fa, #modal-order .detail .introduce ul li .fa {
+        .product .detail .introduce ul li .fa {
           margin-right: 5px;
           color: #101010; }
-    .product .detail .btn-order-product, #modal-order .detail .btn-order-product {
+    .product .detail .btn-order-product {
       padding: 15px 0;
       background-color: #101010;
       color: #fff;
@@ -231,62 +177,62 @@
       font-size: 16px;
       line-height: 18px; }
       @media (max-width: 991px) and (min-width: 768px) {
-        .product .detail .btn-order-product, #modal-order .detail .btn-order-product {
+        .product .detail .btn-order-product {
           font-size: 14px; } }
-      .product .detail .btn-order-product span, #modal-order .detail .btn-order-product span {
+      .product .detail .btn-order-product span {
         font-size: 12px;
         font-weight: normal; }
-      .product .detail .btn-order-product.out-of-stock, #modal-order .detail .btn-order-product.out-of-stock {
+      .product .detail .btn-order-product.out-of-stock {
         background-color: #ccc; }
-    .product .detail .hotline, #modal-order .detail .hotline {
+    .product .detail .hotline {
       text-align: center;
       margin: 10px 0;
       padding: 0;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 1px; }
-      .product .detail .hotline > div, #modal-order .detail .hotline > div {
+      .product .detail .hotline > div {
         padding: 0;
         padding-top: 3px; }
-        .product .detail .hotline > div p, #modal-order .detail .hotline > div p {
+        .product .detail .hotline > div p {
           border-right: 1px solid #000; }
-          .product .detail .hotline > div p span.phone, #modal-order .detail .hotline > div p span.phone {
+          .product .detail .hotline > div p span.phone {
             font-size: 18px;
             letter-spacing: 1px; }
             @media (max-width: 991px) and (min-width: 768px) {
-              .product .detail .hotline > div p span.phone, #modal-order .detail .hotline > div p span.phone {
+              .product .detail .hotline > div p span.phone {
                 display: block; } }
-        .product .detail .hotline > div:first-child p, #modal-order .detail .hotline > div:first-child p {
+        .product .detail .hotline > div:first-child p {
           border-left: 1px solid #000; }
-    .product .detail .quantity, #modal-order .detail .quantity {
+    .product .detail .quantity {
       float: none;
       margin: 10px 0; }
-  .product .product-bottom, #modal-order .product-bottom {
+  .product .product-bottom {
     padding: 30px 0; }
-    .product .product-bottom .description, #modal-order .product-bottom .description {
+    .product .product-bottom .description {
       margin-bottom: 20px; }
       @media (min-width: 768px) {
-        .product .product-bottom .description, #modal-order .product-bottom .description {
+        .product .product-bottom .description {
           padding-right: 30px;
           margin-bottom: 0; } }
-      .product .product-bottom .description section, #modal-order .product-bottom .description section {
+      .product .product-bottom .description section {
         font-size: 15px;
         letter-spacing: 1px;
         padding-top: 30px; }
-      .product .product-bottom .description img, #modal-order .product-bottom .description img {
+      .product .product-bottom .description img {
         max-width: 100%; }
-      .product .product-bottom .description .title, #modal-order .product-bottom .description .title {
+      .product .product-bottom .description .title {
         font-size: 20px;
         font-weight: bold;
         margin-top: 0; }
-      .product .product-bottom .description .nav-tabs li, #modal-order .product-bottom .description .nav-tabs li {
+      .product .product-bottom .description .nav-tabs li {
         padding: 0; }
-        .product .product-bottom .description .nav-tabs li.active a, #modal-order .product-bottom .description .nav-tabs li.active a {
+        .product .product-bottom .description .nav-tabs li.active a {
           color: #000; }
-        .product .product-bottom .description .nav-tabs li.active .border, #modal-order .product-bottom .description .nav-tabs li.active .border {
+        .product .product-bottom .description .nav-tabs li.active .border {
           height: 3px;
           background-color: #000; }
-        .product .product-bottom .description .nav-tabs li a, #modal-order .product-bottom .description .nav-tabs li a {
+        .product .product-bottom .description .nav-tabs li a {
           font-size: 16px;
           padding-left: 0;
           padding-right: 0;
@@ -295,89 +241,81 @@
           border-radius: 0;
           color: #aaa;
           padding-bottom: 5px; }
-          .product .product-bottom .description .nav-tabs li a:hover, #modal-order .product-bottom .description .nav-tabs li a:hover {
+          .product .product-bottom .description .nav-tabs li a:hover {
             background: none; }
-        .product .product-bottom .description .nav-tabs li .border, #modal-order .product-bottom .description .nav-tabs li .border {
+        .product .product-bottom .description .nav-tabs li .border {
           width: 50%;
           height: 0; }
-      .product .product-bottom .description .tab-content table, #modal-order .product-bottom .description .tab-content table {
+      .product .product-bottom .description .tab-content table {
         border-collapse: collapse; }
-      .product .product-bottom .description .tab-content table, .product .product-bottom .description .tab-content th, .product .product-bottom .description .tab-content td, #modal-order .product-bottom .description .tab-content table, #modal-order .product-bottom .description .tab-content th, #modal-order .product-bottom .description .tab-content td {
+      .product .product-bottom .description .tab-content table, .product .product-bottom .description .tab-content th, .product .product-bottom .description .tab-content td {
         border: 1px solid #aaa;
         padding: 10px; }
 
 @media (max-width: 767px) {
   .product-wrapper.container {
     padding: 0; }
-  .product .custom-scrollbar, #modal-order .custom-scrollbar {
+  .product .custom-scrollbar {
     height: 375px;
     width: 70px; }
-  .product .item, #modal-order .item {
+  .product .item {
     border: none; }
-  .product .list-image .slider-large-image, #modal-order .list-image .slider-large-image {
+  .product .list-image .slider-large-image {
     padding: 0; }
-    .product .list-image .slider-large-image img, #modal-order .list-image .slider-large-image img {
+    .product .list-image .slider-large-image img {
       border: none; }
-  .product .detail .in-stock-branch, #modal-order .detail .in-stock-branch {
-    margin-top: 30px; }
-    .product .detail .in-stock-branch button, #modal-order .detail .in-stock-branch button {
-      letter-spacing: .5px;
-      height: 40px;
-      font-size: 15px;
-      color: #777;
-      border-color: #777; }
-  .product .detail .title, #modal-order .detail .title {
+  .product .detail .title {
     text-align: left;
     font-size: 19px;
     letter-spacing: 1.5px; }
-  .product .detail .brand, #modal-order .detail .brand {
+  .product .detail .brand {
     font-size: 12px;
     border-bottom: 0;
     padding-bottom: 0; }
-  .product .detail .owl-carousel-variant, #modal-order .detail .owl-carousel-variant {
+  .product .detail .owl-carousel-variant {
     padding: 15px 0; }
-    .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item, #modal-order .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item {
+    .product .detail .owl-carousel-variant .owl-stage-outer .owl-stage .owl-item {
       padding-left: 0;
       padding-right: 0; }
-  .product .detail .introduce, #modal-order .detail .introduce {
+  .product .detail .introduce {
     padding: 0; }
-  .product .detail .btn-order-product, #modal-order .detail .btn-order-product {
+  .product .detail .btn-order-product {
     padding: 20px 0; }
-  .product .detail .hotline, #modal-order .detail .hotline {
+  .product .detail .hotline {
     font-size: 12px;
     letter-spacing: 1px; }
-    .product .detail .hotline > div p span.phone, #modal-order .detail .hotline > div p span.phone {
+    .product .detail .hotline > div p span.phone {
       font-size: 18px; } }
     @media (max-width: 767px) and (max-width: 360px) {
-      .product .detail .hotline > div p span.phone, #modal-order .detail .hotline > div p span.phone {
+      .product .detail .hotline > div p span.phone {
         font-size: 16px; } }
   @media (max-width: 767px) and (max-width: 350px) {
-    .product .detail .hotline, #modal-order .detail .hotline {
+    .product .detail .hotline {
       font-size: 10px; } }
 
 @media (max-width: 767px) {
-  .product .product-bottom, #modal-order .product-bottom {
+  .product .product-bottom {
     margin: 0;
     padding-bottom: 0; }
-    .product .product-bottom .description, #modal-order .product-bottom .description {
+    .product .product-bottom .description {
       margin-bottom: 0; }
-      .product .product-bottom .description .nav-tabs, #modal-order .product-bottom .description .nav-tabs {
+      .product .product-bottom .description .nav-tabs {
         margin: 0 -15px; }
-        .product .product-bottom .description .nav-tabs li, #modal-order .product-bottom .description .nav-tabs li {
+        .product .product-bottom .description .nav-tabs li {
           margin-right: 0;
           margin-bottom: 0;
           padding: 0 15px; }
-          .product .product-bottom .description .nav-tabs li a, #modal-order .product-bottom .description .nav-tabs li a {
+          .product .product-bottom .description .nav-tabs li a {
             font-size: 13px;
             letter-spacing: 1px;
             padding-bottom: 3px;
             font-weight: 700; } }
           @media (max-width: 767px) and (max-width: 360px) {
-            .product .product-bottom .description .nav-tabs li a, #modal-order .product-bottom .description .nav-tabs li a {
+            .product .product-bottom .description .nav-tabs li a {
               font-size: 11px; } }
 
 @media (max-width: 767px) {
-      .product .product-bottom .description .title, #modal-order .product-bottom .description .title {
+      .product .product-bottom .description .title {
         font-size: 17px; } }
 
 .related > .container {
@@ -490,21 +428,3 @@
         border-radius: 50%; }
       .owl-carousel-product-mobile .owl-dots .owl-dot.active span {
         background-color: #000; } }
-
-#modal-order .item-variant {
-  display: inline-block;
-  float: left; }
-  #modal-order .item-variant img {
-    max-width: 60px; }
-
-#modal-order .btn-detail {
-  background-color: #000;
-  color: #fff;
-  display: block;
-  padding: 8px 0;
-  text-align: center;
-  font-size: 17px;
-  margin-top: 10px; }
-
-#modal-order .in-stock-branch {
-  margin-top: 20px !important; }

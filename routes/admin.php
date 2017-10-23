@@ -14,7 +14,6 @@ require_once('../controllers/admin/AdminVideoController.php');
 require_once('../controllers/admin/AdminArticleController.php');
 require_once('../controllers/admin/AdminBlogController.php');
 require_once('../controllers/admin/AdminPageController.php');
-require_once('../controllers/admin/AdminBranchController.php');
 require_once('../controllers/admin/AdminBrandController.php');
 require_once('../controllers/admin/AdminFilterController.php');
 require_once('../controllers/admin/AdminUserController.php');
@@ -122,7 +121,7 @@ $app->group('/admin', function() use($app) {
   $app->post('/page', '\AdminPageController:create');
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
-  
+
 
   $app->get('/redirect', '\AdminRedirectController:index');
   $app->post('/redirect', '\AdminRedirectController:store');
@@ -157,9 +156,6 @@ $app->group('/admin', function() use($app) {
   $app->post('/video', '\AdminVideoController:store');
   $app->put('/video/{id}', '\AdminVideoController:update');
   $app->delete('/video/{id}', '\AdminVideoController:delete');
-  $app->get('/branch', '\AdminBranchController:index');
-  $app->get('/branch/{id}', '\AdminBranchController:show');
-  $app->put('/branch/{id}', '\AdminBranchController:update');
   $app->get('/images', '\AdminSettingController:getImages');
   $app->delete('/api/images/remove', '\AdminSettingController:removeImage');
 
