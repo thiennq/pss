@@ -89,6 +89,7 @@ $('.btn-update').click(function() {
   data.description = $('textarea[name="description"]').val();
   if(!data.description) {
     toastr.error('Chưa nhập mô tả bài viết');
+    $('textarea[name="description"]').addClass('error');
     return;
   }
   data.content = tinyMCE.get('blog_content').getContent();

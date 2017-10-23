@@ -22,14 +22,13 @@ block content
         table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
           thead
             tr
-              th ID
+              th Id
               th Tiêu đề
               th Người tạo
               th Ngày cập nhật
               th Hiển thị
               th Chỉnh sửa
           tbody
-            - var stt = 1
             each item in data
               tr
                 td=item.id
@@ -39,11 +38,11 @@ block content
                 td=item.updated_at
                 td
                   if item.display == 1
-                    | Có
+                    label.label.label-info Có
                   else
-                    | Không
+                    label.label.label-danger Không
                 td
                   a.btn-edit(href="/admin/page/" + item.id, data-id=item.id, title="Chỉnh sửa")
                     i.fa.fa-pencil-square-o
-                  a.btn-remove-page.btn-remove.btn-remove-page(data-id=item.id, title="Xóa")
+                  a.btn-remove(data-id=item.id, title="Xóa")
                     i.fa.fa-trash

@@ -24,7 +24,7 @@ block content
           i.fa.fa-eye
           | Xem trên web
       li
-        a.btn.btn-admin.btn-update-page(data-id=data.id)
+        a.btn.btn-admin.btn-update(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -37,15 +37,9 @@ block content
             label.col-sm-2.control-label Tiêu đề
               strong.required  *
             .col-sm-10
-              input.form-control(name="title", data-title='', data-handle='', placeholder="Tiêu đề", value=data.title)
-          .form-group
-            label.col-sm-2.control-label Handle
-              strong.required  *
-            .col-sm-10
-              input.form-control(name="handle", value=data.handle)
+              input.form-control(name="title", placeholder="Tiêu đề", value=data.title)
           .form-group
             label.col-sm-2.control-label Hình đại diện
-              img.no-border.loading(src="/images/loading.gif").hidden
             form.col-sm-10
               if data.image
                 img(src="/uploads/" + resize(data.image, 240))
@@ -59,32 +53,37 @@ block content
             .col-sm-10
               textarea.form-control(name="description")=data.description
           .form-group
-            label.col-sm-2.control-label Meta description
-            .col-sm-10
-              textarea.form-control(name="meta_description")=data.meta_description
-          .form-group
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
-              textarea.form-control#page_content(data-value=data.content)
+              textarea.form-control#page_content=data.content
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display", data-value=data.display)
+                option(value="0") Không
+                option(value="1") Có
+    .box
+      .form-horizontal
+        .box-body
+          .form-group
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
+          .form-group
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
+            .col-sm-10
+              input.form-control(name="meta_title", placeholder="Iphone X chính hãng", value=data.meta_title)
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")=data.meta_description
           .form-group
             label.col-sm-2.control-label Meta robots
             .col-sm-10
-              select.form-control(name="meta_robots" data-value=data.meta_robots)
+              select.form-control(name="meta_robots", data-value=data.meta_robots)
                 option(value="index, follow") Index, Follow
                 option(value="noindex, follow") No Index, Follow
                 option(value="index, nofollow") Index, No Follow
                 option(value="noindex, nofollow") No Index, No Follow
-          script.
-            var meta = $('select[name="meta_robots"]').data('value');
-            $('select[name="meta_robots"]').val(meta);
-          .form-group
-            label.col-sm-2.control-label Hiển thị
-            .col-sm-10
-              select.form-control(name="display")
-                if data.display
-                  option(value="0") Không
-                  option(value="1" selected) Có
-                else
-                  option(value="0") Không
-                  option(value="1") Có

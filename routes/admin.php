@@ -122,7 +122,6 @@ $app->group('/admin', function() use($app) {
   $app->post('/page', '\AdminPageController:create');
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
-  $app->get('/pages/search', '\AdminPageController:searchPage');
 
   //Setting
   $app->get('/settings/index', '\AdminSettingController:settingIndex');

@@ -3,7 +3,7 @@ extends ./layout.pug
 block pre-include
   - var menu = 'article'
   - var childMenu = 'page'
-  title Tạo trang nội dung mới
+  title Tạo trang nội dung
 
 block post-include
   script(src=staticURI() + '/js/admin/page.js')
@@ -17,7 +17,7 @@ block content
         a Tạo trang nội dung mới
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin.btn-create-page
+        a.btn.btn-admin.btn-create
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -29,15 +29,9 @@ block content
             label.col-sm-2.control-label Tiêu đề
               strong.required  *
             .col-sm-10
-              input.form-control(name="title", data-title='', data-handle='', placeholder="Tiêu đề")
-          .form-group
-            label.col-sm-2.control-label Handle
-              strong.required  *
-            .col-sm-10
-              input.form-control(name="handle")
+              input.form-control(name="title", placeholder="Tiêu đề")
           .form-group
             label.col-sm-2.control-label Hình đại diện
-              img.no-border.loading(src=staticURI() + "/img/loading.gif").hidden
             form.col-sm-10
               img(src=staticURI() + "/img/default_image.png")
               input.feature-image(type="file" name="upload[]").form-control
@@ -48,14 +42,32 @@ block content
             .col-sm-10
               textarea.form-control(name="description")
           .form-group
-            label.col-sm-2.control-label Meta description
-            .col-sm-10
-              textarea.form-control(name="meta_description")
-          .form-group
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
               textarea.form-control#page_content
+          .form-group
+            label.col-sm-2.control-label Hiển thị
+            .col-sm-10
+              select.form-control(name="display")
+                option(value="1") Có
+                option(value="0") Không
+    .box
+      .form-horizontal
+        .box-body
+          .form-group
+            label.col-sm-2.control-label
+              h4 Tối ưu SEO
+          .form-group
+            label.col-sm-2.control-label Tiêu đề trang
+              p (Tối đa 70 ký tự)
+            .col-sm-10
+              input.form-control(name="meta_title", placeholder="Iphone X chính hãng")
+          .form-group
+            label.col-sm-2.control-label Mô tả trang
+              p (Tối đa 160 ký tự)
+            .col-sm-10
+              textarea.form-control(name="meta_description", placeholder="Laptop 2nd nhập US, Chuyên Laptop văn phòng và Đồ họa")
           .form-group
             label.col-sm-2.control-label Meta robots
             .col-sm-10
@@ -64,9 +76,3 @@ block content
                 option(value="noindex, follow") No Index, Follow
                 option(value="index, nofollow") Index, No Follow
                 option(value="noindex, nofollow") No Index, No Follow
-          .form-group
-            label.col-sm-2.control-label Hiển thị
-            .col-sm-10
-              select.form-control(name="display")
-                option(value="1") Có
-                option(value="0") Không
