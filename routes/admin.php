@@ -167,6 +167,8 @@ $app->group('/admin', function() use($app) {
   $app->put('/settings/mobile', '\AdminSettingController:updateMobileSetting');
   $app->get('/settings/meta', '\AdminSettingController:getMetaTitleSetting');
   $app->put('/settings/metaTitle', '\AdminSettingController:updateMetaTitleSetting');
+  $app->get('/settings/seo', '\AdminSettingController:getSEOSetting');
+  $app->put('/settings/seo', '\AdminSettingController:updateSEOSetting');
   $app->get('/video', '\AdminVideoController:index');
   $app->post('/video', '\AdminVideoController:store');
   $app->put('/video/{id}', '\AdminVideoController:update');

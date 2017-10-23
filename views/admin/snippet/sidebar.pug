@@ -70,12 +70,12 @@ aside.main-sidebar
           li(class=liClass)
             a(href='/admin/blogs', class=liClass)
               i.fa.fa-circle
-              | Nhóm bài viết
+              | Blog
           - var liClass = (childMenu == 'article' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/articles', class=liClass)
               i.fa.fa-circle
-              | Danh sách bài viết
+              | Bài viết
           - var liClass = (childMenu == 'page' ? 'active' : '');
           li(class=liClass)
             a(href='/admin/pages', class=liClass)
@@ -103,6 +103,11 @@ aside.main-sidebar
             a(href="/admin/settings/meta")
               i.fa.fa-circle
               | Title, Meta Description
+          - var liClass = (childMenu == 'seo' ? 'active' : '');
+          li(class=liClass)
+            a(href="/admin/settings/seo")
+              i.fa.fa-circle
+              | SEO
           - var liClass = (childMenu == 'redirect' ? 'active' : '');
           li(class=liClass)
             a(href="/admin/redirect")

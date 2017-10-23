@@ -39,7 +39,7 @@ class CollectionController extends Controller {
 		$skip = ($page_number - 1) * $perpage;
     $query = Product::join('collection_product', 'collection_product.product_id', '=', 'product.id')
               ->where('collection_product.collection_id', $collection_id)
-              ->where('product.display', 1)->where('product.price', '>', 0)
+              ->where('product.display', 1)
               ->groupBy('product.id');
 
     $all_products = $query->select('product.*')->get();
@@ -50,7 +50,6 @@ class CollectionController extends Controller {
 		$list_brand = array();
     $list_material = array();
 		$list_color = array();
-    $list_special = array();
     $list_size = array();
     $list_bag = array();
 
@@ -73,11 +72,6 @@ class CollectionController extends Controller {
 					array_push($arr_temp_color, $color->name);
 				}
 			}
-      $product_special = ProductSpecial::Join('special', 'product_special.special_id', '=', 'special.id')
-				->where('product_special.product_id', $product->id)->select('special.name as name')->get();
-			foreach ($product_special as $key => $special) {
-        if ($special->name && !in_array($special->name, $list_special)) array_push($list_special, $special->name);
-			}
 		}
     sort($list_brand);
     $title = $collection->title;
@@ -91,7 +85,6 @@ class CollectionController extends Controller {
 			'list_color' => $list_color,
       'list_size' => $list_size,
       'list_bag' => $list_bag,
-      'list_special' => $list_special,
 			'total_pages' => $total_pages,
 			'page_number' => $page_number,
 			'breadcrumb_title' => $breadcrumb_title,
@@ -114,7 +107,7 @@ class CollectionController extends Controller {
 		if($params['page']) $page_number = $params['page'];
 		$perpage = 20;
 		$skip = ($page_number - 1) * $perpage;
-    $query = Product::where('product.title', 'LIKE', '%'.$search.'%')->where('product.display', 1)->where('product.price', '>', 0);
+    $query = Product::where('product.title', 'LIKE', '%'.$search.'%')->where('product.display', 1);
     $all_products = $query->select('product.*')->get();
 		$total_pages = ceil(count($all_products) / $perpage);
     $products = $query->orderBy('product.in_stock', 'desc')->orderBy('product.updated_at', 'desc')->skip($skip)->take($perpage)->get();
@@ -123,7 +116,6 @@ class CollectionController extends Controller {
 		$list_brand = array();
     $list_material = array();
 		$list_color = array();
-    $list_special = array();
     $list_size = array();
     $list_bag = array();
 
@@ -146,11 +138,6 @@ class CollectionController extends Controller {
 					array_push($arr_temp_color, $color->name);
 				}
 			}
-      $product_special = ProductSpecial::Join('special', 'product_special.special_id', '=', 'special.id')
-				->where('product_special.product_id', $product->id)->select('special.name as name')->get();
-			foreach ($product_special as $key => $special) {
-        if ($special->name && !in_array($special->name, $list_special)) array_push($list_special, $special->name);
-			}
 		}
     sort($list_brand);
     return $this->view->render($response, 'collection.pug', array(
@@ -161,7 +148,6 @@ class CollectionController extends Controller {
 			'list_color' => $list_color,
       'list_size' => $list_size,
       'list_bag' => $list_bag,
-      'list_special' => $list_special,
 			'total_pages' => $total_pages,
 			'page_number' => $page_number,
 			'breadcrumb_title' => $search,

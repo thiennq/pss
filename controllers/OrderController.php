@@ -130,7 +130,60 @@ class OrderController extends Controller {
       'cart' => $cart,
       'total' => $total,
     ]);
-    
+  }
+
+  public function checkOut(Request $request, Response $response) {
+    $cart = $_SESSION['cart'];
+    $total = 0;
+    foreach ($cart as $key => $value) {
+      $variant = Variant::where('id', $value->variant_id)->first();
+      $product = Product::where('id', $variant->product_id)->first();
+      $value->title = $product->title;
+      $value->variant = $variant->title;
+      $value->handle = $product->handle;
+      $value->price = $variant->price;
+      $value->product_id = $variant->id;
+      $value->image = $product->featured_image;
+      $value->subTotal = (int) $variant->price * (int) $value->quantity;
+      $total += $value->subTotal;
+    }
+    $region = Region::orderBy('name', 'asc')->get();
+    return $this->view->render($response, 'checkout.pug', [
+      'cart' => $cart,
+      'total' => $total,
+      'region' => $region
+    ]);
+  }
+
+  public function orderSuccess(Request $request, Response $response) {
+    if (isset($_SESSION['order_id']) || isset($_SESSION['order_id_dropship'])) {
+      $arr_cart = array();
+      $total = 0;
+      if (isset($_SESSION['order_id'])) {
+        $order = Order::find($_SESSION['order_id']);
+        $customer = Customer::find($order->customer_id);
+        $cart = Cart::where('order_id', $order->id)->get();
+        foreach ($cart as $key => $value) {
+          $variant = Variant::where('id', $value->variant_id)->first();
+          $product = Product::where('id', $variant->product_id)->first();
+          $value->title = $product->title;
+          $value->variant = $variant->title;
+          $value->handle = $product->handle;
+          $value->price = $variant->price;
+          $value->image = $product->featured_image;
+          $value->subTotal = (int) $variant->price * (int) $value->quantity;
+          $total += $value->subTotal;
+          array_push($arr_cart, $value);
+          unset($_SESSION['order_id']);
+        }
+      }
+      return $this->view->render($response, 'successful.pug', [
+        'customer' => $customer,
+        'total' => $total,
+        'cart' => $arr_cart
+      ]);
+    }
+    return $response->withStatus(302)->withHeader('Location', '/');
   }
 
   public function store(Request $request, Response $response) {
@@ -157,52 +210,29 @@ class OrderController extends Controller {
     $customer_id = Customer::update($customer);
 
     $details = array();
-    $dropship = array();
     $cart = $_SESSION['cart'];
     $subTotal = 0;
-    $subTotalDropship = 0;
     foreach ($cart as $key => $value) {
       $item = new stdClass();
-      $variant = Variant::where('id', $value->variant_id)->first();
+      $variant = Variant::find($value->variant_id);
       $product = Product::find($variant->product_id);
       $item->variant_id = $variant->id;
       $item->price = $variant->price;
       $item->quantity = $value->quantity;
-      if ($product->dropship) {
-        $subTotalDropship += (int) $variant->price * (int) $value->quantity;
-        array_push($dropship, $item);
-      } else {
-        $subTotal += (int) $variant->price * (int) $value->quantity;
-        array_push($details, $item);
-      }
+      $subTotal += (int) $variant->price * (int) $value->quantity;
+      array_push($details, $item);
     }
 
-    if (count($details)) {
-      $total = $subTotal + $shipping_price - $discount;
-      $order_id = Order::store($customer_id, $body, $subTotal, $total);
-      if ($order_id) {
-        foreach ($details as $key => $value) {
-          $value->order_id = $order_id;
-          Cart::store($value);
-          Product::updateSell($value->product_id, $value->quantity);
-        }
-        unset($_SESSION['cart']);
-        $_SESSION['order_id'] = $order_id;
+    $total = $subTotal + $shipping_price - $discount;
+    $order_id = Order::store($customer_id, $body, $subTotal, $total);
+    if ($order_id) {
+      foreach ($details as $key => $value) {
+        $value->order_id = $order_id;
+        Cart::store($value);
+        Product::updateSell($value->product_id, $value->quantity);
       }
-    }
-    if (count($dropship)) {
-      $totalDropship = $subTotalDropship + $shipping_price - $discount;
-      $order_id = Order::store($customer_id, $body, $subTotalDropship, $totalDropship, -2);
-      if ($order_id) {
-        foreach ($dropship as $key => $value) {
-          $value->order_id = $order_id;
-          Cart::store($value);
-          Product::updateSell($value->product_id, $value->quantity);
-        }
-        $_SESSION['order_id_dropship'] = $order_id;
-      }
-    }
-    if ($_SESSION['order_id'] || $_SESSION['order_id_dropship']) {
+      unset($_SESSION['cart']);
+      $_SESSION['order_id'] = $order_id;
       return $response->withJson([
         'code' => 0,
         'message' => 'success'
@@ -212,79 +242,6 @@ class OrderController extends Controller {
       'code' => -1,
       'message' => 'error'
     ]);
-  }
-
-  public function checkOut(Request $request, Response $response) {
-    $cart = $_SESSION['cart'];
-    $total = 0;
-    foreach ($cart as $key => $value) {
-      $variant = Variant::where('id', $value->variant_id)->first();
-      $product = Product::where('id', $variant->product_id)->first();
-      $value->title = $product->title;
-      $value->variant = $variant->title;
-      $value->handle = $product->handle;
-      $value->price = $variant->price;
-      $value->product_id = $variant->id;
-      $value->image = $product->featured_image;
-      $value->subTotal = (int) $variant->price * (int) $value->quantity;
-      $total += $value->subTotal;
-    }
-    $region = Region::orderBy('name', 'asc')->get();
-    return $this->view->render($response, 'checkout.pug', [
-      'cart' => $cart,
-      'total' => $total,
-      'region' => $region
-    ]);
-    
-  }
-
-  public function orderSuccess(Request $request, Response $response) {
-    if (isset($_SESSION['order_id']) || isset($_SESSION['order_id_dropship'])) {
-      $arr_cart = array();
-      $total = 0;
-      if (isset($_SESSION['order_id'])) {
-        $order = Order::find($_SESSION['order_id']);
-        $customer = Customer::find($order->customer_id);
-        $cart = Cart::where('order_id', $order->id)->get();
-        foreach ($cart as $key => $value) {
-          $variant = Variant::where('id', $value->variant_id)->first();
-          $product = Product::where('id', $variant->product_id)->first();
-          $value->title = $product->title;
-          $value->variant = $variant->title;
-          $value->handle = $product->handle;
-          $value->price = $variant->price;
-          $value->image = $product->featured_image;
-          $value->subTotal = (int) $variant->price * (int) $value->quantity;
-          $total += $value->subTotal;
-          array_push($arr_cart, $value);
-          unset($_SESSION['order_id']);
-        }
-      }
-      if (isset($_SESSION['order_id_dropship'])) {
-        $order = Order::find($_SESSION['order_id_dropship']);
-        $customer = Customer::find($order->customer_id);
-        $cart = Cart::where('order_id', $order->id)->get();
-        foreach ($cart as $key => $value) {
-          $variant = Variant::where('id', $value->variant_id)->first();
-          $product = Product::where('id', $variant->product_id)->first();
-          $value->title = $product->title;
-          $value->variant = $variant->title;
-          $value->handle = $product->handle;
-          $value->price = $variant->price;
-          $value->image = $product->featured_image;
-          $value->subTotal = (int) $variant->price * (int) $value->quantity;
-          $total += $value->subTotal;
-          array_push($arr_cart, $value);
-          unset($_SESSION['order_id_dropship']);
-        }
-      }
-      return $this->view->render($response, 'successful.pug', [
-        'customer' => $customer,
-        'total' => $total,
-        'cart' => $arr_cart
-      ]);
-    }
-    return $response->withStatus(302)->withHeader('Location', '/');
   }
 }
 

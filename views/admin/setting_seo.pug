@@ -1,0 +1,52 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'seo'
+  title Setting SEO
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-8.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a SEO
+        
+    ol.button-right.col-sm-4.col.xs-12
+      li
+        a.btn.btn-admin.btn-update-setting-seo
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-shop-info
+        .box-body
+          .form-group
+            label.col-sm-2.control-label Meta Title
+            .col-sm-10
+              input.form-control(name="meta_title_default" placeholder="Meta Title" value=meta_title_default)
+          .form-group
+            label.col-sm-2.control-label Meta Description
+            .col-sm-10
+              textarea.form-control(rows="6" name="meta_description_default" placeholder="Meta Description")=meta_description_default
+          .form-group
+            label.col-sm-2.control-label Facebook Pixel
+            .col-sm-10
+              textarea.form-control(rows="6" name="facebook_pixel" placeholder="Mặc định cho tất cả các trang")=facebook_pixel
+          .form-group.clearfix
+            label.col-sm-2.control-label Facebook Image
+            form.col-sm-10
+              if facebook_image
+                img(src="/uploads/" + facebook_image, style="max-width: 100%;")
+              else
+                img(src=staticURI() + "/img/default_image.png", style="max-width: 100%;")
+              input.upload.form-control(type="file" name="upload[]" data-type="image")
+              input.upload-value(type="hidden" name="facebook_image" value=facebook_image)
+          .form-group
+            label.col-sm-2.control-label Google
+            .col-sm-10
+              textarea.form-control(rows="6" name="meta_google" placeholder="Mặc định cho tất cả các trang")=meta_google

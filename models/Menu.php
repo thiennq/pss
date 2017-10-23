@@ -8,13 +8,15 @@ class Menu extends Illuminate\Database\Eloquent\Model {
   protected $table = 'menu';
 
   public function listAll() {
-    $data = Menu::all();
-    foreach ($data as $key => $menu) {
-      if($menu->parent_id) $menu->parent = Menu::find($menu->parent_id)->title;
+    $menus = Menu::where('parent_id', -1)->get();
+    foreach ($menus as $key => $menu) {
+      $menu->submenu = 0;
+      $submenu = Menu::where('parent_id', $menu->id)->get();
+      if (count($submenu)) $menu->submenu = $submenu;
     }
-    return $data;
+    return $menus;
   }
-  
+
   public function store($data) {
     $menu = new Menu;
     $menu->title = $data['title'];
@@ -50,22 +52,6 @@ class Menu extends Illuminate\Database\Eloquent\Model {
     }
     if ($menu->delete()) return 0;
     return -3;
-  } 
-  public function getMenu() {
-    $menus = Menu::where('parent_id', -1)->get();
-    foreach ($menus as $menu) {
-      $menu->handle = 'menu-' . createHandle($menu->title);
-      $id = $menu->id;
-      $menu->submenu = 0;
-      $submenu = Menu::where('parent_id', $id)->get();
-      if(count($submenu)) {
-        foreach ($submenu as $value) {
-          $value->handle = 'menu-' . createHandle($value->title);
-        }
-        $menu->submenu = $submenu;
-      }
-    }
-    return $menus;
   }
 
   public function menuSidebarCollection() {

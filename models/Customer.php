@@ -19,19 +19,18 @@ class Customer extends Illuminate\Database\Eloquent\Model {
         $customer->updated_at = date('Y-m-d H:i:s');
         $customer->save();
         return $customer->id;
-      } else {
-        $customer = new Customer;
-        $customer->name = $obj->name;
-        $customer->phone = $obj->phone;
-        $customer->gender = $obj->gender;
-        $customer->email = $obj->email;
-        $customer->address = $obj->address;
-        $customer->region = $obj->region;
-        $customer->subregion = $obj->subregion;
-        $customer->created_at = date('Y-m-d H:i:s');
-        $customer->updated_at = date('Y-m-d H:i:s');
-        $customer->save();
-        return $customer->id;
       }
+      $customer = new Customer;
+      $customer->name = $obj->name;
+      $customer->phone = $obj->phone;
+      $customer->gender = $obj->gender;
+      $customer->email = $obj->email;
+      $customer->address = $obj->address;
+      $customer->region = $obj->region;
+      $customer->subregion = $obj->subregion;
+      $customer->created_at = date('Y-m-d H:i:s');
+      $customer->updated_at = date('Y-m-d H:i:s');
+      $customer->save();
+      return $customer->id;
     }
 }

@@ -5,6 +5,7 @@ require_once("../models/CollectionProduct.php");
 require_once(ROOT . '/controllers/helper.php');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Illuminate\Database\Connection as DB;
 use ControllerHelper as Helper;
 
 class AdminProductController extends AdminController {
@@ -79,6 +80,7 @@ class AdminProductController extends AdminController {
       $data->meta_description = $body['meta_description'];
       $data->meta_robots = $body['meta_robots'];
       $data->display = $body['display'];
+      $data->inventory_management = $body['inventory_management'];
       $data->updated_at = date('Y-m-d H:i:s');
       $data->save();
 
@@ -139,6 +141,7 @@ class AdminProductController extends AdminController {
       }
       $data->featured_image = $body['featured_image'];
       $data->save();
+      updateStock($id);
       $result = Helper::response(0);
       return $response->withJson($result, 200);
     } catch (Exception $e) {

@@ -3,7 +3,7 @@ extends ./layout.pug
 block pre-include
   - var menu = 'article'
   - var childMenu = 'blog'
-  title Tạo nhóm bài viết
+  title Tạo Blog
 
 block post-include
   script(src=staticURI() + '/js/admin/blog.js')
@@ -12,9 +12,9 @@ block content
   section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
-        a Nhóm bài viết
+        a Blog
       li
-        a Tạo nhóm bài viết
+        a Tạo Blog
     ol.button-right.col-sm-4.col.xs-12
       li
         a.btn.btn-admin.btn-create-blog

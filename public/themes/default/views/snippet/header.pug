@@ -17,25 +17,24 @@ header(data-uri=themeURI())
             img(src=themeURI() +"/img/logo.png" alt="Mia")
         .col-sm-8.col-xs-8.mobile-search-box
           .row
-            form.search.col-sm-7(action=fullUrl('tim-kiem'))
+            form.search.col-sm-12(action=fullUrl('tim-kiem'))
               input.form-control(type="text" placeholder="Nhập sản phẩm cần tìm" name="q" autocomplete="off")
               img(src="/themes/default/img/search-icon.png").hidden-xs.search-icon
               img(src="/themes/default/img/search-icon-mobile.png").visible-xs.search-icon
               ul.search-result
-            .contact.clearfix.col-sm-5.hidden-xs
-              p GỌI MUA HÀNG 
-                span=hotline1()
-              p GÓP Ý, KHIẾU NẠI 
-                span=hotline2() 
         .col-xs-2.visible-xs.collapsed-bars
           img(src="/themes/default/img/collapsed-bars.png")(type='button', data-toggle='modal', data-target='#menuModal')
       ul.main-menu.clearfix.hidden-xs
-        - var menus = Menu();
+        - var menus = menu();
         each menu in menus
-          li
-            a(href=fullUrl(menu.link))=menu.title
-            if menu.check_submenu
-              | !{menu.submenu}
+          li.dropdown
+            a.dropdown-toggle(href=fullUrl(menu.link), data-toggle="dropdown")=menu.title
+            if menu.submenu
+              span.caret
+              ul.dropdown-menu
+                each item in menu.submenu
+                  li
+                    a(href=item.link)=item.title
   .header-bottom.hidden-xs
     .container
       i.fa.fa-shopping-bag.fa-lg

@@ -2,12 +2,12 @@ extends ./layout.pug
 
 block pre-include
   title=data.title
-  - metaTitle = data['title']
+  - var metaTitle = data.title
   if data.meta_description
-    - metaDescription = data['meta_description'];
+    - var metaDescription = data.meta_description;
   if data.meta_robots
-    - meta_robots = data['meta_robots'];
-  - ogImage = data['ogImage']
+    - var meta_robots = data.meta_robots;
+  - var ogImage = data.ogImage;
   link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
   link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
 block post-include
@@ -176,36 +176,3 @@ block content
             else
               .col20.col-xs-6
                 include snippet/product-loop
-
-  //- - var articleIndex = articleIndex();
-  //- if countArr(articleIndex)
-  //-   .related.col-xs-12.visible-xs
-  //-     .container
-  //-       .related-type
-  //-         a TIN TỨC MỚI NHẤT
-  //-           .border.hidden-xs
-  //-       .row.list-product-related.latest-news-product
-  //-         each item in articleIndex
-  //-           .col-xs-12
-  //-             .row
-  //-               .col-xs-5.pd-left-0.pd-right-0
-  //-                 a.cover(href='/' + item.link)
-  //-                   img(src="/uploads/" + resize(item.image, 240))
-  //-               .col-xs-7
-  //-                 h3.news-title
-  //-                   a(href='/' + item.link)=item.title
-  //-                 .description
-  //-                   div=item.description
-  //-                   .bottom-line.visible-xs
-  //-                     a(href='/' + item.link)=item.updated_at
-  //- .container.top-brand-footer.pd-left-0.pd-right-0.visible-xs
-  //-   .title
-  //-     span TOP BRAND
-  //-   .col-xs-12
-  //-     .brands
-  //-         - var brands = BrandatIndexPage();
-  //-         each item in brands
-  //-           ul
-  //-             each i in item
-  //-               li
-  //-                 a(href=fullUrl("thuong-hieu/" + i.handle))=i.name

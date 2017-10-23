@@ -19,7 +19,6 @@ block content
         a Menu
     ol.button-right.col-sm-4.col.xs-12
       li
-        //a.btn.btn-admin(href="/admin/menu/new") Tạo menu
         a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
   section.content.clearfix
     .box
@@ -55,7 +54,7 @@ block content
                     i.fa.fa-trash
               if item.submenu
                 each child in item.submenu
-                  tr(style="background-color: #eee;", data-parent_id=item.id)
+                  tr.submenu(style="background-color: #eee;", data-parent_id=item.id, data-id=child.id)
                     td.col-sm-1=stt++
                     td.col-sm-3.menu-title(data-value=child.title style="padding-left: 40px;")
                       i.fa.fa-level-down(style="margin-right: 5px;")
@@ -100,13 +99,15 @@ block content
                       .col-sm-6.key
                         select.form-control(name="menu-type")
                           option(value="collection" selected) Nhóm sản phẩm
-                          option(value="thong-tin") Bài viết
-                          option(value="tin-tuc") Tin tức
+                          option(value="blog") Blog
+                          option(value="article") Bài viết
+                          option(value="page") Trang nội dung
                           option(value="custom") Địa chỉ web
                       .col-sm-6.value
                         select.form-control(name="menu-collection")
                           each item in collection
                             option(value=item.link)=item.breadcrumb
+                        select.hidden.form-control(name="menu-blog")
                         select.hidden.form-control(name="menu-article")
                         select.hidden.form-control(name="menu-page")
                         input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")
@@ -158,10 +159,3 @@ block content
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Hủy
               button.btn.btn-primary.btn-update-menu Cập nhật
-    .box
-      .box-header
-        h3.box-title Menu Mobile
-      .box-body
-        textarea.form-control(rows="10" name="menu_mobile")=menu_mobile
-        br
-        a.pull-right.btn.btn-primary.btn-save-menu-mobile Cập nhật

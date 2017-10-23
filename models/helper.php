@@ -11,12 +11,14 @@ $GLOBALS['size'] = [100, 240, 480, 640, 1024, 2048];
 
 function setMemcached($key, $value, $time=30*24*60*60) {
   global $memcached;
-  $memcached->set($key, $value, $time);
+  if ($memcached) {
+    $memcached->set($key, $value, $time);
+  }
 }
 
 function getMemcached($key) {
   global $memcached;
-  if(strpos(HOST, 'localhost') !== false && $memcached) return $memcached->get($key);
+  if($memcached) return $memcached->get($key);
   return false;
 }
 
@@ -224,4 +226,109 @@ function rotate($input) {
   }
   imagedestroy($source);
   imagedestroy($rotate);
+}
+
+function SiteMap() {
+  $path = ROOT . '/public/';
+  $sitemap = new Sitemap(HOST);
+  $filename = 'sitemap_products_1';
+  unlink($path . $filename . 'xml');
+  $sitemap->setPath($path);
+  $sitemap->setFilename($filename);
+  $sitemap->addItem('/' , '1.0', 'Daily');
+  $Product = Product::where('display', 1)->orderBy('updated_at', 'desc')->get();
+  foreach ($Product as $key => $product) {
+    $sitemap->addItem('/san-pham/' . $product['handle'] , '1.0', 'Daily', $product['updated_at']);
+  }
+  $sitemap->createSitemapIndex($path, 'Today');
+  unlink($path . $filename . '-index.xml');
+
+  $sitemap = new Sitemap(HOST);
+  $filename = 'sitemap_collections_1';
+  unlink($path . $filename . 'xml');
+  $sitemap->setPath($path);
+  $sitemap->setFilename($filename);
+  $sitemap->addItem('/' , '1.0', 'Daily');
+  $collections = Collection::all();
+  foreach ($collections as $key => $collection) {
+    $link = str_replace(',', '/', $collection['link']);
+    $sitemap->addItem('/' . $link, '0.9', 'Daily', $collection['updated_at']);
+  }
+  $sitemap->createSitemapIndex($path, 'Today');
+  unlink($path . $filename . '-index.xml');
+
+  $sitemap = new Sitemap(HOST);
+  $filename = 'sitemap_news_1';
+  unlink($path . $filename . 'xml');
+  $sitemap->setPath($path);
+  $sitemap->setFilename($filename);
+  $sitemap->addItem('/' , '1.0', 'Daily');
+  $articles = Article::where('display', 1)->get();
+  foreach ($articles as $key => $article) {
+    $sitemap->addItem('/article/' . $article['handle'] . '-'. $article['id'], '0.9', 'Daily', $article['updated_at']);
+  }
+  $sitemap->createSitemapIndex($path, 'Today');
+  unlink($path . $filename . '-index.xml');
+}
+
+function createSitemap() {
+  SiteMap();
+  global $HOST;
+  $domtree = new DOMDocument('1.0', 'UTF-8');
+  $domtree->preserveWhiteSpace = false;
+  $domtree->formatOutput = true;
+  /* Create attribute */
+  $domAttribute = $domtree->createAttribute('xmlns');
+  /* Value for the created attribute */
+  $domAttribute->value = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+
+  /* Create the root element of the xml tree */
+  $xmlRoot = $domtree->createElement("sitemapindex");
+  $xmlRoot->appendChild($domAttribute);
+  /* Append it to the document created */
+  $xmlRoot = $domtree->appendChild($xmlRoot);
+
+  $sitemaps = array('products','collections','news');
+  $prefix = '/sitemap_';
+  $extension = '_1.xml';
+  foreach ($sitemaps as $key => $sitemap) {
+    $currentSitemap = $domtree->createElement("sitemap");
+    $currentSitemap = $xmlRoot->appendChild($currentSitemap);
+    $currentSitemap->appendChild($domtree->createElement('loc', $HOST . $prefix . $sitemap . $extension));
+  }
+
+  $xml_out = $domtree->saveXML($domtree->documentElement);
+  $file = fopen(ROOT . '/public/sitemap.xml',"w");
+  if (fwrite($file, $xml_out) !== FALSE) {
+    $link = HOST . '/sitemap.xml';
+    echo "Success: <a href=".$link.">".$link."</a>" ;
+  } else echo "An error occured, please try again later";
+  fclose($file);
+}
+
+function updateStock($product_id) {
+  $product = Product::find($product_id);
+  if (!$product->inventory_management) {
+    $product->in_stock = 1;
+  }
+  else {
+    $check = Variant::where('product_id', $product_id)->where('inventory', '>', 0)->count();
+    $product->in_stock = $check ? 1 : 0;
+  }
+  $product->save();
+}
+
+function smartSearch(Request $request, Response $response) {
+  $query = $request->getQueryParams();
+  $products = Product::where('title', 'LIKE', '%'.$query['q'].'%')->where('display', 1)->skip(0)->take(5)->orderBy('updated_at', 'desc')->get();
+  if(count($products)) {
+    return $response->withJson(array(
+      "code" => 0,
+      "data" => $products
+    ));
+  }
+  return $response->withJson(array(
+    "code" => -1,
+    "message" => "Product not available"
+  ));
 }

@@ -45,10 +45,10 @@ $app->get('/tin-tuc/{link}', '\ArticleController:getNews');
 $app->get('/thong-tin/{link}', '\ArticleController:getInfo');
 
 $app->post('/api/filter', '\CollectionController:filter');
-$app->get('/api/san-pham/search', '\ProductController:smartSearch');
+$app->get('/api/san-pham/search', 'smartSearch');
 $app->get('/api/region', '\FunctionController::getSubRegion');
 $app->post('/api/orders', '\OrderController:store');
-$app->get('/api/website/sitemap', '\FunctionController:SiteMap' );
+$app->get('/api/website/sitemap', 'createSitemap' );
 $app->get('/api/website/initDB', '\FunctionController:initDB');
 $app->get('/404', '\ArticleController:PageNotFound');
 

@@ -16,6 +16,10 @@ block content
         a=data.title
     ol.button-right.col-sm-6
       li
+        a.btn.btn-review(href="/san-pham/" + data.handle, target="_blank")
+          i.fa.fa-eye
+          | Xem trên web
+      li
         a.btn.btn-admin.btn-update-product(data-id=data.id)
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
@@ -41,7 +45,7 @@ block content
             label.col-sm-2.control-label Mô tả
             .col-sm-10
               textarea.form-control#description=data.description
-          .form-group
+          //.form-group
             label.col-sm-2.control-label Hình đại diện 
               br 
               | (chọn một hình trong hình ảnh của variant)
@@ -51,10 +55,17 @@ block content
                 img#featured_img(data-name=data.featured_image, src="/uploads/" + featured_image)
               else
                 img#featured_img(src=staticURI() + "/img/default_image.png")
-
+          .form-group
+            label.col-sm-2.control-label Quản lý tồn kho
+            .col-sm-10
+              select.form-control(name="inventory-management", data-value=data.inventory_management)
+                option(value="0") Không
+                option(value="1") Có
           .form-group
             label.col-sm-2.control-label Phiên bản
               strong.required  *
+              br 
+              | (Chọn một hình trong hình ảnh của variant làm hình đại diện)
             .col-sm-10
               .list-variant.clearfix.variant-bonus.list-append
                 if count(data.variants)
@@ -70,7 +81,10 @@ block content
                             .col-sm-3
                               input.form-control(type="number", name="variant-price-compare", placeholder="Giá so sánh", min="1", value=variant.price_compare)
                             .col-sm-3
-                              input.form-control(type="number" name="variant-inventory", value=1, min="1", value=variant.inventory)
+                              if data.inventory_management
+                                input.form-control(type="number" name="variant-inventory", value=1, min="1", value=variant.inventory)
+                              else
+                                input.form-control(type="number" name="variant-inventory", value=1, min="1", value=variant.inventory, disabled)
                         .col-xs-1
                           a.btn-remove.btn-remove-variant(data-id=variant.id)
                             i.fa.fa-trash

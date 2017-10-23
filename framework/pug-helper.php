@@ -64,11 +64,11 @@ function getRelatedArticle($articleId) {
   return $related_article;
 }
 
-function Menu() {
+function menu() {
   if(getMemcached('menus')) $menus = getMemcached('menus');
   else {
-    $menus = Menu::getMenu();
-    // setMemcached("menus", $menus);
+    $menus = Menu::listAll();
+    setMemcached("menus", $menus);
   }
   return $menus;
 }
@@ -126,6 +126,26 @@ function banner_shopping_footer() {
 
 function banner_complain_footer() {
   return getMeta('banner_complain_footer');
+}
+
+function meta_title_default() {
+  return getMeta('meta_title_default');
+}
+
+function meta_description_default() {
+  return getMeta('meta_description_default');
+}
+
+function facebook_pixel() {
+  return getMeta('facebook_pixel');
+}
+
+function facebook_image() {
+  return getMeta('facebook_image');
+}
+
+function meta_google() {
+  return getMeta('meta_google');
 }
 
 function Brand() {
@@ -289,11 +309,6 @@ function fullUrl($link=null) {
 function livechat() {
   $livechat = Meta::where('key', 'livechat')->first();
   return $livechat->value;
-}
-
-function menu_mobile() {
-  $menu_mobile = Meta::where('key', 'menu_mobile')->first();
-  return $menu_mobile->value;
 }
 
 function banner_default_fb() {

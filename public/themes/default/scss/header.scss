@@ -229,10 +229,6 @@ header {
         }
         height: 100%;
         float: left;
-        &:last-child {
-          float: right;
-          padding-right: 0;
-        }
         > a {
           letter-spacing: 1px;
           font-size: 16px;
@@ -392,7 +388,7 @@ header {
 
       .minicart-product {
         font-family: "Helvetica";
-      
+
         position: relative;
         .left {
           float: left;
@@ -408,7 +404,7 @@ header {
           .product-img {
             height: 35px;
             background-size: contain;
-            background-position: center;  
+            background-position: center;
           }
         }
         .cart-item-detail {
@@ -435,7 +431,7 @@ header {
           }
           .product-name-cn {
             font-size: 13px;
-      
+
           }
           .quantity-select {
             display: inline-block;
@@ -456,16 +452,16 @@ header {
           }
           .remove-btn {
             position: absolute;
-      
+
             right: 0;
             top: 0;
             i {
               font-size: 16px;
               vertical-align: top;
-      
+
             }
             &:hover {
-      
+
               cursor: pointer;
             }
           }
