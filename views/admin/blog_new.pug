@@ -17,7 +17,7 @@ block content
         a Tạo Blog
     ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin.btn-create-blog
+        a.btn.btn-admin.btn-create
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -32,7 +32,6 @@ block content
               input.form-control(name="title", data-title='', data-handle='', placeholder="Tiêu đề")
           .form-group
             label.col-sm-2.control-label Hình đại diện
-              img.no-border.loading(src=staticURI() + "/img/loading.gif").hidden
             form.col-sm-10
               img(src=staticURI() + "/img/default_image.png")
               input.feature-image(type="file" name="upload[]").form-control

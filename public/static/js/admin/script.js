@@ -234,10 +234,15 @@ function checkDate(datetime) {
   return new Date(datetime);
 }
 
-
 function reloadPage(url = null) {
   setTimeout(function() {
     if (url) location.href = url;
     else location.reload();
   }, 1000);
 }
+
+$(window).on('load', function() {
+  $("select[data-value]").val(function(){
+    return $(this).data('value');
+  });
+});

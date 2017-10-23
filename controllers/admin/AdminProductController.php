@@ -10,9 +10,9 @@ use ControllerHelper as Helper;
 
 class AdminProductController extends AdminController {
 
-  public function index(Request $request, Response $response) {
+  public function fetch(Request $request, Response $response) {
     $data = Product::all();
-    return $this->view->render($response, 'admin/product_list.pug', [
+    return $this->view->render($response, 'admin/product.pug', [
       'data' => $data
     ]);
   }

@@ -28,12 +28,9 @@ class AdminBlogController extends AdminController {
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $blog = Blog::find($id);
-    if (!$blog) {
-      $this->view->render($response, '404.pug');
-      return $response->withStatus(404);
-    }
+    if (!$blog) return $response->withStatus(302)->withHeader('Location', '/404');
     return $this->view->render($response, 'admin/blog_edit.pug', array(
-      'data' => $code
+      'data' => $blog
     ));
   }
 

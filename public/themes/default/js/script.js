@@ -7,7 +7,6 @@ var themeURI = $('header').data('uri');
 
 $(window).on('load', function() {
   $("img").unveil();
-  // runVariantCarousel();
 });
 
 updateCartIcon();
@@ -475,7 +474,7 @@ function addToCart(variant_id, quantity) {
       if (!json.code) {
         toastr.success('Thêm vào giỏ hàng thành công');
         updateCartIcon();
-      } 
+      }
       else if (json.code == -1) {
         toastr.error('Hiện phiên bản ' + json.variant + ' chỉ còn ' + json.in_stock  + ' sản phẩm.');
       }
@@ -729,19 +728,6 @@ $('.btn-checkout-done').click(function() {
     }
   });
 });
-
-function runVariantCarousel() {
-  if ($('.variant-carousel').length) {
-    $('.variant-carousel').owlCarousel({
-      loop: false,
-      nav: true,
-      dots: false,
-      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-      navElement: 'span',
-      items: 4
-    });
-  }
-}
 
 $(document).on('click', '.item-thumb', function() {
   var large = $(this).attr('data-large');

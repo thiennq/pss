@@ -19,7 +19,7 @@
       $blog = new Blog;
       $blog->title = $data['title'];
       $blog->handle = createHandle($data['title']);
-      $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
+      $blog->image = $data['image'] ? renameOneImage($data['image'], $blog->handle) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];
@@ -41,11 +41,13 @@
     }
 
     function update($id, $data) {
+      $blog = Blog::where('title', $data['title'])->where('id', '!=', $id)->first();
+      if ($blog) return -1;
       $blog = Blog::find($id);
       if (!$blog) return -2;
       $blog->title = $data['title'];
       $blog->handle = createHandle($data['title']);
-      $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
+      $blog->image = $data['image'] ? renameOneImage($data['image'], $blog->handle) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];

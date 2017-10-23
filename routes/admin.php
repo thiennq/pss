@@ -49,7 +49,7 @@ $app->group('/admin', function() use($app) {
   $app->post('/api/uploadImageTinymce', 'uploadImageTinymce');
 
   //Product
-  $app->get('/products', '\AdminProductController:index');
+  $app->get('/products', '\AdminProductController:fetch');
   $app->post('/products', '\AdminProductController:store');
   $app->get('/products/new', '\AdminProductController:create');
   $app->get('/products/{id}', '\AdminProductController:show');
@@ -106,7 +106,6 @@ $app->group('/admin', function() use($app) {
   $app->post('/article', '\AdminArticleController:create');
   $app->put('/article/{id}', '\AdminArticleController:update');
   $app->delete('/article/{id}', '\AdminArticleController:delete');
-  $app->get('/articles/search', '\AdminArticleController:searchArticle');
 
   // Blog
   $app->get('/blog/new', '\AdminBlogController:new');
