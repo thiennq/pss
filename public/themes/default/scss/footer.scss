@@ -47,12 +47,6 @@ footer {
       }
     }
     @media screen and (max-width: 1199px) {
-      .hotlines {
-        padding-left: 0;
-        .hotline {
-          height: 50px;
-        }
-      }
       .subscribe {
         padding-left: 30px;
         .receive-info {
@@ -111,139 +105,6 @@ footer {
     }
 
   }
-  .menu-policy {
-    margin: 20px 0;
-    .mailings {
-      .mailing {
-        margin-bottom: 15px;
-        .mailing-title {
-          text-transform: uppercase;
-          margin-bottom: 5px;
-          font-size: 15px;
-        }
-        .email {
-          font-size: 14px;
-        }
-      }
-    }
-    .policies {
-      .policy {
-        a {
-          color: black;
-          display: block;
-        }
-        margin-bottom: 5px;
-      }
-    }
-    .introduce {
-      .intro {
-        a {
-          color: black;
-          display: block;
-        }
-        margin-bottom: 5px;
-      }
-    }
-    .social-icon {
-      .icon {
-        display: inline-block;
-        margin-right: 10px;
-        height: 40px;
-        width: 40px;
-        background-size: contain !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-        margin-bottom: 5px;
-      }
-      .bo-cong-thuong {
-        display: inline-block;
-        height: 50px;
-        width: 130px;
-        background-size: contain !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-      }
-    }
-    @media screen and (max-width: 1119px) {
-      .social-icon {
-        .icon {
-        margin-left: 10px;
-        margin-right: 0;
-        }
-      }
-    }
-    @media screen and (max-width: 1024px) {
-      .social-icon {
-        .icon {
-          height: 33px;
-        width: 30px;
-        }
-        .bo-cong-thuong {
-          height: 35px;
-        width: 95px;
-        }
-      }
-    }
-    @media screen and (max-width: 991px) {
-      .mailings {
-        .mailing {
-          margin-bottom: 13px;
-          .mailing-title {
-            font-size: 13px;
-          line-height: 15px;
-          }
-          .email {
-            font-size: 11px;
-          line-height: 14px;
-          }
-        }
-      }
-    }
-
-    @media screen and (max-width: 767px) {
-      border-bottom: 1px solid #dadbdc;
-      padding: 0;
-      padding-bottom: 15px;
-      .mailings {
-        padding-left: 0;
-        min-height: 120px;
-        .mailing {
-          margin-bottom: 13px;
-          .mailing-title {
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            font-size: 13px;
-            line-height: 15px;
-          }
-          .email {
-            font-size: 11px;
-            line-height: 16px;
-          }
-        }
-      }
-      .policies {
-        padding-left: 0;
-        .policy {
-          font-size: 12px;
-          line-height: 16px;
-          margin-bottom: 4px;
-        }
-      }
-      .introduce {
-        padding-left: 0;
-        .intro {
-          font-size: 12px;
-          line-height: 16px;
-          margin-bottom: 4px;
-        }
-      }
-      .social-icon {
-        .icon {
-        margin-left: 10px;
-        }
-      }
-    }
-  }
   .top-brands {
     .top-brands-title {
       .title {
@@ -286,88 +147,6 @@ footer {
       }
     }
   }
-  .branchs {
-    .container {
-      padding: 0;
-    }
-    .group-branchs:first-child {
-      padding-top: 20px;
-      border-top: 1px solid #dadbdc;
-    }
-    .group-branchs {
-      margin-top: 20px;
-      .group-title {
-        padding: 0;
-        .title {
-          margin-bottom: 10px;
-          width: 190px;
-          font-size: 17px;
-          font-weight: 600;
-          text-transform: uppercase;
-          color: black;
-          border-bottom: 1px solid #dadbdc;
-        }
-      }
-      .branch {
-        padding: 0 0;
-        margin-bottom: 20px;
-        .district {
-          text-transform: uppercase;
-          font-size: 15px;
-          padding: 0 0;
-        }
-        .location {
-          position: relative;
-          .bullet {
-            position: absolute;
-            left: 8px;
-          }
-          font-size: 13px;
-          .address {
-            padding: 0 0;
-          }
-          .nearby {
-            padding: 0 0;
-          }
-          .hotline {
-            padding: 0 0;
-            font-style: italic;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-    @media screen and (max-width: 767px) {
-      .group-branchs:first-child {
-        border-top: none;
-        padding-top: 0;
-      }
-      .group-branchs {
-        margin-top: 0;
-        .group-title {
-          padding-left: 0;
-          .title {
-            font-size: 17px;
-          }
-        }
-        .branch {
-          padding-right: 6px;
-          .district {
-            font-size: 13px;
-          }
-          .location {
-            font-size: 12px;
-            padding-top: 5px;
-            padding-right: 0;
-            padding-left: 0;
-            .bullet {
-              left: -6px;
-            }
-          }
-        }
-      }
-    }
-  }
   .copyright {
   padding: 20px 0 !important;
   border-top: 1px solid #dadbdc;
@@ -387,5 +166,5 @@ footer {
       width: 100%;
     }
   }
-  
+
 }

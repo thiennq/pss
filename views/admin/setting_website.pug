@@ -1,23 +1,23 @@
 extends ./layout.pug
-
 block pre-include
-  - var menu = 'setting';
-  - var childMenu = 'index';
-  title Setting | Trang chủ
+  - var menu = 'setting'
+  - var childMenu = 'website'
+  title Setting Desktop
 
 block post-include
   script(src=staticURI() + '/js/admin/setting.js')
 
 block content
   section.content-header.clearfix
-    ol.breadcrumb.col-sm-6.hidden-xs
+    ol.breadcrumb.col-sm-8.hidden-xs
       li
         a Thiết lập chung
       li
-        a Trang chủ
-    ol.button-right.col-sm-6.col-xs-12
+        a Website
+        
+    ol.button-right.col-sm-4.col.xs-12
       li
-        a.btn.btn-admin.btn-update-setting-index
+        a.btn.btn-admin.btn-update-setting-website
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -26,6 +26,47 @@ block content
       .box-body
         .form-horizontal
           .col-xs-12
+            p WEBSITE
+            .box-body
+              .form-group
+                label.col-sm-2.control-label Tên cửa hàng
+                .col-sm-10
+                  input.form-control(name="shop_name" placeholder="Shop ABC" value=shop_name)
+              .form-group
+                label.col-sm-2.control-label Địa chỉ
+                .col-sm-10
+                  input.form-control(name="shop_address" placeholder="123 Cách Mạng Tháng 8, P15, Q3" value=shop_address)
+              .form-group
+                label.col-sm-2.control-label Hotline 1
+                .col-sm-10
+                  input.form-control(name="hotline1" placeholder="0123456789" value=hotline1)
+              .form-group
+                label.col-sm-2.control-label Hotline 2
+                .col-sm-10
+                  input.form-control(name="hotline2", placeholder="0123456789" value=hotline2)
+    .box
+      .box-body
+        .form-horizontal
+          .col-xs-12
+            p PHÍ GIAO HÀNG
+            .box-body
+              .form-group.clearfix
+                label.col-sm-2.control-label Giao hàng miễn phí
+                .col-sm-10
+                  input.form-control(name="free_shipping" value=free_shipping placeholder="Giá trị đơn hàng tối thiểu")
+              .form-group.clearfix
+                label.col-sm-2.control-label Nội thành
+                .col-sm-10
+                  input.form-control(name="price_urban" value=price_urban placeholder="20000")
+              .form-group.clearfix
+                label.col-sm-2.control-label Ngoại thành
+                .col-sm-10
+                  input.form-control(name="price_suburban" value=price_suburban placeholder="40000")
+    .box
+      .box-body
+        .form-horizontal
+          .col-xs-12
+            p TRANG CHỦ
             .form-group.clearfix
               label.col-sm-2.control-label Nhóm sản phẩm nổi bật 1
               form.col-sm-10
@@ -59,14 +100,12 @@ block content
                       option(value="" selected disabled) Chọn nhóm sản phẩm
                       each item in collections
                         option(value=item.id)=item.breadcrumb
+    .box
+      .box-body
+        .form-horizontal
+          .col-xs-12
+            p LIVE CHAT
             .form-group.clearfix
-              label.col-sm-2.control-label Nhóm sản phẩm nổi bật 4
+              label.col-sm-2.control-label Script
               form.col-sm-10
-                .row
-                  .col-xs-6
-                    input.form-control(name="index_collection_title_4", placeholder="Tiêu đề", value=index_collection_title_4)
-                  .col-xs-6
-                    select.form-control(name="index_collection_id_4", data-value=index_collection_id_4)
-                      option(value="" selected disabled) Chọn nhóm sản phẩm
-                      each item in collections
-                        option(value=item.id)=item.breadcrumb
+                textarea.form-control(name="livechat", rows="10")=livechat

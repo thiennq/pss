@@ -88,21 +88,11 @@ aside.main-sidebar
           span Thiết lập
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          - var liClass = (childMenu == 'index' ? 'active' : '');
+          - var liClass = (childMenu == 'website' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/settings/index')
+            a(href="/admin/settings/website")
               i.fa.fa-circle
-              | Trang chủ
-          - var liClass = (childMenu == 'desktop' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/settings/desktop")
-              i.fa.fa-circle
-              | Desktop
-          - var liClass = (childMenu == 'meta' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/settings/meta")
-              i.fa.fa-circle
-              | Title, Meta Description
+              | Website
           - var liClass = (childMenu == 'seo' ? 'active' : '');
           li(class=liClass)
             a(href="/admin/settings/seo")
@@ -113,16 +103,6 @@ aside.main-sidebar
             a(href="/admin/redirect")
               i.fa.fa-circle
               | Redirect 301
-          - var liClass = (childMenu == 'custom-css' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/custom-css")
-              i.fa.fa-circle
-              | Custom CSS
-          - var liClass = (childMenu == 'livechat' ? 'active' : '');
-          li(class=liClass)
-            a(href="/admin/livechat")
-              i.fa.fa-circle
-              | LiveChat
           - var liClass = (childMenu == 'images' ? 'active' : '');
           li(class=liClass)
             a(href="/admin/images")

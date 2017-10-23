@@ -14,7 +14,7 @@ $('.btn-update-filter').click(function() {
       data: data
     },
     success: function(json) {
-      if(!json.code) toastr.success('Cập nhật thông tin thành công');
+      if(!json.code) toastr.success('Cập nhật thành công');
       else toastr.error('Có lỗi xảy ra. Xin vui lòng thử lại');
     }
   });

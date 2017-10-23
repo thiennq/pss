@@ -128,26 +128,6 @@ block content
   //-           #nav-specification.tab-pane.fade
   //-             section !{data.specification}
   //-         //- section !{data['material']}
-  //-       .col-md-4.col-sm-5.news-support.hidden-xs
-  //-         .support
-  //-           .content-div
-  //-             - var sale_policy = sale_policy();
-  //-             !{sale_policy}
-  //-           .blank-div
-  //-         .news
-  //-           h4.title TIN TƯC GẦN ĐÂY
-  //-           .content
-  //-             .container-fluid
-  //-               each item in articleOther
-  //-                 .row
-  //-                   .col-xs-4.news-image(style="background-image: url(/uploads/"+resize(item.image, 240)+")")
-  //-                   .col-xs-8.news-see-more
-  //-                     a(href=fullUrl(item.link)).news-title=item.title
-  //-                     a(href=fullUrl(item.link)).bottom-line
-  //-                       | Chi tiết&gt;&gt;
-  //-           .news-list
-  //-             a(href="/tin-tuc") &lt;&lt;Danh mục tin tức
-  //-         //- !{saleProductPolicy()}
   if count(related_products)
     .related.col-xs-12
       .container

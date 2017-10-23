@@ -2,28 +2,15 @@ footer
   .col-sm-12.hotline-n-subscribe
     .container
       .row
-        .hotlines
-          .col-sm-4.col-xs-6.hotline(style="background:url('/uploads/" + banner_shopping_footer() + "')")
-          .col-sm-4.col-xs-6.hotline(style="background:url('/uploads/" + banner_complain_footer() + "')")
         form.col-sm-4.hidden-xs.subscribe
           .col-xs-12.receive-info
             | NHẬN THÔNG TIN KHUYẾN MÃI
           input.form-control.col-xs-7(placeholder="Nhập email" name="email_subscribe", required, type="email")
           button(type="submit").btn-subscribe Đăng ký
-  .col-sm-12.menu-policy
-    .container
-      -var policy = policy();
-      !{policy}
-  .col-sm-12.branchs
-    .container
-      - var branchs = branchs();
-      !{branchs}
   .col-sm-12.copyright.clearfix.col-xs-12
     .container
       span Copyright @2017-2018 
-      span.orange Mia.vn 
+      span.orange eyeteam.vn
       span All rights reserved.
   .clearfix
-  //- - var livechat = livechat();
-  //- | !{livechat}
-          
+  !{livechat()}

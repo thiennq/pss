@@ -98,7 +98,6 @@ class AdminUserController extends AdminController {
         else if($role->order) $href = '/admin/order';
         else if($role->customer) $href = '/admin/customer';
         else if($role->article) $href = '/admin/article/news';
-        else if($role->setting) $href = '/admin/settings/index';
         else if($role->staff) $href = '/admin/user';
         if($_SESSION['href']) $href = $_SESSION['href'];
         return $response->withJson([

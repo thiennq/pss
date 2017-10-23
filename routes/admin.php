@@ -122,12 +122,7 @@ $app->group('/admin', function() use($app) {
   $app->post('/page', '\AdminPageController:create');
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
-
-  //Setting
-  $app->get('/settings/index', '\AdminSettingController:settingIndex');
-  $app->put('/api/settings/index', '\AdminSettingController:updateSettingIndex');
-  $app->get('/shipping', '\AdminSettingController:settingShipping');
-  $app->put('/api/settings/shipping', '\AdminSettingController:updateSettingShiping');
+  
 
   $app->get('/redirect', '\AdminRedirectController:index');
   $app->post('/redirect', '\AdminRedirectController:store');
@@ -154,16 +149,8 @@ $app->group('/admin', function() use($app) {
   $app->put('/menu/{id}', '\AdminMenuController:update');
   $app->get('/menu/list-menu/{type}', '\AdminMenuController:getListMenu');
 
-  $app->get('/information', '\AdminFilterController:showInformation');
-  $app->get('/custom-css', '\AdminFilterController:showCustomCSS');
-  $app->put('/information/custom-css', '\AdminFilterController:updateCustomCSS');
-
-  $app->get('/settings/desktop', '\AdminSettingController:getDesktopSetting');
-  $app->put('/settings/desktop', '\AdminSettingController:updateDesktopSetting');
-  $app->get('/settings/mobile', '\AdminSettingController:getMobileSetting');
-  $app->put('/settings/mobile', '\AdminSettingController:updateMobileSetting');
-  $app->get('/settings/meta', '\AdminSettingController:getMetaTitleSetting');
-  $app->put('/settings/metaTitle', '\AdminSettingController:updateMetaTitleSetting');
+  $app->get('/settings/website', '\AdminSettingController:getWebsiteSetting');
+  $app->put('/settings/website', '\AdminSettingController:updateWebsiteSetting');
   $app->get('/settings/seo', '\AdminSettingController:getSEOSetting');
   $app->put('/settings/seo', '\AdminSettingController:updateSEOSetting');
   $app->get('/video', '\AdminVideoController:index');
@@ -173,8 +160,6 @@ $app->group('/admin', function() use($app) {
   $app->get('/branch', '\AdminBranchController:index');
   $app->get('/branch/{id}', '\AdminBranchController:show');
   $app->put('/branch/{id}', '\AdminBranchController:update');
-  $app->get('/livechat', '\AdminSettingController:getLiveChat');
-  $app->post('/meta/saveMeta', '\AdminSettingController:saveMeta');
   $app->get('/images', '\AdminSettingController:getImages');
   $app->delete('/api/images/remove', '\AdminSettingController:removeImage');
 

@@ -149,20 +149,6 @@ $(document).ready(function() {
 });
 
 
-$('.btn-update-css').click(function() {
-  var css = $(document).find('textarea[name="custom_css"]').val()
-	$.ajax({
-		type: 'PUT',
-		url: '/admin/information/custom-css',
-		data: {
-      css: css
-    },
-		success: function(json) {
-			toastr.success('Cập nhật thành công');
-		}
-	});
-});
-
 $('.btn-remove-image').click(function() {
   var image = $(this).data('image');
   $(this).closest('.form-group').find('input').val('');

@@ -102,30 +102,12 @@ function getPriceFilter() {
   return $arr;
 }
 
-function sale_policy() {
-  return getMeta('sale_policy');
-}
-
 function hotline1() {
   return getMeta('hotline1');
 }
 
 function hotline2() {
   return getMeta('hotline2');
-}
-function policy() {
-  return getMeta('footer1');
-}
-function branchs() {
-  return getMeta('footer2');
-}
-
-function banner_shopping_footer() {
-  return getMeta('banner_shopping_footer');
-}
-
-function banner_complain_footer() {
-  return getMeta('banner_complain_footer');
 }
 
 function meta_title_default() {
@@ -142,10 +124,6 @@ function facebook_pixel() {
 
 function facebook_image() {
   return getMeta('facebook_image');
-}
-
-function meta_google() {
-  return getMeta('meta_google');
 }
 
 function Brand() {
@@ -307,8 +285,7 @@ function fullUrl($link=null) {
 }
 
 function livechat() {
-  $livechat = Meta::where('key', 'livechat')->first();
-  return $livechat->value;
+  return getMeta('livechat');
 }
 
 function banner_default_fb() {

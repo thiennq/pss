@@ -36,7 +36,7 @@ block content
           .form-group
             label.col-sm-2.control-label Facebook Pixel
             .col-sm-10
-              textarea.form-control(rows="6" name="facebook_pixel" placeholder="Mặc định cho tất cả các trang")=facebook_pixel
+              textarea.form-control(rows="6" name="facebook_pixel" placeholder="Facebook pixel")=facebook_pixel
           .form-group.clearfix
             label.col-sm-2.control-label Facebook Image
             form.col-sm-10
@@ -46,7 +46,3 @@ block content
                 img(src=staticURI() + "/img/default_image.png", style="max-width: 100%;")
               input.upload.form-control(type="file" name="upload[]" data-type="image")
               input.upload-value(type="hidden" name="facebook_image" value=facebook_image)
-          .form-group
-            label.col-sm-2.control-label Google
-            .col-sm-10
-              textarea.form-control(rows="6" name="meta_google" placeholder="Mặc định cho tất cả các trang")=meta_google
