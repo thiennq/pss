@@ -55,7 +55,6 @@ function getHotArticle($articleId) {
   $responseData = array(
     'hot_article' => $hot_article
   );
-
   error_log('RESPONSE =' . $responseData);
   return $responseData;
 }
