@@ -19,12 +19,8 @@ class AdminBlogController extends AdminController {
   }
 
   public function fetch(Request $request, Response $response) {
-    $page_number = 1;
-    $params = $request->getQueryParams();
-    if($params['page']) $page_number = $params['page'];
-    $perpage = 12;
-    $data = Blog::fetch($page_number,$perpage);
-    return $this->view->render($response, 'admin/blog_list.pug', array(
+    $data = Blog::orderBy('updated_at', 'desc')->get();
+    return $this->view->render($response, 'admin/blog.pug', array(
       'data' => $data
     ));
   }
@@ -54,23 +50,6 @@ class AdminBlogController extends AdminController {
     $code = Blog::remove($id);
     $result = Helper::response($code);
     return $response->withJson($result, 200);
-  }
-
-  public function searchBlog(Request $request, Response $response) {
-    $params = $request->getQueryParams();
-    $title = $params['q'];
-    $id = $params['id'];
-    $Blog = Blog::where('title', 'LIKE', '%'.$title.'%')->where('id', '!=', $id)->take(10)->get();
-    if(count($Blog)) {
-      return $response->withJson(array(
-        'code' => 0,
-        'data' => $Blog
-      ));
-    }
-    return $response->withJson(array(
-      'code' => -1,
-      'message' => 'Empty'
-    ));
   }
 
 }

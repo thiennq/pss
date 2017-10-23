@@ -115,7 +115,6 @@ $app->group('/admin', function() use($app) {
   $app->post('/blog', '\AdminBlogController:create');
   $app->put('/blog/{id}', '\AdminBlogController:update');
   $app->delete('/blog/{id}', '\AdminBlogController:delete');
-  $app->get('/blogs/search', '\AdminBlogController:searchBlog');
 
   // Page
   $app->get('/page/new', '\AdminPageController:new');

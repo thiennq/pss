@@ -22,11 +22,12 @@ $Schema->create('article', function (Blueprint $table) {
   $table->string('handle');
   $table->string('image')->nullable();
   $table->text('description')->nullable();
-  $table->text('meta_description')->nullable();
   $table->text('content');
-  $table->text('meta_robots');
   $table->string('author')->nullable();
   $table->boolean('display');
   $table->integer('view');
+  $table->text('meta_title')->nullable();
+  $table->text('meta_description')->nullable();
+  $table->text('meta_robots')->nullable();
   $table->timestamps();
 });

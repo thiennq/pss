@@ -7,7 +7,7 @@
     public $timestamps = false;
     protected $table = 'blog';
 
-    function fetch($page_number, $perpage) {
+    function fetch($page_number = 1, $perpage = 50) {
       $skip = ($page_number - 1) * $perpage;
       $blogs = Blog::orderBy('updated_at', 'desc')->skip($skip)->take($perpage)->get();
       return $blogs;
@@ -18,20 +18,19 @@
       if ($blog) return -1;
       $blog = new Blog;
       $blog->title = $data['title'];
-      $blog->handle = $data['handle'];
+      $blog->handle = createHandle($data['title']);
       $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
-      $blog->meta_description = $data['meta_description'] ? $data['meta_description']: '';
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];
       $blog->display = $data['display'];
-      $blog->meta_robots = $data['meta_robots'];
       $blog->view = 0;
+      $blog->meta_title = $data['meta_title'] ? $data['meta_title']: '';
+      $blog->meta_description = $data['meta_description'] ? $data['meta_description']: '';
+      $blog->meta_robots = $data['meta_robots'];
       $blog->created_at = date('Y-m-d H:i:s');
       $blog->updated_at = date('Y-m-d H:i:s');
-      if($blog->save()) {
-        return $blog->id;
-      }
+      if($blog->save()) return $blog->id;
       return -3;
     }
 
@@ -43,33 +42,27 @@
 
     function update($id, $data) {
       $blog = Blog::find($id);
-      if (!$blog) {
-        return -2;
-      }
+      if (!$blog) return -2;
       $blog->title = $data['title'];
-      $blog->handle = $data['handle'];
-      if($data['image']) $blog->image = renameOneImage($data['image'], $data['handle']);
-      if($data['description']) $blog->description = $data['description'];
-      if($data['meta_description']) $blog->meta_description = $data['meta_description'];
+      $blog->handle = createHandle($data['title']);
+      $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
+      $blog->description = $data['description'] ? $data['description'] : '';
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];
       $blog->display = $data['display'];
+      $blog->meta_title = $data['meta_title'] ? $data['meta_title']: '';
+      $blog->meta_description = $data['meta_description'] ? $data['meta_description']: '';
       $blog->meta_robots = $data['meta_robots'];
-      $blog->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
-      if ($blog->save()) {
-        return 0;
-      }
+      $blog->updated_at = date('Y-m-d H:i:s');
+      if ($blog->save()) return 0;
       return -3;
     }
 
     function remove($id) {
       $blog = Blog::find($id);
-      if (!$blog) {
-        return -2;
-      }
+      if (!$blog) return -2;
       if ($blog->delete()) return 0;
       return -3;
     }
-
   }
 ?>
