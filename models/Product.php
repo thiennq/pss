@@ -17,6 +17,7 @@ class Product extends Illuminate\Database\Eloquent\Model {
       $product->featured_image = '';
       $product->description = $data['description'];
       $product->display = (int) $data['display'] ? 1 : 0;
+      $product->in_stock = 0;
       $product->inventory_management = (int) $data['inventory_management'] ? 1 : 0;
       $product->view = 0;
       $product->sell = 0;

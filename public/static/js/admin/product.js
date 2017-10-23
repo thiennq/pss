@@ -24,6 +24,15 @@ $(document).find('select').each(function() {
   if(data) $(this).val(data);
 });
 
+var featureImage = {};
+var $fImg = $('#featured_img[data-name]');
+featureImage.image = '';
+featureImage.uploaded = false;
+if ($fImg.length > 0) {
+  featureImage.image = $fImg.attr('data-name')
+  featureImage.uploaded = true;
+}
+
 var listFormData = [];
 for (var i = 0; i < $('.variant-item').length; i++) {
   listFormData.push(new FormData());

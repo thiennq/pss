@@ -12,7 +12,6 @@ class AdminProductController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Product::all();
-    error_log('PRODUCT = ' . $data);
     return $this->view->render($response, 'admin/product_list.pug', [
       'data' => $data
     ]);

@@ -18,7 +18,8 @@
       //- if product.featured_image
       - var src = '/uploads/' + resize(product.featured_image, 240);
       img.main-image(src=src, data-src=src, alt=product.title, data-title=product.title, data-handle=product.handle)
-      unless inInventory(product.product_id)
+      unless inInventory(product.id)
+        p=product.product_id
         .out-of-stock HÀNG TẠM HẾT
     //- a.brand(href=fullBrandLink)=product.brand
     //-   if product.percent

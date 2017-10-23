@@ -8428,7 +8428,6 @@ header {
                   header .header-menu .main-menu > li .sub-menu .menu-sort ul li a:hover {
                     text-decoration: underline !important; }
   header .header-bottom {
-    cursor: pointer;
     margin-top: 5px;
     margin-bottom: 5px;
     text-align: right; }
