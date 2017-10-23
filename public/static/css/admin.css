@@ -53,8 +53,17 @@
       padding-top: 120px; } }
   .content .form-horizontal .form-group:last-child {
     margin-bottom: 0; }
-  .content .box .box-body tbody tr {
-    cursor: move; }
+  .content .box .box-body tbody {
+    z-index: 10; }
+    .content .box .box-body tbody tr.submenu {
+      cursor: move;
+      z-index: 20; }
+      .content .box .box-body tbody tr.submenu td {
+        z-index: 30; }
+        .content .box .box-body tbody tr.submenu td a {
+          z-index: 40; }
+          .content .box .box-body tbody tr.submenu td a i {
+            z-index: 50; }
 
 table.table-bordered.dataTable {
   border-bottom: none; }

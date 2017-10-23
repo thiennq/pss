@@ -78,6 +78,8 @@ $('.btn-create-menu').click(function() {
   var data = {};
   data.title = modal.find('input[name="title"]').val();
   data.parent_id = modal.find('select[name="parent_id"]').val();
+  priority = modal.find('select[name="parent_id"] option[value=' + data.parent_id + ']').attr('data-priority');
+  data.priority = (parseInt(data.parent_id) == -1) ? -1 : (parseInt(priority) + 1);
   if(!data.title) {
     toastr.error('Chưa nhập tiêu đề');
     modal.find('input[name="title"]').addClass('error');
@@ -103,11 +105,12 @@ $('.btn-create-menu').click(function() {
     }
   });
 });
-
-$('.btn-edit-menu').click(function() {
+$('tbody').on('mousedown', '.btn-edit-menu', function(e) {
+  e.stopPropagation();
   var id = $(this).data('id');
   var tr = $(this).closest('tr');
   var modal = $('#modal-update');
+  modal.find('select[name="parent_id"]').prop('disabled', false);
   $.get("/admin/menu/"+id, function (json) {
     var data = json.data;
     var link_type = data.link_type;
@@ -144,7 +147,9 @@ $('.btn-edit-menu').click(function() {
       modal.find('select[name="menu-collection"]').addClass('hidden');
       modal.find('input[name="menu-link"]').addClass('hidden');
     }
-    modal.find('.btn-update-menu').attr('data-id', id);
+    modal.find('.btn-update-menu')
+      .attr('data-id', id)
+      .attr('data-priority', tr.attr('data-priority'));
     modal.modal('show');
   });
 });
@@ -157,6 +162,7 @@ $('.btn-update-menu').click(function() {
   var data = {};
   data.title = modal.find('input[name="title"]').val();
   data.parent_id = modal.find('select[name="parent_id"]').val();
+  data.priority = $(this).attr('data-priority');
   if(!data.title) {
     toastr.error('Chưa nhập tiêu đề');
     modal.find('input[name="title"]').addClass('error');
@@ -167,23 +173,27 @@ $('.btn-update-menu').click(function() {
   else if (data.link_type == 'collection') data.link = modal.find('select[name="menu-collection"]').val();
   else if (data.link_type == 'tin-tuc') data.link = modal.find('select[name="menu-article"]').val();
   else if (data.link_type == 'thong-tin') data.link = modal.find('select[name="menu-page"]').val();
-  if(!data.link) {
+  /*if(!data.link) {
     toastr.error('Chưa nhập địa chỉ web');
     return false;
-  }
+  }*/
   $.ajax({
     type: 'PUT',
     url: '/admin/menu/' + id,
     data: data,
     success: function(json) {
-      if(!json.code) toastr.success('Cập nhật thành công');
+      if(!json.code) {
+        toastr.success('Cập nhật thành công');
+        setTimeout(reloadPage(), 1000);
+      } 
       else if(json.code == -1) toastr.error('Tiêu đề đã tồn tại');
       else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
   });
 });
 
-$(document).on('click', '.btn-remove-menu', function() {
+$('tbody').on('mousedown', '.btn-remove-menu', function(e) {
+  e.stopPropagation();
   var id = $(this).data('id');
   var submenu = $(this).closest('tr').attr('data-submenu');
   var message = (submenu > 0) ? "Khi xóa menu này, các menu con cũng sẽ bị xóa theo!\nBạn có chắc chắn muốn xóa menu?" : "Xóa menu này?";
@@ -198,6 +208,7 @@ $(document).on('click', '.btn-remove-menu', function() {
         if(!json.code) {
           toastr.success('Đã xóa');
           tbl.row(tr).remove().draw();
+          reloadPage();
           if (parent_id != -1 ) {
             tr = $('tr[data-id='+parent_id+']');
             var submenu = tr.attr('data-submenu');
@@ -215,9 +226,10 @@ $(document).on('click', '.btn-remove-menu', function() {
 });
 
 var parentIdMD = '';
+var lastIndex = '';
 var parentIdMU = '';
 
-function checkMoveValid(index) {
+function checkMoveValid() {
   if (parentIdMD != parentIdMU) {
     parentIdMD = '';
     parentIdMU = '';
@@ -225,29 +237,34 @@ function checkMoveValid(index) {
     return;
   }
   var rows = $('tbody tr');
-  var stop = $('tbody tr[data-id=' + parentIdMD + ']').index();
-  var count = index;
+  var startRow = $('tbody tr[data-id=' + parentIdMD + ']');
+  var current = startRow.index() + 1;
+  var stop = parseInt(startRow.attr('data-priority'));
+  var count = 0;
   updateMenu();
 
   function updateMenu() {
-    if (count == stop) {
+    if (count > stop) {
       toastr.success('Cập nhật thành công');
       reloadPage();
+      return;
     }
-    var row = rows.eq(count);
+    var row = rows.eq(current);
     var id = row.attr('data-id');
     var data = {};
     data.title = row.find('.menu-title').attr('data-value');
     data.link = row.find('.menu-link').attr('data-value');
     data.data_type = row.find('.menu-link').attr('data-type');
     data.parent_id = row.attr('data-parent_id');
+    data.priority = count;
     $.ajax({
       type: 'PUT',
       url: '/admin/menu/' + id,
       data: data,
       success: function(json) {
         if(!json.code) {
-          count--;
+          count++;
+          current++;
           setTimeout(function() {
             updateMenu();
           }, 200);
@@ -261,19 +278,23 @@ function checkMoveValid(index) {
   }
 }
 
-$('.submenu').mousedown(function() {
+$('tbody').on('mousedown', 'tr.submenu', function() {
   parentIdMD = $(this).attr('data-parent_id');
-})
-$('.submenu').mouseup(function() {
+  lastIndex = $(this).index();
+});
+$('tbody').on('mouseup', 'tr.submenu', function() {
   var self = $(this);
   setTimeout(function(){ 
+    if (lastIndex == self.index()) {
+      return false;
+    }
     var rows = $('tbody tr');
     rows.each(function(i, e) {
       if ($(e).attr('data-parent_id') == -1) {
         parentIdMU = $(e).attr('data-id');
       }
       if ($(e).attr('data-id') == self.attr('data-id')) {
-        checkMoveValid(i);
+        checkMoveValid();
         return false;
       } 
     });

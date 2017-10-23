@@ -22,5 +22,6 @@ $Schema->create('menu', function (Blueprint $table) {
     $table->string('title');
     $table->string('link')->nullable();
     $table->string('link_type')->nullable();
+    $table->integer('priority')->nullable();
     $table->timestamps();
 });
