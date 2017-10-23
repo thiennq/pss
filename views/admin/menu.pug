@@ -39,7 +39,7 @@ block content
                 - var submenu = count(item.submenu)
               else
                 - var submenu = 0
-              tr(data-id=item.id, data-parent_id=-1, data-submenu=submenu)
+              tr.parentMenu(data-id=item.id, data-parent_id=-1, data-submenu=submenu, data-priority=item.priority)
                 td.col-sm-1=stt++
                 td.col-sm-3.menu-title(data-value=item.title)=item.title
                 td.col-sm-3.menu-link(data-value=item.link, data-type=item.link_type)
@@ -54,7 +54,7 @@ block content
                     i.fa.fa-trash
               if item.submenu
                 each child in item.submenu
-                  tr.submenu(style="background-color: #eee;", data-parent_id=item.id, data-id=child.id)
+                  tr.submenu(style="background-color: #eee;", data-parent_id=item.id, data-id=child.id, data-priority=child.priority)
                     td.col-sm-1=stt++
                     td.col-sm-3.menu-title(data-value=child.title style="padding-left: 40px;")
                       i.fa.fa-level-down(style="margin-right: 5px;")
@@ -70,7 +70,9 @@ block content
                       a.btn-remove.btn-remove-menu(data-id=child.id title="Xóa")
                         i.fa.fa-trash
         script.
-              $('tbody').sortable();
+              $('tbody').sortable({
+                cancel: '.parentMenu'
+              });
       #modal-create.modal.fade(role="dialog")
         .modal-dialog
           .modal-content
@@ -86,7 +88,7 @@ block content
                       option(value="-1" selected) Không chọn menu cha
                       each item in data
                         if item.parent_id == -1
-                          option(value=item.id)=item.title
+                          option(value=item.id, data-priority=item.priority)=item.title
                 .form-group.clearfix
                   label.col-sm-2.control-label Tiêu đề
                     strong.required  *

@@ -20,7 +20,13 @@ class Menu extends Illuminate\Database\Eloquent\Model {
     $menu->title = $data['title'];
     $menu->link = $data['link'] ? $data['link'] : '';
     $menu->link_type = $data['link_type'] ? $data['link_type'] : '';
+    if ($data['parent_id'] != -1) {
+      $parent = Menu::find($data['parent_id']);
+      $parent->priority = $parent->priority + 1;
+      $parent->save();
+    }
     $menu->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
+    $menu->priority = $data['priority'];
     $menu->created_at = date('Y-m-d H:i:s');
     $menu->updated_at = date('Y-m-d H:i:s');
     if ($menu->save()) return $menu->id;
@@ -33,6 +39,28 @@ class Menu extends Illuminate\Database\Eloquent\Model {
     $menu->title = $data['title'];
     $menu->link = $data['link'] ? $data['link'] : '';
     $menu->link_type = $data['link_type'] ? $data['link_type'] : '';
+    $menu->priority = $data['priority'];
+    if ($menu->parent_id != $data['parent_id']) {
+      if ($menu->parent_id != -1) {
+        $parent1 = Menu::find($menu->parent_id);
+        $parent1->priority = $parent1->priority - 1;
+        $parent1->save();
+        $submenus = Menu::where('parent_id', $parent1->id)->where('priority','>', $menu->priority)->get();
+        foreach ($submenus as $submenu) {
+          $submenu->priority = $submenu->priority - 1;
+          $submenu->save();
+        }
+      }
+      if ($data['parent_id'] != -1) {
+        $parent2 = Menu::find($data['parent_id']);
+        $parent2->priority = $parent2->priority + 1;
+        $menu->priority = $parent2->priority;
+        $parent2->save();
+      }
+      else {
+        $menu->priority = -1;
+      }
+    }
     $menu->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
     $menu->updated_at = date('Y-m-d H:i:s');
     if ($menu->save()) return 0;
@@ -48,6 +76,16 @@ class Menu extends Illuminate\Database\Eloquent\Model {
         $submenu->delete();
       }
     }
+    else {
+      $parent = Menu::find($menu->parent_id);
+      $parent->priority = $parent->priority - 1;
+      $parent->save();
+      $submenus = Menu::where('parent_id', $menu->parent_id)->where('priority','>', $menu->priority)->get();
+      foreach ($submenus as $submenu) {
+        $submenu->priority = $submenu->priority - 1;
+        $submenu->save();
+      }
+    }
     if ($menu->delete()) return 0;
     return -3;
   } 
@@ -57,7 +95,7 @@ class Menu extends Illuminate\Database\Eloquent\Model {
       $menu->handle = 'menu-' . createHandle($menu->title);
       $id = $menu->id;
       $menu->submenu = 0;
-      $submenu = Menu::where('parent_id', $id)->orderBy('updated_at', 'desc')->get();
+      $submenu = Menu::where('parent_id', $id)->orderBy('priority', 'asc')->get();
       if(count($submenu)) {
         foreach ($submenu as $value) {
           $value->handle = 'menu-' . createHandle($value->title);
