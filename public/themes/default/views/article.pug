@@ -4,8 +4,8 @@ block pre-include
   title=article.title
   if fb_image
     - ogImage = fb_image
-  if article.description_seo
-    - metaDescription = article.description_seo
+  if article.meta_description
+    - metaDescription = article.meta_description
   if article.meta_robots
     - meta_robots = article.meta_robots;
   - metaTitle = article.title

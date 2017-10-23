@@ -34,7 +34,7 @@ class AdminBlogController extends AdminController {
     $code = Blog::get($id);
     if ($code == -2) {
       $result = Helper::response($code);
-      $response->withJson($result, 200);
+      return $response->withJson($result, 200);
     }
     return $this->view->render($response, 'admin/blog_edit.pug', array(
       'data' => $code

@@ -43,7 +43,11 @@ class AdminArticleController extends AdminController {
 
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $article = Article::get($id);
+    $code = Article::get($id);
+    if ($code == -2) {
+      $result = Helper::response($code);
+      return $response->withJson($result, 200);
+    }
     $blogs = Blog::all();
     $blog_article = BlogArticle::where('article_id', $id)->get();
     return $this->view->render($response, 'admin/article_edit.pug', array(
