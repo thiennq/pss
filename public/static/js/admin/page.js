@@ -57,7 +57,7 @@ $('.btn-create-page').click(function(event) {
     toastr.error('Chưa nhập mô tả bài viết');
     return;
   }
-  data.description_seo = $('textarea[name="description_seo"]').val();
+  data.meta_description = $('textarea[name="meta_description"]').val();
   data.content = tinyMCE.get('page_content').getContent();
   if(!data.content) {
     toastr.error('Chưa nhập nội dung bài viết');
@@ -105,7 +105,7 @@ $('.btn-update-page').click(function() {
     toastr.error('Chưa nhập mô tả bài viết');
     return;
   }
-  data.description_seo = $('textarea[name="description_seo"]').val();
+  data.meta_description = $('textarea[name="meta_description"]').val();
   data.content = tinyMCE.get('page_content').getContent();
   if(!data.content) {
     toastr.error('Chưa nhập nội dung bài viết');

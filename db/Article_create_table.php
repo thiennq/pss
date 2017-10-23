@@ -18,12 +18,11 @@ $Schema = $capsule->schema();
 
 $Schema->create('article', function (Blueprint $table) {
   $table->increments('id');
-  $table->string('blog_id');
   $table->string('title');
   $table->string('handle');
   $table->string('image')->nullable();
   $table->text('description')->nullable();
-  $table->text('description_seo')->nullable();
+  $table->text('meta_description')->nullable();
   $table->text('content');
   $table->text('meta_robots');
   $table->string('author')->nullable();

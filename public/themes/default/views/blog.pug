@@ -4,8 +4,8 @@ block pre-include
   title=blog.title
   if blog.image
     - ogImage = blog.image
-  if blog.description_seo
-    - metaDescription = blog.description_seo
+  if blog.meta_description
+    - metaDescription = blog.meta_description
   if blog.meta_robots
     - meta_robots = blog.meta_robots;
   - metaTitle = blog.title
