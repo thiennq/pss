@@ -110,7 +110,6 @@ function uploadImg(formData, callback) {
 
 function uploadImgs(form, callback) {
   var index = form.attr('data-id');
-  console.log('index', index);
   var files = form.prop('files');
   var formData = listFormData[parseInt(index)];
   if (!formData) {
@@ -122,7 +121,6 @@ function uploadImgs(form, callback) {
       formData.append('upload[]', f, f.name);
     }
   }
-  console.log('formData', formData);
   uploadImg(formData, function(json) {
     var list_image = [];
     if(!json.code) {
@@ -355,8 +353,6 @@ $('.btn-update-product').click(function(event) {
           }
           var itemVariant = list_variant_update.eq(count_update);
           var formRI = itemVariant.find('.upload-list-image');
-          console.log('list_variant_update', list_variant_update);
-          console.log('formRI', formRI);
           variant.id = itemVariant.find('.btn-remove-variant').attr('data-id');
           variant.title = itemVariant.find('input[name="variant-title"]').val();
           variant.price = itemVariant.find('input[name="variant-price"]').val();
@@ -370,7 +366,6 @@ $('.btn-update-product').click(function(event) {
           variant.image_deleted = image_deleted;
           uploadImgs(formRI, function(list_image) {
             variant.list_image = list_image;
-            console.log('list_image',list_image);
             $.ajax({
               type: 'PUT',
               url: '/admin/variants/' + variant.id,
@@ -399,7 +394,6 @@ $('.btn-update-product').click(function(event) {
           variant.inventory = itemVariant.find('input[name="variant-inventory"]').val();
           uploadImgs(formRI, function(list_image) {
             variant.list_image = list_image;
-            console.log('list_image',list_image);
             $.ajax({
               type: 'POST',
               url: '/admin/variants',

@@ -84,8 +84,19 @@ $color_sidebar: #222d32;
   .box {
     .box-body {
       tbody {
-        tr {
+        z-index: 10;
+        tr.submenu {
           cursor: move;
+          z-index: 20; 
+          td {
+            z-index: 30; 
+            a {
+              z-index: 40;
+              i {
+                z-index: 50;
+              }
+            }
+          }
         }
       }
     }
