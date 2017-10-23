@@ -14,12 +14,14 @@
     }
 
     function create($data) {
+      $blog = Blog::where('title', $data['title'])->first();
+      if ($blog) return -1;
       $blog = new Blog;
       $blog->title = $data['title'];
       $blog->handle = $data['handle'];
       $blog->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
       $blog->description = $data['description'] ? $data['description'] : '';
-      $blog->description_seo = $data['description_seo'] ? $data['description_seo']: '';
+      $blog->meta_description = $data['meta_description'] ? $data['meta_description']: '';
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];
       $blog->display = $data['display'];
@@ -48,7 +50,7 @@
       $blog->handle = $data['handle'];
       if($data['image']) $blog->image = renameOneImage($data['image'], $data['handle']);
       if($data['description']) $blog->description = $data['description'];
-      if($data['description_seo']) $blog->description_seo = $data['description_seo'];
+      if($data['meta_description']) $blog->meta_description = $data['meta_description'];
       $blog->content = $data['content'];
       $blog->author = $_SESSION['fullname'];
       $blog->display = $data['display'];

@@ -14,12 +14,14 @@
     }
 
     function create($data) {
+      $page = Page::where('title', $data['title'])->first();
+      if ($page) return -1;
       $page = new Page;
       $page->title = $data['title'];
       $page->handle = $data['handle'];
       $page->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
       $page->description = $data['description'] ? $data['description'] : '';
-      $page->description_seo = $data['description_seo'] ? $data['description_seo']: '';
+      $page->meta_description = $data['meta_description'] ? $data['meta_description']: '';
       $page->content = $data['content'];
       $page->author = $_SESSION['fullname'];
       $page->display = $data['display'];
@@ -28,43 +30,45 @@
       $page->created_at = date('Y-m-d H:i:s');
       $page->updated_at = date('Y-m-d H:i:s');
       if($page->save()) {
-        $page_id = $page->id;
-        return $page_id;
+        return $page->id;
       }
-      else return -1;
+      return -3;
     }
 
     function get($id) {
       $data = Page::find($id);
-      return $data;
+      if ($data) return $data;
+      return -2;
     }
 
     function update($id, $data) {
       $page = Page::find($id);
-      if ($page) {
-        $page->title = $data['title'];
-        $page->handle = $data['handle'];
-        if($data['image']) $page->image = renameOneImage($data['image'], $data['handle']);
-        if($data['description']) $page->description = $data['description'];
-        if($data['description_seo']) $page->description_seo = $data['description_seo'];
-        $page->content = $data['content'];
-        $page->author = $_SESSION['fullname'];
-        $page->display = $data['display'];
-        $page->meta_robots = $data['meta_robots'];
-        $page->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
-        $page->save();
+      if (!$page) {
+        return -2;
+      }
+      $page->title = $data['title'];
+      $page->handle = $data['handle'];
+      if($data['image']) $page->image = renameOneImage($data['image'], $data['handle']);
+      if($data['description']) $page->description = $data['description'];
+      if($data['meta_description']) $page->meta_description = $data['meta_description'];
+      $page->content = $data['content'];
+      $page->author = $_SESSION['fullname'];
+      $page->display = $data['display'];
+      $page->meta_robots = $data['meta_robots'];
+      $page->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
+      if ($page->save()) {
         return 0;
       }
-      return -1;
+      return -3;
     }
 
     function remove($id) {
       $page = Page::find($id);
-      if($page) {
-        $page->delete();
-        return 0;
+      if (!$page) {
+        return -2;
       }
-      return -1;
+      if ($page->delete()) return 0;
+      return -3;
     }
 
   }

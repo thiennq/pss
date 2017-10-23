@@ -8,13 +8,15 @@ class Menu extends Illuminate\Database\Eloquent\Model {
   protected $table = 'menu';
 
   public function listAll() {
-    $data = Menu::all();
-    foreach ($data as $key => $menu) {
-      if($menu->parent_id) $menu->parent = Menu::find($menu->parent_id)->title;
+    $menus = Menu::where('parent_id', -1)->get();
+    foreach ($menus as $key => $menu) {
+      $menu->submenu = 0;
+      $submenu = Menu::where('parent_id', $menu->id)->get();
+      if (count($submenu)) $menu->submenu = $submenu;
     }
-    return $data;
+    return $menus;
   }
-  
+
   public function store($data) {
     $menu = new Menu;
     $menu->title = $data['title'];

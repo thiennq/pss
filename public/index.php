@@ -13,10 +13,12 @@ define('ROOT', dirname(dirname(__FILE__)));
 define('CONFIGPATH', dirname(dirname(__FILE__)));
 
 require_once('../framework/config.php');
-// require_once('../framework/memcached.php');
 require_once('../framework/database.php');
 require_once('../framework/controller.php');
 require_once('../framework/adminController.php');
+if (getenv('ENV') && getenv('ENV') == 'production') {
+  require_once('../framework/memcached.php');
+}
 
 $app = new \Slim\App(['settings'  => [
     'determineRouteBeforeAppMiddleware' => true,

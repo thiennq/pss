@@ -4,8 +4,8 @@ block pre-include
   title=article.title
   if fb_image
     - ogImage = fb_image
-  if article.description_seo
-    - metaDescription = article.description_seo
+  if article.meta_description
+    - metaDescription = article.meta_description
   if article.meta_robots
     - meta_robots = article.meta_robots;
   - metaTitle = article.title
@@ -28,28 +28,29 @@ block content
           .social-icon
             span.middle-inline-block
             i.fa.fa-google-plus
-      - var articleDetail = getArticleDetail(article.hanle, article.id);
-      if countArr(articleDetail.related)
+      - var relatedArticles = getRelatedArticle(article.id)
+      if count(relatedArticles)
         .relative-news.hidden-xs.row 
           .title 
             a BÀI VIẾT LIÊN QUAN
               .border
-          each article in articleDetail.related
+          each item in relatedArticles
             .item
-              .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
+              a.col-sm-2.avatar(href='/article/' + item.handle, style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
               .col-sm-10
                 .news-title 
-                  a(href='/article/' + article.handle)=article.title
-                .news-content=article.description
-      if countArr(articleDetail.hot_article)
+                  a(href='/article/' + item.handle)=item.title
+                .news-content=item.description
+      - var hotArticles = getHotArticle(article.id)
+      if count(hotArticles)
         .relative-news.hidden-xs.row 
           .title 
             a BÀI VIẾT NỔI BẬT
               .border
-          each article in articleDetail.hot_article
+          each item in hotArticles
             .item
-              .col-sm-2.avatar(href='/article/' + article.handle, style="background:url('/uploads/"+resize(article.image, 240)+"')" ) 
+              a.col-sm-2.avatar(href='/article/' + item.handle, style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
               .col-sm-10
                 .news-title 
-                  a(href='/article/' + article.handle)=article.title
-                .news-content=article.description
+                  a(href='/article/' + item.handle)=item.title
+                .news-content=item.description

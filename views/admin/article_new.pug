@@ -36,7 +36,7 @@ block content
             .col-sm-10
               input.form-control(name="handle")
           .form-group
-            label.col-sm-2.control-label Nhóm bài viết
+            label.col-sm-2.control-label Blog
             .col-sm-10.blog-detail
               each blog in blogs
                 label.checkbox-inline
@@ -55,9 +55,9 @@ block content
             .col-sm-10
               textarea.form-control(name="description")
           .form-group
-            label.col-sm-2.control-label Mô tả SEO
+            label.col-sm-2.control-label Meta description
             .col-sm-10
-              textarea.form-control(name="description_seo")
+              textarea.form-control(name="meta_description")
           .form-group
             label.col-sm-2.control-label Nội dung
               strong.required  *

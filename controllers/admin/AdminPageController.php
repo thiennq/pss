@@ -37,7 +37,11 @@ class AdminPageController extends AdminController {
 
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $page = Page::get($id);
+    $page = Page::find($id);
+    if (!$page) {
+      $this->view->render($response, '404.pug');
+      return $response->withStatus(404);
+    }
     return $this->view->render($response, 'admin/page_edit.pug', array(
 			'data' => $page,
     ));

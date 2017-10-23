@@ -2,7 +2,7 @@ extends ./layout.pug
 block pre-include
   - var menu = 'article'
   - var childMenu = 'article'
-  title Danh sách bài viết
+  title Bài viết
 
 block post-include
   script(src=staticURI() + '/js/admin/article.js')
@@ -11,7 +11,7 @@ block content
   section.content-header.clearfix
     ol.breadcrumb.col-sm-8.hidden-xs
       li
-        a Danh sách bài viết
+        a Bài viết
     ol.button-right.col-sm-4.col.xs-12
       li
         a.btn.btn-admin(href="/admin/article/new") Thêm mới

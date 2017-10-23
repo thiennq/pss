@@ -8,29 +8,23 @@ class Article extends Illuminate\Database\Eloquent\Model {
   protected $table = 'article';
 
   function create($data) {
+    $article = Article::where('title', $data['title'])->first();
+    if ($article) return -1;
     $article = new Article;
     $article->title = $data['title'];
     $article->handle = $data['handle'];
     $article->image = $data['image'] ? renameOneImage($data['image'], $data['handle']) : '';
     $article->description = $data['description'] ? $data['description'] : '';
-    $article->description_seo = $data['description_seo'] ? $data['description_seo']: '';
+    $article->meta_description = $data['meta_description'] ? $data['meta_description']: '';
     $article->content = $data['content'];
     $article->author = $_SESSION['fullname'];
     $article->display = $data['display'];
-    $article->blog_id = $data['blog_id'];
     $article->meta_robots = $data['meta_robots'];
     $article->view = 0;
     $article->created_at = date('Y-m-d H:i:s');
     $article->updated_at = date('Y-m-d H:i:s');
-    if($article->save()) {
-      $article_id = $article->id;
-      $blog_id = $article->blog_id;
-      foreach ($blog_id as $key => $blogId) {
-        BlogArticle::store($blogId, $article_id);
-      }
-      return $article_id;
-    }
-    else return -1;
+    if($article->save()) return $article->id;
+    return -3;
   }
 
   function fetch($page_number, $perpage) {
@@ -41,44 +35,34 @@ class Article extends Illuminate\Database\Eloquent\Model {
 
   function get($id) {
     $data = Article::find($id);
-    return $data;
+    if ($data) return $data;
+    return -2;
   }
 
   function update($id, $data) {
     $article = Article::find($id);
-    if($article) {
-      $article->title = $data['title'];
-      $article->handle = $data['handle'];
-      if($data['image']) $article->image = renameOneImage($data['image'], $data['handle']);
-      if($data['description']) $article->description = $data['description'];
-      if($data['description_seo']) $article->description_seo = $data['description_seo'];
-      $article->content = $data['content'];
-      $article->author = $_SESSION['fullname'];
-      $article->display = $data['display'];
-      $article->blog_id = $data['blog_id'];
-      $article->meta_robots = $data['meta_robots'];
-      $article->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
-
-      $article->save();
-
-      BlogArticle::removeAll($id);
-      $blog_id = $data['blog_id'];
-      foreach ($blog_id as $key => $blogId) {
-        BlogArticle::store($blogId, $id);
-      }
-      return 0;
-    }
-    return -1;
+    if (!$article) return -2;
+    $article->title = $data['title'];
+    $article->handle = $data['handle'];
+    if($data['image']) $article->image = renameOneImage($data['image'], $data['handle']);
+    if($data['description']) $article->description = $data['description'];
+    if($data['meta_description']) $article->meta_description = $data['meta_description'];
+    $article->content = $data['content'];
+    $article->author = $_SESSION['fullname'];
+    $article->display = $data['display'];
+    $article->meta_robots = $data['meta_robots'];
+    $article->updated_at = $data['updated_at'] ? $data['updated_at'] : date('Y-m-d H:i:s');
+    if($article->save()) return $article->id;
+    return -3;
   }
 
   function remove($id) {
     $article = Article::find($id);
-    if($article) {
-      $article->delete();
-      BlogArticle::removeAll($id);
+    if (!$article) return -2;
+    if ($article->delete()) {
       return 0;
     }
-    return -1;
+    return -3;
   }
 
 }
