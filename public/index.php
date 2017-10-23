@@ -12,6 +12,16 @@ date_default_timezone_set(getenv('TIMEZONE') ? getenv('TIMEZONE') : 'Asia/Ho_Chi
 define('ROOT', dirname(dirname(__FILE__)));
 define('CONFIGPATH', dirname(dirname(__FILE__)));
 
+try {
+  $PROTOCOL = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+  $HOST = $PROTOCOL . '://' . $_SERVER['HTTP_HOST'];
+  define('HOST', $HOST);
+  define('PROTOCOL', $PROTOCOL);
+} catch (Exception $e) {
+  error_log($e->getMessage());
+}
+
+
 require_once('../framework/config.php');
 require_once('../framework/database.php');
 require_once('../framework/controller.php');

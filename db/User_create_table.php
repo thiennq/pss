@@ -25,3 +25,8 @@ $Schema->create('user', function (Blueprint $table) {
     $table->string('role');
     $table->timestamps();
 });
+
+// ALTER TABLE USER ADD COLUMN test TEXT;
+// $Schema->table('user', function (Blueprint $table) {
+//     $table->text("test");
+// });

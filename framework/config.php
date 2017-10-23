@@ -3,15 +3,6 @@
 $dotenv = new Dotenv\Dotenv(dirname(dirname(__FILE__)));
 $dotenv->load();
 
-try {
-  $PROTOCOL = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
-  $HOST = $PROTOCOL . '://' . $_SERVER['HTTP_HOST'];
-  define('HOST', $HOST);
-  define('PROTOCOL', $PROTOCOL);
-} catch (Exception $e) {
-  error_log($e->getMessage());
-}
-
 $db = [
     'driver' => 'mysql',
     'host' => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
