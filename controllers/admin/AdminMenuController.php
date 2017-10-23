@@ -10,7 +10,7 @@ class AdminMenuController extends AdminController {
 
 	public function getListMenu(Request $request, Response $response) {
 		$type = $request->getAttribute('type');
-		if($type == 'collection') $data = Collection::listBreadCrumb();
+		if($type == 'collection') $data = Collection::orderBy('breadcrumb', 'asc')->get();
 		/*else if($type == 'tin-tuc') $data = Article::listAllArticle();
     else if($type == 'thong-tin') $data = Article::listAllPage();*/
 		return $response->withJson([
@@ -20,13 +20,15 @@ class AdminMenuController extends AdminController {
 	}
 
 	public function index(Request $request, Response $response) {
-		$menu = Menu::getMenu();
-		/*$article = Article::listAllArticle();
-    $page = Article::listAllPage();*/
-    $collection = Collection::listBreadCrumb();
+		$menu = Menu::listAll();
+		$blog = Blog::all();
+		$article = Article::all();
+    $page = Page::all();
+    $collection = Collection::orderBy('breadcrumb', 'asc')->get();
 		return $this->view->render($response, 'admin/menu.pug', [
 			'data' => $menu,
       'collection' => $collection,
+			'blog' => $blog,
 			'article' => $article,
       'page' => $page
 		]);

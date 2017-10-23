@@ -99,13 +99,15 @@ block content
                       .col-sm-6.key
                         select.form-control(name="menu-type")
                           option(value="collection" selected) Nhóm sản phẩm
-                          option(value="thong-tin") Bài viết
-                          option(value="tin-tuc") Tin tức
+                          option(value="blog") Blog
+                          option(value="article") Bài viết
+                          option(value="page") Trang nội dung
                           option(value="custom") Địa chỉ web
                       .col-sm-6.value
                         select.form-control(name="menu-collection")
                           each item in collection
                             option(value=item.link)=item.breadcrumb
+                        select.hidden.form-control(name="menu-blog")
                         select.hidden.form-control(name="menu-article")
                         select.hidden.form-control(name="menu-page")
                         input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")

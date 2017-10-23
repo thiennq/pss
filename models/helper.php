@@ -11,12 +11,14 @@ $GLOBALS['size'] = [100, 240, 480, 640, 1024, 2048];
 
 function setMemcached($key, $value, $time=30*24*60*60) {
   global $memcached;
-  $memcached->set($key, $value, $time);
+  if ($memcached) {
+    $memcached->set($key, $value, $time);
+  }
 }
 
 function getMemcached($key) {
   global $memcached;
-  if(strpos(HOST, 'localhost') !== false && $memcached) return $memcached->get($key);
+  if($memcached) return $memcached->get($key);
   return false;
 }
 
@@ -307,7 +309,7 @@ function createSitemap() {
 function updateStock($product_id) {
   $product = Product::find($product_id);
   if (!$product->inventory_management) {
-    $product->in_stock = 1; 
+    $product->in_stock = 1;
   }
   else {
     $check = Variant::where('product_id', $product_id)->where('inventory', '>', 0)->count();

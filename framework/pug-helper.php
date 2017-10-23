@@ -67,11 +67,11 @@ function getArticleDetail($articleHandle, $articleId) {
   }
 }
 
-function Menu() {
+function menu() {
   if(getMemcached('menus')) $menus = getMemcached('menus');
   else {
-    $menus = Menu::getMenu();
-    // setMemcached("menus", $menus);
+    $menus = Menu::listAll();
+    setMemcached("menus", $menus);
   }
   return $menus;
 }

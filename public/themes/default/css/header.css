@@ -197,9 +197,6 @@ header {
         @media (max-width: 991px) {
           header .header-menu .main-menu > li {
             padding-top: 15px; } }
-        header .header-menu .main-menu > li:last-child {
-          float: right;
-          padding-right: 0; }
         header .header-menu .main-menu > li > a {
           letter-spacing: 1px;
           font-size: 16px;
