@@ -22,8 +22,6 @@ block content
         a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
   section.content.clearfix
     .box
-      .box-header
-        h3.box-title Menu Desktop
       .box-body
         table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
           thead
@@ -110,7 +108,7 @@ block content
                         select.hidden.form-control(name="menu-blog")
                         select.hidden.form-control(name="menu-article")
                         select.hidden.form-control(name="menu-page")
-                        input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")
+                        input.hidden.form-control(name="menu-link" placeholder="https://example.vn")
               .modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') Hủy
                 button.btn.btn-primary.btn-create-menu Tạo menu
@@ -155,7 +153,7 @@ block content
                         select.hidden.form-control(name="menu-article")
                           each item in article
                             option(value=item.link)=item.title
-                        input.hidden.form-control(name="menu-link" placeholder="https://bela.vn")
+                        input.hidden.form-control(name="menu-link" placeholder="https://example.vn")
             .modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal') Hủy
               button.btn.btn-primary.btn-update-menu Cập nhật
