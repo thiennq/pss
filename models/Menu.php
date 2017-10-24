@@ -11,7 +11,7 @@ class Menu extends Illuminate\Database\Eloquent\Model {
     $menus = Menu::where('parent_id', -1)->get();
     foreach ($menus as $key => $menu) {
       $menu->submenu = 0;
-      $submenu = Menu::where('parent_id', $menu->id)->get();
+      $submenu = Menu::where('parent_id', $menu->id)->orderBy('priority','asc')->get();
       if (count($submenu)) $menu->submenu = $submenu;
     }
     return $menus;
