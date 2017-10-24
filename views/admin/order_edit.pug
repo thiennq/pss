@@ -25,14 +25,15 @@ block post-include
 
 block content
 	section.content-header.clearfix
-		ol.breadcrumb.col-sm-8.hidden-xs
+		ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
 			li
 				a(href="/admin/order") Đơn hàng
 			li
 				a Chi tiết đơn hàng
 			li
 				a=order.id
-		ol.button-right.col-sm-4.col.xs-12
+		ol.button-right.col-md-4.col-sm-5.col-xs-12
+			span.middle-inline-block
 			if odoo
 				li
 					a.btn.btn-review.btn-update-state(data-id=order.id)
