@@ -14,22 +14,22 @@ aside.main-sidebar
         ul.treeview-menu
           - var liClass = (childMenu == 'new' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/products/new')
+            a(href='/admin/product/new')
               i.fa.fa-circle
               | Thêm sản phẩm
           - var liClass = (childMenu == 'collection' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/collections')
+            a(href='/admin/collection')
               i.fa.fa-circle
               | Nhóm sản phẩm
           - var liClass = (childMenu == 'product' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/products')
+            a(href='/admin/product')
               i.fa.fa-circle
               | Danh sách sản phẩm
-          - var liClass = (childMenu == 'filter' ? 'active' : '');
+          - var liClass = (childMenu == 'attribute' ? 'active' : '');
           li(class=liClass)
-            a(href='/admin/filters')
+            a(href='/admin/attribute')
               i.fa.fa-circle
               | Thuộc tính
           - var liClass = (childMenu == 'price' ? 'active' : '');

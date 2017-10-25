@@ -16,7 +16,7 @@ block content
       li
         a(href='/admin/collection') Nhóm sản phẩm
     ol.button-right.col-md-4.col-sm-5.col-xs-12
-			span.middle-inline-block
+      span.middle-inline-block
       li
         a.btn.btn-admin(href="/admin/collection/new") Tạo nhóm sản phẩm
   section.content
@@ -38,11 +38,11 @@ block content
                   else
                     img(src=staticURI() + "/img/no-image.png")
                 td.col-sm-5
-                  a(href="/admin/collections/" + collection.id, target="_blank")= collection.title
+                  a(href="/admin/collection/" + collection.id, target="_blank")= collection.title
                 td.col-sm-5
                   a(href="/" + collection.link, target="_blank")= collection.link
                 td.col-sm-1
-                  a.btn-edit(href="/admin/collections/" + collection.id)
+                  a.btn-edit(href="/admin/collection/" + collection.id)
                     i.fa.fa-pencil-square-o
                   a.btn-remove(data-id=collection.id)
                     i.fa.fa-trash

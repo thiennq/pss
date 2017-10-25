@@ -2,11 +2,11 @@ extends ./layout.pug
 
 block pre-include
   - menu = 'product';
-  - childMenu = 'filter';
+  - childMenu = 'attribute';
   title Thuộc tính
 
 block post-include
-  script(src=staticURI() + '/js/admin/filter.js')
+  script(src=staticURI() + '/js/admin/attribute.js')
 
 block content
   section.content-header.clearfix
@@ -18,39 +18,36 @@ block content
     ol.button-right.col-sm-4
       li
         a.btn.btn-admin(data-toggle="modal" data-target="#modal-add") Thêm thuộc tính
-  section.content.filter.clearfix
+  section.content.attribute.clearfix
     each item in data
       .col-lg-4.col-md-6.col-sm-12.col-xs-12
-        .filter-card.clearfix(data-id=item.id)
-          .title=item.title
+        .attribute-card.clearfix(data-id=item.id)
+          .title=item.name
             .group-btn
-              i.fa.fa-edit.edit-filter.edit-attribute(data-id=item.id)
-              i.fa.fa-trash.delete-filter(data-id=item.id)
+              i.fa.fa-edit.edit-attribute.edit-attribute(data-id=item.id)
+              i.fa.fa-trash.delete-attribute(data-id=item.id)
           .option-list
             if item.child
               .clearfix
-                .col-sm-4 Tên option
-                .col-sm-4 Giá trị option
+                .col-sm-8 Tên option
                 .col-sm-4.text-right Chỉnh sửa
               each child in item.child
                 if child.id
                   .clearfix
-                    .col-sm-4=child.title
-                    .col-sm-4=child.value
+                    .col-sm-8=child.name
                     .col-sm-4.text-right
-                      i.fa.fa-edit.edit-filter.edit-option(data-id=child.id)
-                      i.fa.fa-trash.delete-filter(data-id=child.id, data-option=1)
+                      i.fa.fa-edit.edit-attribute.edit-option(data-id=child.id)
+                      i.fa.fa-trash.delete-attribute(data-id=child.id, data-option=1)
           .col-xs-12.group-add-new-option
-            .input-group
-              input.form-control(type='text', name="title", placeholder="Tên option (bắt buộc)")
-              input.form-control(type='text', name="value", placeholder="Giá trị (không bắt buộc)")
+            .input-group.w100
+              input.form-control(type='text', name="name", placeholder="Tên option")
               .col-xs-12.text-center
                 .row
                   button.w100.btn.btn-default.add-new-option(data-parent_id=item.id) Thêm option mới
 
     #modal-add.modal.fade(role='dialog')
       .modal-dialog
-        .modal-content.form-add-filter
+        .modal-content.form-add-attribute
           .modal-header
             button.close(type='button', data-dismiss='modal') ×
             h4.modal-title Thêm
@@ -60,7 +57,7 @@ block content
                 .form-group
                   label.col-sm-3.control-label Tên thuộc tính
                   .col-sm-9
-                    input.form-control(type="text" name="title" placeholder="Màu sắc" required)
+                    input.form-control(type="text" name="name" placeholder="Kích thước" required)
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Đóng
             button.btn.btn-admin.btn-create
@@ -69,7 +66,7 @@ block content
               | Lưu lại
     #modal-edit.modal.fade(role='dialog')
       .modal-dialog
-        .modal-content.form-add-filter
+        .modal-content.form-add-attribute
           .modal-header
             button.close(type='button', data-dismiss='modal') ×
             h4.modal-title Chỉnh sửa
@@ -79,7 +76,7 @@ block content
                 .form-group
                   label.col-sm-3.control-label Tên thuộc tính
                   .col-sm-9
-                    input.form-control(type="text" name="title" placeholder="Màu sắc" required)
+                    input.form-control(type="text" name="name" placeholder="Kích thước" required)
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Đóng
             button.btn.btn-admin.btn-update
@@ -88,7 +85,7 @@ block content
               | Cập nhật
     #modal-edit-option.modal.fade(role='dialog')
       .modal-dialog
-        .modal-content.form-add-filter
+        .modal-content.form-add-attribute
           .modal-header
             button.close(type='button', data-dismiss='modal') ×
             h4.modal-title Chỉnh sửa
@@ -98,11 +95,7 @@ block content
                 .form-group
                   label.col-sm-3.control-label Tên option
                   .col-sm-9
-                    input.form-control(type="text" name="title" placeholder="Màu sắc" required)
-                .form-group
-                  label.col-sm-3.control-label Giá trị option
-                  .col-sm-9
-                    input.form-control(type="text" name="value" placeholder="Màu sắc" required)
+                    input.form-control(type="text" name="name" placeholder="Kích thước" required)
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Đóng
             button.btn.btn-admin.btn-update

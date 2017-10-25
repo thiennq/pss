@@ -286,7 +286,7 @@ table.table-bordered.dataTable {
 		font-size: 13px;
     height: 34px;
     @media screen and (max-width: 991px) {
-      margin-top: 0 !important; 
+      margin-top: 0 !important;
     }
     @media screen and (max-width: 768px) {
       background-color: $color_sidebar !important;
@@ -748,20 +748,6 @@ $color_tundora_approx: #444;
 	}
 }
 
-.filter-content {
-	background-color: $white;
-	padding: 20px;
-	width: 250px;
-	position: absolute;
-	border: 1px solid $color_alto_approx;
-	z-index: 99;
-	top: 50px;
-	left: 0;
-	select {
-		margin: 5px 0;
-	}
-}
-
 .arrow-up {
 	width: 0;
 	height: 0;
@@ -884,9 +870,9 @@ option:disabled {
   cursor: not-allowed;
 }
 
-.filter {
+.attribute {
   background-color: white;
-  .filter-card {
+  .attribute-card {
     background-color: white;
     border-radius: 2px;
     border : 1px solid #ddd;
@@ -905,12 +891,12 @@ option:disabled {
         padding-right: 15px;
       }
     }
-    .delete-filter {
+    .delete-attribute {
       cursor: pointer;
       font-size: 20px;
       color: red;
     }
-    .edit-filter {
+    .edit-attribute {
       cursor: pointer;
       padding-right: 5px;
       font-size : 20px;

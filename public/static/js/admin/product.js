@@ -143,7 +143,7 @@ function updateFeaturedImage(product_id, featured_image) {
   data.featured_image = featured_image
   $.ajax({
     type: 'PUT',
-    url: '/admin/products/featured-image/' + product_id,
+    url: '/admin/product/featured-image/' + product_id,
     data: data,
     success: function(json) {
       if (json.code == -2) {
@@ -197,7 +197,7 @@ $('.btn-create').click(function() {
   self.addClass('disabled');
   $.ajax({
     type: 'POST',
-    url: '/admin/products',
+    url: '/admin/product',
     data: data,
     success: function(json) {
       if (json.code == -1) {
@@ -220,7 +220,7 @@ $('.btn-create').click(function() {
           if (count ==  list_variant.length) {
             self.removeClass('disabled');
             updateFeaturedImage(product_id, featureImage.image);
-            reloadPage('/admin/products/' + product_id);
+            reloadPage('/admin/product/' + product_id);
             return false;
           }
           var itemVariant = list_variant.eq(count);
@@ -290,7 +290,7 @@ $('.btn-update-product').click(function(event) {
 
   $.ajax({
     type: 'PUT',
-    url: '/admin/products/' + id,
+    url: '/admin/product/' + id,
     data: data,
     success: function(json) {
       if (json.code == -2) {
@@ -314,7 +314,7 @@ $('.btn-update-product').click(function(event) {
           if (count_upload ==  list_variant_upload.length) {
             self.removeClass('disabled');
             updateFeaturedImage(variant.product_id, featureImage.image);
-            reloadPage('/admin/products/' + variant.product_id);
+            reloadPage('/admin/product/' + variant.product_id);
             return false;
           }
           var itemVariant = list_variant_upload.eq(count_upload);
@@ -381,7 +381,7 @@ $('.btn-update-product').click(function(event) {
           if (count_upload ==  list_variant_upload.length) {
             self.removeClass('disabled');
             updateFeaturedImage(variant.product_id, featureImage.image);
-            reloadPage('/admin/products/' + variant.product_id);
+            reloadPage('/admin/product/' + variant.product_id);
             return false;
           }
           var itemVariant = list_variant_upload.eq(count_upload);
@@ -429,7 +429,7 @@ $(document).on('click', '.btn-remove-product', function() {
   if(confirm("Xóa sản phẩm " + tr.find('td:first-child a').html() + " ?")) {
     $.ajax({
       type: 'DELETE',
-      url: '/admin/products/' + id,
+      url: '/admin/product/' + id,
       success: function(json) {
         if(!json.code) {
           toastr.success('Xóa sản phẩm '+tr.find('td:first-child a').html()+' thành công');

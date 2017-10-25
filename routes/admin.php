@@ -15,7 +15,7 @@ require_once('../controllers/admin/AdminArticleController.php');
 require_once('../controllers/admin/AdminBlogController.php');
 require_once('../controllers/admin/AdminPageController.php');
 require_once('../controllers/admin/AdminBrandController.php');
-require_once('../controllers/admin/AdminFilterController.php');
+require_once('../controllers/admin/AdminAttributeController.php');
 require_once('../controllers/admin/AdminUserController.php');
 require_once('../controllers/admin/AdminSettingController.php');
 require_once('../controllers/admin/AdminPriceController.php');
@@ -46,31 +46,31 @@ $app->group('/admin', function() use($app) {
   $app->post('/api/uploadImageTinymce', 'uploadImageTinymce');
 
   //Product
-  $app->get('/products', '\AdminProductController:fetch');
-  $app->post('/products', '\AdminProductController:store');
-  $app->get('/products/new', '\AdminProductController:create');
-  $app->get('/products/{id}', '\AdminProductController:show');
-  $app->put('/products/{id}', '\AdminProductController:update');
-  $app->put('/products/featured-image/{id}', '\AdminProductController:updateFeaturedImage');
-  $app->delete('/products/{id}', '\AdminProductController:delete');
+  $app->get('/product', '\AdminProductController:fetch');
+  $app->post('/product', '\AdminProductController:store');
+  $app->get('/product/new', '\AdminProductController:create');
+  $app->get('/product/{id}', '\AdminProductController:show');
+  $app->put('/product/{id}', '\AdminProductController:update');
+  $app->put('/product/featured-image/{id}', '\AdminProductController:updateFeaturedImage');
+  $app->delete('/product/{id}', '\AdminProductController:delete');
 
   $app->post('/variants', '\AdminVariantController:store');
   $app->get('/variants/{id}', '\AdminVariantController:show');
   $app->put('/variants/{id}', '\AdminVariantController:update');
   $app->delete('/variants/{id}', '\AdminVariantController:delete');
 
-  $app->get('/collections', '\AdminCollectionController:index');
-  $app->get('/collections/new', '\AdminCollectionController:create');
-  $app->get('/collections/{id}', '\AdminCollectionController:show');
-  $app->post('/collections', '\AdminCollectionController:store');
-  $app->put('/collections/{id}', '\AdminCollectionController:update');
-  $app->delete('/collections/{id}', '\AdminCollectionController:delete');
+  $app->get('/collection', '\AdminCollectionController:index');
+  $app->get('/collection/new', '\AdminCollectionController:create');
+  $app->get('/collection/{id}', '\AdminCollectionController:show');
+  $app->post('/collection', '\AdminCollectionController:store');
+  $app->put('/collection/{id}', '\AdminCollectionController:update');
+  $app->delete('/collection/{id}', '\AdminCollectionController:delete');
 
-  $app->get('/filters', '\AdminFilterController:index');
-  $app->post('/filters', '\AdminFilterController:store');
-  $app->get('/filters/{id}', '\AdminFilterController:get');
-  $app->put('/filters/{id}', '\AdminFilterController:update');
-  $app->delete('/filters/{id}', '\AdminFilterController:delete');
+  $app->get('/attribute', '\AdminAttributeController:index');
+  $app->post('/attribute', '\AdminAttributeController:store');
+  $app->get('/attribute/{id}', '\AdminAttributeController:get');
+  $app->put('/attribute/{id}', '\AdminAttributeController:update');
+  $app->delete('/attribute/{id}', '\AdminAttributeController:delete');
 
   $app->get('/brand', '\AdminBrandController:index');
   $app->post('/brand', '\AdminBrandController:store');

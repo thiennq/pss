@@ -543,18 +543,6 @@ table img {
 .form-feature-product div:hover .btn-rotate-image {
   display: inline-block; }
 
-.filter-content {
-  background-color: #fff;
-  padding: 20px;
-  width: 250px;
-  position: absolute;
-  border: 1px solid #dddddd;
-  z-index: 99;
-  top: 50px;
-  left: 0; }
-  .filter-content select {
-    margin: 5px 0; }
-
 .arrow-up {
   width: 0;
   height: 0;
@@ -650,15 +638,15 @@ option:disabled {
   background-color: #eee;
   cursor: not-allowed; }
 
-.filter {
+.attribute {
   background-color: white; }
-  .filter .filter-card {
+  .attribute .attribute-card {
     background-color: white;
     border-radius: 2px;
     border: 1px solid #ddd;
     margin-bottom: 30px;
     padding-bottom: 15px; }
-    .filter .filter-card .title {
+    .attribute .attribute-card .title {
       text-align: center;
       padding-top: 10px;
       padding-bottom: 10px;
@@ -666,25 +654,25 @@ option:disabled {
       font-weight: bold;
       font-size: 16px;
       height: 40px; }
-      .filter .filter-card .title .group-btn {
+      .attribute .attribute-card .title .group-btn {
         float: right;
         padding-right: 15px; }
-    .filter .filter-card .delete-filter {
+    .attribute .attribute-card .delete-attribute {
       cursor: pointer;
       font-size: 20px;
       color: red; }
-    .filter .filter-card .edit-filter {
+    .attribute .attribute-card .edit-attribute {
       cursor: pointer;
       padding-right: 5px;
       font-size: 20px;
       color: blue;
       position: relative;
       top: 1px; }
-    .filter .filter-card .option-list {
+    .attribute .attribute-card .option-list {
       min-height: 300px;
       overflow: auto;
       margin-top: 10px; }
-      .filter .filter-card .option-list .clearfix {
+      .attribute .attribute-card .option-list .clearfix {
         margin-bottom: 10px; }
-    .filter .filter-card .group-add-new-option input {
+    .attribute .attribute-card .group-add-new-option input {
       margin-bottom: 10px; }

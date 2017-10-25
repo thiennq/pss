@@ -9,17 +9,16 @@ block post-include
   script(src=staticURI() + '/js/admin/collection.js')
   
 block content
-	section.content-header.clearfix
+  section.content-header.clearfix
     ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
         a Sản phẩm
       li
         a(href='/admin/collection') Nhóm sản phẩm
       li
-      	a=data.title
-
+        a=data.title
     ol.button-right.col-md-4.col-sm-5.col-xs-12
-			span.middle-inline-block
+      span.middle-inline-block
       li
         a.btn.btn-review(href="/" + data.link, target="_blank")
           i.fa.fa-eye
@@ -31,9 +30,9 @@ block content
           | Cập nhật
 
   section.content
-		.box.box-info
-		  .form-horizontal.form-collection
-		    .box-body
+    .box.box-info
+      .form-horizontal.form-collection
+        .box-body
           .form-group
             label.col-sm-2.control-label Nhóm sản phẩm cha
             .col-sm-10

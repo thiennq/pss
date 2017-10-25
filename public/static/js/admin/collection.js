@@ -31,7 +31,7 @@ $('.btn-create').click(function() {
       self.removeClass('disabled');
       if(!json.code) {
         toastr.success('Tạo thành công');
-        reloadPage('/admin/collections/' + json.id);
+        reloadPage('/admin/collection/' + json.id);
       } else if (json.code == -1) {
         toastr.error('Nhóm sản phẩm đã tồn tại');
       } else if (json.code == -4) {
@@ -72,7 +72,7 @@ $('.btn-update').click(function() {
   self.addClass('disabled');
   $.ajax({
     type: 'PUT',
-    url: '/admin/collections/' + id,
+    url: '/admin/collection/' + id,
     data: data,
     success: function(json) {
       self.removeClass('disabled');
@@ -94,7 +94,7 @@ $(document).on('click', '.btn-remove', function() {
   if(confirm("Xóa nhóm sản phẩm?")) {
     $.ajax({
       type: 'DELETE',
-      url: '/admin/collections/' + id,
+      url: '/admin/collection/' + id,
       success: function(json) {
         if(!json.code) {
           toastr.success('Xóa thành công');

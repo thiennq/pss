@@ -4,16 +4,16 @@ $('#modal-add').on('click', '.btn-create', function() {
   var self = $(this);
   var modal = $('#modal-add');
   var data = {};
-  data.title = modal.find('input[name="title"]').val();
-  if (!data.title) {
+  data.name = modal.find('input[name="name"]').val();
+  if (!data.name) {
     toastr.error("Chưa nhập tiêu đề");
-    modal.find('input[name="title"]').addClass('error');
+    modal.find('input[name="name"]').addClass('error');
     return;
   }
   self.addClass('disabled');
   $.ajax({
       type: 'POST',
-      url: '/admin/filters',
+      url: '/admin/attribute',
       data: data,
       success: function(json) {
           self.removeClass('disabled');
@@ -29,17 +29,17 @@ $('#modal-add').on('click', '.btn-create', function() {
 $('.add-new-option').click(function() {
   var group = $(this).closest('.group-add-new-option');
   var data = {};
-  data.title = group.find('input[name="title"]').val();
-  if (!data.title) {
+  data.name = group.find('input[name="name"]').val();
+  if (!data.name) {
     toastr.error("Chưa nhập tiêu đề");
-    group.find('input[name="title"]').addClass('error');
+    group.find('input[name="name"]').addClass('error');
     return;
   }
   data.parent_id = $(this).data('parent_id');
   data.value = group.find('input[name="value"]').val();
   $.ajax({
       type: 'POST',
-      url: '/admin/filters',
+      url: '/admin/attribute',
       data: data,
       success: function(json) {
           if(!json.code) {
@@ -55,11 +55,11 @@ $('.edit-attribute').click(function() {
   var id = $(this).data('id');
   $.ajax({
     type : 'GET',
-    url : '/admin/filters/' + id,
+    url : '/admin/attribute/' + id,
     success : function(json) {
       if (!json.code) {
         var modal = $('#modal-edit');
-        modal.find('input[name="title"]').val(json.data.title);
+        modal.find('input[name="name"]').val(json.data.name);
         modal.find('.btn-update').attr('data-id', json.data.id);
         $('#modal-edit').modal('show');
       } else toastr.error('Không tìm thấy');
@@ -72,16 +72,16 @@ $('#modal-edit').on('click', '.btn-update', function() {
   var modal = $('#modal-edit');
   var id = $(this).attr('data-id');
   var data = {};
-  data.title = modal.find('input[name="title"]').val();
-  if (!data.title) {
+  data.name = modal.find('input[name="name"]').val();
+  if (!data.name) {
     toastr.error("Chưa nhập tiêu đề");
-    modal.find('input[name="title"]').addClass('error');
+    modal.find('input[name="name"]').addClass('error');
     return;
   }
   self.addClass('disabled');
   $.ajax({
       type: 'PUT',
-      url: '/admin/filters/' + id,
+      url: '/admin/attribute/' + id,
       data: data,
       success: function(json) {
         self.removeClass('disabled');
@@ -97,12 +97,11 @@ $('.edit-option').click(function() {
   var id = $(this).data('id');
   $.ajax({
     type : 'GET',
-    url : '/admin/filters/' + id,
+    url : '/admin/attribute/' + id,
     success : function(json) {
       if (!json.code) {
         var modal = $('#modal-edit-option');
-        modal.find('input[name="title"]').val(json.data.title);
-        modal.find('input[name="value"]').val(json.data.value);
+        modal.find('input[name="name"]').val(json.data.name);
         modal.find('.btn-update').attr('data-id', json.data.id);
         $('#modal-edit-option').modal('show');
       } else toastr.error('Không tìm thấy');
@@ -115,17 +114,17 @@ $('#modal-edit-option').on('click', '.btn-update', function() {
   var modal = $('#modal-edit-option');
   var id = $(this).attr('data-id');
   var data = {};
-  data.title = modal.find('input[name="title"]').val();
-  if (!data.title) {
+  data.name = modal.find('input[name="name"]').val();
+  if (!data.name) {
     toastr.error("Chưa nhập tiêu đề");
-    modal.find('input[name="title"]').addClass('error');
+    modal.find('input[name="name"]').addClass('error');
     return;
   }
   data.value = modal.find('input[name="value"]').val();
   self.addClass('disabled');
   $.ajax({
       type: 'PUT',
-      url: '/admin/filters/' + id,
+      url: '/admin/attribute/' + id,
       data: data,
       success: function(json) {
           self.removeClass('disabled');
@@ -138,14 +137,14 @@ $('#modal-edit-option').on('click', '.btn-update', function() {
 });
 
 
-$('.delete-filter').click(function() {
-  var card = $(this).closest('.filter-card');
+$('.delete-attribute').click(function() {
+  var card = $(this).closest('.attribute-card');
   if ($(this).data('option')) card = $(this).closest('.clearfix');
   var id = $(this).data('id');
   if (confirm('Xóa thuộc tính')) {
     $.ajax({
       type: 'DELETE',
-      url: '/admin/filters/' + id,
+      url: '/admin/attribute/' + id,
       success: function(json) {
         if (!json.code) {
           toastr.success('Xóa thành công');

@@ -1,4 +1,5 @@
 <?php
+
 require('../vendor/autoload.php');
 require('../framework/config.php');
 
@@ -15,9 +16,9 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $Schema = $capsule->schema();
 
-$Schema->create('product_filter', function (Blueprint $table) {
+$Schema->create('attribute', function (Blueprint $table) {
     $table->increments('id');
-    $table->integer('product_id');
-    $table->integer('filter_id');
+    $table->integer('parent_id')->nullable();
+    $table->string('name')->nullable();
     $table->timestamps();
 });

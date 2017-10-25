@@ -40,7 +40,7 @@ class AdminUserController extends AdminController {
   public function getlogin(Request $request, Response $response) {
     if(in_array('login', $_SESSION) && $_SESSION['login']) {
       $href = $_SESSION['href'];
-      if(!$href) $href = '/admin/collections';
+      if(!$href) $href = '/admin/collection';
       return $response->withStatus(302)->withHeader('Location', $href);
     }
     return $this->view->render($response, 'admin/login.pug');

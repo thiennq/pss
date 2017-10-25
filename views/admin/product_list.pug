@@ -32,7 +32,7 @@ block content
     ol.button-right.col-md-4.col-sm-5.col-xs-12
 			span.middle-inline-block
       li
-        a.btn.btn-admin(href="/admin/products/new")
+        a.btn.btn-admin(href="/admin/product/new")
           | Tạo sản phẩm
 
   section.content
@@ -57,7 +57,7 @@ block content
                   else
                     img(src= staticURI() + "/img/no-image.png")
                 td
-                  a(href="/admin/products/" + product.id)=product.title
+                  a(href="/admin/product/" + product.id)=product.title
                 td
                   a=product.in_stock 
                 td
@@ -66,7 +66,7 @@ block content
                   else
                     label.label.label-danger Không
                 td.text-center
-                  a.btn-edit(href="/admin/products/" + product.id)
+                  a.btn-edit(href="/admin/product/" + product.id)
                     i.fa.fa-pencil-square-o
                   a.btn-remove.btn-remove-product(data-id=product.id)
                     i.fa.fa-trash

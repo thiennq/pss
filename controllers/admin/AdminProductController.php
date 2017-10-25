@@ -1,5 +1,6 @@
 <?php
 require_once(ROOT . '/models/Product.php');
+require_once(ROOT . '/models/Attribute.php');
 require_once(ROOT . '/models/Collection.php');
 require_once(ROOT . '/models/CollectionProduct.php');
 require_once(ROOT . '/controllers/helper.php');
@@ -19,10 +20,10 @@ class AdminProductController extends AdminController {
 
   public function create(Request $request, Response $response) {
     $collections = Collection::orderBy('breadcrumb', 'asc')->get();
-    $filter = Filter::where('parent_id', -1)->get();
+    $attribute = Attribute::where('parent_id', -1)->get();
     $attributes = [];
-    foreach ($filter as $key => $value) {
-      $childs = Filter::where('parent_id', $value->id)->get();
+    foreach ($attribute as $key => $value) {
+      $childs = Attribute::where('parent_id', $value->id)->get();
       if (count($childs)) {
         foreach ($childs as $key => $child) {
           $obj = new stdClass();
