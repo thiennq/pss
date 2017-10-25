@@ -1,0 +1,46 @@
+extends ./layout.pug
+
+block pre-include
+  title Giỏ hàng
+block post-include
+  link(rel='stylesheet', href=staticURI() + '/libs/toastr.min.css')
+  script(src=staticURI() + '/libs/toastr.min.js')
+block content
+  .container.checkout#checkout-cart
+    if count(cart)==0
+      .checkout-title
+        | GIỎ HÀNG HIỆN ĐANG TRỐNG
+        .clearfix
+    else
+      .checkout-title
+        .cart GIỎ HÀNG
+        .clearfix
+      .col-xs-12.product-wrapper
+        each item in cart
+          .product-detail.row(data-id=item.product_id)
+            .image.col-xs-3(style="background:url('/uploads/"+resize(item.image, 240)+"')")
+              span.btn-remove-item-cart(data-id=item.product_id)
+                img(src=themeURI() + "/img/i-close.png")
+            .info.col-xs-9
+              .col-xs-7.product-info
+                a.product-title(href="/san-pham/" + item.handle)=item.title
+                br
+                a.product-title(href="/san-pham/" + item.handle)=item.variant
+              .col-xs-5.product-price
+                .col-sm-6.col-xs-12.quantity-select
+                  .quantity-btn.btn-minus(data-id=item.product_id, data-price=item.price)
+                    i.fa.fa-minus(aria-hidden="true")
+                  input.quantity-label(name="quantity", value=item.quantity, min=1)
+                  .quantity-btn.btn-plus(data-id=item.product_id, data-price=item.price)
+                    i.fa.fa-plus(aria-hidden="true")
+                .col-sm-6.col-xs-12.price
+                  span.main-price.orange=money(item.subTotal)
+      .col-xs-12.total
+        .col-xs-6.total-name Tổng tiền
+        .col-xs-6.total-amount.orange=money(total)
+      .col-xs-12.col-sm-12.customer-wrapper
+        form.customer-info.clearfix
+          .row
+            .col-sm-6.col-xs-12.purchase
+              a.btn.btn-order.btn-checkout(href="/checkout")
+                span.main THANH TOÁN

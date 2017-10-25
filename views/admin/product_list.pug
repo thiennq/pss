@@ -1,0 +1,72 @@
+extends ./layout.pug
+block pre-include
+  title Danh sách sản phẩm
+  - var menu = 'product';
+  - var childMenu = 'product';
+
+block post-include
+  script(src=staticURI() +'/js/admin/product.js')
+  script.
+    var tblProduct = $("#table-list-product").DataTable({
+      aaSorting: [],
+      bDestroy: true,
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true,
+      rowReorder: false,
+      fnRowCallback: function(a, b, c, d) {
+        var img = $(a).find('img')[0];
+        var dataSrc = $(img).data('src');
+        if (dataSrc) $(img).attr('src', dataSrc);
+      }
+    });
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a Danh sách sản phẩm
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+			span.middle-inline-block
+      li
+        a.btn.btn-admin(href="/admin/products/new")
+          | Tạo sản phẩm
+
+  section.content
+    .box
+      .box-body.clearfix
+        table#table-list-product.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              td
+              td Tên sản phẩm
+              td Tồn kho
+              td Hiển thị
+              td Chỉnh sửa
+          tbody
+            each product in data
+              tr
+                td.text-left
+                  if product.featured_image
+                    - var thumb = resize(product.featured_image, 60);
+                    - var linkthumb = "/uploads/" + thumb;
+                    img(src=linkthumb, data-src=linkthumb)
+                  else
+                    img(src= staticURI() + "/img/no-image.png")
+                td
+                  a(href="/admin/products/" + product.id)=product.title
+                td
+                  a=product.in_stock 
+                td
+                  if product.display
+                    label.label.label-info Có
+                  else
+                    label.label.label-danger Không
+                td.text-center
+                  a.btn-edit(href="/admin/products/" + product.id)
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-product(data-id=product.id)
+                    i.fa.fa-trash

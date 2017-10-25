@@ -10,7 +10,7 @@ block post-include
 
 block content
   section.content-header.clearfix
-    ol.breadcrumb.col-sm-8.hidden-xs
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
         a Trang nội dung
       li
@@ -18,7 +18,8 @@ block content
       li
         a=data.title
 
-    ol.button-right.col-sm-4.col.xs-12
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+			span.middle-inline-block
       li
         a.btn.btn-review(href="/page/" + data.handle, target="_blank")
           i.fa.fa-eye

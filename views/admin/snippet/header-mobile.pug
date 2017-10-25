@@ -7,7 +7,8 @@
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand Admin BLHH
+        a.navbar-brand
+          img(src=staticURI() + '/img/eye-logo.png')
       #navbar.navbar-collapse.collapse(aria-expanded='false', style='height: 1px;')
         ul.nav.navbar-nav
           li
@@ -16,41 +17,34 @@
               span.caret
             ul.dropdown-menu(role='menu')
               li
-                a(href='/admin/collection') Nhóm sản phẩm
+                a(href='/admin/products/new') Thêm sản phẩm
+              li
+                a(href='/admin/collections') Nhóm sản phẩm
               li
                 a(href='/admin/products') Danh sách sản phẩm
               li
-                a(href='/admin/brand') Thương hiệu
-              li
-                a(href='/admin/color') Màu sắc
-              li
-                a(href='/admin/material') Chất liệu
-              li
-                a(href='/admin/specification') Thông số kỹ thuật
+                a(href='/admin/filters') Thuộc tính
               li
                 a(href='/admin/price') Bộ lọc giá
-            
           li
             a(href='/admin/order') Đơn hàng
             
           li
             a(href='/admin/customer') Khách hàng
-            
           li
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               | Bài viết
               span.caret
             ul.dropdown-menu(role='menu')
               li
-                a(href='/admin/article/news') Tin tức
+                a(href='/admin/blogs') Blog
               li
-                a(href='/admin/article/info') Thông tin - Chính sách
+                a(href='/admin/articles') Bài viết
               li
-                a(href='/admin/article/new') Viết bài mới
-            
+                a(href='/admin/pages') Trang nội dung
           li
             a.dropdown-toggle(href='#', data-toggle='dropdown')
-              | Thiết lập chung
+              | Thiết lập
               span.caret
             ul.dropdown-menu(role='menu')
               li
@@ -65,7 +59,6 @@
                 a(href='/admin/redirect') Redirect 301
               li
                 a(href='/admin/images') Hình ảnh
-          
           li
             a(href='/admin/user') Nhân viên
           li
