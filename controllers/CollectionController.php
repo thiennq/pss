@@ -308,7 +308,7 @@ class CollectionController extends Controller {
 		$total_pages = ceil(count($all) / (int)$perpage);
 		if(count($products)) {
       $products = Product::getInfoProduct($products);
-			return $this->view->render($response, 'collection-filter.pug', [
+			return $this->view->render($response, 'collection_filter.pug', [
 				'products' => $products,
         'page_number' => $page_number,
         'total_pages' => $total_pages

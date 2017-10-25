@@ -576,3 +576,41 @@
     }
   }
 }
+
+
+@media screen and (max-width: 768px) {
+  .owl-carousel-variant {
+    .owl-stage-outer {
+      z-index: 99999;
+    }
+    .owl-nav {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      span {
+        &.owl-next {
+          display: inline-block;
+          float: right;
+          position: relative;
+          left: -20px;
+          z-index: 9999;
+          img {
+            max-width: 20px;
+          }
+        }
+        &.owl-prev {
+          display: inline-block;
+          position: relative;
+          left: -10px;
+          z-index: 9999;
+          img {
+            max-width: 20px;
+          }
+        }
+        &.disabled {
+          display: none;
+        }
+      }
+    }
+  }
+}

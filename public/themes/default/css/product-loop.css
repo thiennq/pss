@@ -171,6 +171,9 @@
         padding: 0;
         width: initial !important;
         display: inline-block !important; }
+      .wrapper-item-product-loop .item-product-loop .variant-image .owl-stage-outer {
+        z-index: 99;
+        padding: 0 !important; }
   @media screen and (min-width: 767px) {
     .wrapper-item-product-loop:hover .btn-order {
       display: block; }

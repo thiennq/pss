@@ -8,11 +8,6 @@
     //-   span.percent.top - #{product.percent}
     //- else
     //-   span.hidden.percent.top
-    //- if device == 'desktop'
-    //-   .variant-image.owl-carousel.variant-carousel
-    //-     each item in product.variants
-    //-       - var large = resize('1508470866_Donald-Trump.jpg', 240);
-    //-       img.item.item-thumb(src="/uploads/" + large, alt=item.title, data-large="/uploads/" + large, data-title=item.title, data-handle=item.handle, data-price=money(item.price), data-price_compare=money(item.price_compare), data-display_discount = item.display_discount, data-percent=item.percent)
     a.wrap-image(href=fullUrl)
       - var src = themeURI() + '/img/default_image.png';
       //- if product.featured_image

@@ -1,31 +1,5 @@
 footer {
   background-color: #f1f1f2; }
-  footer .top-brands .top-brands-title .title {
-    font-size: 17px;
-    font-weight: 600;
-    color: black;
-    text-transform: uppercase;
-    width: 150px;
-    border-bottom: 1px solid #dadbdc;
-    margin-bottom: 15px; }
-  footer .top-brands .brands {
-    padding: 0 15px; }
-    footer .top-brands .brands ul {
-      width: calc(100%/7);
-      display: inline-block;
-      float: left; }
-      footer .top-brands .brands ul li {
-        width: 100%;
-        font-size: 13px;
-        margin-bottom: 5px; }
-        footer .top-brands .brands ul li a {
-          font-size: 13px;
-          color: #000; }
-  @media screen and (max-width: 991px) {
-    footer .top-brands .top-brands-title .title {
-      font-size: 15px; }
-    footer .top-brands .brands ul {
-      width: 20%; } }
   footer .copyright {
     padding: 20px 0 !important;
     border-top: 1px solid #dadbdc;

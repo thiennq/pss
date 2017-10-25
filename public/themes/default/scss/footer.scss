@@ -2,48 +2,6 @@
 
 footer {
   background-color: #f1f1f2;
-  .top-brands {
-    .top-brands-title {
-      .title {
-        font-size: 17px;
-        font-weight: 600;
-        color: black;
-        text-transform: uppercase;
-        width: 150px;
-        border-bottom: 1px solid #dadbdc;
-        margin-bottom: 15px;
-      }
-    }
-    .brands {
-      padding: 0 15px;
-      ul {
-        width: calc(100%/7);
-        display: inline-block;
-        float: left;
-        li {
-          width: 100%;
-          font-size: 13px;
-          margin-bottom: 5px;
-          a {
-            font-size: 13px;
-            color: #000;
-          }
-        }
-      }
-    }
-    @media screen and (max-width: 991px) {
-      .top-brands-title {
-        .title {
-          font-size: 15px;
-        }
-      }
-      .brands {
-        ul {
-          width: 20%;
-        }
-      }
-    }
-  }
   .copyright {
   padding: 20px 0 !important;
   border-top: 1px solid #dadbdc;
