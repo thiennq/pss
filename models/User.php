@@ -8,17 +8,21 @@ class User extends Illuminate\Database\Eloquent\Model {
     protected $table = 'user';
 
     public function store($data) {
-      $check = User::where('email', $data->email)->first();
+      error_log(json_encode($data));
+      $check = User::where('email', $data['email'])->first();
       if($check) return -1;
+      $random = randomString(50);
       $user = new User;
       $user->name = $data['name'];
       $user->email = $data['email'];
-      $user->phone = $data['phone'];
+      $user->phone = $data['phone'] ? $data['phone'] : '';
       $user->role = $data['role'];
-      $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
-  		$user->created_at = date('Y-m-d H:i:s');
-  		$user->updated_at = date('Y-m-d H:i:s');
+      $user->password = '';
+      $user->random = $random;
+      $user->created_at = date('Y-m-d H:i:s');
+      $user->updated_at = date('Y-m-d H:i:s');
       $user->save();
+      sendEmailUser($user->id);
       return 0;
     }
 
@@ -29,10 +33,19 @@ class User extends Illuminate\Database\Eloquent\Model {
       if($check) return -1;
       $user->name = $data['name'];
       $user->email = $data['email'];
-      $user->phone = $data['phone'];
+      $user->phone = $data['phone'] ? $data['phone'] : '';
       $user->role = $data['role'];
-      $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
-  		$user->updated_at = date('Y-m-d H:i:s');
+      $user->updated_at = date('Y-m-d H:i:s');
+      $user->save();
+      return 0;
+    }
+
+    public function updatePassword($random, $password) {
+      $user = User::where('random', $random)->first();
+      if (!$user) return -2;
+      $user->password = password_hash($password, PASSWORD_DEFAULT);
+      $user->random = '';
+      $user->updated_at = date('Y-m-d H:i:s');
       $user->save();
       return 0;
     }

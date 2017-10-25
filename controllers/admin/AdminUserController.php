@@ -9,6 +9,7 @@ class AdminUserController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$user = User::orderBy('updated_at', 'desc')->get();
+		$login_email = $_SESSION['email'];
 		return $this->view->render($response, 'admin/user.pug', array(
 			'login_email' => $login_email,
 			'user' => $user
@@ -46,37 +47,6 @@ class AdminUserController extends AdminController {
     return $this->view->render($response, 'admin/login.pug');
   }
 
-  public function checkLogin(Request $request, Response $response) {
-    $body = $request->getParsedBody();
-		$email = $body['email'];
-		$password = $body['password'];
-		$user = User::where('email', $email)->first();
-    if($user) {
-      if(password_verify($password, $user->password)) {
-        $_SESSION['login'] = true;
-        $_SESSION['user_id'] = $user->id;
-        $_SESSION['email'] = $user->email;
-        $_SESSION['name'] = $user->name;
-				$_SESSION['role'] = $user->role;
-        $href = '/admin/login';
-        if($_SESSION['href']) $href = $_SESSION['href'];
-        return $response->withJson([
-          'code' => 0,
-  				'message' => 'Đăng nhập thành công',
-          'href' => $href
-        ]);
-      }
-      return $response->withJson([
-        'code' => -1,
-        'message' => 'Mật khẩu không chính xác'
-      ]);
-    }
-    return $response->withJson([
-      'code' => -1,
-      'message' => 'Email không tồn tại'
-    ]);
-  }
-
   public function getLogout(Request $request, Response $response){
     session_start();
     session_unset();
@@ -110,6 +80,7 @@ class AdminUserController extends AdminController {
 			'message' => 'Not found'
 		]);
 	}
+
   public function update(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $body = $request->getParsedBody();
@@ -124,7 +95,6 @@ class AdminUserController extends AdminController {
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);
 	}
-
 }
 
 ?>

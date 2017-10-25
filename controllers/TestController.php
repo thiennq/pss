@@ -21,10 +21,6 @@ class TestController extends Controller {
       $template = str_replace('{{'.$key.'}}', $value, $template);
     }
     $header = 'reply from: Nhan';
-    error_log($to);
-    error_log($subject);
-    error_log($header);
-    error_log($template);
     PHPMailer($to, $subject, $template, $header);
   }
 

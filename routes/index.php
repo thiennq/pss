@@ -10,6 +10,7 @@ require_once('../controllers/PageController.php');
 require_once('../controllers/OrderController.php');
 require_once('../controllers/ArticleController.php');
 require_once('../controllers/BlogController.php');
+require_once('../controllers/UserController.php');
 require_once('../controllers/TestController.php');
 require_once('../models/helper.php');
 
@@ -41,6 +42,12 @@ $app->get('/api/getInfoCart', '\OrderController:getInfoCart');
 $app->post('/api/addToCart', '\OrderController:addToCart');
 $app->put('/api/updateCart', '\OrderController:updateCart');
 $app->delete('/api/deleteCart', '\OrderController:deleteCart');
+
+$app->get('/user/forgotpassword', '\UserController:forgotPassword');
+$app->get('/user/{random}', '\UserController:createPassword');
+$app->post('/api/user/login', '\UserController:checkLogin');
+$app->put('/api/user/password', '\UserController:updatePassword');
+$app->get('/api/user/checkEmail', '\UserController:resetPassword');
 
 $app->get('/api/san-pham/variant/{id}', '\ProductController:findProductVariant');
 $app->get('/test-mail', '\TestController:sendMail');

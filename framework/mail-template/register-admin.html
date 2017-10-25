@@ -3,29 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title>Admin Register</title>
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
       <div class="greet">
-        <p>Xin chào {{admin_name}}</p>
+        <p>Xin chào {{user_name}}</p>
       </div>
       <div class="notification">
-        <p>BẠN NHẬN ĐƯỢC LỜI MỜI THAM GIA BAN QUẢN TRỊ WEBSITE ...</p>
+        <p>BẠN NHẬN ĐƯỢC LỜI MỜI THAM GIA BAN QUẢN TRỊ WEBSITE {{website}},</p>
       </div>
     </header>
     <div class="content-wrapper">
       <div class="account-info">
         <p>THÔNG TIN TÀI KHOẢN</p>
-        <p>Họ tên: {{admin_name}}</p>
-        <p>Email: {{admin_email}}</p>
-        <p>Password: {{admin_pw}}</p>
-        <p>Trang quản trị: {{admin_page}}</p>
+        <p>Họ tên: {{user_name}}</p>
+        <p>Email: {{user_email}}</p>
+        <p>Phân quyền: {{user_role}}</p>
       </div>
       <div class="create-pw">
         <p>
-          Vui lòng truy cập vào đường link sau đây để tạo lại mật khẩu
-          <a href={create-pass-link}>{{create-pass-link}}</a>
+          Vui lòng truy cập vào đường link sau đây để tạo mật khẩu:
+          <a href="{{link_create_password}}">{{link_create_password}}</a>
         </p>
       </div>
     </div>

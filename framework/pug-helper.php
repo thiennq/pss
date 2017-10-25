@@ -21,7 +21,6 @@ function staticURI() {
   return '/static';
 }
 
-
 function getMeta($key) {
   $meta = Meta::where('key', $key)->first();
   return $meta->value;

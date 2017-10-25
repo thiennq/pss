@@ -98,56 +98,32 @@ function resizeImage(image, size) {
   return image;
 }
 
-$(document).ready(function(){
-	$('.filter .input-group ul li').click(function(){
-		$('.filter .input-group .dropdown-toggle .text').text($(this).text());
-	});
-	function tag() {
-		if(document.getElementById('in').value!="") {
-			var l = (document.getElementById('in').value);
-			$('.filter .tagsinput #tag').tagsinput('add', l);
-		}
-	}
-	function inputKeyUp(e) {
-		e.which = e.which || e.keyCode;
-	  	if(e.which == 13) {
-			tag();
-			document.getElementById('in').value = '';
-	  }
-	}
-	$(document).on('keyup', '#in', inputKeyUp);
-
-})
-
-
-$(document).ready(function() {
-  $('#modal-change-password').on('show.bs.modal', function() {
-    $('#modal-change-password').find('input').val('');
-  });
-  $('.form-change-password').on('submit', function(e){
-    e.preventDefault();
-    var password = $(this).find('input[name="password"]').val();
-    var new_password = $(this).find('input[name="new_password"]').val();
-    $.ajax({
-      type: 'PUT',
-      url: '/admin/user/doi-mat-khau',
-      data: {
-        password: password,
-        new_password: new_password
-      },
-      success: function(json) {
-        if(!json.code) {
-          toastr.success('Đổi mật khẩu thành công');
-          setTimeout(function(){
-            window.location.reload();
-          }, 1000);
-        } else if(json.code == -1) toastr.error('Mật khẩu không đúng');
-        else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      }
-    });
-  });
+$('#modal-change-password').on('show.bs.modal', function() {
+  $('#modal-change-password').find('input').val('');
 });
 
+$('.form-change-password').on('submit', function(e){
+  e.preventDefault();
+  var password = $(this).find('input[name="password"]').val();
+  var new_password = $(this).find('input[name="new_password"]').val();
+  $.ajax({
+    type: 'PUT',
+    url: '/admin/api/user/changePassword',
+    data: {
+      password: password,
+      new_password: new_password
+    },
+    success: function(json) {
+      if(!json.code) {
+        toastr.success('Đổi mật khẩu thành công');
+        setTimeout(function(){
+          window.location.reload();
+        }, 1000);
+      } else if(json.code == -1) toastr.error('Mật khẩu cũ không đúng');
+      else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+    }
+  });
+});
 
 $('.btn-remove-image').click(function() {
   var image = $(this).data('image');
@@ -184,37 +160,6 @@ function convertToHandle(str) {
 	}
   return str;
 }
-
-function handle(str) {
-	if(str) {
-		str = str.trim();
-		str= str.toLowerCase();
-	  str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
-	  str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
-	  str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
-	  str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
-	  str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
-	  str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
-	  str= str.replace(/đ/g,"d");
-    str = str.replace(/\,/g, '-');
-    str = str.replace(/\./g, '-');
-    str = str.replace(/\!/g, '-');
-    str = str.replace(/\?/g, '-');
-    str = str.replace(/\~/g, '-');
-    str = str.replace(/\ /g, '-');
-    str = str.replace(/\|/g, '-');
-		str = str.replace(/\./g, '-');
-    str = str.replace(/\"/g, '-');
-    str = str.replace(/\'/g, '-');
-    str = str.replace(/\--/g, '-');
-		str = str.replace(/\--/g, '-');
-		str = str.replace(/\--/g, '-');
-    str = str.replace(/\--/g, '-');
-    if(str.slice(-1) == '-') str = str.substring(0, str.length - 1);
-	}
-  return str;
-}
-
 
 function checkDate(datetime) {
   return new Date(datetime);

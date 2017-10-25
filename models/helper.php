@@ -5,6 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once('Product.php');
 require_once('Collection.php');
+require_once('User.php');
 
 $GLOBALS['size'] = [100, 240, 480, 640, 1024, 2048];
 
@@ -374,7 +375,7 @@ function rotateImage(Request $request, Response $response) {
   return convertImage($file, $size[0]);
 }
 
-function PHPMailer($to, $subject, $body, $text) {
+function PHPMailer($to, $subject, $body) {
   $mail = new PHPMailer;
   include ROOT . '/framework/phpmailer.php';
   $mail->IsSMTP();
@@ -389,13 +390,56 @@ function PHPMailer($to, $subject, $body, $text) {
   $mail->isHTML(true);
   $mail->Subject = $subject;
   $mail->Body    = $body;
-  $mail->AltBody = $text;
+  $mail->AltBody = '';
   $mail->CharSet = "UTF-8";
-  $mail->FromName = "GYPSY";
-  if(!$mail->send())  {
-    $message = "SEND FAILED !!! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
-    return $STMP_USERNAME;
-  }
-  $message = "SEND SUCCESS ! To : " . $to . " . Subject : " . $subject . " Content : " . $body . " Text : " . $text;
+
+  if(!$mail->send()) return false;
   return true;
+}
+
+function randomString($length = 50) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $random = '';
+  for ($i = 0; $i < $length; $i++) {
+    $random .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $random;
+}
+
+function sendEmailUser($id) {
+  $user = User::find($id);
+  if (!$user) return false;
+  $to = $user->email;
+  $subject = 'THÔNG TIN TÀI KHOẢN NGƯỜI DÙNG';
+  $variables = array();
+  $variables['website'] = 'EYE SOLUTION';
+  $variables['user_name'] = $user->name;
+  $variables['user_email'] = $user->email;
+  $variables['user_role'] = ($user->role == 'admin') ? 'Administrator' : 'User';
+  $variables['link_create_password'] = HOST . '/user/' . $user->random;
+  $body = file_get_contents(ROOT . '/framework/mail-template/register-admin.html');
+  foreach ($variables as $key => $value) {
+    $body = str_replace('{{'.$key.'}}', $value, $body);
+  }
+  PHPMailer($to, $subject, $body);
+}
+
+function sendEmailForgotPassword($email) {
+  error_log("email: " . $email);
+  $user = User::where('email', $email)->first();
+  if (!$user) return false;
+  $to = $email;
+  $subject = 'THÔNG TIN TÀI KHOẢN NGƯỜI DÙNG';
+  $variables = array();
+  $variables['website'] = 'EYE SOLUTION';
+  $variables['user_name'] = $user->name;
+  $variables['user_email'] = $email;
+  $variables['user_role'] = ($user->role == 'admin') ? 'Administrator' : 'User';
+  $variables['link_create_password'] = HOST . '/user/' . $user->random;
+  $body = file_get_contents(ROOT . '/framework/mail-template/forget-password.html');
+  foreach ($variables as $key => $value) {
+    $body = str_replace('{{'.$key.'}}', $value, $body);
+  }
+  PHPMailer($to, $subject, $body);
 }

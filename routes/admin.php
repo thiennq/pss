@@ -37,9 +37,7 @@ $app->group('/admin', function() use($app) {
     return $res->withStatus(302)->withHeader('Location', $href);
   });
 
-  //Login
   $app->get('/login', '\AdminUserController:getlogin');
-  $app->post('/login', '\AdminUserController:checkLogin');
   $app->get('/logout', '\AdminUserController:getLogout');
 
   $app->post('/api/uploadImage', 'uploadImage');
@@ -149,12 +147,17 @@ $app->group('/admin', function() use($app) {
   $app->delete('/api/images/remove', '\AdminSettingController:removeImage');
 
   //User
-  $app->get('/user', '\AdminUserController:index');
-  $app->get('/user/{id}', '\AdminUserController:show');
-  $app->post('/user', '\AdminUserController:store');
-  $app->put('/user/doi-mat-khau', '\AdminUserController:changePassword');
-  $app->put('/user/{id}', '\AdminUserController:update');
-  $app->delete('/user/{id}', '\AdminUserController:delete');
+  $app->group('', function () use ($app) {
+    $app->get('/user', '\AdminUserController:index');
+    $app->get('/api/user/{id}', '\AdminUserController:show');
+    $app->post('/api/user', '\AdminUserController:store');
+    $app->put('/api/user/changePassword', '\AdminUserController:changePassword');
+    $app->put('/api/user/{id}', '\AdminUserController:update');
+    $app->delete('/api/user/{id}', '\AdminUserController:delete');
+  })->add(function ($request, $response, $next) {
+    if(in_array('admin', $_SESSION['role'])) return $next($request, $response);
+    return $response->withStatus(302)->withHeader('Location', '/404');
+  });
 
   $app->get('/api/rotate', 'rotateImage');
   $app->get('/api/tinymce/images', '\AdminProductController:renderImageTinymce');

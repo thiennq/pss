@@ -34,15 +34,10 @@ block content
 				a=order.id
 		ol.button-right.col-md-4.col-sm-5.col-xs-12
 			span.middle-inline-block
-			if odoo
-				li
-					a.btn.btn-review.btn-update-state(data-id=order.id)
-						i.fa.fa-save
-						| Cập nhật đơn hàng
-				li
-					a.btn.btn-review(href='http://erp.tga.com.vn/web#id='+order.id_odoo+'&view_type=form&model=sale.order&menu_id=173&action=233', target="_blank")
-						i.fa.fa-eye
-						| Xem trên Odoo
+			li
+				a.btn.btn-review.btn-update-state(data-id=order.id)
+					i.fa.fa-save
+					| Cập nhật đơn hàng
 	section.content
 		.box.clearfix
 			.box-header.with-border

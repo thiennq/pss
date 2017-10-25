@@ -106,11 +106,12 @@ aside.main-sidebar
             a(href="/admin/images")
               i.fa.fa-circle
               | Hình ảnh
-      - var itemClass = (menu == 'user' ? 'active' : 'item');
-      li.treeview(class=itemClass)
-        a(href="/admin/user")
-          i.fa.fa-user
-          span Nhân viên
+      if role == 'admin'
+        - var itemClass = (menu == 'user' ? 'active' : 'item');
+        li.treeview(class=itemClass)
+          a(href="/admin/user")
+            i.fa.fa-user
+            span Nhân viên
     .foot
       .info
         p
