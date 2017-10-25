@@ -1,7 +1,7 @@
 initDataTable('table');
 
 $('#modal-add').on('click', '.btn-create', function() {
-  $(this).addClass('disabled');
+  var self = $(this);
   var modal = $('#modal-add');
   var data = {};
   data.title = modal.find('input[name="title"]').val();
@@ -10,13 +10,13 @@ $('#modal-add').on('click', '.btn-create', function() {
     modal.find('input[name="title"]').addClass('error');
     return;
   }
-  modal.addClass('disabled');
+  self.addClass('disabled');
   $.ajax({
       type: 'POST',
       url: '/admin/filters',
       data: data,
       success: function(json) {
-          modal.removeClass('disabled');
+          self.removeClass('disabled');
           if(!json.code) {
               toastr.success('Thêm thành công');
               reloadPage();
@@ -68,7 +68,7 @@ $('.edit-attribute').click(function() {
 });
 
 $('#modal-edit').on('click', '.btn-update', function() {
-  $(this).addClass('disabled');
+  var self = $(this);
   var modal = $('#modal-edit');
   var id = $(this).attr('data-id');
   var data = {};
@@ -78,16 +78,17 @@ $('#modal-edit').on('click', '.btn-update', function() {
     modal.find('input[name="title"]').addClass('error');
     return;
   }
+  self.addClass('disabled');
   $.ajax({
       type: 'PUT',
       url: '/admin/filters/' + id,
       data: data,
       success: function(json) {
-          modal.find('.btn-update').removeClass('disabled');
-          if(!json.code) {
-            toastr.success('Cập nhật thành công');
-            reloadPage();
-          } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+        self.removeClass('disabled');
+        if(!json.code) {
+          toastr.success('Cập nhật thành công');
+          reloadPage();
+        } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
       }
   });
 });
@@ -110,7 +111,7 @@ $('.edit-option').click(function() {
 });
 
 $('#modal-edit-option').on('click', '.btn-update', function() {
-  $(this).addClass('disabled');
+  var self = $(this);
   var modal = $('#modal-edit-option');
   var id = $(this).attr('data-id');
   var data = {};
@@ -121,12 +122,13 @@ $('#modal-edit-option').on('click', '.btn-update', function() {
     return;
   }
   data.value = modal.find('input[name="value"]').val();
+  self.addClass('disabled');
   $.ajax({
       type: 'PUT',
       url: '/admin/filters/' + id,
       data: data,
       success: function(json) {
-          modal.find('.btn-update').removeClass('disabled');
+          self.removeClass('disabled');
           if(!json.code) {
             toastr.success('Cập nhật thành công');
             reloadPage();
@@ -137,20 +139,20 @@ $('#modal-edit-option').on('click', '.btn-update', function() {
 
 
 $('.delete-filter').click(function() {
-    var card = $(this).closest('.filter-card');
-    if ($(this).data('option')) card = $(this).closest('.clearfix');
-    var id = $(this).data('id');
-    if (confirm('Xóa thuộc tính')) {
-        $.ajax({
-            type: 'DELETE',
-            url: '/admin/filters/' + id,
-            success: function(json) {
-                if (!json.code) {
-                    toastr.success('Xóa thành công');
-                    card.remove();
-                    reloadPage();
-                } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-            }
-        })
-    }
+  var card = $(this).closest('.filter-card');
+  if ($(this).data('option')) card = $(this).closest('.clearfix');
+  var id = $(this).data('id');
+  if (confirm('Xóa thuộc tính')) {
+    $.ajax({
+      type: 'DELETE',
+      url: '/admin/filters/' + id,
+      success: function(json) {
+        if (!json.code) {
+          toastr.success('Xóa thành công');
+          card.remove();
+          reloadPage();
+        } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
+      }
+    })
+  }
 })

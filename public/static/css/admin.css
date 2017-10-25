@@ -5,6 +5,9 @@
   border: 0;
   border-radius: 0; }
 
+.w100 {
+  width: 100%; }
+
 .no-border {
   border: none !important; }
 

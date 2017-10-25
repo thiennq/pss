@@ -42,10 +42,11 @@ block content
                       i.fa.fa-trash.delete-filter(data-id=child.id, data-option=1)
           .col-xs-12.group-add-new-option
             .input-group
-              input.form-control(type='text', name="title", placeholder="Tên option (required)")
-              input.form-control(type='text', name="value", placeholder="Giá trị (optional)")
+              input.form-control(type='text', name="title", placeholder="Tên option (bắt buộc)")
+              input.form-control(type='text', name="value", placeholder="Giá trị (không bắt buộc)")
               .col-xs-12.text-center
-                button.btn.btn-default.add-new-option(data-parent_id=item.id) Thêm option mới
+                .row
+                  button.w100.btn.btn-default.add-new-option(data-parent_id=item.id) Thêm option mới
 
     #modal-add.modal.fade(role='dialog')
       .modal-dialog

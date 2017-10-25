@@ -13,6 +13,8 @@ class BlogArticle extends Illuminate\Database\Eloquent\Model {
 		$blog_article = new BlogArticle;
 		$blog_article->article_id = $article_id;
     $blog_article->blog_id = $blog_id;
+    $blog_article->created_at = date('Y-m-d H:i:s');
+    $blog_article->updated_at = date('Y-m-d H:i:s');
     $blog_article->save();
   }
 

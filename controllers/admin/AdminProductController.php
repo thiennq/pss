@@ -1,7 +1,7 @@
 <?php
 require_once(ROOT . '/models/Product.php');
 require_once(ROOT . '/models/Collection.php');
-require_once("../models/CollectionProduct.php");
+require_once(ROOT . '/models/CollectionProduct.php');
 require_once(ROOT . '/controllers/helper.php');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -19,8 +19,22 @@ class AdminProductController extends AdminController {
 
   public function create(Request $request, Response $response) {
     $collections = Collection::orderBy('breadcrumb', 'asc')->get();
+    $filter = Filter::where('parent_id', -1)->get();
+    $attributes = [];
+    foreach ($filter as $key => $value) {
+      $childs = Filter::where('parent_id', $value->id)->get();
+      if (count($childs)) {
+        foreach ($childs as $key => $child) {
+          $obj = new stdClass();
+          $obj->id = $child->id;
+          $obj->label = $value->title . ': ' . $child->title;
+          array_push($attributes, $obj);
+        }
+      }
+    }
     return $this->view->render($response, 'admin/product_new.pug', array(
-      'collections' => $collections
+      'collections' => $collections,
+      'attributes' => $attributes
     ));
   }
 
