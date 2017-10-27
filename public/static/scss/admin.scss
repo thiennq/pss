@@ -8,7 +8,8 @@ $color_grey: #ccc;
 $color_light_grey: #eee;
 $color_yellow: #FDD31F;
 $color_hover_sidebar: #1a2226;
-$color_sidebar: #222d32;
+$color_sidebar: #364150;
+$color_header: #2b3643;
 
 .error {
   border: 1px solid red !important;
@@ -271,7 +272,7 @@ table.table-bordered.dataTable {
 
 .content-header {
 	padding: 10px 15px;
-	background-color: $color_sidebar;
+	background-color: $color_header;
 	position: fixed;
 	width: calc(100% - 230px);
   z-index: 999;
