@@ -16,14 +16,14 @@ class AdminArticleController extends AdminController {
     ));
   }
 
-  public function new(Request $request, Response $response) {
+  public function create(Request $request, Response $response) {
     $blogs = Blog::all();
     return $this->view->render($response, 'admin/article_new.pug', array(
       'blogs' => $blogs
     ));
   }
 
-  public function create(Request $request, Response $response) {
+  public function store(Request $request, Response $response) {
     $data = $request->getParsedBody();
     $code = Article::create($data);
     if ($code) {

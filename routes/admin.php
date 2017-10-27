@@ -94,26 +94,26 @@ $app->group('/admin', function() use($app) {
   $app->get('/customer/export', '\AdminCustomerController:export');
 
   // Article
-  $app->get('/article/new', '\AdminArticleController:new');
+  $app->get('/article/new', '\AdminArticleController:create');
   $app->get('/articles', '\AdminArticleController:fetch');
   $app->get('/article/{id}', '\AdminArticleController:get');
-  $app->post('/article', '\AdminArticleController:create');
+  $app->post('/article', '\AdminArticleController:store');
   $app->put('/article/{id}', '\AdminArticleController:update');
   $app->delete('/article/{id}', '\AdminArticleController:delete');
 
   // Blog
-  $app->get('/blog/new', '\AdminBlogController:new');
+  $app->get('/blog/new', '\AdminBlogController:create');
   $app->get('/blogs', '\AdminBlogController:fetch');
   $app->get('/blog/{id}', '\AdminBlogController:get');
-  $app->post('/blog', '\AdminBlogController:create');
+  $app->post('/blog', '\AdminBlogController:store');
   $app->put('/blog/{id}', '\AdminBlogController:update');
   $app->delete('/blog/{id}', '\AdminBlogController:delete');
 
   // Page
-  $app->get('/page/new', '\AdminPageController:new');
+  $app->get('/page/new', '\AdminPageController:create');
   $app->get('/pages', '\AdminPageController:fetch');
   $app->get('/page/{id}', '\AdminPageController:get');
-  $app->post('/page', '\AdminPageController:create');
+  $app->post('/page', '\AdminPageController:store');
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
 
