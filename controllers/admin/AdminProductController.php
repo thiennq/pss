@@ -33,7 +33,7 @@ class AdminProductController extends AdminController {
         }
       }
     }
-    return $this->view->render($response, 'admin/product_new', array(
+    return $this->view->render($response, 'admin/product_create', array(
       'collections' => $collections,
       'attributes' => $attributes
     ));

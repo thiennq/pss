@@ -7,13 +7,21 @@ use ControllerHelper as Helper;
 
 class AdminUserController extends AdminController {
 
-	public function index(Request $request, Response $response) {
+	public function fetch(Request $request, Response $response) {
 		$user = User::orderBy('updated_at', 'desc')->get();
 		$login_email = $_SESSION['email'];
 		return $this->view->render($response, 'admin/user', array(
 			'login_email' => $login_email,
 			'user' => $user
 		));
+	}
+
+	public function create(Request $request, Response $response) {
+		return $this->view->render($response, 'admin/user_create');
+	}
+
+	public function history(Request $request, Response $response) {
+		return $this->view->render($response, 'admin/user_history');
 	}
 
   public function show(Request $request, Response $response) {

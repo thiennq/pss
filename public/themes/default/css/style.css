@@ -11451,32 +11451,6 @@ a {
   position: relative;
   float: right; }
 
-.video .banner {
-  margin: 0;
-  padding: 0; }
-  .video .banner img {
-    width: 100%; }
-
-.video .content {
-  padding: 20px 0; }
-  .video .content .clip {
-    text-align: center;
-    padding: 10px 15px;
-    font-size: 15px;
-    font-weight: 600; }
-    .video .content .clip iframe {
-      width: 100%;
-      height: 180px; }
-    .video .content .clip p {
-      white-space: normal;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 10px;
-      font-size: 12px;
-      height: 40px; }
-    .video .content .clip a {
-      color: #000; }
-
 .content.row h1 {
   font-size: 15px;
   margin-top: 5px !important;

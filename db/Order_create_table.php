@@ -22,9 +22,9 @@ $Schema->create('order', function (Blueprint $table) {
     $table->string('payment_method');
     $table->string('shipping_price');
     $table->string('discount');
-    $table->string('order_status');
-    $table->integer('payment_status');
-    $table->integer('shipping_status');
+    $table->string('order_status'); // new, confim, done, cancel, return
+    $table->integer('payment_status'); // 0, 1
+    $table->integer('shipping_status'); // 0, 1, 2
     $table->string('subtotal');
     $table->string('total');
     $table->text('notes')->nullable();

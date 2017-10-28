@@ -11,3 +11,4 @@ public/excel
 composer.lock
 node_modules
 public/*.xml
+public/cache

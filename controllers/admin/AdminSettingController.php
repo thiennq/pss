@@ -60,6 +60,10 @@ class AdminSettingController extends AdminController {
     ));
   }
 
+  public function shipping_fee(Request $request, Response $response) {
+    return $this->view->render($response, 'admin/shipping_fee');
+  }
+
   public function getImages(Request $request, Response $response) {
     $dir = ROOT . '/public/images';
     $images = scandir($dir);

@@ -11,7 +11,7 @@ class AdminDashboardController extends AdminController{
 
     public function fetch(Request $request, Response $response){
         $data = Article::orderBy('updated_at', 'desc')->get();
-        return $this->view->render($response, 'admin/article.pug', array(
+        return $this->view->render($response, 'admin/dashboard', array(
             'data' => $data
         ));
     }

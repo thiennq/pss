@@ -13,7 +13,7 @@ class View {
     $this->layout = $obj['layout'];
 
     $PUG_PRETTY = getenv('PUG_PRETTY') ? getenv('PUG_PRETTY') : false;
-    $CACHE = getenv('CACHE') ? getenv('CACHE') : 'cache';
+    $CACHE = getenv('CACHE') ? getenv('CACHE') : '';
     $viewConfig = array(
       'prettyprint' => $PUG_PRETTY,
       'debug' => false,

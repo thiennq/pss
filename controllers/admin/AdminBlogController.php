@@ -8,7 +8,7 @@ use ControllerHelper as Helper;
 class AdminBlogController extends AdminController {
 
   public function create(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/blog_new.pug');
+    return $this->view->render($response, 'admin/blog_create');
   }
 
   public function store(Request $request, Response $response) {

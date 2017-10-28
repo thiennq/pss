@@ -17,7 +17,6 @@ require_once('../models/helper.php');
 
 $app->get('/', '\IndexController:index');
 
-$app->get('/video', '\PageController:video');
 $app->get('/saleoff', '\PageController:saleOff');
 $app->get('/thuong-hieu/{name}', '\CollectionController:brand');
 $app->get('/tim-kiem', '\CollectionController:search');

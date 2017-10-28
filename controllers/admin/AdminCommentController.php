@@ -7,13 +7,10 @@ require_once("../models/BlogArticle.php");
 require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
-class AdminArticleController extends AdminController {
+class AdminCommentController extends AdminController {
 
   public function fetch(Request $request, Response $response) {
-    $data = Article::orderBy('updated_at', 'desc')->get();
-    return $this->view->render($response, 'admin/article', array(
-      'data' => $data
-    ));
+    return $this->view->render($response, 'admin/comment');
   }
 
   public function create(Request $request, Response $response) {

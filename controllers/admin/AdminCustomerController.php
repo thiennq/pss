@@ -8,11 +8,15 @@ require_once("../models/SubRegion.php");
 
 class AdminCustomerController extends AdminController {
 
-	public function index(Request $request, Response $response) {
+	public function fetch(Request $request, Response $response) {
 		$customers = Customer::join('region', 'customer.region', '=', 'region.id')->join('subregion', 'customer.subregion', '=', 'subregion.id')->select('customer.id', 'customer.name', 'customer.phone', 'customer.email','region.name as region')->get();
 		return $this->view->render($response, 'admin/customer', array(
 			'customers' => $customers
 		));
+	}
+
+	public function create(Request $request, Response $response) {
+		return $this->view->render($response, 'admin/customer_create');
 	}
 
 	public function showOrder(Request $request, Response $response) {

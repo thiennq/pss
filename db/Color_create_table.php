@@ -19,6 +19,6 @@ $Schema = $capsule->schema();
 $Schema->create('color', function (Blueprint $table) {
     $table->increments('id');
     $table->string('name')->nullable();
-    $table->string('option')->nullable();
+    $table->string('hex')->nullable();
     $table->timestamps();
 });

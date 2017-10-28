@@ -1,26 +1,20 @@
 extends ./layout.pug
 
 block pre-include
-  - var menu = 'setting';
-  - var childMenu = 'menu';
-  title Menu
-  script(src=staticURI() + '/libs/jquery-ui.min.js')
+  - var menu = 'contact';
+  title Liên hệ
   link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
   
 block post-include
-  script(src=staticURI() + '/js/admin/menu.js')
+  script(src=staticURI() + '/js/admin/contact.js')
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
-        a Cấu hình
+        a Liên hệ
       li
-        a Menu
-    ol.button-right.col-md-4.col-sm-5.col-xs-12
-      span.middle-inline-block
-      li
-        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
+        a Danh sách
   section.content.clearfix
     .box
       .box-body
