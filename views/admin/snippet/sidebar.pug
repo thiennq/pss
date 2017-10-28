@@ -8,7 +8,7 @@ aside.main-sidebar
       - var itemClass = (menu == 'product' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="#")
-          i.fa.fa-product-hunt
+          i.icon-note
           span Sản phẩm
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
@@ -40,17 +40,17 @@ aside.main-sidebar
       - var itemClass = (menu == 'order' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='/admin/order')
-          i.fa.fa-reorder
+          i.icon-basket
           span Đơn hàng
       - var itemClass = (menu == 'customer' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/customer")
-          i.fa.fa-users
+          i.icon-users
           span Khách hàng
       - var itemClass = (menu == 'article' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')
-          i.fa.fa-book
+          i.icon-note
           span Bài viết
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
@@ -72,7 +72,7 @@ aside.main-sidebar
       - var itemClass = (menu == 'setting' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href='#')
-          i.fa.fa-cog
+          i.icon-settings
           span Thiết lập
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
