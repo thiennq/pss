@@ -13,7 +13,7 @@ class AdminOrderController extends AdminController {
 		$orders = Order::join('customer', 'customer.id', '=', 'order.customer_id')
 							->select('order.id', 'order.created_at', 'customer.name', 'order.total', 'order.order_status')
 							->orderBy('id', 'desc')->get();
-		return $this->view->render($response, 'admin/order.pug', array(
+		return $this->view->render($response, 'admin/order', array(
 			'orders' => $orders
 		));
 	}
@@ -40,7 +40,7 @@ class AdminOrderController extends AdminController {
 		$customer->subregion = $subregion->name;
 		$region = Region::find($customer->region);
 		$customer->region = $region->name;
-		return $this->view->render($response, 'admin/order_edit.pug', array(
+		return $this->view->render($response, 'admin/order_edit', array(
 			'order' => $order,
 			'cart' => $cart,
 			'customer' => $customer

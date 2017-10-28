@@ -10,7 +10,7 @@ class AdminUserController extends AdminController {
 	public function index(Request $request, Response $response) {
 		$user = User::orderBy('updated_at', 'desc')->get();
 		$login_email = $_SESSION['email'];
-		return $this->view->render($response, 'admin/user.pug', array(
+		return $this->view->render($response, 'admin/user', array(
 			'login_email' => $login_email,
 			'user' => $user
 		));
@@ -44,7 +44,7 @@ class AdminUserController extends AdminController {
       if(!$href) $href = '/admin/collection';
       return $response->withStatus(302)->withHeader('Location', $href);
     }
-    return $this->view->render($response, 'admin/login.pug');
+    return $this->view->render($response, 'admin/login');
   }
 
   public function getLogout(Request $request, Response $response){

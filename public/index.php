@@ -46,7 +46,7 @@ $container['logger'] = function($c) {
 $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
       $ctrl = new Controller($c);
-      return $ctrl->view->render($response,'404.pug', []);
+      return $ctrl->view->render($response, '404.pug', []);
     };
 };
 

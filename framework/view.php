@@ -3,15 +3,17 @@
 require_once (dirname(__FILE__) . '/config.php');
 require_once (dirname(__FILE__) . '/../vendor/pug-php/pug/src/Pug/Pug.php');
 use \Pug\Pug as Pug;
+use Jenssegers\Blade\Blade as Blade;
 require_once (dirname(__FILE__) . '/pug-helper.php');
 
 class View {
   public function __construct($obj) {
     $this->path = $obj['path'];
     $this->device = $obj['device'];
+    $this->layout = $obj['layout'];
 
     $PUG_PRETTY = getenv('PUG_PRETTY') ? getenv('PUG_PRETTY') : false;
-    $CACHE = getenv('CACHE') ? getenv('CACHE') : false;
+    $CACHE = getenv('CACHE') ? getenv('CACHE') : 'cache';
     $viewConfig = array(
       'prettyprint' => $PUG_PRETTY,
       'debug' => false,
@@ -22,20 +24,24 @@ class View {
     }
 
     // override config from config.php
+    global $config;
     if (isset($config['view'])) {
       foreach ($config['view'] as $key => $value) {
         $viewConfig[$key] = $value;
       }
     }
-    $pug = new Pug($viewConfig);
-    $this->pug = $pug;
+
+    if ($config['VIEW_ENGINE'] == 'pug') {
+      $view = new Pug($viewConfig);
+    } else if ($config['VIEW_ENGINE'] == 'blade') {
+      $view = new Blade($obj['path'] . 'blade/', $viewConfig['cache']);
+    }
+    $this->view = $view;
   }
 
   public function render($response, $file, $data = array()) {
     try {
       global $config, $pugVars;
-
-      $filepath = $this->path . $file;
       $data['config'] = $config;
       foreach ($pugVars as $key => $val) {
         if (!isset($data[$key])) {
@@ -44,8 +50,21 @@ class View {
       }
       $data['device'] = $this->device;
 
-      $html = $this->pug->render($filepath, $data);
-      return $response->write($html);
+      if ($config['VIEW_ENGINE'] == 'pug') {
+
+        $filepath = $this->path . $file . '.pug';
+        if ($this->layout == 'theme') {
+          $filepath = $this->path . 'pug/' . $file . '.pug';
+        }
+        $html = $this->view->render($filepath, $data);
+        return $response->write($html);
+
+      } else if ($config['VIEW_ENGINE'] == 'blade') {
+
+        $html = $this->view->make($file, $data);
+        return $response->write($html);
+
+      }
     } catch (Exception $e) {
       echo $e;
     }
@@ -53,6 +72,6 @@ class View {
 
   public function get($file, $data) {
     $filepath = $this->path . $file;
-    return $this->pug->render($filepath, $data);
+    return $this->view_engine->render($filepath, $data);
   }
 }

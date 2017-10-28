@@ -6,6 +6,8 @@ var rename = require('gulp-rename');
 var insert = require('gulp-insert');
 var inject = require('gulp-inject-string');
 var deletefile = require('gulp-delete-file');
+var ejs = require('gulp-ejs');
+var gutil = require('gulp-util');
 var themeDir = 'public/themes/default/';
 
 
@@ -57,10 +59,20 @@ gulp.task('deletefile', function () {
     }));
 });
 
+gulp.task('ejs', function () {
+  var dir = __dirname + '/public/themes/default/views/ejs';
+  gulp.src(dir + '/*.ejs')
+    .pipe(ejs({
+        msg: 'Hello Gulp!'
+    }).on('error', gutil.log))
+    .pipe(gulp.dest(dir + '/dist'))
+});
+
+
 gulp.task('default',function() {
   gulp.watch('public/static/scss/admin.scss',['admin']);
   gulp.watch(themeDir + 'scss/*.scss',['deletefile', 'css', 'scss', 'css2pug']);
   gulp.watch(themeDir + 'js/script.js',['js']);
 });
 
-gulp.task('build', ['deletefile', 'scss', 'css', 'js', 'css2pug', 'admin']);
+gulp.task('build', ['deletefile', 'scss', 'css', 'js', 'css2pug', 'admin', 'ejs']);

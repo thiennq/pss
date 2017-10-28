@@ -24,6 +24,7 @@ class Controller {
     $this->view = new View(array(
     	'path' => $path,
       'device' => $deviceType,
+      'layout' => 'theme'
     ));
   }
 }

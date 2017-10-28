@@ -7,7 +7,7 @@ class AdminSettingController extends AdminController {
 
   public function setting(Request $request, Response $response) {
     $collections = Collection::orderBy('breadcrumb', 'asc')->get();
-    return $this->view->render($response, 'admin/setting.pug', array(
+    return $this->view->render($response, 'admin/setting', array(
       'collections' => $collections,
       'hotline1' => getMeta('hotline1'),
       'hotline2' => getMeta('hotline2'),
@@ -65,7 +65,7 @@ class AdminSettingController extends AdminController {
     $images = scandir($dir);
     array_shift($images);
     array_shift($images);
-    return $this->view->render($response, 'admin/images.pug', array(
+    return $this->view->render($response, 'admin/images', array(
       "images" => $images,
       "total" => count($images)
 		));

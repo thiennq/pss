@@ -7,7 +7,7 @@ class AdminPriceController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Price::orderBy('id', 'asc')->get();
-    return $this->view->render($response, 'admin/price.pug', array(
+    return $this->view->render($response, 'admin/price', array(
       'data' => $data
     ));
   }

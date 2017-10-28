@@ -9,7 +9,7 @@ class AdminAttributeController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$data = Attribute::fetch();
-		return $this->view->render($response, 'admin/attribute.pug', [
+		return $this->view->render($response, 'admin/attribute', [
 			'data' => $data
 		]);
 	}

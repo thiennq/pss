@@ -9,16 +9,16 @@ class PageController extends Controller {
     $handle = $request->getAttribute('handle');
     $page = Page::where('handle', $handle)->first();
     if (!$page) {
-      $this->view->render($response, '404.pug');
+      $this->view->render($response, '404');
       return $response->withStatus(404);
     }
-    return $this->view->render($response, 'page.pug', array(
+    return $this->view->render($response, 'page', array(
       'page' => $page
     ));
   }
 
   public function PageNotFound(Request $request, Response $response) {
-    $this->view->render($response, '404.pug');
+    $this->view->render($response, '404');
     return $response->withStatus(404);
   }
 }

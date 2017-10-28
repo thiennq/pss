@@ -80,7 +80,7 @@ class AdminVariantController extends AdminController {
     $images = scandir($dir);
     array_shift($images);
     array_shift($images);
-    return $this->view->render($response, 'admin/tinymce-upload.pug', array(
+    return $this->view->render($response, 'admin/tinymce-upload', array(
       "title" => "Upload image",
       "images" => $images,
       "total" => count($images)

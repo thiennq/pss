@@ -7,7 +7,7 @@ class AdminDirectController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Redirect::all();
-    return $this->view->render($response, 'admin/redirect.pug', array(
+    return $this->view->render($response, 'admin/redirect', array(
       'data' => $data
     ));
   }

@@ -8,12 +8,12 @@ class ArticleController extends Controller {
     $handle = $request->getAttribute('handle');
     $article = Article::where('handle', $handle)->first();
     if(!$article) {
-      $this->view->render($response, '404.pug');
+      $this->view->render($response, '404');
       return $response->withStatus(404);
     }
     $article->view = $article->view + 1;
     $article->save();
-    return $this->view->render($response, 'article.pug', array(
+    return $this->view->render($response, 'article', array(
       'article' => $article
     ));
   }

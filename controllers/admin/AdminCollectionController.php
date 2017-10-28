@@ -13,14 +13,14 @@ class AdminCollectionController extends AdminController {
 		foreach ($data as $key => $value) {
 			$value->image = convertImage($value->image, 240);
 		}
-		return $this->view->render($response, 'admin/collection.pug', array(
+		return $this->view->render($response, 'admin/collection', array(
 			'collections' => $data
 		));
 	}
 
 	public function create(Request $request, Response $response) {
 		$collection = Collection::where('parent_id', -1)->orderBy('breadcrumb', 'asc')->get();
-		return $this->view->render($response, 'admin/collection_new.pug', array(
+		return $this->view->render($response, 'admin/collection_new', array(
 			'collection' => $collection
 		));
 	}
@@ -29,11 +29,11 @@ class AdminCollectionController extends AdminController {
 		$id = $request->getAttribute('id');
 		$data = Collection::find($id);
 		if (!$data) {
-			$this->view->render($response, '404.pug');
+			$this->view->render($response, '404');
 			return $response->withStatus(404);
 		}
 		$collection = Collection::where('id', '!=', $id)->get();
-		return $this->view->render($response, 'admin/collection_edit.pug', array(
+		return $this->view->render($response, 'admin/collection_edit', array(
 			'data' => $data,
 			'collection' => $collection
 		));

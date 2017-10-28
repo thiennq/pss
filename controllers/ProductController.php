@@ -15,7 +15,7 @@ class ProductController extends Controller {
 
     $product = Product::where('handle', $handle)->first();
     if(!$product) {
-      $this->view->render($response, '404.pug');
+      $this->view->render($response, '404');
       return $response->withStatus(404);
     }
 
@@ -48,7 +48,7 @@ class ProductController extends Controller {
     'product_seen' => $product_seen
   );
 
-    return $this->view->render($response, 'product.pug', $responseData);
+    return $this->view->render($response, 'product', $responseData);
   }
 
   public function findProductVariant(Request $request, Response $response) {

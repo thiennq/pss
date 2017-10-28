@@ -13,7 +13,7 @@ class AdminProductController extends AdminController {
 
   public function fetch(Request $request, Response $response) {
     $data = Product::all();
-    return $this->view->render($response, 'admin/product.pug', [
+    return $this->view->render($response, 'admin/product', [
       'data' => $data
     ]);
   }
@@ -33,7 +33,7 @@ class AdminProductController extends AdminController {
         }
       }
     }
-    return $this->view->render($response, 'admin/product_new.pug', array(
+    return $this->view->render($response, 'admin/product_new', array(
       'collections' => $collections,
       'attributes' => $attributes
     ));
@@ -53,7 +53,7 @@ class AdminProductController extends AdminController {
     }
     $data->variants = $variants;
     $data->collection_id = CollectionProduct::where('product_id', $id)->get();
-    return $this->view->render($response, 'admin/product_edit.pug', array(
+    return $this->view->render($response, 'admin/product_edit', array(
       'data' => $data,
       'collections' => $collections
     ));
@@ -138,7 +138,7 @@ class AdminProductController extends AdminController {
     $images = scandir($dir);
     array_shift($images);
     array_shift($images);
-    return $this->view->render($response, 'admin/tinymce-upload.pug', array(
+    return $this->view->render($response, 'admin/tinymce-upload', array(
       "title" => "Upload image",
       "images" => $images,
       "total" => count($images)

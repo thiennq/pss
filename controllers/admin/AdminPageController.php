@@ -9,13 +9,13 @@ class AdminPageController extends AdminController {
 
   public function fetch(Request $request, Response $response) {
     $data = Page::orderBy('updated_at', 'desc')->get();
-    return $this->view->render($response, 'admin/page.pug', array(
+    return $this->view->render($response, 'admin/page', array(
       'data' => $data
     ));
   }
 
   public function new(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/page_new.pug');
+    return $this->view->render($response, 'admin/page_new');
   }
 
   public function create(Request $request, Response $response) {
@@ -29,7 +29,7 @@ class AdminPageController extends AdminController {
     $id = $request->getAttribute('id');
     $page = Page::find($id);
     if (!$page) return $response->withStatus(302)->withHeader('Location', '/404');
-    return $this->view->render($response, 'admin/page_edit.pug', array(
+    return $this->view->render($response, 'admin/page_edit', array(
 			'data' => $page
     ));
   }
