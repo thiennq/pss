@@ -43,6 +43,9 @@ $app->group('/admin', function() use($app) {
   $app->post('/api/uploadImage', 'uploadImage');
   $app->post('/api/uploadImageTinymce', 'uploadImageTinymce');
 
+  //Dashboard
+  $app->get('/dashboard', '\AdminDashboardController:fetch');
+
   //Product
   $app->get('/product', '\AdminProductController:fetch');
   $app->post('/product', '\AdminProductController:store');

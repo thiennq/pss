@@ -5,6 +5,11 @@ aside.main-sidebar
       li.header
         a.logo-admin(href="/")
           img(src=staticURI() + '/img/eye-logo.png')
+      - var itemClass = (menu == 'dashboard' ? 'active' : 'item');
+      li.treeview(class=itemClass)
+        a(href="/admin/dashboard")
+          i.icon-home
+          span Bảng điều khiển
       - var itemClass = (menu == 'product' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="#")
@@ -42,6 +47,17 @@ aside.main-sidebar
         a(href='/admin/order')
           i.icon-basket
           span Đơn hàng
+        ul.treeview-menu
+          - var liClass = (childMenu == 'new' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/order/new')
+              i.fa.fa-circle
+              | Thêm dơn hàng
+          - var liClass = (childMenu == 'confirm' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/order/confirm')
+              i.fa.fa-circle
+              | Đã xác nhận
       - var itemClass = (menu == 'customer' ? 'active' : 'item');
       li.treeview(class=itemClass)
         a(href="/admin/customer")
