@@ -13,7 +13,7 @@ class BlogController extends Controller {
     $params = $request->getQueryParams();
     if($params['page']) $page_number = $params['page'];
 
-    return $this->view->render($response, 'blog.pug', array(
+    return $this->view->render($response, 'blog', array(
       'blog' => $blog,
       'page_number' => $page_number
     ));

@@ -11,14 +11,14 @@ class AdminArticleController extends AdminController {
 
   public function fetch(Request $request, Response $response) {
     $data = Article::orderBy('updated_at', 'desc')->get();
-    return $this->view->render($response, 'admin/article.pug', array(
+    return $this->view->render($response, 'admin/article', array(
       'data' => $data
     ));
   }
 
   public function create(Request $request, Response $response) {
     $blogs = Blog::all();
-    return $this->view->render($response, 'admin/article_new.pug', array(
+    return $this->view->render($response, 'admin/article_new', array(
       'blogs' => $blogs
     ));
   }
@@ -43,7 +43,7 @@ class AdminArticleController extends AdminController {
     if (!$article) return $response->withStatus(302)->withHeader('Location', '/404');
     $blogs = Blog::all();
     $blog_article = BlogArticle::where('article_id', $id)->get();
-    return $this->view->render($response, 'admin/article_edit.pug', array(
+    return $this->view->render($response, 'admin/article_edit', array(
 			'data' => $article,
       'blogs' => $blogs,
       'blog_article' => $blog_article

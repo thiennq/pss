@@ -7,9 +7,9 @@ $db = [
     'driver' => 'mysql',
     'host' => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
     'port' => getenv('DB_PORT') ? getenv('DB_PORT') : 3306,
-    'database' => getenv('DATABASE') ? getenv('DATABASE') : 'combento',
+    'database' => getenv('DATABASE') ? getenv('DATABASE') : 'skeleton',
     'username' => getenv('DB_USER') ? getenv('DB_USER') : 'root',
-    'password' => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : '',
+    'password' => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : 'root',
     'prefix'    => getenv('DB_PREFIX') ? getenv('DB_PREFIX') : '',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci'
@@ -33,3 +33,5 @@ $config = [
     'onesignal' => $onesignal,
     'themeDir' => 'default'
 ];
+
+$config['VIEW_ENGINE'] = getenv('VIEW_ENGINE') ? getenv('VIEW_ENGINE') : 'pug';

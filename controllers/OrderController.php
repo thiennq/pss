@@ -160,7 +160,7 @@ class OrderController extends Controller {
       $value->subTotal = (int) $variant->price * (int) $value->quantity;
       $total += $value->subTotal;
     }
-    return $this->view->render($response, 'cart.pug', [
+    return $this->view->render($response, 'cart', [
       'cart' => $cart,
       'total' => $total,
     ]);
@@ -182,7 +182,7 @@ class OrderController extends Controller {
       $total += $value->subTotal;
     }
     $region = Region::orderBy('name', 'asc')->get();
-    return $this->view->render($response, 'checkout.pug', [
+    return $this->view->render($response, 'checkout', [
       'cart' => $cart,
       'total' => $total,
       'region' => $region
@@ -211,7 +211,7 @@ class OrderController extends Controller {
           unset($_SESSION['order_id']);
         }
       }
-      return $this->view->render($response, 'successful.pug', [
+      return $this->view->render($response, 'successful', [
         'customer' => $customer,
         'total' => $total,
         'cart' => $arr_cart

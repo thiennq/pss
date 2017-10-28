@@ -26,7 +26,7 @@ class AdminMenuController extends AdminController {
 		$article = Article::all();
     $page = Page::all();
     $collection = Collection::orderBy('breadcrumb', 'asc')->get();
-		return $this->view->render($response, 'admin/menu.pug', [
+		return $this->view->render($response, 'admin/menu', [
 			'data' => $menu,
       'collection' => $collection,
 			'blog' => $blog,

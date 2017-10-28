@@ -24,6 +24,7 @@ class AdminController {
     $this->view = new View(array(
     	'path' => $path,
       'device' => $deviceType,
+      'layout' => 'admin'
     ));
   }
 }

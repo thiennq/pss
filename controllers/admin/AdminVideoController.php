@@ -7,7 +7,7 @@ class AdminVideoController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $data = Video::all();
-    return $this->view->render($response, 'admin/video.pug', array(
+    return $this->view->render($response, 'admin/video', array(
       'videos' => $data
     ));
   }

@@ -20,7 +20,7 @@ class AdminBlogController extends AdminController {
 
   public function fetch(Request $request, Response $response) {
     $data = Blog::orderBy('updated_at', 'desc')->get();
-    return $this->view->render($response, 'admin/blog.pug', array(
+    return $this->view->render($response, 'admin/blog', array(
       'data' => $data
     ));
   }
@@ -29,7 +29,7 @@ class AdminBlogController extends AdminController {
     $id = $request->getAttribute('id');
     $blog = Blog::find($id);
     if (!$blog) return $response->withStatus(302)->withHeader('Location', '/404');
-    return $this->view->render($response, 'admin/blog_edit.pug', array(
+    return $this->view->render($response, 'admin/blog_edit', array(
       'data' => $blog
     ));
   }

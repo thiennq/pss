@@ -7,19 +7,19 @@ class AdminBrandController extends AdminController {
 
   public function index(Request $request, Response $response) {
     $brand = Brand::orderBy('name', 'asc')->get();
-    return $this->view->render($response, 'admin/brand.pug', array(
+    return $this->view->render($response, 'admin/brand', array(
       'data' => $brand
     ));
   }
 
   public function create(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/brand_new.pug');
+    return $this->view->render($response, 'admin/brand_new');
   }
 
   public function show(Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $brand = Brand::find($id);
-    return $this->view->render($response, 'admin/brand_edit.pug', array(
+    return $this->view->render($response, 'admin/brand_edit', array(
       'data' => $brand
     ));
   }

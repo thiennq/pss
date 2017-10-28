@@ -13,6 +13,7 @@
       "ifsnop/mysqldump-php": "^2.2",
       "predis/predis": "^1.1",
       "forxer/Gravatar": "~1.2",
-      "aws/aws-sdk-php": "2.*"
+      "aws/aws-sdk-php": "2.*",
+      "jenssegers/blade": "^1.1"
     }
 }

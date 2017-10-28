@@ -12,7 +12,7 @@ class CollectionController extends Controller {
 		if(substr($handle, -1) == '/') $handle = substr($handle, 0, -1);
 		$collection = Collection::where('link', $handle)->first();
     if(!$collection) {
-      $this->view->render($response, '404.pug');
+      $this->view->render($response, '404');
       return $response->withStatus(404);
     }
     $collection_id = $collection->id;
@@ -75,7 +75,7 @@ class CollectionController extends Controller {
     sort($list_brand);
     $title = $collection->title;
     if ($collection->meta_title) $title = $collection->meta_title;
-    return $this->view->render($response, 'collection.pug', array(
+    return $this->view->render($response, 'collection', array(
       'title' => $title,
 			'collection' => $collection,
       'list_product' => $products,
@@ -139,7 +139,7 @@ class CollectionController extends Controller {
 			}
 		}
     sort($list_brand);
-    return $this->view->render($response, 'collection.pug', array(
+    return $this->view->render($response, 'collection', array(
       'title' => 'Tìm kiếm',
       'list_product' => $products,
       'list_brand' => $list_brand,
@@ -160,7 +160,7 @@ class CollectionController extends Controller {
     if (!$brand) return $response->withStatus(302)->withHeader('Location', '/');
     $brand = Brand::where('handle', $brand)->first();
     if (!$brand) {
-      $this->view->render($response, '404.pug');
+      $this->view->render($response, '404');
       return $response->withStatus(404);
     }
     $breadcrumb_collection = array();
@@ -203,7 +203,7 @@ class CollectionController extends Controller {
 		}
     $title = $brand->name;
     if ($brand->meta_title) $title = $brand->meta_title;
-    return $this->view->render($response, 'collection.pug', array(
+    return $this->view->render($response, 'collection', array(
       'title' => $title,
       'list_product' => $products,
       'list_material' => $list_material,
@@ -308,7 +308,7 @@ class CollectionController extends Controller {
 		$total_pages = ceil(count($all) / (int)$perpage);
 		if(count($products)) {
       $products = Product::getInfoProduct($products);
-			return $this->view->render($response, 'collection_filter.pug', [
+			return $this->view->render($response, 'collection_filter', [
 				'products' => $products,
         'page_number' => $page_number,
         'total_pages' => $total_pages

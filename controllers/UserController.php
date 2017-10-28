@@ -11,16 +11,16 @@ class UserController extends Controller {
 		$random = $request->getAttribute('random');
 		$check = User::where('random', $random)->first();
 		if (!$check) {
-			$this->view->render($response, '404.pug');
+			$this->view->render($response, '404');
       return $response->withStatus(404);
 		}
-		return $this->view->render($response, 'create_password.pug', [
+		return $this->view->render($response, 'create_password', [
       'random' => $random
     ]);
 	}
 
   public function forgotPassword (Request $request, Response $response) {
-		return $this->view->render($response, 'forgot_password.pug');
+		return $this->view->render($response, 'forgot_password');
 	}
 
   public function checkLogin(Request $request, Response $response) {

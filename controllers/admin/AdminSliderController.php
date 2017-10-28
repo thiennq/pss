@@ -8,7 +8,7 @@ class AdminSliderController extends AdminController {
 
 	public function index(Request $request, Response $response) {
 		$data = Slider::all();
-		return $this->view->render($response, 'admin/slider.pug', array(
+		return $this->view->render($response, 'admin/slider', array(
 			'data' => $data
 		));
 	}
