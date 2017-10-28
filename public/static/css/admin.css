@@ -100,7 +100,7 @@ table.table-bordered.dataTable {
   margin-left: 0 !important; }
 
 .header-mobile .navbar-default {
-  background-color: #222d32;
+  background-color: #364150;
   border-color: #FFF; }
 
 .header-mobile .navbar-default .navbar-brand {
@@ -187,7 +187,7 @@ table.table-bordered.dataTable {
 
 .content-header {
   padding: 10px 15px;
-  background-color: #222d32;
+  background-color: #2b3643;
   position: fixed;
   width: calc(100% - 230px);
   z-index: 999;
@@ -206,7 +206,7 @@ table.table-bordered.dataTable {
         margin-top: 0 !important; } }
     @media screen and (max-width: 768px) {
       .content-header .breadcrumb {
-        background-color: #222d32 !important;
+        background-color: #364150 !important;
         padding-right: 10px; } }
     .content-header .breadcrumb i {
       margin-right: 10px; }
@@ -316,7 +316,7 @@ table.table-bordered.dataTable {
 
 .main-sidebar {
   padding: 0;
-  background-color: #222d32;
+  background-color: #364150;
   position: fixed;
   font-size: 15px; }
   .main-sidebar .sidebar ul a {
@@ -340,7 +340,7 @@ table.table-bordered.dataTable {
     position: fixed;
     bottom: 0;
     width: 230px;
-    background-color: #222d32; }
+    background-color: #364150; }
     .main-sidebar .foot .ava {
       float: left;
       padding-top: 3px; }

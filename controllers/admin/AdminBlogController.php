@@ -7,11 +7,11 @@ use ControllerHelper as Helper;
 
 class AdminBlogController extends AdminController {
 
-  public function new(Request $request, Response $response) {
+  public function create(Request $request, Response $response) {
     return $this->view->render($response, 'admin/blog_new.pug');
   }
 
-  public function create(Request $request, Response $response) {
+  public function store(Request $request, Response $response) {
     $data = $request->getParsedBody();
     $code = Blog::create($data);
     $result = Helper::response($code);

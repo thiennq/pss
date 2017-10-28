@@ -14,11 +14,11 @@ class AdminPageController extends AdminController {
     ));
   }
 
-  public function new(Request $request, Response $response) {
+  public function create(Request $request, Response $response) {
     return $this->view->render($response, 'admin/page_new.pug');
   }
 
-  public function create(Request $request, Response $response) {
+  public function store(Request $request, Response $response) {
     $body = $request->getParsedBody();
     $code = Page::create($body);
     $result = Helper::response($code);
