@@ -9,12 +9,16 @@ use ControllerHelper as Helper;
 class AdminCollectionController extends AdminController {
 
 	public function index(Request $request, Response $response) {
-		$data = Collection::orderBy('title')->get();
-		foreach ($data as $key => $value) {
-			$value->image = convertImage($value->image, 240);
+		$data = Collection::all();
+        foreach ($data as $key => $value) {
+            $value->image = convertImage($value->image, 240);
+        }
+        $tree = $this->buildTree($data);
+        foreach ($tree as $key => $value) {
+        	error_log($value->children);
 		}
 		return $this->view->render($response, 'admin/collection', array(
-			'collections' => $data
+			'collections' => $tree
 		));
 	}
 
@@ -74,6 +78,25 @@ class AdminCollectionController extends AdminController {
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);
 	}
+
+    public function buildTree( $arr, $pid = -1 ) {
+        $op = array();
+        foreach( $arr as $item ) {
+            if( $item->parent_id == $pid ) {
+                $op[$item->id] = array(
+                    'id' => $item->id,
+                    'parent_id' => $item->parent_id,
+                    'title' => $item->title,
+                );
+                $children =  $this->buildTree( $arr, $item->id );
+                if( $children ) {
+                    $op[$item->id]['children'] = $children;
+                }
+            }
+        }
+        error_log(json_encode($op));
+        return $op;
+    }
 }
 
 ?>

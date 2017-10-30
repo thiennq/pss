@@ -10,6 +10,7 @@ $('.btn-create').click(function() {
   var self = $(this);
   $('input').removeClass('error');
   var data = {};
+  data.parent_id = $('select[name="parent_id"]').val();
   data.title = $('input[name="title"]').val();
   if(!data.title.trim().length) {
     toastr.error('Chưa nhập tiêu đề');
@@ -135,3 +136,4 @@ $(document).on('change', '.upload', function() {
     });
   }
 });
+$('.box-tree').jstree();

@@ -126,9 +126,15 @@ aside.main-sidebar
             a(href="/admin/article" class=liClass)
               | Danh sách
           - var liClass = (childMenu == 'blog' ? 'active' : '');
-          li
-            a(href='/admin/blog' class=liClass)
-              | Nhóm bài viết
+          li(class=liClass)
+            a(href='/admin/blogs', class=liClass)
+              i.fa.fa-circle
+              | Danh mục bài viết
+          - var liClass = (childMenu == 'article' ? 'active' : '');
+          li(class=liClass)
+            a(href='/admin/articles', class=liClass)
+              i.fa.fa-circle
+              | Bài viết
           - var liClass = (childMenu == 'page' ? 'active' : '');
           li
             a(href='/admin/page' class=liClass)

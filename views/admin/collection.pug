@@ -1,5 +1,13 @@
 extends ./layout.pug
 
+mixin folderTree(arrs)
+  each arr in arrs
+    ul
+      li=arr.title
+      p=arr.children
+      if countArr(arr.children)
+        +folderTree(arr.children)
+
 block pre-include
   title Nhóm sản phẩm
   - var menu = 'product'
@@ -21,6 +29,9 @@ block content
         a.btn.btn-admin(href="/admin/collection/new") Tạo nhóm sản phẩm
   section.content
     .box
+      .box-tree
+        +folderTree(collections)
+
       .box-body
         table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
           thead
@@ -46,3 +57,4 @@ block content
                     i.fa.fa-pencil-square-o
                   a.btn-remove(data-id=collection.id)
                     i.fa.fa-trash
+      .
