@@ -49,6 +49,10 @@ $app->group('/admin', function() use($app) {
   $app->put('/product/featured-image/{id}', '\AdminProductController:updateFeaturedImage');
   $app->delete('/product/{id}', '\AdminProductController:delete');
 
+  $app->post('/product/{id}/tag', '\AdminTagController:store');
+  $app->put('/product/{id}/tag', '\AdminTagController:update');
+  $app->delete('/product/{id}/tag', '\AdminTagController:delete');
+
   $app->post('/variants', '\AdminVariantController:store');
   $app->get('/variants/{id}', '\AdminVariantController:show');
   $app->put('/variants/{id}', '\AdminVariantController:update');
@@ -122,7 +126,11 @@ $app->group('/admin', function() use($app) {
   $app->put('/page/{id}', '\AdminPageController:update');
   $app->delete('/page/{id}', '\AdminPageController:delete');
 
+  //comment
   $app->get('/comment', '\AdminCommentController:fetch');
+  $app->get('/comment/{id}', '\AdminCommentController:get');
+  $app->put('/comment/{id}', '\AdminCommentController:update');
+  $app->delete('/comment/{id}', '\AdminCommentController:delete');
 
   $app->get('/contact', '\AdminContactController:fetch');
 
