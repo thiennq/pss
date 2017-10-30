@@ -23,6 +23,10 @@ $color_header: #2b3643;
   border-radius: 0;
 }
 
+.mg0 {
+  margin: 0 !important;
+}
+
 .w100 {
   width: 100%;
 }
@@ -942,4 +946,41 @@ option:disabled {
       }
     }
   }
+}
+
+.box {
+  .box-title {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      color: $main_color;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.nav-tabs-lang {
+  border: none;
+  text-align: right;
+  li {
+    display: inline-block;
+    float: none;
+    border: none;
+    user-select: none;
+    a {
+      border: none !important;
+      background: none !important;
+      color: #555 !important;
+    }
+    &.active a {
+      border-bottom: 4px solid $main_color !important;
+    }
+  }
+}
+
+form .banner {
+  max-width: 100%;
 }

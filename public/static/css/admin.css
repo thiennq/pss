@@ -5,6 +5,9 @@
   border: 0;
   border-radius: 0; }
 
+.mg0 {
+  margin: 0 !important; }
+
 .w100 {
   width: 100%; }
 
@@ -694,3 +697,31 @@ option:disabled {
         margin-bottom: 10px; }
     .attribute .attribute-card .group-add-new-option input {
       margin-bottom: 10px; }
+
+.box .box-title {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px; }
+  .box .box-title .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #3C99D9;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+.nav-tabs-lang {
+  border: none;
+  text-align: right; }
+  .nav-tabs-lang li {
+    display: inline-block;
+    float: none;
+    border: none;
+    user-select: none; }
+    .nav-tabs-lang li a {
+      border: none !important;
+      background: none !important;
+      color: #555 !important; }
+    .nav-tabs-lang li.active a {
+      border-bottom: 4px solid #3C99D9 !important; }
+
+form .banner {
+  max-width: 100%; }

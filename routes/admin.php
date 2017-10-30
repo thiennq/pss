@@ -3,25 +3,17 @@ use Slim\Container as ContainerInterface;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require_once('../controllers/admin/AdminDashboardController.php');
-require_once('../controllers/admin/AdminCollectionController.php');
-require_once('../controllers/admin/AdminContactController.php');
-require_once('../controllers/admin/AdminCommentController.php');
-require_once('../controllers/admin/AdminColorController.php');
-require_once('../controllers/admin/AdminProductController.php');
-require_once('../controllers/admin/AdminVariantController.php');
-require_once('../controllers/admin/AdminSliderController.php');
-require_once('../controllers/admin/AdminMenuController.php');
-require_once('../controllers/admin/AdminOrderController.php');
-require_once('../controllers/admin/AdminCustomerController.php');
-require_once('../controllers/admin/AdminArticleController.php');
-require_once('../controllers/admin/AdminBlogController.php');
-require_once('../controllers/admin/AdminPageController.php');
-require_once('../controllers/admin/AdminBrandController.php');
-require_once('../controllers/admin/AdminAttributeController.php');
-require_once('../controllers/admin/AdminUserController.php');
-require_once('../controllers/admin/AdminSettingController.php');
-require_once('../controllers/admin/AdminPriceController.php');
+$adminDir = ROOT . '/controllers/admin/';
+$files = scandir($adminDir);
+$files = array_diff($files, array('.', '..', __FILE__));
+foreach ($files as $file) {
+  try {
+    require_once($adminDir . $file);
+  } catch (Exception $e) {
+    error_log($e);
+  }
+}
+
 require_once('../controllers/TestController.php');
 require_once("../models/User.php");
 

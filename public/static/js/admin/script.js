@@ -188,3 +188,15 @@ $('.main-item').click(function() {
 $('.main-sidebar .treeview-menu a').click(function(e) {
   e.stopPropagation();
 });
+
+function uploadManager() {
+  var w = $(window).width() * 0.7;
+  var h = $(window).height() * 0.8;
+  var l = $(window).width()  * 0.15;
+  var t = $(window).height()  * 0.1;
+  newwindow = window.open('http://localhost:9000/', 'name', 'height='+h+', width='+w+', left='+l+', top='+t+', location=0');
+  if (window.focus) {
+    newwindow.focus();
+  }
+  return false;
+}

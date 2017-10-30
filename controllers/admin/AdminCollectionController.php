@@ -20,7 +20,7 @@ class AdminCollectionController extends AdminController {
 
 	public function create(Request $request, Response $response) {
 		$collection = Collection::where('parent_id', -1)->orderBy('breadcrumb', 'asc')->get();
-		return $this->view->render($response, 'admin/collection_new', array(
+		return $this->view->render($response, 'admin/collection_create', array(
 			'collection' => $collection
 		));
 	}

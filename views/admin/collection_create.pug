@@ -1,0 +1,132 @@
+extends ./layout.pug
+
+block pre-include
+  title Tạo nhóm sản phẩm
+  - var menu = 'product'
+  - var childMenu = 'collection'
+block post-include
+  script(src=staticURI() + '/js/admin/collection.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/collection') Nhóm sản phẩm
+      li
+        a Tạo mới
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin.btn-create
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .row
+      .col-sm-8.col-xs-12
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    label.col-sm-2.control-label.pd-left-0 Nhóm sản phẩm
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="title", placeholder="VD: Nhóm sản phẩm Laptop, phụ kiện...")
+                  .form-group
+                    label.col-sm-2.control-label Mô tả ngắn
+                    .col-sm-10
+                      textarea.form-control(name="description")
+                  .form-group
+                    label.col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content
+                  .form-group
+                    label.col-sm-2.control-label Hình đại diện
+                      br
+                      span.btn-remove-image(data-image='default_image.png') (Xóa)
+                    form.col-sm-10.collection-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]" data-type="image")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Banner
+                      br
+                      span.btn-remove-image(data-image='default_image_l.jpg') (Xóa)
+                    form.col-sm-10.collection-banner
+                      img.banner(src=staticURI() + "/img/default_image_l.jpg")
+                      input.upload.form-control(type="file" name="upload[]" data-type="banner")
+                      input(type="hidden" name="banner")
+                #tab-en.tab-pane.fade
+                  .form-group
+                    label.col-sm-2.control-label Nhóm sản phẩm
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="title", placeholder="VD: Nhóm sản phẩm Laptop, phụ kiện...")
+                  .form-group
+                    label.col-sm-2.control-label Mô tả ngắn
+                    .col-sm-10
+                      textarea.form-control(name="description")
+                  .form-group
+                    label.col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content
+                  .form-group
+                    label.col-sm-2.control-label Hình đại diện
+                      br
+                      span.btn-remove-image(data-image='default_image.png') (Xóa)
+                    form.col-sm-10.collection-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]" data-type="image")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Banner
+                      br
+                      span.btn-remove-image(data-image='default_image_l.jpg') (Xóa)
+                    form.col-sm-10.collection-banner
+                      img.banner(src=staticURI() + "/img/default_image_l.jpg")
+                      input.upload.form-control(type="file" name="upload[]" data-type="banner")
+                      input(type="hidden" name="banner")
+        include snippet/box-seo.pug
+      .col-sm-4.col-xs-12.pd-left-0
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title DANH MỤC
+            .box-body
+              .form-group.mg0
+                .row
+                  .col-xs-12
+                    select.form-control(name="parent_id")
+                      option(value=-1 selected) Chọn nhóm sản phẩm cha...
+                      each item in collection
+                        option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title HÌNH ẢNH
+            .box-body
+              .form-group.mg0
+                .row
+                  label.col-xs-12 Hình đại diện
+                  form.col-xs-12
+                    img(src=staticURI() + "/img/default_image.png" onclick="uploadManager()")
+                    input.upload1.form-control(type="file" name="upload[]" data-type="image")
+                    input(type="hidden" name="image")
+                br
+                .row
+                  label.col-xs-12 Banner
+                  form.col-xs-12
+                    img.banner(src=staticURI() + "/img/default_image_l.jpg")
+                    input.upload.form-control(type="file" name="upload[]" data-type="image")
+                    input(type="hidden" name="banner")
