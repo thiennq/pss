@@ -2,8 +2,8 @@ extends ./layout.pug
 
 block pre-include
   - var menu = 'user';
-  - var childMenu = 'list';
-  title Quản lý người dùng
+  - var childMenu = 'create';
+  title Thêm mới nhân viên
 
 block post-include
   script(src=staticURI() +'/js/admin/user.js')
@@ -14,7 +14,7 @@ block content
       li
         a Quản trị viên
       li
-        a Danh sách
+        a Thêm mới
     ol.button-right.col-md-4.col-sm-5.col-xs-12
       span.middle-inline-block
       li

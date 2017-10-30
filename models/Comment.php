@@ -10,32 +10,27 @@ class Comment extends Illuminate\Database\Eloquent\Model {
 
   public function store($data) {
     $comment = new Comment;
-    $comment->product_id = $data['product_id'];
-    $comment->parent_id = $data['parent_id'];
-    $comment->email = $data['email'];
-    $comment->avatar = $data['avatar'];
     $comment->name = $data['name'];
+    $comment->phone_number = $data['phone_number'];
+    $comment->email = $data['email'];
     $comment->content = $data['content'];
-    $comment->display = $data['display'];
+    $comment->parent_id = $data['parent_id'];
+    $comment->type = $data['type'];
+    $comment->type_id = $data['type_id'];
+    $comment->status = $data['status'];
     $comment->created_at = date('Y-m-d H:i:s');
     $comment->updated_at = date('Y-m-d H:i:s');
-    if ($comment->save()) return $comment;
-    return 'Error';
+    if ($comment->save()) return $comment->id;
+    return -3;
   }
 
-  public function update($id, $data) {
+  public function update($id) {
     $comment = Comment::find($id);
-    if (!$comment) return 'Not found';
-    $comment->product_id = $data['product_id'];
-    $comment->parent_id = $data['parent_id'];
-    $comment->email = $data['email'];
-    $comment->avarta = $data['avarta'];
-    $comment->name = $data['name'];
-    $comment->content = $data['content'];
-    $comment->display = $data['display'];
+    if (!$comment) return -2;
+    $comment->status = 1;
     $comment->updated_at = date('Y-m-d H:i:s');
-    if ($comment->save()) return 'Updated';
-    return 'Error';
+    if ($comment->save()) return $comment->id;
+    return -3;
   }
 
   public function getAvarta($email) {
@@ -43,8 +38,8 @@ class Comment extends Illuminate\Database\Eloquent\Model {
   }
   public function remove($id) {
     $comment = Comment::find($id);
-    if(!$comment) return 'NotFound';
-    if($comment->delete()) return 'Deleted';
-    return 'Error';
+    if(!$comment) return -2;
+    if($comment->delete()) return $comment->id;
+    return -3;
   }
 }

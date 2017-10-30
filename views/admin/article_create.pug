@@ -1,20 +1,20 @@
 extends ./layout.pug
-
 block pre-include
   - var menu = 'article'
-  - var childMenu = 'blog'
-  title Tạo Blog
+  - var childMenu = 'create'
+  title Viết bài mới
 
 block post-include
-  script(src=staticURI() + '/js/admin/blog.js')
+  script(src=staticURI() + '/js/admin/article.js')
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
-        a Blog
+        a Bài viết
       li
-        a Tạo Blog
+        a Viết bài mới
+
     ol.button-right.col-md-4.col-sm-5.col-xs-12
       span.middle-inline-block
       li
@@ -22,15 +22,22 @@ block content
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
-  section.content.blog
-    .box
-      .form-horizontal
+  section.content.article
+    .box.box-info
+      .form-horizontal.form-article
         .box-body
           .form-group
             label.col-sm-2.control-label Tiêu đề
               strong.required  *
             .col-sm-10
               input.form-control(name="title", placeholder="Tiêu đề")
+          .form-group
+            label.col-sm-2.control-label Blog
+            .col-sm-10.blog-detail
+              each blog in blogs
+                label.checkbox-inline
+                  input(type="checkbox" value=blog.id)
+                  =blog.title
           .form-group
             label.col-sm-2.control-label Hình đại diện
             form.col-sm-10
@@ -46,7 +53,7 @@ block content
             label.col-sm-2.control-label Nội dung
               strong.required  *
             .col-sm-10
-              textarea.form-control#blog_content
+              textarea.form-control#article_content
           .form-group
             label.col-sm-2.control-label Hiển thị
             .col-sm-10

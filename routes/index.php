@@ -17,7 +17,6 @@ require_once('../models/helper.php');
 
 $app->get('/', '\IndexController:index');
 
-$app->get('/video', '\PageController:video');
 $app->get('/saleoff', '\PageController:saleOff');
 $app->get('/thuong-hieu/{name}', '\CollectionController:brand');
 $app->get('/tim-kiem', '\CollectionController:search');
@@ -48,6 +47,7 @@ $app->get('/user/{random}', '\UserController:createPassword');
 $app->post('/api/user/login', '\UserController:checkLogin');
 $app->put('/api/user/password', '\UserController:updatePassword');
 $app->get('/api/user/checkEmail', '\UserController:resetPassword');
+$app->post('/api/comment', '\AdminCommentController:store');
 
 $app->get('/api/san-pham/variant/{id}', '\ProductController:findProductVariant');
 $app->get('/test-mail', '\TestController:sendMail');

@@ -177,3 +177,14 @@ $(window).on('load', function() {
     return $(this).data('value');
   });
 });
+
+$('.main-item').click(function() {
+  var treeview = $(this).closest('.treeview');
+  if (treeview.hasClass('active')) {
+    treeview.removeClass('active');
+  } else treeview.addClass('active');
+});
+
+$('.main-sidebar .treeview-menu a').click(function(e) {
+  e.stopPropagation();
+});

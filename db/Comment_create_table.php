@@ -16,10 +16,15 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $Schema = $capsule->schema();
 
-$Schema->create('redirect', function (Blueprint $table) {
+$Schema->create('comment', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('old');
-    $table->string('new');
+    $table->string('name');
+    $table->string('phone_number')->nullable();
+    $table->string('email')->nullable();
+    $table->text('content');
+    $table->integer('parent_id');
+    $table->string('type'); //bai viet hoặc san pham
+    $table->integer('type_id'); //id cua bai viet or san pham
+    $table->tinyInteger('status'); // 0, 1
     $table->timestamps();
-
 });

@@ -15,7 +15,7 @@ class AdminPageController extends AdminController {
   }
 
   public function create(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/page_new.pug');
+    return $this->view->render($response, 'admin/page_create');
   }
 
   public function store(Request $request, Response $response) {

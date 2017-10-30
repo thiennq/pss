@@ -1,54 +1,49 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+require_once("../models/Article.php");
 require_once("../models/Blog.php");
+require_once("../models/BlogArticle.php");
+require_once("../models/Comment.php");
 require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
-class AdminBlogController extends AdminController {
+class AdminCommentController extends AdminController {
 
-  public function create(Request $request, Response $response) {
-    return $this->view->render($response, 'admin/blog_create');
+  public function fetch(Request $request, Response $response) {
+    $comments = Comment::all();
+    return $this->view->render($response, 'admin/comment',array(
+        'comments' => $comments
+    ));
   }
 
   public function store(Request $request, Response $response) {
     $data = $request->getParsedBody();
-    $code = Blog::create($data);
+    $code = Comment::store($data);
     $result = Helper::response($code);
-		return $response->withJson($result, 200);
-  }
-
-  public function fetch(Request $request, Response $response) {
-    $data = Blog::orderBy('updated_at', 'desc')->get();
-    return $this->view->render($response, 'admin/blog', array(
-      'data' => $data
-    ));
+    return $response->withJson($result, 200);
   }
 
   public function get(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $blog = Blog::find($id);
-    if (!$blog) return $response->withStatus(302)->withHeader('Location', '/404');
-    return $this->view->render($response, 'admin/blog_edit', array(
-      'data' => $blog
-    ));
+    $comment = Comment::find($id);
+    $result = Helper::response($comment);
+    return $response->withJson($result, 200);
   }
 
   public function update(Request $request, Response $response) {
-    $data = $request->getParsedBody();
     $id = $request->getAttribute('id');
-    $code = Blog::update($id,$data);
+    $code = Comment::update($id);
     $result = Helper::response($code);
     return $response->withJson($result, 200);
   }
 
   public function delete(Request $request, Response $response) {
     $id = $request->getAttribute('id');
-    $code = Blog::remove($id);
+    $code = Comment::remove($id);
     $result = Helper::response($code);
     return $response->withJson($result, 200);
   }
-
 }
 
 ?>

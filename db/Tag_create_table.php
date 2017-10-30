@@ -16,9 +16,8 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $Schema = $capsule->schema();
 
-$Schema->create('color', function (Blueprint $table) {
+$Schema->create('tag', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('name')->nullable();
-    $table->string('hex')->nullable();
+    $table->string('name');
     $table->timestamps();
 });

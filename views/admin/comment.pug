@@ -1,0 +1,107 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'comment';
+  title Bình luận
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
+block post-include
+  script(src=staticURI() + '/js/admin/comment.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Bình luận
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo comment
+  section.content.clearfix
+    .box
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th.col-sm-1 #
+              th.col-sm-4 Nội dung
+              th.col-sm-2 Tên
+              th.col-sm-2 Thời gian
+              th.col-sm-3 Chỉnh sửa
+          - var stt = 1
+          tbody
+            each item in comments
+              tr
+                td.col-sm-1=stt++
+                td.col-sm-4.menu-content(data-value=item.content)=item.content
+                td.col-sm-2.menu-name(data-value=item.name)=item.name
+                td.col-sm-2.menu-created(data-value=item.created_at)=item.created_at
+                td.col-sm-3
+                  a.btn-edit.btn-edit-comment(data-id=item.id, data-toggle="modal" data-target="#modal-update" title="Chỉnh sửa")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-comment(data-id=item.id, title="Xóa")
+                    i.fa.fa-trash
+        script.
+              $('tbody').sortable({
+                cancel: '.parentMenu'
+              });
+      #modal-create.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Tạo comment
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Name
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="name" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Điện thoại
+                  .col-sm-10
+                    input.form-control(name="phone" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Email
+                  .col-sm-10
+                    input.form-control(name="email" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Nội dung
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="content" placeholder="")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-create-comment Tạo comment
+      #modal-update.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Sửa comment
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Name
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="name" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Điện thoại
+                  .col-sm-10
+                    input.form-control(name="phone" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Email
+                  .col-sm-10
+                    input.form-control(name="email" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Nội dung
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="content" placeholder="")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-update-comment Sửa comment

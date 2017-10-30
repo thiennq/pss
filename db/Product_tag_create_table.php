@@ -16,9 +16,10 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $Schema = $capsule->schema();
 
-$Schema->create('video', function (Blueprint $table) {
+$Schema->create('product_tag', function (Blueprint $table) {
     $table->increments('id');
-    $table->string('title');
-    $table->string('embed_link');
+    $table->integer('product_id');
+    $table->integer('tag_id');
     $table->timestamps();
 });
+

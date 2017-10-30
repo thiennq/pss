@@ -1,7 +1,10 @@
+$main_color: #3C99D9;
+$color_text_sidebar: #b4bcc8;
+$color_icon_sidebar: #6b788b;
+
 $color_blue: #274C9C;
 $color_light_blue: #3569d6;
 $color_white: #fff;
-$main_color: #ff9e10;
 $color_red: #dc4a3d;
 $color_black: #444;
 $color_grey: #ccc;
@@ -225,12 +228,12 @@ table.table-bordered.dataTable {
 }
 
 .btn-admin {
-  background-color: $color_hover_sidebar !important;
-  color: $color_white !important;
-  border-color: $color_white !important;
+  background-color: $main_color !important;
+  color: #fff !important;
+  border-color: #fff !important;
   &:hover {
     background-color: $color_white !important;
-    color: $color_blue !important;
+    color: $main_color !important;
   }
   > i {
     margin-right: 5px;
@@ -261,14 +264,6 @@ table.table-bordered.dataTable {
   }
 }
 
-
-// Video
-#addVideo {
-  .modal-content {
-    width: 700px;
-  }
-
-}
 
 .content-header {
 	padding: 10px 15px;
@@ -439,25 +434,53 @@ table.table-bordered.dataTable {
   background-color: $color_sidebar;
   position: fixed;
   font-size: 15px;
-	.sidebar {
+  .sidebar {
     ul {
-      a {
-        color: $color_white;
-        &:hover {
-          color: $color_yellow;
+      li {
+        &.header a {
+          border-bottom: 0;
+          margin-bottom: 20px;
         }
-        i {
-          margin-right: 5px;
+        border-bottom: 1px solid #3d4957;
+        a {
+          color: #b4bcc8;
+          padding: 9px 5px 9px 15px;
+          cursor: pointer;
+          user-select: none;
+          i {
+            margin-right: 5px;
+            color: #6b788b;
+          }
+          &:hover {
+            background-color: #2C3542;
+          }
+          &.active {
+            background-color: $main_color;
+            color: #fff;
+            i {
+              color: #fff;
+            }
+          }
+        }
+        ul {
+          padding: 0;
+          li {
+            a {
+              color: #b4bcc8;
+              padding-left: 40px;
+              &:hover {
+                background-color: #3e4b5c;
+              }
+              &.active {
+                background-color: #2C3542;
+              }
+              i {
+                font-size: 9px;
+              }
+            }
+          }
         }
       }
-      ul {
-        i {
-          font-size: 10px;
-        }
-      }
-    }
-    li.active > a {
-      color: $color_yellow;
     }
     .header {
       color: $color_white;

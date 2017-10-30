@@ -10,12 +10,34 @@ require_once(ROOT . '/models/Product.php');
 class AdminOrderController extends AdminController {
 
 	public function index(Request $request, Response $response) {
-		$orders = Order::join('customer', 'customer.id', '=', 'order.customer_id')
-							->select('order.id', 'order.created_at', 'customer.name', 'order.total', 'order.order_status')
-							->orderBy('id', 'desc')->get();
+		$params = $request->getQueryParams();
+		$order_status = $params['order_status'];
+		$payment_status = $params['payment_status'];
+		$menu_child = 'all';
+
+		if (isset($payment_status) && $payment_status == 1) $menu_child = 'paid';
+		$query = Order::join('customer', 'customer.id', '=', 'order.customer_id');
+
+		if (isset($order_status)) {
+			$menu_child = $order_status;
+			$query = $query->where('order.order_status', $order_status);
+			if (isset($payment_status)) {
+				$query = $query->where('order.payment_status', $payment_status);
+				if ($payment_status == 0) $menu_child = 'unpaid';
+				else $menu_child = 'paid';
+			}
+		}
+
+		$data = $query->select('order.id', 'order.created_at', 'customer.name', 'order.total', 'order.order_status')->orderBy('id', 'desc')->get();
+
 		return $this->view->render($response, 'admin/order', array(
-			'orders' => $orders
+			'$data' => $data,
+			'menu_child' => $menu_child
 		));
+	}
+
+	public function search(Request $request, Response $response) {
+		return $this->view->render($response, 'admin/order_search');
 	}
 
 	public function show (Request $request, Response $response) {

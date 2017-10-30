@@ -2,23 +2,16 @@ extends ./layout.pug
 
 block pre-include
   - var menu = 'customer';
-  - var childMenu = 'list';
-  title Danh sách khách hàng
-block post-include
-  script.
-    initDataTable('table');
+  - var childMenu = 'create';
+  title Thêm mới khách hàng
 
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
-        a Danh sách khách hàng
-    ol.button-right.col-md-4.col-sm-5.col-xs-12
-      span.middle-inline-block
+        a Khách hàng
       li
-        a.btn.btn-review(href="/admin/customer/export")
-          i.fa.fa-download
-          b Export
+        a Thêm mới
   section.content
     .box
       .box-body

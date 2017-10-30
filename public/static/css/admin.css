@@ -156,12 +156,12 @@ table.table-bordered.dataTable {
   outline: 0 !important; }
 
 .btn-admin {
-  background-color: #1a2226 !important;
+  background-color: #3C99D9 !important;
   color: #fff !important;
   border-color: #fff !important; }
   .btn-admin:hover {
     background-color: #fff !important;
-    color: #274C9C !important; }
+    color: #3C99D9 !important; }
   .btn-admin > i {
     margin-right: 5px;
     display: inline-block; }
@@ -181,9 +181,6 @@ table.table-bordered.dataTable {
 .box-footer .btn-danger {
   margin-left: 5px;
   float: left; }
-
-#addVideo .modal-content {
-  width: 700px; }
 
 .content-header {
   padding: 10px 15px;
@@ -319,16 +316,37 @@ table.table-bordered.dataTable {
   background-color: #364150;
   position: fixed;
   font-size: 15px; }
-  .main-sidebar .sidebar ul a {
-    color: #fff; }
-    .main-sidebar .sidebar ul a:hover {
-      color: #FDD31F; }
-    .main-sidebar .sidebar ul a i {
-      margin-right: 5px; }
-  .main-sidebar .sidebar ul ul i {
-    font-size: 10px; }
-  .main-sidebar .sidebar li.active > a {
-    color: #FDD31F; }
+  .main-sidebar .sidebar ul li {
+    border-bottom: 1px solid #3d4957; }
+    .main-sidebar .sidebar ul li.header a {
+      border-bottom: 0;
+      margin-bottom: 20px; }
+    .main-sidebar .sidebar ul li a {
+      color: #b4bcc8;
+      padding: 9px 5px 9px 15px;
+      cursor: pointer;
+      user-select: none; }
+      .main-sidebar .sidebar ul li a i {
+        margin-right: 5px;
+        color: #6b788b; }
+      .main-sidebar .sidebar ul li a:hover {
+        background-color: #2C3542; }
+      .main-sidebar .sidebar ul li a.active {
+        background-color: #3C99D9;
+        color: #fff; }
+        .main-sidebar .sidebar ul li a.active i {
+          color: #fff; }
+    .main-sidebar .sidebar ul li ul {
+      padding: 0; }
+      .main-sidebar .sidebar ul li ul li a {
+        color: #b4bcc8;
+        padding-left: 40px; }
+        .main-sidebar .sidebar ul li ul li a:hover {
+          background-color: #3e4b5c; }
+        .main-sidebar .sidebar ul li ul li a.active {
+          background-color: #2C3542; }
+        .main-sidebar .sidebar ul li ul li a i {
+          font-size: 9px; }
   .main-sidebar .sidebar .header {
     color: #fff;
     font-size: 20px;
