@@ -31,6 +31,7 @@ class Collection extends Illuminate\Database\Eloquent\Model {
     $item->content = $data['content'];
     $item->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $item->handle) : '';
     $item->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $item->handle . '_banner') : '';
+    $item->display = $data['display'] ? 1 : 0;
     $item->created_at = date('Y-m-d H:i:s');
     $item->updated_at = date('Y-m-d H:i:s');
     if ($item->save()) return $item->id;
@@ -56,6 +57,7 @@ class Collection extends Illuminate\Database\Eloquent\Model {
     $item->content = $data['content'];
     $item->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $item->handle) : '';
     $item->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $item->handle . '_banner') : '';
+    $item->display = $data['display'] ? 1 : 0;
     $item->updated_at = date('Y-m-d H:i:s');
     if ($item->save()) return 0;
     return -3;

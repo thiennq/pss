@@ -96,3 +96,15 @@ block content
                   .col-xs-12.banner.item-choose-image
                     img(src=staticURI() + "/img/default_image_l.jpg")
                     input.value(type="hidden" name="banner")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title DANH MỤC
+            .box-body
+              .form-group.mg0
+                .row
+                  .col-xs-12
+                    select.form-control(name="parent_id")
+                      option(value="-1" selected) Chọn nhóm sản phẩm cha...
+                      each item in collection
+                        option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
