@@ -136,4 +136,10 @@ $(document).on('change', '.upload', function() {
     });
   }
 });
-$('.box-tree').jstree();
+$('.box-tree').jstree({
+    "core" : {
+        "themes" : {
+            "variant" : "large"
+        }
+    }
+});

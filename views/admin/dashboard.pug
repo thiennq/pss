@@ -1,57 +1,81 @@
 extends ./layout.pug
 
 block pre-include
-  title Dashboard
+  title Bảng điều khiển
   - var menu = 'dashboard';
 block post-include
   script.
     initDataTable('table');
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
+  script(src=staticURI() + '/js/admin/dashboard.js')
 block content
   section.content-header.clearfix
     ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
       li
-        a Đơn hàng
-      li
-        a Danh sách đơn hàng
+        a Bảng điều khiển
   section.content
-    .box
-      .box-body
-        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
-          thead
-            tr
-              th Mã đơn hàng
-              th Ngày đặt hàng
-              th Khách hàng
-              th Trạng thái
-              th Tổng tiền
-          tbody
-            each order in orders
-              tr
-                td
-                  a(href="/admin/orders/" + order.id target="_blank").link=order.id
-                td=order.created_at
-                td=order.name
-                td
-                  if order.id_odoo == '-2'
-                    if order.order_status == "new"
-                      label.label.label-primary Dropship - Mới
-                    else
-                      if order.order_status == "done"
-                        label.label.label-success Dropship - Hoàn thành
-                      else
-                        if order.order_status == 'cancel'
-                          label.label.label-danger Dropship - Hủy
-                        else
-                          label.label.label-info Dropship - Xác nhận
-                  else
-                    if order.order_status == "new"
-                      label.label.label-primary Mới
-                    else
-                      if order.order_status == "done"
-                        label.label.label-success Hoàn thành
-                      else
-                        if order.order_status == 'cancel'
-                          label.label.label-danger Hủy
-                        else
-                          label.label.label-info Xác nhận
-                td.right=money(order.total)
+    h3.page-title Trang bảng điều khiển &nbsp;
+      small Bảng điều khiển & thống kê
+    .row
+      .col-xs-12.col-sm-6.col-md-3
+        .small-box.bg-aqua
+          .inner
+            h3.count(data-value=50) 0
+            p Đơn hàng
+          .icon
+            i.fa.fa-shopping-cart
+          a.small-box-footer Xem chi tiết &nbsp;
+            i.fa.fa-arrow-circle-right
+      .col-xs-12.col-sm-6.col-md-3
+        .small-box.bg-green
+          .inner
+            h3.count(data-value=150) 0
+            p Liên hệ
+          .icon
+            i.fa.fa-comments
+          a.small-box-footer Xem chi tiết &nbsp;
+            i.fa.fa-arrow-circle-right
+      .col-xs-12.col-sm-6.col-md-3
+        .small-box.bg-red
+          .inner
+            h3.count(data-value=10) 0
+            p Sản phẩm
+          .icon
+            i.fa.fa-bar-chart
+          a.small-box-footer Xem chi tiết &nbsp;
+            i.fa.fa-arrow-circle-right
+      .col-xs-12.col-sm-6.col-md-3
+        .small-box.bg-yellow
+          .inner
+            h3.count(data-value=58) 0
+            p Bài viết
+          .icon
+            i.fa.fa-globe
+          a.small-box-footer Xem chi tiết &nbsp;
+            i.fa.fa-arrow-circle-right
+
+    .row
+      .col-xs-12.col-sm-6
+        .row.portlet-title
+          h3.title-chart: i.fa.fa-bar-chart &nbsp; LƯỢT TRUY CẬP
+          .optionchart.text-center
+            label.btn.btn-default.btn-danger
+              input(type='radio' name='option' value='week' dateto='' dateend='' checked)
+              | Tuần
+            label.btn.btn-default
+              input(type='radio' name='option' value='month' dateto='' dateend='')
+              | Tháng
+        canvas#visitchart
+      .col-xs-12.col-sm-6
+        .row.portlet-title
+          h3.title-chart.text-red: i.fa.fa-money &nbsp; DOANH THU
+          .optionchart.text-center
+            div.btn-group
+              button.revenue-btn(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") 01 tuần &nbsp;
+                span.caret
+              ul.dropdown-menu.revenue-menu
+                li.active(dateto = '' dateend = '' value = 1): a(href="#") 01 tuần
+                li(dateto = '' dateend = '' value = 2): a(href="#") 02 tuần
+                li(dateto = '' dateend = '' value = 4): a(href="#") 01 tháng
+                li(dateto = '' dateend = '' value = 8): a(href="#") 02 tháng
+        canvas#revenuechart

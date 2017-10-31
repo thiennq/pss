@@ -14,9 +14,6 @@ class AdminCollectionController extends AdminController {
             $value->image = convertImage($value->image, 240);
         }
         $tree = $this->buildTree($data);
-        foreach ($tree as $key => $value) {
-        	error_log($value->children);
-		}
 		return $this->view->render($response, 'admin/collection', array(
 			'collections' => $tree
 		));
@@ -94,7 +91,6 @@ class AdminCollectionController extends AdminController {
                 }
             }
         }
-        error_log(json_encode($op));
         return $op;
     }
 }
