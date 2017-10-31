@@ -987,6 +987,7 @@ form .banner {
   max-width: 100%;
 }
 
+
 #modal-upload {
   .modal-dialog {
     width: 75%;
@@ -1079,4 +1080,31 @@ form .banner {
 
 .nav-tabs-lang {
   display: none;
+}
+
+.portlet-title {
+  padding: 0 0 0 25px;
+  .title-chart{
+    color: $color_light_blue;
+    width: 70%;
+    float: left;
+  }
+  .optionchart{
+    width: 30%;
+    float: right;
+    margin: 15px 0 10px 0;
+    label:nth-child(1){
+      margin-right: 5px;
+    }
+    label{
+      color: $color_red;
+      input {
+        visibility: hidden;
+        position: absolute;
+      }
+    }
+    .btn-danger{
+      color: #fff;
+    }
+  }
 }

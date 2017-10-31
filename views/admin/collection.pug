@@ -4,9 +4,8 @@ mixin folderTree(arrs)
   each arr in arrs
     ul
       li=arr.title
-      p=arr.children
-      if countArr(arr.children)
-        +folderTree(arr.children)
+        if arr.children
+          +folderTree(arr.children)
 
 block pre-include
   title Nhóm sản phẩm

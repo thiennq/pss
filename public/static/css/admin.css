@@ -793,3 +793,23 @@ form .banner {
 
 .nav-tabs-lang {
   display: none; }
+
+.portlet-title {
+  padding: 0 0 0 25px; }
+  .portlet-title .title-chart {
+    color: #3569d6;
+    width: 70%;
+    float: left; }
+  .portlet-title .optionchart {
+    width: 30%;
+    float: right;
+    margin: 15px 0 10px 0; }
+    .portlet-title .optionchart label:nth-child(1) {
+      margin-right: 5px; }
+    .portlet-title .optionchart label {
+      color: #dc4a3d; }
+      .portlet-title .optionchart label input {
+        visibility: hidden;
+        position: absolute; }
+    .portlet-title .optionchart .btn-danger {
+      color: #fff; }

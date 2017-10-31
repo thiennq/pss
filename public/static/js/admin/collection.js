@@ -1,7 +1,14 @@
 initTinymce('#content_vi');
 initTinymce('#content_en');
 initDataTable('table');
-$('.box-tree').jstree();
+
+$('.box-tree').jstree({
+    "core" : {
+        "themes" : {
+            "variant" : "large"
+        }
+    }
+});
 
 $('.btn-create-update').click(function() {
   var id = $(this).data('id');
