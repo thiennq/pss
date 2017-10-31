@@ -34,5 +34,47 @@ class AdminCustomerController extends AdminController {
 	public function export() {
 		require_once("../controllers/ExportCustomer.php");
 	}
+
+    public function store(Request $request, Response $response) {
+        $data = $request->getParsedBody();
+        $code = Customer::store($data);
+        $result = Helper::response($code);
+        return $response->withJson($result, 200);
+    }
+
+    public function update(Request $request, Response $response) {
+        $id = $request->getAttribute('id');
+        $code = Customer::update($id);
+        $result = Helper::response($code);
+        return $response->withJson($result, 200);
+    }
+
+    public function delete(Request $request, Response $response) {
+        $id = $request->getAttribute('id');
+        $code = Customer::delete($id);
+        $result = Helper::response($code);
+        return $response->withJson($result, 200);
+    }
+
+    public function search(Request $request, Response $response){
+        $query = $request->getQueryParams();
+		$result = Customer::where('name','LIKE','%'.$query['key'].'%')->
+			orWhere('phone','LIKE','%'.$query['key'].'%')->
+			orWhere('email','LIKE','%'.$query['key'].'%')->
+			orWhere('address','LIKE','%'.$query['key'].'%')->
+			orWhere('region','LIKE','%'.$query['key'].'%')->
+			orWhere('subregion','LIKE','%'.$query['key'].'%')->get();
+        if(count($result)) {
+            return $response->withJson(array(
+                "code" => 0,
+                "message" => "success",
+                "data" => $result
+            ));
+        }
+        return $response->withJson(array(
+            "code" => -1,
+            "message" => "Not found"
+        ));
+	}
 }
 ?>

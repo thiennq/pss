@@ -132,7 +132,11 @@ $app->group('/admin', function() use($app) {
   $app->put('/comment/{id}', '\AdminCommentController:update');
   $app->delete('/comment/{id}', '\AdminCommentController:delete');
 
+  //contact
   $app->get('/contact', '\AdminContactController:fetch');
+  $app->post('/contact', '\AdminContactController:store');
+  $app->put('/contact/{id}', '\AdminContactController:update');
+  $app->delete('/contact/{id}', '\AdminContactController:delete');
 
   $app->get('/slider', '\AdminSliderController:index');
   $app->get('/slider/{id}', '\AdminSliderController:getSlider');
