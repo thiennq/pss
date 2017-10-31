@@ -59,7 +59,7 @@ $app->group('/admin', function() use($app) {
   $app->delete('/variants/{id}', '\AdminVariantController:delete');
 
   $app->get('/collection', '\AdminCollectionController:index');
-  $app->get('/collection/new', '\AdminCollectionController:create');
+  $app->get('/collection/create', '\AdminCollectionController:create');
   $app->get('/collection/{id}', '\AdminCollectionController:show');
   $app->post('/collection', '\AdminCollectionController:store');
   $app->put('/collection/{id}', '\AdminCollectionController:update');
@@ -151,7 +151,10 @@ $app->group('/admin', function() use($app) {
   $app->put('/setting', '\AdminSettingController:updateSetting');
 
   $app->get('/images', '\AdminSettingController:getImages');
+  $app->get('/uploads', '\AdminSettingController:getUploads');
   $app->delete('/api/images/remove', '\AdminSettingController:removeImage');
+
+  $app->get('/api/uploads', '\AdminSettingController:getUploads');
 
   $app->get('/shipping_fee', '\AdminSettingController:shipping_fee');
 

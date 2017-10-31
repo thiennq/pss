@@ -1,35 +1,45 @@
-initTinymce('#content');
+initTinymce('#content_vi');
+initTinymce('#content_en');
 initDataTable('table');
+$('.box-tree').jstree();
 
-$(document).ready(function() {
-  var parent_id = $('select[name="parent_id"]').data('value');
-  if (parent_id) $('select[name="parent_id"]').val(parent_id);
-});
-
-$('.btn-create').click(function() {
+$('.btn-create-update').click(function() {
+  var id = $(this).data('id');
   var self = $(this);
   $('input').removeClass('error');
   var data = {};
   data.parent_id = $('select[name="parent_id"]').val();
-  data.title = $('input[name="title"]').val();
+
+  data.title = $('#tab-vi').find('input[name="title"]').val();
   if(!data.title.trim().length) {
     toastr.error('Chưa nhập tiêu đề');
     $('input[name="title"]').addClass('error');
     return;
   }
+  data.description = $('#tab-vi').find('textarea[name="description"]').val();
+  data.content = tinyMCE.get('content_vi').getContent();
+
+  data.meta_title = $('#tab-seo-vi').find('input[name="meta_title"]').val();
+  data.meta_description = $('#tab-seo-vi').find('textarea[name="meta_description"]').val();
+  data.meta_keyword = $('#tab-seo-vi').find('textarea[name="meta_keyword"]').val();
+  data.meta_robots = $('#tab-seo-vi').find('select[name="meta_robots"]').val();
+
   data.image = $('input[name="image"]').val();
   data.banner = $('input[name="banner"]').val();
-  data.description = $('textarea[name="description"]').val();
-  data.content = tinyMCE.get('content').getContent();
-  data.meta_title = $('input[name="meta_title"]').val();
-  data.meta_description = $('textarea[name="meta_description"]').val();
+
   self.addClass('disabled');
+
+  if (id) updateCollection(id, data);
+  else createCollection(data);
+});
+
+function createCollection(data) {
   $.ajax({
     type: 'POST',
     url: '/admin/collection',
     data: data,
     success: function(json) {
-      self.removeClass('disabled');
+      $(document).find('.disabled').removeClass('disabled');
       if(!json.code) {
         toastr.success('Tạo thành công');
         reloadPage('/admin/collection/' + json.id);
@@ -40,43 +50,15 @@ $('.btn-create').click(function() {
       } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
   });
-});
+}
 
-$('.btn-update').click(function() {
-  var self = $(this);
-  var id = $(this).data('id');
-  $('input').removeClass('error');
-  var data = {};
-  data.title = $('input[name="title"]').val();
-  if(!data.title.trim().length) {
-    toastr.error('Chưa nhập tiêu đề');
-    $('input[name="title"]').addClass('error');
-    return;
-  }
-  data.handle = handle(data.title);
-  data.breadcrumb = data.title;
-  data.link = data.handle;
-  data.parent_id = $('select[name="parent_id"]').val();
-  if(data.parent_id != "-1") {
-    data.breadcrumb = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-breadcrumb');
-    data.breadcrumb += '/' + data.title;
-    data.link = $('select[name="parent_id"]').find('option[value="'+data.parent_id+'"]').attr('data-link');
-    data.link += '/' + data.handle;
-  }
-
-  data.image = $('input[name="image"]').val();
-  data.banner = $('input[name="banner"]').val();
-  data.description = $('textarea[name="description"]').val();
-  data.content = tinyMCE.get('content').getContent();
-  data.meta_title = $('input[name="meta_title"]').val();
-  data.meta_description = $('textarea[name="meta_description"]').val();
-  self.addClass('disabled');
+function updateCollection(id, data) {
   $.ajax({
     type: 'PUT',
     url: '/admin/collection/' + id,
     data: data,
     success: function(json) {
-      self.removeClass('disabled');
+      $(document).find('.disabled').removeClass('disabled');
       if(!json.code) {
         toastr.success('Cập nhật thành công');
         reloadPage();
@@ -87,7 +69,7 @@ $('.btn-update').click(function() {
       } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
     }
   });
-});
+}
 
 $(document).on('click', '.btn-remove', function() {
   var id = $(this).data('id');
@@ -105,35 +87,3 @@ $(document).on('click', '.btn-remove', function() {
     });
   }
 });
-
-
-$(document).on('change', '.upload', function() {
-  var type = $(this).data('type');
-  if(checkExtImage($(this).val())) {
-    var form = $(this).closest('form');
-    var formData = new FormData(form[0]);
-    $.ajax({
-      type: 'POST',
-      url: '/admin/api/uploadImage',
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false,
-      success: function(json) {
-        if(!json.code) {
-          var image = json.data[0];
-          var timestamp = new Date() - 0;
-          if(type == "banner") {
-            var resize = resizeImage(image, 640);
-            form.find('input[name="banner"]').val(image);
-          } else {
-            var resize = resizeImage(image, 240);
-            form.find('input[name="image"]').val(image);
-          }
-          form.find('img').attr('src', '/uploads/' + resize + '?v=' + timestamp);
-        } else toastr.error('Có lỗi xảy ra, xin vui lòng thử lại');
-      }
-    });
-  }
-});
-$('.box-tree').jstree();

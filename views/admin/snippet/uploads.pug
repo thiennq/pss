@@ -1,0 +1,46 @@
+html
+  head
+    title File Manager
+    link(rel="stylesheet", href=staticURI() + '/libs/bootstrap.min.css')
+    link(rel="stylesheet", href=staticURI() + '/libs/font-awesome.min.css')
+    link(rel="stylesheet", href=staticURI() + "/css/admin.css")
+  body
+    .container-fuild.file-manager
+      .list-image.clearfix
+        label.col-xs-2.image.add-image(for="upload-image")
+          form.item(style="background: url('"+staticURI()+ "/img/add_image.png')", enctype="multipart/form-data")
+            i.fa.fa-circle-o-notch.fa-spin
+            input.hidden#upload-image(type="file" name="upload[]" accept="image/*" multiple="multiple")
+        each image in images
+          - var src = currentHost() + '/uploads/' + resize(image, 240);
+          .col-xs-2.image
+            .item(style="background: url('"+src+"')", data-src=image)
+              span.remove-image
+                i.fa.fa-trash
+      .footer.clearfix
+        .col-xs-6
+          a.btn.btn-default.btn-close-window Đóng
+        .col-xs-6.text-right
+          a.btn.btn-primary Chọn ảnh
+      script(src=staticURI() + '/libs/jquery.min.js')
+      script(src=staticURI() + '/js/admin/script.js')
+      script.
+        $('.list-image-upload').on('click', '.item', function() {
+          var src = $(this).find('img').attr('src');
+          var args = top.tinymce.activeEditor.windowManager.getParams();
+          win = (args.window);
+          input = (args.input);
+          win.document.getElementById(input).value = src;
+          top.tinymce.activeEditor.windowManager.close();
+        });
+        
+        $('.btn-viewmore').click(function() {
+          var count = 0;
+          $('.list-image-upload').find('.item.hidden').each(function(index, elem) {
+            $(this).removeClass('hidden');
+            $(this).find('img').attr('src', $(this).find('img').data('src'));
+            count++;
+            if(count == 8) return false;
+          });
+          if(!$('.list-image-upload').find('.item.hidden').length) $('.btn-viewmore').addClass('hidden');
+        });

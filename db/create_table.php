@@ -31,6 +31,10 @@ use Illuminate\Database\Schema\Blueprint;
     mkdir(ROOT . '/public/uploads', 0777, true);
   }
 
+  if (!file_exists(ROOT . '/public/uploads/origin')) {
+    mkdir(ROOT . '/public/uploads/origin', 0777, true);
+  }
+
   if (!file_exists(ROOT . '/public/images')) {
     mkdir(ROOT . '/public/images', 0777, true);
   }

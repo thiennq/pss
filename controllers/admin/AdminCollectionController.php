@@ -3,6 +3,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 require_once(ROOT . '/models/Collection.php');
 require_once(ROOT . '/models/Product.php');
+require_once(ROOT . '/models/Seo.php');
 require_once(ROOT . '/controllers/helper.php');
 use ControllerHelper as Helper;
 
@@ -32,14 +33,13 @@ class AdminCollectionController extends AdminController {
 	public function show(Request $request, Response $response) {
 		$id = $request->getAttribute('id');
 		$data = Collection::find($id);
-		if (!$data) {
-			$this->view->render($response, '404');
-			return $response->withStatus(404);
-		}
+		if (!$data) return $response->withStatus(302)->withHeader('Location', '/404');
 		$collection = Collection::where('id', '!=', $id)->get();
+		$seo = Seo::get('collection', $id);
 		return $this->view->render($response, 'admin/collection_edit', array(
 			'data' => $data,
-			'collection' => $collection
+			'collection' => $collection,
+			'seo' => $seo
 		));
 	}
 
@@ -53,6 +53,7 @@ class AdminCollectionController extends AdminController {
 			return $response->withJson($checkNull, 200);
 		}
 		$code = Collection::store($body);
+		if ($code) Seo::store('collection', $code, $body);
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);
 	}
@@ -68,6 +69,7 @@ class AdminCollectionController extends AdminController {
 			return $response->withJson($checkNull, 200);
 		}
 		$code = Collection::update($id, $body);
+		Seo::update('collection', $id, $body);
 		$result = Helper::response($code);
 		return $response->withJson($result, 200);
 	}

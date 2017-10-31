@@ -19,7 +19,7 @@ block content
     ol.button-right.col-md-4.col-sm-5.col-xs-12
       span.middle-inline-block
       li
-        a.btn.btn-admin.btn-create
+        a.btn.btn-admin.btn-create-update
           i.fa.fa-floppy-o
           i.fa.fa-circle-o-notch.fa-spin
           | Lưu lại
@@ -50,23 +50,7 @@ block content
                   .form-group
                     label.col-sm-2.control-label Nội dung
                     .col-sm-10
-                      textarea.form-control#content
-                  .form-group
-                    label.col-sm-2.control-label Hình đại diện
-                      br
-                      span.btn-remove-image(data-image='default_image.png') (Xóa)
-                    form.col-sm-10.collection-image
-                      img(src=staticURI() + "/img/default_image.png")
-                      input.upload.form-control(type="file" name="upload[]" data-type="image")
-                      input(type="hidden" name="image")
-                  .form-group
-                    label.col-sm-2.control-label Banner
-                      br
-                      span.btn-remove-image(data-image='default_image_l.jpg') (Xóa)
-                    form.col-sm-10.collection-banner
-                      img.banner(src=staticURI() + "/img/default_image_l.jpg")
-                      input.upload.form-control(type="file" name="upload[]" data-type="banner")
-                      input(type="hidden" name="banner")
+                      textarea.form-control#content_vi
                 #tab-en.tab-pane.fade
                   .form-group
                     label.col-sm-2.control-label Nhóm sản phẩm
@@ -80,23 +64,7 @@ block content
                   .form-group
                     label.col-sm-2.control-label Nội dung
                     .col-sm-10
-                      textarea.form-control#content
-                  .form-group
-                    label.col-sm-2.control-label Hình đại diện
-                      br
-                      span.btn-remove-image(data-image='default_image.png') (Xóa)
-                    form.col-sm-10.collection-image
-                      img(src=staticURI() + "/img/default_image.png")
-                      input.upload.form-control(type="file" name="upload[]" data-type="image")
-                      input(type="hidden" name="image")
-                  .form-group
-                    label.col-sm-2.control-label Banner
-                      br
-                      span.btn-remove-image(data-image='default_image_l.jpg') (Xóa)
-                    form.col-sm-10.collection-banner
-                      img.banner(src=staticURI() + "/img/default_image_l.jpg")
-                      input.upload.form-control(type="file" name="upload[]" data-type="banner")
-                      input(type="hidden" name="banner")
+                      textarea.form-control#content_en
         include snippet/box-seo.pug
       .col-sm-4.col-xs-12.pd-left-0
         .box
@@ -108,7 +76,7 @@ block content
                 .row
                   .col-xs-12
                     select.form-control(name="parent_id")
-                      option(value=-1 selected) Chọn nhóm sản phẩm cha...
+                      option(value="-1" selected) Chọn nhóm sản phẩm cha...
                       each item in collection
                         option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
         .box
@@ -119,14 +87,12 @@ block content
               .form-group.mg0
                 .row
                   label.col-xs-12 Hình đại diện
-                  form.col-xs-12
-                    img(src=staticURI() + "/img/default_image.png" onclick="uploadManager()")
-                    input.upload1.form-control(type="file" name="upload[]" data-type="image")
-                    input(type="hidden" name="image")
+                  .col-xs-12.item-choose-image
+                    img(src=staticURI() + "/img/default_image.png")
+                    input.value(type="hidden" name="image")
                 br
                 .row
                   label.col-xs-12 Banner
-                  form.col-xs-12
-                    img.banner(src=staticURI() + "/img/default_image_l.jpg")
-                    input.upload.form-control(type="file" name="upload[]" data-type="image")
-                    input(type="hidden" name="banner")
+                  .col-xs-12.banner.item-choose-image
+                    img(src=staticURI() + "/img/default_image_l.jpg")
+                    input.value(type="hidden" name="banner")

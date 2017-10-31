@@ -72,7 +72,7 @@
       top: 5px;
       right: 5px;
       position: absolute;
-      color: $color_white;
+      color: #fff;
       padding: 3px 5px;
       border-radius: 5px;
       background-color: $main_color;
@@ -160,7 +160,7 @@
       }
     }
     .out-of-stock {
-      color: $color_white;
+      color: #fff;
       background-color: rgba(0, 0, 0, 0.8);
       padding: 10px;
       text-align: center;
@@ -205,7 +205,7 @@
         .variant-image {
           display: block;
           img {
-            border: 1px solid $color_white;
+            border: 1px solid #fff;
             cursor: pointer;
             margin-right: 5px;
             margin-top: 0;

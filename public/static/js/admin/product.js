@@ -47,24 +47,6 @@ $('.btn-add-variant').click(function() {
   listFormData.push(new FormData());
 });
 
-function readURL(files, callback) {
-  function loadOne(file) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var imgData = reader.result;
-      output.push(imgData);
-      if (output.length == files.length) {
-        callback(output);
-      }
-    };
-    reader.readAsDataURL(file);
-  }
-  var output = [];
-  for (var i = 0; i < files.length; i++) {
-    loadOne(files[i]);
-  }
-}
-
 $(document).on('change', '.upload-list-image', function(){
   if($(this).val()) {
     var variant = $(this).closest('.variant-item');

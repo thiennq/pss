@@ -14,64 +14,64 @@ class Collection extends Illuminate\Database\Eloquent\Model {
   }
 
   public function store($data) {
-    $collection = Collection::where('title', $data['title'])->first();
-    if ($collection) return -1;
-    $collection = new Collection;
-    $collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
-    $collection->title = $data['title'];
-    $collection->handle = createHandle($data['title']);
-    $collection->breadcrumb = $data['title'];
-    $collection->link = $collection->handle;
-    if ($data['parent_id']) {
+    $item = Collection::where('title', $data['title'])->first();
+    if ($item) return -1;
+    $item = new Collection;
+    $item->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
+    $item->title = $data['title'];
+    $item->handle = createHandle($data['title']);
+    $item->breadcrumb = $data['title'];
+    $item->link = $item->handle;
+    if ($data['parent_id'] != '-1') {
       $parent = Collection::find($data['parent_id']);
-      $collection->breadcrumb = $parent->breadcrumb . '/' . $data['title'];
-      $collection->link = $parent->link . '/' . $collection->handle;
+      $item->breadcrumb = $parent->breadcrumb . '/' . $data['title'];
+      $item->link = $parent->link . '/' . $item->handle;
     }
-    $collection->description = $data['description'];
-    $collection->content = $data['content'];
-    $collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
-    $collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
-    $collection->meta_title = $data['meta_title'];
-    $collection->meta_description = $data['meta_description'];
-    $collection->created_at = date('Y-m-d H:i:s');
-    $collection->updated_at = date('Y-m-d H:i:s');
-    if ($collection->save()) return $collection->id;
+    $item->description = $data['description'];
+    $item->content = $data['content'];
+    $item->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $item->handle) : '';
+    $item->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $item->handle . '_banner') : '';
+    $item->created_at = date('Y-m-d H:i:s');
+    $item->updated_at = date('Y-m-d H:i:s');
+    if ($item->save()) return $item->id;
     return -3;
   }
 
-    public function update($id, $data) {
-        $collection = Collection::find($id);
-        if (!$collection) return -2;
-        $check = Collection::where('id', '!=', $id)->where('title', $data['title'])->first();
-        if ($check) return -1;
-
-    $collection->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
-    $collection->title = $data['title'];
-    $collection->handle = $data['handle'];
-    $collection->breadcrumb = $data['breadcrumb'];
-    $collection->link = $data['link'];
-    $collection->description = $data['description'];
-    $collection->content = $data['content'];
-    $collection->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $collection->handle) : '';
-    $collection->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $collection->handle . '_banner') : '';
-    $collection->meta_title = $data['meta_title'];
-    $collection->meta_description = $data['meta_description'];
-        $collection->updated_at = date('Y-m-d H:i:s');
-        if ($collection->save()) return 0;
-        return -3;
+  public function update($id, $data) {
+    $item = Collection::find($id);
+    if (!$item) return -2;
+    $check = Collection::where('id', '!=', $id)->where('title', $data['title'])->first();
+    if ($check) return -1;
+    $item->parent_id = $data['parent_id'] ? $data['parent_id'] : -1;
+    $item->title = $data['title'];
+    $item->handle = createHandle($data['title']);
+    $item->breadcrumb = $data['title'];
+    $item->link = $item->handle;
+    if ($data['parent_id'] != '-1') {
+      $parent = Collection::find($data['parent_id']);
+      $item->breadcrumb = $parent->breadcrumb . '/' . $data['title'];
+      $item->link = $parent->link . '/' . $item->handle;
     }
+    $item->description = $data['description'];
+    $item->content = $data['content'];
+    $item->image = $data['image'] ? renameOneImage($data['image'], 'collection_' . $item->handle) : '';
+    $item->banner = $data['banner'] ? renameOneImage($data['banner'], 'collection_' . $item->handle . '_banner') : '';
+    $item->updated_at = date('Y-m-d H:i:s');
+    if ($item->save()) return 0;
+    return -3;
+  }
 
-    public function remove($id) {
-        $collection = Collection::find($id);
-        $image = $collection->image;
-        $banner = $collection->banner;
-        if (!$collection) return -2;
-        if ($collection->delete()) {
-            Collection::where('parent_id', $id)->update(['parent_id' => -1]);
-            removeImage($image);
-            removeImage($banner);
-            return 0;
-        }
-        return -3;
+  public function remove($id) {
+    $item = Collection::find($id);
+    $image = $item->image;
+    $banner = $item->banner;
+    if (!$item) return -2;
+    if ($item->delete()) {
+      Collection::where('parent_id', $id)->update(['parent_id' => -1]);
+      removeImage($image);
+      removeImage($banner);
+      return 0;
     }
+    return -3;
+  }
 }

@@ -1,0 +1,13 @@
+#modal-upload.modal.fade(role='dialog')
+  .modal-dialog
+    .modal-content
+      .container-fuild.file-manager
+        .list-image.clearfix
+          label.col-xs-2.image.add-image(for="upload-image")
+            form.item(style="background: url('"+staticURI()+ "/img/add_image.png')", enctype="multipart/form-data")
+              i.fa.fa-circle-o-notch.fa-spin
+              input.hidden#upload-image(type="file" name="upload[]" accept="image/*" multiple="multiple")
+        .modal-footer.clearfix
+          .col-xs-12.text-right
+            a.btn.btn-default(data-dismiss="modal") Đóng
+            a.btn.btn-primary.btn-choose-image.disabled Chọn ảnh

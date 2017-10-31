@@ -14,6 +14,9 @@
 .no-border {
   border: none !important; }
 
+img {
+  max-width: 100%; }
+
 .export {
   text-align: right;
   padding: 20px; }
@@ -159,12 +162,11 @@ table.table-bordered.dataTable {
   outline: 0 !important; }
 
 .btn-admin {
-  background-color: #3C99D9 !important;
   color: #fff !important;
   border-color: #fff !important; }
   .btn-admin:hover {
     background-color: #fff !important;
-    color: #3C99D9 !important; }
+    color: #000 !important; }
   .btn-admin > i {
     margin-right: 5px;
     display: inline-block; }
@@ -725,3 +727,69 @@ option:disabled {
 
 form .banner {
   max-width: 100%; }
+
+#modal-upload .modal-dialog {
+  width: 75%;
+  height: 90%; }
+  #modal-upload .modal-dialog .modal-content {
+    height: 100%; }
+    #modal-upload .modal-dialog .modal-content .file-manager {
+      height: 100%; }
+      #modal-upload .modal-dialog .modal-content .file-manager .list-image {
+        height: calc(100% - 65px);
+        overflow-y: auto; }
+  #modal-upload .modal-dialog .modal-footer a {
+    margin-left: 10px; }
+
+.file-manager .list-image {
+  padding: 20px 10px 0;
+  border-bottom: 1px solid #ddd; }
+  .file-manager .list-image .add-image form {
+    position: relative; }
+    .file-manager .list-image .add-image form .fa-spin {
+      font-size: 30px;
+      position: absolute;
+      top: calc(50% - 15px);
+      left: calc(50% - 15px);
+      display: none; }
+    .file-manager .list-image .add-image form.disabled .fa-spin {
+      display: inline-block; }
+  .file-manager .list-image .image {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px; }
+    .file-manager .list-image .image:first-child {
+      margin: 0; }
+    .file-manager .list-image .image .item {
+      width: 100%;
+      padding-bottom: 100%;
+      background-size: cover !important;
+      background-position: center center !important;
+      margin: 0;
+      cursor: pointer;
+      position: relative;
+      border: 5px solid transparent; }
+      .file-manager .list-image .image .item.active {
+        border-color: #3C99D9; }
+      .file-manager .list-image .image .item .remove-image {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #000;
+        z-index: 9999;
+        font-size: 14px;
+        display: none;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        padding-top: 5px; }
+      .file-manager .list-image .image .item:hover .remove-image {
+        display: inline-block; }
+
+.file-manager .footer {
+  padding: 20px 10px; }
+
+.nav-tabs-lang {
+  display: none; }

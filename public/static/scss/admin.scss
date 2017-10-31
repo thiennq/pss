@@ -4,7 +4,6 @@ $color_icon_sidebar: #6b788b;
 
 $color_blue: #274C9C;
 $color_light_blue: #3569d6;
-$color_white: #fff;
 $color_red: #dc4a3d;
 $color_black: #444;
 $color_grey: #ccc;
@@ -33,6 +32,10 @@ $color_header: #2b3643;
 
 .no-border {
   border: none !important;
+}
+
+img {
+  max-width: 100%;
 }
 
 .export {
@@ -232,12 +235,11 @@ table.table-bordered.dataTable {
 }
 
 .btn-admin {
-  background-color: $main_color !important;
   color: #fff !important;
   border-color: #fff !important;
   &:hover {
-    background-color: $color_white !important;
-    color: $main_color !important;
+    background-color: #fff !important;
+    color: #000 !important;
   }
   > i {
     margin-right: 5px;
@@ -314,19 +316,19 @@ table.table-bordered.dataTable {
 	}
 
   .btn-review {
-    border: 1px solid $color_white !important;
-		color: $color_white !important;
+    border: 1px solid #fff !important;
+		color: #fff !important;
     i {
       margin-right: 5px;
       position: relative;
       top: 1px;
     }
 		&:hover {
-			color: $color_white !important;
+			color: #fff !important;
 		}
 	}
 	> .breadcrumb > li > a {
-		color: $color_white;
+		color: #fff;
 		font-size: 14px;
 	}
 }
@@ -487,7 +489,7 @@ table.table-bordered.dataTable {
       }
     }
     .header {
-      color: $color_white;
+      color: #fff;
       font-size: 20px;
       padding: 0;
       padding-right: 10px;
@@ -517,9 +519,9 @@ table.table-bordered.dataTable {
 			padding: 10px;
 			p {
 				margin: 0;
-				color: $color_white;
+				color: #fff;
 				a {
-					color: $color_white;
+					color: #fff;
 				}
 			}
 		}
@@ -651,7 +653,7 @@ table {
     .image {
       padding: 5px;
       position: relative;
-      border: 1px solid $color_white;
+      border: 1px solid #fff;
       text-align: center;
       height: 135px;
       background-size: contain;
@@ -832,7 +834,7 @@ div.mce-fullscreen {
 .btn-import {
   background-color: $color_blue !important;
   &:hover {
-    color: $color_white !important;
+    color: #fff !important;
     background-color: $color_blue !important;
   }
 }
@@ -848,7 +850,7 @@ div.mce-fullscreen {
 
 .modal .btn-admin:hover {
   background-color: $color_hover_sidebar !important;
-  color: $color_white !important;
+  color: #fff !important;
 }
 
 .modal .btn-admin img {
@@ -983,4 +985,98 @@ option:disabled {
 
 form .banner {
   max-width: 100%;
+}
+
+#modal-upload {
+  .modal-dialog {
+    width: 75%;
+    height: 90%;
+    .modal-content {
+      height: 100%;
+      .file-manager {
+        height: 100%;
+        .list-image {
+          height: calc(100% - 65px);
+          overflow-y: auto;
+        }
+      }
+    }
+    .modal-footer {
+      a {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.file-manager {
+  .list-image {
+    padding: 20px 10px 0;
+    border-bottom: 1px solid #ddd;
+    .add-image {
+      form {
+        position: relative;
+        .fa-spin {
+          font-size: 30px;
+          position: absolute;
+          top: calc(50% - 15px);
+          left: calc(50% - 15px);
+          display: none;
+        }
+        &.disabled {
+          .fa-spin {
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .image {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 20px;
+      &:first-child {
+        margin: 0;
+      }
+      .item {
+        width: 100%;
+        padding-bottom: 100%;
+        background-size: cover !important;
+        background-position: center center !important;
+        margin: 0;
+        cursor: pointer;
+        position: relative;
+        border: 5px solid transparent;
+        &.active {
+          border-color: $main_color;
+        }
+        .remove-image {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          cursor: pointer;
+          color: #fff;
+          background-color: #000;
+          z-index: 9999;
+          font-size: 14px;
+          display: none;
+          width: 25px;
+          height: 25px;
+          text-align: center;
+          padding-top: 5px;
+        }
+        &:hover {
+          .remove-image {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+  .footer {
+    padding: 20px 10px;
+  }
+}
+
+.nav-tabs-lang {
+  display: none;
 }

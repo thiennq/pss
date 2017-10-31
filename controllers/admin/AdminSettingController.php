@@ -66,13 +66,29 @@ class AdminSettingController extends AdminController {
 
   public function getImages(Request $request, Response $response) {
     $dir = ROOT . '/public/images';
-    $images = scandir($dir);
-    array_shift($images);
-    array_shift($images);
+    $files = scandir($dir);
+    $files = array_diff($files, array('.', '..', __FILE__));
     return $this->view->render($response, 'admin/images', array(
-      "images" => $images,
-      "total" => count($images)
+      "images" => $files,
+      "total" => count($files)
 		));
+  }
+
+  public function getUploads(Request $request, Response $response) {
+    $params = $request->getQueryParams();
+    $perpage = 17;
+    $page = $params['page'];
+    $skip = ((int) $page - 1) * $perpage;
+    $dir = ROOT . '/public/uploads/origin';
+    $files = scandir($dir);
+    $files = array_diff($files, array('.', '..', __FILE__));
+    $files = array_reverse($files);
+    $images = array_slice($files, $skip, $perpage);
+    return $response->withJson([
+      'code' => 0,
+      'data' => $images,
+      'total' => count($files)
+    ]);
   }
 
   public function removeImage(Request $request, Response $response) {

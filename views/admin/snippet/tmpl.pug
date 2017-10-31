@@ -7,6 +7,15 @@ script#item-image(type="text/x-tmpl").
       <i class="fa fa-times"></i>
     </span>
   </div>
+  
+script#item-upload-image(type="text/x-tmpl").
+  <div class="col-xs-2 image">
+    <div class="item" style="background: url('{%=o.src%}')" data-src="{%=o.image%}">
+      <span class="remove-image">
+        <i class="fa fa-times"></i>
+      </span>
+    </div>
+  </div>
 
 script#add-variant(type="text/html").
   <div class="variant-item clearfix" data-id={%=o.id%}>

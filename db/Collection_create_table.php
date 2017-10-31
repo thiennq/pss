@@ -27,7 +27,5 @@ $Schema->create('collection', function (Blueprint $table) {
     $table->string('link')->nullable();
     $table->text('description')->nullable();
     $table->text('content')->nullable();
-    $table->text('meta_title')->nullable();
-    $table->text('meta_description')->nullable();
     $table->timestamps();
 });

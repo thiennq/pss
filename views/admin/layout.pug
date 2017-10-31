@@ -40,6 +40,8 @@ html
         include snippet/header-mobile
       .content-wrapper
         block content
+      include snippet/modal-upload
       include snippet/modal-change-password
+      script(src=staticURI() + '/js/admin/modal-upload.js')
       script(src=staticURI() + '/js/admin/script.js')
       block post-include

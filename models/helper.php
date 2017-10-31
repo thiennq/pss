@@ -74,6 +74,7 @@ function removeImage($name) {
 
 function uploadImage(Request $request, Response $response) {
   $path = ROOT . '/public/uploads/';
+  $originPath = ROOT . '/public/uploads/origin/';
   $result = array();
   $total = count($_FILES['upload']['name']);
   global $size;
@@ -89,6 +90,7 @@ function uploadImage(Request $request, Response $response) {
       }
       $img_2048 = convertImage($newFilePath, 2048);
       rename($img_2048, $newFilePath);
+      copy($newFilePath, $originPath . $newName);
     }
   }
   if(count($result)) {

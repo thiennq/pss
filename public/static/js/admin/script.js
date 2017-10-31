@@ -189,14 +189,15 @@ $('.main-sidebar .treeview-menu a').click(function(e) {
   e.stopPropagation();
 });
 
+var windowUpload;
 function uploadManager() {
   var w = $(window).width() * 0.7;
   var h = $(window).height() * 0.8;
   var l = $(window).width()  * 0.15;
   var t = $(window).height()  * 0.1;
-  newwindow = window.open('http://localhost:9000/', 'name', 'height='+h+', width='+w+', left='+l+', top='+t+', location=0');
+  windowUpload = window.open('/admin/uploads', 'name', 'height='+h+', width='+w+', left='+l+', top='+t+', location=no, menubar=no');
   if (window.focus) {
-    newwindow.focus();
+    windowUpload.focus();
   }
   return false;
 }
