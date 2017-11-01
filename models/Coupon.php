@@ -18,17 +18,16 @@ class Coupon extends Illuminate\Database\Eloquent\Model {
       $coupon->value = $data['value'];
       $coupon->usage_count = 0;
       $coupon->usage_left = $data['usage_left'];
-      $dateSecond = strtotime($data['expired_date']);
+//      $dateSecond = strtotime($data['expired_date']);
       $coupon->min_value_order = $data['min_value_order'] ? $data['min_value_order'] : 0;
-      $coupon->expired_date = $dateSecond;
-  		$coupon->created_at = date('Y-m-d H:i:s');
-  		$coupon->updated_at = date('Y-m-d H:i:s');
+      $coupon->expired_date = $data['expired_date'];
+      $coupon->created_at = date('Y-m-d H:i:s');
+  	  $coupon->updated_at = date('Y-m-d H:i:s');
       if($coupon->save()) return 0;
       return -1;
     }
 
     public function update($id , $data) {
-      error_log('id : '.$id);
       $coupon = Coupon::find($id);
       if (!$coupon) return -2;
       $check = Coupon::where('code', $data['code'])->first();
@@ -39,20 +38,27 @@ class Coupon extends Illuminate\Database\Eloquent\Model {
       $coupon->code = $data['code'];
       $coupon->value = $data['value'];
       $coupon->usage_left = $data['usage_left'];
-      $dateSecond = strtotime($data['expired_date']);
+//      $dateSecond = strtotime($data['expired_date']);
       $coupon->min_value_order = $data['min_value_order'];
-      $coupon->expired_date = $dateSecond;
-  		$coupon->created_at = date('Y-m-d H:i:s');
-  		$coupon->updated_at = date('Y-m-d H:i:s');
+      $coupon->expired_date = $data['expired_date'];
+      $coupon->updated_at = date('Y-m-d H:i:s');
       if($coupon->save()) return 0;
       return -1;
     }
-    public function list() {
+
+    public function remove($id){
+        $coupon = Coupon::find($id);
+        if (!$coupon) return -2;
+        if ($coupon->delete()) return 0;
+        return -3;
+    }
+
+    public function couponlist() {
       $data = Coupon::orderBy('updated_at', 'desc')->get();
       return $data;
     }
 
-    public function use($code) {
+    public function couponuse($code) {
       $coupon = Coupon::where('code', $code)->first();
       if (!$coupon) return -2;
       $coupon->usage_left = $coupon->usage_left - 1;

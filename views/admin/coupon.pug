@@ -1,0 +1,156 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'coupon';
+  - var childMenu = 'childcoupon';
+  title Mã giảm giá
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
+block post-include
+  script(src=staticURI() + '/js/admin/coupon.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Mã giảm giá
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo mã giảm giá
+  section.content.clearfix
+    .box
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th.col-sm-1 #
+              th.col-sm-2 Tên
+              th.col-sm-1 Mã
+              th.col-sm-1 Giá trị
+              th.col-sm-2 Lượt sử dụng
+              th.col-sm-2 Lượt sử dụng còn lại
+              th.col-sm-2 Ngày hết hạn
+              th.col-sm-1 Chỉnh sửa
+          - var stt = 1
+          tbody
+            each item in coupon
+              tr
+                td.col-sm-1=stt++
+                td.col-sm-2.menu-content(data-value=item.title)=item.title
+                td.col-sm-1.menu-name(data-value=item.code)=item.code
+                td.col-sm-1.menu-name(data-value=item.value)=item.value
+                td.col-sm-2.menu-name(data-value=item.usage_count)=item.usage_count
+                td.col-sm-2.menu-name(data-value=item.usage_left)=item.usage_left
+                td.col-sm-2.menu-name(data-value=item.expired_date)=item.expired_date
+                td.col-sm-1
+                  a.btn-edit.btn-edit-coupon(data-id=item.id, data-toggle="modal" data-target="#modal-update" title="Chỉnh sửa")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove.btn-remove-coupon(data-id=item.id, title="Xóa")
+                    i.fa.fa-trash
+      #modal-create.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Tạo mã giảm giá
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Mã
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="code" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Loại
+                    strong.required  *
+                  .col-sm-10
+                    select.form-control(name='type')
+                      option(name="type" value="value") Giá trị
+                      option(name="type" value="percentage") Phần trăm
+                .form-group.clearfix
+                  label.col-sm-2.control-label Giá trị
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="value" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Giá trị đơn hàng tối thiểu
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="min_value_order" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Số lượng
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="usage_left" type="number" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Mô tả
+                  .col-sm-10
+                    input.form-control(name="description" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Hạn dùng
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="expired_date" type="date" placeholder="")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-create-coupon Tạo coupon
+      #modal-update.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Sửa mã giảm giá
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Mã
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="code" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Loại
+                    strong.required  *
+                  .col-sm-10
+                    select.form-control(name='type')
+                      option(name="type" value="value") Giá trị
+                      option(name="type" value="percentage") Phần trăm
+                .form-group.clearfix
+                  label.col-sm-2.control-label Giá trị
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="value" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Giá trị đơn hàng tối thiểu
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="min_value_order" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Số lượng
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="usage_left" type="number" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Mô tả
+                  .col-sm-10
+                    input.form-control(name="description" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Hạn dùng
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="expired_date" type="date" placeholder="")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-update-coupon Sửa coupon
