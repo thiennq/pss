@@ -1,8 +1,8 @@
 $(document).ready(function () {
     var labelVisit = ["January", "February", "March", "April", "May", "June", "July"];
     var dataVisit = [0, 10, 5, 50, 20, 30, 45];
-    var labelRevenue = [];
-    var dataRevenue = [];
+    var labelRevenue = ["January", "February", "March", "April", "May", "June", "July"];
+    var dataRevenue = [0, 10, 5, 50, 20, 30, 45];
     $('input[name="option"]').on('change',function () {
       var val = $(this).val();
       var iframe = $(this).closest('iframe');
@@ -29,7 +29,7 @@ $(document).ready(function () {
           addData(chartVisit,labelVisit,dataVisit);
       }
     })
-    $('li').on('click',function () {
+    $('.revenue-menu li').on('click',function () {
         var selected = $(this);
         var val = $(this).val();
         var txt = $(this).html();
