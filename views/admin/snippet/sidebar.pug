@@ -173,10 +173,6 @@ aside.main-sidebar
             span Quản trị viên
             i.fa.fa-angle-left.pull-right
           ul.treeview-menu
-            - var liClass = (childMenu == 'create' ? 'active' : '');
-            li
-              a(href='/admin/user/create' class=liClass)
-                | Thêm mới
             - var liClass = (childMenu == 'list' ? 'active' : '');
             li
               a(href='/admin/user' class=liClass)
