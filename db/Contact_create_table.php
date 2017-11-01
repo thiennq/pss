@@ -22,6 +22,6 @@ $Schema->create('contact', function (Blueprint $table) {
     $table->string('phone');
     $table->string('email');
     $table->string('content');
-    $table->tinyInteger('status');
+    $table->boolean('status');
     $table->timestamps();
 });
