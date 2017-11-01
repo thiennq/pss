@@ -105,3 +105,31 @@ block content
                     else
                       img(src=staticURI() + "/img/default_image_l.jpg")
                     input.value(type="hidden", name="banner", value=data.banner)
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title TRẠNG THÁI
+            .box-body
+              .form-group.mg0
+                .row
+                  label.col-xs-12 Hiển thị
+                  .col-xs-12
+                    select.form-control(name="display", data-value=data.display)
+                      option(value="0" selected) Không
+                      option(value="1") Có
+                br
+                - var firstHistory = getFirstHistory('collection', data.id);
+                - var lastHistory = getLastHistory('collection', data.id);
+                .row
+                  .clearfix
+                    label.col-xs-6 Ngày tạo
+                    .col-xs-6=data.created_at
+                  .clearfix
+                    label.col-xs-6 Người tạo
+                    .col-xs-6=firstHistory.user
+                  .clearfix
+                    label.col-xs-6 Cập nhật sau cùng
+                    .col-xs-6=lastHistory.created_at
+                  .clearfix
+                    label.col-xs-6 Người cập nhật sau cùng
+                    .col-xs-6=lastHistory.user

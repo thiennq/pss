@@ -1,12 +1,5 @@
 extends ./layout.pug
 
-mixin folderTree(arrs)
-  each arr in arrs
-    ul
-      li=arr.title
-        if arr.children
-          +folderTree(arr.children)
-
 block pre-include
   title Nhóm sản phẩm
   - var menu = 'product'
@@ -23,37 +16,17 @@ block content
       li
         a(href='/admin/collection') Nhóm sản phẩm
     ol.button-right.col-md-4.col-sm-5.col-xs-12
-      span.middle-inline-block
       li
         a.btn.btn-admin(href="/admin/collection/create") Tạo nhóm sản phẩm
   section.content
     .box
-      .box-tree
-        +folderTree(collections)
-
       .box-body
-        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
-          thead
-            tr
-              th
-              th Nhóm sản phẩm
-              th Link
-              th Xóa
-          tbody
-            each collection in collections
-              tr
-                td.col-sm-1.image
-                  if collection.image
-                    img(src="/uploads/" + collection.image)
-                  else
-                    img(src=staticURI() + "/img/no-image.png")
-                td.col-sm-5
-                  a(href="/admin/collection/" + collection.id, target="_blank")= collection.title
-                td.col-sm-5
-                  a(href="/" + collection.link, target="_blank")= collection.link
-                td.col-sm-1
-                  a.btn-edit(href="/admin/collection/" + collection.id)
-                    i.fa.fa-pencil-square-o
-                  a.btn-remove(data-id=collection.id)
-                    i.fa.fa-trash
-      .
+        .box-tree
+          mixin folderTree(arrs)
+            each item in arrs
+              ul
+                li=item.title
+                  if countArr(item.children)
+                    - var child = getCollectionChild(item.id);
+                    +folderTree(child)
+          +folderTree(collections)

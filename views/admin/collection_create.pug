@@ -99,12 +99,12 @@ block content
         .box
           .form-horizontal
             .box-title.clearfix
-              .col-xs-6.title DANH MỤC
+              .col-xs-6.title TRẠNG THÁI
             .box-body
               .form-group.mg0
                 .row
+                  label.col-xs-12 Hiển thị
                   .col-xs-12
-                    select.form-control(name="parent_id")
-                      option(value="-1" selected) Chọn nhóm sản phẩm cha...
-                      each item in collection
-                        option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
+                    select.form-control(name="display")
+                      option(value="0" selected) Không
+                      option(value="1") Có

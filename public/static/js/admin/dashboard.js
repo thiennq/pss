@@ -29,7 +29,7 @@ $(document).ready(function () {
           addData(chartVisit,labelVisit,dataVisit);
       }
     })
-    $('li').on('click',function () {
+    $('li1').on('click',function () {
         var selected = $(this);
         var val = $(this).val();
         var txt = $(this).html();
@@ -120,4 +120,3 @@ function removeData(chart) {
     });
     chart.update();
 }
-

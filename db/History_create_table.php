@@ -21,7 +21,7 @@ $Schema->create('history', function (Blueprint $table) {
   $table->string('user');
   $table->integer('user_id')->nullable();
   $table->text('content')->nullable();
-  $table->string('type');
+  $table->string('type')->nullable();
   $table->string('type_id')->nullable();
   $table->timestamps();
 });

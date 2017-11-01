@@ -113,6 +113,7 @@ function facebook_image() {
 }
 
 function countArr($arr) {
+  error_log("here: " . json_encode($arr));
   return count($arr);
 }
 
@@ -218,4 +219,21 @@ function collectionIndex() {
   }
   setMemcached("productIndex", $data);
   return $data;
+}
+
+function getFirstHistory($type, $type_id) {
+  error_log($type);
+  error_log($type_id);
+  $item = History::where('type', $type)->where('type_id', $type_id)->orderBy('id', 'asc')->first();
+  return $item;
+}
+
+function getLastHistory($type, $type_id) {
+  $item = History::where('type', $type)->where('type_id', $type_id)->orderBy('id', 'desc')->first();
+  return $item;
+}
+
+function getCollectionChild($parent_id) {
+  $item = Collection::where('parent_id', $parent_id)->get();
+  return $item;
 }

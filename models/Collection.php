@@ -65,9 +65,9 @@ class Collection extends Illuminate\Database\Eloquent\Model {
 
   public function remove($id) {
     $item = Collection::find($id);
+    if (!$item) return -2;
     $image = $item->image;
     $banner = $item->banner;
-    if (!$item) return -2;
     if ($item->delete()) {
       Collection::where('parent_id', $id)->update(['parent_id' => -1]);
       removeImage($image);

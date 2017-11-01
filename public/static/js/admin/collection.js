@@ -33,6 +33,7 @@ $('.btn-create-update').click(function() {
 
   data.image = $('input[name="image"]').val();
   data.banner = $('input[name="banner"]').val();
+  data.display = $('select[name="display"]').val();
 
   self.addClass('disabled');
 
