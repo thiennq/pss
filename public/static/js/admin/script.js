@@ -180,6 +180,7 @@ $(window).on('load', function() {
 
 $('.main-item').click(function() {
   var treeview = $(this).closest('.treeview');
+  treeview.siblings().removeClass('active');
   if (treeview.hasClass('active')) {
     treeview.removeClass('active');
   } else treeview.addClass('active');

@@ -28,19 +28,15 @@ aside.main-sidebar
           li
             a(href='/admin/order?order_status=confirm&payment_status=0' class=liClass)
               | Chưa thanh toán
-          - var liClass = (childMenu == 'paid' ? 'active' : '');
-          li
-            a(href='/admin/order?order_status=confirm&payment_status=1' class=liClass)
-              | Đã thanh toán chưa gửi hàng
           - var liClass = (childMenu == 'done' ? 'active' : '');
           li
             a(href='/admin/order?order_status=done' class=liClass)
               | Hoàn tất
-          - var liClass = (childMenu == 'return' ? 'active' : '');
-          li
-            a(href='/admin/order?order_status=return' class=liClass)
-              | Bị hoàn trả
-          - var liClass = (childMenu == 'cancel' ? 'active' : '');
+          //- - var liClass = (childMenu == 'return' ? 'active' : '');
+          //- li
+          //-   a(href='/admin/order?order_status=return' class=liClass)
+          //-     | Bị hoàn trả
+          //- - var liClass = (childMenu == 'cancel' ? 'active' : '');
           li
             a(href='/admin/order?order_status=cancel' class=liClass)
               | Bị hủy
@@ -101,10 +97,6 @@ aside.main-sidebar
           span Khách hàng
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          - var liClass = (childMenu == 'create' ? 'active' : '');
-          li
-            a(href='/admin/customer/create' class=liClass)
-              | Thêm mới
           - var liClass = (childMenu == 'list' ? 'active' : '');
           li
             a(href='/admin/customer' class=liClass)
