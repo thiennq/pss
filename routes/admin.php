@@ -53,6 +53,13 @@ $app->group('/admin', function() use($app) {
   $app->put('/product/{id}/tag', '\AdminTagController:update');
   $app->delete('/product/{id}/tag', '\AdminTagController:delete');
 
+  //coupon
+  $app->get('/coupon', '\AdminCouponController:fetch');
+  $app->post('/coupon', '\AdminCouponController:store');
+  $app->get('/coupon/{id}', '\AdminCouponController:get');
+  $app->put('/coupon/{id}', '\AdminCouponController:update');
+  $app->delete('/coupon/{id}', '\AdminCouponController:delete');
+
   $app->post('/variants', '\AdminVariantController:store');
   $app->get('/variants/{id}', '\AdminVariantController:show');
   $app->put('/variants/{id}', '\AdminVariantController:update');
