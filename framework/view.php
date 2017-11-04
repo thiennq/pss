@@ -74,7 +74,7 @@ class View {
         $html = $this->view->make($file, $data);
         return $response->write($html);
       } else if ($this->engine == 'twig') {
-        return $this->view->render($response, $file . '.html' , $data);
+        return $this->view->render($response, $file . '.twig' , $data);
       }
     } catch (Exception $e) {
       echo $e;
