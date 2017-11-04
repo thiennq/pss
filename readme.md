@@ -16,3 +16,16 @@ cp .env.example .env
 cd db
 php create_table.php
 ```
+
+## Run for development
+```bash
+cd public
+php -S localhost:9000
+```
+
+## How to deploy
+Just upload all folders/files into `www` or `htdocs` folder.
+
+Don't forgot to exclude `node_modules`, `.git` folder.
+
+Enable cache (CACHE=cache) in .env for better performance.
