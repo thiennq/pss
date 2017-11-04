@@ -1,34 +1,20 @@
-.wrapper-item-product-loop
-  .item-product-loop
-    - var link = 'san-pham/' + product['handle'];
-    - var fullUrl = fullUrl(link);
-    - var brand_link = 'thuong-hieu/' + product.brand_url;
-    - var fullBrandLink = fullUrl(brand_link);
-    //- if product.percent
-    //-   span.percent.top - #{product.percent}
-    //- else
-    //-   span.hidden.percent.top
-    a.wrap-image(href=fullUrl)
-      - var src = themeURI() + '/img/default_image.png';
-      //- if product.featured_image
-      - var src = '/uploads/' + resize(product.featured_image, 240);
-      img.main-image(src=src, data-src=src, alt=product.title, data-title=product.title, data-handle=product.handle)
-      unless inInventory(product.id)
-        p=product.product_id
-        .out-of-stock HÀNG TẠM HẾT
-    
-    //- a.brand(href=fullBrandLink)=product.brand
-    //-   if product.percent
-    //-     span.percent - #{product.percent}
-    //-   else
-    //-     span.hidden.percent
-    h3.title
-      a(href=fullUrl)=product.title
-    //- .price
-    //-   span.main-price=money(product.price)
-    //-   if product.discount
-    //-     span.price-compare=money(product.price_compare)
-    //-   else
-    //-     span.price-compare
-  //- if device == 'desktop'
-  //-   .btn-order(data-id=product.id) MUA NGAY
+<div class="wrapper-item-product-loop">
+  <div class="item-product-loop">
+    {% set link = 'san-pham/' + product['handle']  %}
+    {% set fullUrl = {{link | fullUrl}} %}
+    {% set brand_link = 'thuong-hieu/' + product.brand_url  %}
+    {% set fullBrandlink = {{brand_link | fullUrl}}  %}
+    <a>.wrap-image(href=fullUrl)
+      {% set src = "{{themeURI()}}/img/default_image.png" %}
+      {% set src = '/uploads/' + {{product.featured_image | resize('240')}} %}
+      <img class="main-image" src="{{src}}" data-src="{{src}}" alt="{{product.title}}" data-title="{{product.title}}" data-handle="{{product.handle}}" />
+      {% if not {{product.id | inInventory}}  %}
+        <p>{{product.product_id}}</p>
+        <div class="out-of-stock">HÀNG TẠM HẾT</div>
+      {% endif %}
+    </a>
+    <h3 class="title">
+      <a href="#">{{product.title}}</a>
+    </h3>
+  </div>
+</div>

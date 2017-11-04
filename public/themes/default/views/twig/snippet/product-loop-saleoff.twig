@@ -1,12 +1,14 @@
-.item-product-loop.clearfix
-  span.sale SALE!
-  - var image = resize(product['featured_image'], 240);
-  //- img(src="/images/product_loading.gif", data-src="/uploads/#{image}", alt="#{image}")
-  img(src="/images/product_loading.gif", data-src="/images/balo_saleoff.png", alt="#{image}")
-  a.brand(href="#")=product.product_vendor
-  a.title(href=product.handle)=product.title
-  .price
-    if product.price_compare
-      span.price-compare=money(product.price_compare)
-    span.main-price=money(product.price)
-  a.btn-add-product THÊM VÀO GIỎ HÀNG
+<div class="item-product-loop clearfix">
+  <span class="sale">SALE!</span>
+  {% set image = product['featured_image'] | resize('240') %}
+  <img src="/images/product_loading.gif" data-src="/images/balo_saleoff.png" alt="" />
+  <a class="brand" href="#">{{product.product_vendor}}</a>
+  <a class="title" href="{{product.handle}}">{{product.title}}</a>
+  <div class="price">
+    {% if product.price_compare %}
+      <span class="price-compare">{{product.price_compare | money}}</span>
+    {% endif %}
+    <span class="main-price">{{product.price | money}}</span>
+  </div>
+  <a class="btn-add-product">THÊM VÀO GIỎ HÀNG</a>
+</div>

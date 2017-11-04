@@ -1,11 +1,13 @@
-link(rel="manifest" href="/manifest.json")
-script(src="https://cdn.onesignal.com/sdks/OneSignalSDK.js", async='async')
+<link rel="manifest" href="/manifest.json">
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
 
-if config['onesignal']
+{% if config['onesignal'] %}
   - $appId = '"' . $config['onesignal']['app_id'] . '"';
   - $safariWebId = '"' . $config['onesignal']['safari_key'] . '"';
   - $subdomain = $config['onesignal']['subdomain'] ? '"' . $config['onesignal']['subdomain'] . '"' : "false";
-script.
+{% endif %}
+{% verbatim %}
+<script>
   var OneSignal = window.OneSignal || [];
   OneSignal.push(["init", {
     appId: #{appId},
@@ -16,3 +18,5 @@ script.
       },
       safari_web_id: #{safariWebId}
   }]);
+</script>
+{% endverbatim %}

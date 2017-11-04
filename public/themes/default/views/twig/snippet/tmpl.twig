@@ -1,4 +1,5 @@
-script#item-image(type="text/x-tmpl").
+{% verbatim %}
+<script id="item-image" type="text/x-tmpl">
   <div class="image col-xs-2" data-name={%=o.name%}>
     <img src={%=o.src%}/>
     <span class="rotate">
@@ -8,18 +9,24 @@ script#item-image(type="text/x-tmpl").
       <i class="fa fa-times"></i>
     </span>
   </div>
+</script>
+{% endverbatim %}
 
-script#search-product(type="text/x-tmpl").
+{% verbatim %}
+<script id="search-product" type="text/x-tmpl">
   <li>
-   <a href="/san-pham/{%=o.handle%}">
-     <img src='/uploads/{%=o.featured_image%}'>
-     <span>{%=o.title%}</span>
-     <span class="price">{%=o.price%}</span>
+    <a href="/san-pham/{%=o.handle%}">
+      <img src='/uploads/{%=o.featured_image%}'>
+      <span>{%=o.title%}</span>
+      <span class="price">{%=o.price%}</span>
       <span class="price-compare">{%=o.price_compare%}</span>
-   </a>
+    </a>
   </li>
+</script>
+{% endverbatim %}
 
-script#add-new-tag(type="text/x-tmpl").
+{% verbatim %}
+<script id="add-new-tag" type="text/x-tmpl">
   <div class="item clearfix">
     <div class="col-xs-4 pd-left-0">
       <input class="form-control" name="name_tag" placeholder="Du lịch">
@@ -33,3 +40,5 @@ script#add-new-tag(type="text/x-tmpl").
       </a>
     </div>
   </div>
+</script>
+{% endverbatim %}
