@@ -1,0 +1,78 @@
+{% if total_pages %}
+  <div class="filter clearfix">
+    {% if count_brand_filter %}
+      <div class="dropdown item item-brand">
+        <span class="dropdown-toggle" data-toggle="dropdown">Thương hiệu</span>
+          <span class="caret"></span>
+        <span class="triangle"></span>
+        <ul class="dropdown-menu">
+          {% for item in list_brand %}
+            <li data-id="{{item.id}}">
+              <img src="/images/checkbox.jpg" />
+              <label class="checkbox"></label>
+              <span>{{item.title}}</span>
+            </li>
+          {% endfor %}
+          <li class="last-item">
+            <a href="#" class="btn-filter hidden"></a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
+    {% if count_color_filter %}
+      <div class="dropdown item item-color">
+        <span class="dropdown-toggle" data-toggle="dropdown">Màu sắc</span>
+          <span class="caret"></span>
+        <span class="triangle"></span>
+        <ul class="dropdown-menu">
+          {% for item in list_color %}
+            <li data-id="{{ item.name }}" style="{{ item.style }}">
+              <i class="fa fa-check-circle"></i>
+            </li>
+          {% endfor %}
+          <a class="btn-filter hidden" href="#"></a>
+        </ul>
+      </div>
+    {% endif %}
+    <div class="dropdown item item-price">.
+      <span class="dropdown-toggle" data-toggle="dropdown">Mức giá</span>
+        <span class="caret"></span>
+      <span class="triangle"></span>
+      <ul class="dropdown-menu">
+        <li class="all active" data-value='all'>
+          <i class="fa fa-check"></i>
+          <span>Tất cả mức giá</span>
+        </li>
+        {% set price = getPriceFilter() %}
+        {% for item in price %}
+          <li data-value="{{item.value}}">
+            <i class="fa fa-check"></i>
+            <span>{{item.title}}</span>
+          </li>
+        {% endfor %}
+        <li class="last">
+          <a href="#" class="btn-filter hidden"></a>
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown item item-sort">.
+      <span class="dropdown-toggle" data-toggle="dropdown">Sắp xếp</span>
+        <span class="caret"></span>
+      <span class="triangle"></span>
+      <ul class="dropdown-menu">
+        <li>(data-value="price:desc")
+          <i class="fa fa-check"></i>
+          <span>Giá cao đến thấp</span>
+        </li>
+        <li>(data-value="price:asc")
+          <i class="fa fa-check"></i>
+          <span>Giá thấp đến cao</span>
+        </li>
+        <li>(data-value="view:desc")
+          <i class="fa fa-check"></i>
+          <span>Xem nhiều nhất</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,18 @@
+link(rel="manifest" href="/manifest.json")
+script(src="https://cdn.onesignal.com/sdks/OneSignalSDK.js", async='async')
+
+if config['onesignal']
+  - $appId = '"' . $config['onesignal']['app_id'] . '"';
+  - $safariWebId = '"' . $config['onesignal']['safari_key'] . '"';
+  - $subdomain = $config['onesignal']['subdomain'] ? '"' . $config['onesignal']['subdomain'] . '"' : "false";
+script.
+  var OneSignal = window.OneSignal || [];
+  OneSignal.push(["init", {
+    appId: #{appId},
+    autoRegister: true,
+    subdomainName: #{subdomain},
+      notifyButton: {
+          enable: false /* Set to false to hide */
+      },
+      safari_web_id: #{safariWebId}
+  }]);

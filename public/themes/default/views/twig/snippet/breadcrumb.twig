@@ -1,0 +1,25 @@
+<div class="breadcrumb">
+  <ul>
+    <li>
+      <a href="{{ '' | fullUrl }}">Trang chủ</a>
+    </li>
+    <li>
+      <span>&gt;</span>
+    </li>
+    {% if breadcrumb_collection %}
+      {% for item in breadcrumb_collection %}
+        {% if item.title %}
+          <li>
+            <a href="{{ item.handle }}">{{ item.title }}</a>
+          </li>
+          <li>
+            span &gt;
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <li>
+      <a>{{breadcrumb_title}}</a>
+    </li>
+  </ul>
+</div>

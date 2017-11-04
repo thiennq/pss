@@ -1,0 +1,85 @@
+.sidebar-mobile.clearfix
+  .filter-sidebar.filter.clearfix
+    .dropdown.item.item-brand(data-type="brand")
+      span.dropdown-toggle(data-toggle='dropdown') Thương hiệu
+        span.caret
+      span.triangle
+      if count(list_brand)
+        ul.dropdown-menu
+          //- li.col-xs-12(data-value="all")
+            //- img(src=themeURI() + "/img/checkbox.jpg")
+            //- label.checkbox
+            //- span Tất cả các thương hiệu
+          each item in list_brand
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    .dropdown.item.item-price(data-type="price")
+      span.dropdown-toggle(data-toggle='dropdown') Giá tiền
+        span.caret
+      span.triangle
+      ul.dropdown-menu
+        //- li(data-value='all')
+        //-   img(src=themeURI() + "/img/checkbox.jpg")
+        //-   label.checkbox
+        //-   span Tất cả mức giá
+        - var price = getPriceFilter();
+        each item in price
+          li(data-value=item.value)
+            img(src=themeURI() + "/img/checkbox.jpg")
+            label.checkbox
+            span=item.title
+    .dropdown.item.item-size(data-type="size")
+      span.dropdown-toggle(data-toggle='dropdown') Kích thước
+        span.caret
+      span.triangle
+      if count(list_size)
+        ul.dropdown-menu
+          each item in list_size
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    .dropdown.item.item-color.text-right(data-type="color")
+      span.dropdown-toggle(data-toggle='dropdown') Màu sắc
+        span.caret
+      span.triangle
+      if count(list_color)
+        ul.dropdown-menu
+          each item in list_color
+            li(data-value=item.name style=item.style)
+              i.fa.fa-check-circle
+    .dropdown.item.item-laptop(data-type="bag")
+      span.dropdown-toggle(data-toggle='dropdown') Ngăn đựng lap top
+        span.caret
+      span.triangle
+      if count(list_bag)
+        ul.dropdown-menu
+          each item in list_bag
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    .dropdown.item.item-material(data-type="material")
+      span.dropdown-toggle(data-toggle='dropdown') Chất liệu
+        span.caret
+      span.triangle
+      if count(list_material)
+        ul.dropdown-menu
+          each item in list_material
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
+    .dropdown.item.item-feature.text-right(data-type="special")
+      span.dropdown-toggle(data-toggle='dropdown') Tính năng đặc biệt
+        span.caret
+      span.triangle
+      if count(list_special)
+        ul.dropdown-menu
+          each item in list_special
+            li(data-value=item)
+              img(src=themeURI() + "/img/checkbox.jpg")
+              label.checkbox
+              span=item
