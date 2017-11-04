@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block pre_include %}
+  <title>{%article.title%}</title>
+  {% fb_image ? set ogImage = fb_image %}
+  {% article.meta_description ? set metaDescription = article.meta_description %}
+  {% if article.meta_robots %}  
+    {% set meta_robots = article.meta_robots %}
+  {% endif %}
+  {% set metaTitle = article.title %}
+{% endblock pre_include %}
+
+{% block content %}
+  <div class="news-detail container">
+    <div class="col-xs-12 left">
+      <div class="content row">
+        <h1 class="title">{% article.title %}</h1>
+        <p class="description"><b>{% article.description %}</b></p>
+        <section>{% article.content %}</section>
+        <div class="author">{% article.author %}</div>
+      </div>
+      {% set relatedArticles =  article.id | getRelatedArticle %}
+      {% if relatedArticles | count %}
+        <div class="relative-news hidden-xs row"> 
+          <div class="title"> 
+            <a>BÀI VIẾT LIÊN QUAN <div class="border"></div></a>
+          </div>
+          {% for item in relatedArticles %}
+            <div class="item">
+              <a href="/article/{% item.handle %}" style="background:url('/uploads/{{item.image|resize('240')}}')" class="col-sm-2 avatar"></a>
+              <div class="col-sm-10">
+                <div class="news-title"><a href="/article/{% item.handle %}">{% item.title %}</a></div>
+                <div class="news-content">{% item.description %}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% set hotArticles =  article.id | getHotArticle %}
+      {% if hotArticles | count %}
+        <div class="relative-news hidden-xs row"> 
+          <div class="title"> 
+            <a>BÀI VIẾT LIÊN QUAN <div class="border"></div></a>
+          </div>
+          {% for item in hotArticles %}
+            <div class="item">
+              <a href="/article/{% item.handle %}" style="background:url('/uploads/{{item.image|resize('240')}}')" class="col-sm-2 avatar"></a>
+              <div class="col-sm-10">
+                <div class="news-title"><a href="/article/{% item.handle %}">{% item.title %}</a></div>
+                <div class="news-content">{% item.description %}</div>
+              </div>
+            </div>
+          {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+
