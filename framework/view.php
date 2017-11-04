@@ -8,9 +8,15 @@ require_once (ROOT . '/framework/pug-helper.php');
 
 class View {
   public function __construct($obj) {
+    global $config;
     $this->path = $obj['path'];
     $this->device = $obj['device'];
     $this->layout = $obj['layout'];
+    $this->engine = $config['VIEW_ENGINE'];
+    if ($this->layout == 'admin') {
+      $this->engine = 'pug';
+    }
+    error_log('this->engine = ' . $this->engine);
 
     $PUG_PRETTY = getenv('PUG_PRETTY') ? getenv('PUG_PRETTY') : false;
     $CACHE = getenv('CACHE') ? getenv('CACHE') : '';
@@ -24,19 +30,18 @@ class View {
     }
 
     // override config from config.php
-    global $config;
     if (isset($config['view'])) {
       foreach ($config['view'] as $key => $value) {
         $viewConfig[$key] = $value;
       }
     }
 
-    if ($config['VIEW_ENGINE'] == 'pug') {
+    if ($this->engine == 'pug') {
       $view = new Pug($viewConfig);
-    } else if ($config['VIEW_ENGINE'] == 'blade') {
+    } else if ($this->engine == 'blade') {
       $view = new Blade($obj['path'] . 'blade/', $viewConfig['cache']);
     }
-    else if ($config['VIEW_ENGINE'] == 'twig') {
+    else if ($this->engine == 'twig') {
       if ($this->layout == 'theme') {
         $filepath = $this->path . 'twig/';
       }
@@ -58,17 +63,17 @@ class View {
       }
       $data['device'] = $this->device;
 
-      if ($config['VIEW_ENGINE'] == 'pug') {
+      if ($this->engine == 'pug') {
         $filepath = $this->path . $file . '.pug';
         if ($this->layout == 'theme') {
           $filepath = $this->path . 'pug/' . $file . '.pug';
         }
         $html = $this->view->render($filepath, $data);
         return $response->write($html);
-      } else if ($config['VIEW_ENGINE'] == 'blade') {
+      } else if ($this->engine == 'blade') {
         $html = $this->view->make($file, $data);
         return $response->write($html);
-      } else if ($config['VIEW_ENGINE'] == 'twig') {
+      } else if ($this->engine == 'twig') {
         return $this->view->render($response, $file . '.html' , $data);
       }
     } catch (Exception $e) {

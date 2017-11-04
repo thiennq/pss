@@ -24,12 +24,13 @@ use Illuminate\Database\Schema\Blueprint;
   $capsule->addConnection($config['db']);
   $capsule->setAsGlobal();
   $capsule->bootEloquent();
+  $passwordHash = password_hash('admin@123', PASSWORD_DEFAULT);
 
   Capsule::insert('INSERT INTO ' . Capsule::getTablePrefix()
     . 'user (id, name, email, phone, password, role, random, created_at, updated_at) '
     . 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
-      1, 'Super', 'admin@gmail.com', '0123456789', '$2y$10$w6KNej1ldcSzeFUXhpM.eebWz6LyCFMa5JeFWQLck1652apo8qEri',
+      1, 'Super', 'admin@gmail.com', '0123456789', $passwordHash,
       'super', '', date('Y-m-d H:i:s'), date('Y-m-d H:i:s')
     ]
   );
