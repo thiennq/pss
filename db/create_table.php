@@ -25,7 +25,14 @@ use Illuminate\Database\Schema\Blueprint;
   $capsule->setAsGlobal();
   $capsule->bootEloquent();
 
-  Capsule::insert('INSERT INTO ' . Capsule::getTablePrefix() . 'user (id, name, email, phone, password, role, random, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [1, 'Super', 'admin@eyeteam.vn', '0123456789', '$2y$10$GqGH78I8ZHIrywkNbdylAOpP2zJRz/L8K8WlEZoN1vnJwI90ndhvq', 'super', '', date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
+  Capsule::insert('INSERT INTO ' . Capsule::getTablePrefix()
+    . 'user (id, name, email, phone, password, role, random, created_at, updated_at) '
+    . 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      1, 'Super', 'admin@gmail.com', '0123456789', '$2y$10$w6KNej1ldcSzeFUXhpM.eebWz6LyCFMa5JeFWQLck1652apo8qEri',
+      'super', '', date('Y-m-d H:i:s'), date('Y-m-d H:i:s')
+    ]
+  );
 
   if (!file_exists(ROOT . '/public/uploads')) {
     mkdir(ROOT . '/public/uploads', 0777, true);

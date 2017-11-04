@@ -4,7 +4,7 @@ require_once (dirname(__FILE__) . '/config.php');
 require_once (dirname(__FILE__) . '/../vendor/pug-php/pug/src/Pug/Pug.php');
 use \Pug\Pug as Pug;
 use Jenssegers\Blade\Blade as Blade;
-require_once (dirname(__FILE__) . '/pug-helper.php');
+require_once (ROOT . '/framework/pug-helper.php');
 
 class View {
   public function __construct($obj) {
@@ -36,6 +36,14 @@ class View {
     } else if ($config['VIEW_ENGINE'] == 'blade') {
       $view = new Blade($obj['path'] . 'blade/', $viewConfig['cache']);
     }
+    else if ($config['VIEW_ENGINE'] == 'twig') {
+      if ($this->layout == 'theme') {
+        $filepath = $this->path . 'twig/';
+      }
+      require_once (ROOT . '/framework/twig-helper.php');
+      $view = new \Slim\Views\Twig($filepath, $viewConfig);
+      $view->addExtension(new Twig_Helper());
+    }
     $this->view = $view;
   }
 
@@ -51,19 +59,17 @@ class View {
       $data['device'] = $this->device;
 
       if ($config['VIEW_ENGINE'] == 'pug') {
-
         $filepath = $this->path . $file . '.pug';
         if ($this->layout == 'theme') {
           $filepath = $this->path . 'pug/' . $file . '.pug';
         }
         $html = $this->view->render($filepath, $data);
         return $response->write($html);
-
       } else if ($config['VIEW_ENGINE'] == 'blade') {
-
         $html = $this->view->make($file, $data);
         return $response->write($html);
-
+      } else if ($config['VIEW_ENGINE'] == 'twig') {
+        return $this->view->render($response, $file . '.html' , $data);
       }
     } catch (Exception $e) {
       echo $e;

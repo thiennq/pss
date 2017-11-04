@@ -12,3 +12,4 @@ composer.lock
 node_modules
 public/*.xml
 public/cache
+package-lock.json

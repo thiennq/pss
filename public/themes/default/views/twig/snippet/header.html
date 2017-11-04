@@ -1,0 +1,47 @@
+{% verbatim %}
+<script id="search-product" type="text/x-tmpl">
+  <li>
+    <a href="/san-pham/{%=o.handle%}">
+      <img src="{%=o.featured_image%}">
+      <span>{%=o.title%}</span>
+      <span class="price">{%=o.price%}</span>
+      <span class="price-compare">{%=o.price_compare%}</span>
+    </a>
+  </li>
+</script>
+{% endverbatim %}
+<header data-uri="{{ themeURI() }}">
+  <div class="header-menu">
+    <div class="container">
+      <div class="header-menu-top clearfix">
+        <div class="col-sm-4 col-xs-2 pd-0 mobile-logo"><a href="/" class="logo"><img src="{{ themeURI() }}/img/logo.png" alt="EYE"></a></div>
+        <div class="col-sm-8 col-xs-8 mobile-search-box">
+          <div class="row">
+            <form action="{{ 'tim-kiem' | fullUrl }}" class="search col-sm-12"><input type="text" placeholder="Nhập sản phẩm cần tìm" name="q" autocomplete="off" class="form-control"><img src="{{themeURI()}}/img/search-icon.png" class="hidden-xs search-icon"><img src="{{themeURI()}}/img/search-icon-mobile.png" class="visible-xs search-icon">
+              <ul
+                class="search-result"></ul>
+            </form>
+          </div>
+        </div>
+      </div>
+      <ul class="main-menu clearfix hidden-xs"></ul>
+    </div>
+  </div>
+  <div class="header-bottom hidden-xs">
+    <div class="container"><i class="fa fa-shopping-bag fa-lg"><span class="quantity"></span></i>
+      <div class="minicart">
+        <div class="minicart-header-wrapper cart-detail">
+          <div class="minicart-detail"></div>
+          <div class="cart clearfix">
+            <div class="total-price col-xs-12">
+              <p class="label-text">Tổng cộng</p>
+              <div class="price">0đ</div>
+            </div>
+            <div class="checkout-notes l col-xs-6"><a href="/cart" class="btn-bento btn-checkout btn-cart-dropdown col-xs-12">Xem giỏ hàng</a></div>
+            <div class="checkout-notes r col-xs-6"><a href="/checkout" class="btn-bento btn-checkout btn-cart-dropdown col-xs-12">Thanh toán</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

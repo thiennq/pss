@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block pre_include %}
+  <title>Hellow</title>
+{% endblock pre_include %}
+
+{% block post_include %}
+  <link rel="stylesheet" href="{{themeURI()}}/libs/owl.carousel.min.css">
+  <script src="{{themeURI()}}/libs/owl.carousel.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="homepage">
+    <div class="container slider-homepage">
+      <div class="index-slider-carousel owl-carousel"></div>
+    </div>
+    <div class="container category">
+      <div class="collection-group clearfix">
+        <div class="collection-title"><span></span></div>
+        <div class="list-product-index clearfix">
+          <div class="row"></div>
+        </div>
+      </div>
+      <div class="collection-group clearfix">
+        <div class="collection-title"><span></span></div>
+        <div class="list-product-index clearfix">
+          <div class="row"></div>
+        </div>
+      </div>
+      <div class="collection-group clearfix">
+        <div class="collection-title"><span></span></div>
+        <div class="list-product-index clearfix">
+          <div class="row"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
