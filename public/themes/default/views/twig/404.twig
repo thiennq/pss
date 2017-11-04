@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block pre_include %}
+  <title>Trang không tồn tại</title>
+{% endblock pre_include %}
+
+{% block content %}
+  <div class="container error-page text-center">
+    <div class="col-sm-12"><img src="{{themeURI()}}/img/404.png" alt="404.png"></div>
+    <div class="col-sm-12 back-to-home">
+      <button><a href="{{fullUrl()}}">Về trang chủ</a></button>
+    </div>
+  </div>
+{% endblock content %}

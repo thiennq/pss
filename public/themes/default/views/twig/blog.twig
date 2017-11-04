@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block pre_include %}
+  <title>{%blog.title%}</title>
+  {% fb_image ? set ogImage = fb_image %}
+  {% blog.meta_description ? set metaDescription = blog.meta_description %}
+  {% blog.meta_robots ? set meta_robots = blog.meta_robots %}
+  {% endif %}
+  {% set metaTitle = blog.title %}
+{% endblock pre_include %}
+
+{% block post_include %}
+  <script src="{{themeURI()}}/libs/twbsPagination.min.js"></script>
+{% endblock post_include %}
+
+
+{% block content %}
+  <div class="news-detail container">
+    {% include "snippet/breadcrumb.html" %}
+    <div class="col-xs-12">
+      <div class="content blog row">
+        <h1 class="title">{% blog.title %}</h1>
+        <p class="description"><b>{% blog.description %}</b></p>
+        <section>{% blog.content %}</section>
+        <div class="list-articles clearfix row">
+          {% set articles =  blog.id | listArticles(page_number) %}
+          {% for article in articles %}
+            {% set thumb = "{{themeURI()}}/img/article_default.png" %}
+            {% if article.image %}
+              {% set thumb = "/uploads/{{article.image | resize('240')}}" %}
+            {% endif %}
+            <div class="col-xs-12 article">
+              <a class="cover col-sm-3 col-xs-4" href="/article/{% article.handle %}" style='background-image:url({% thumb %})'></a>
+              <div class="col-sm-9 col-xs-8"><a href="/article/{% article.handle %}">{% article.title %}</a>
+                <div class="date">{{article.updated_at | ddMMYYYY }}</div>
+                <div class="news-content">{% article.description %}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if articles.total_pages > 1 %}
+        <div id="pagination" data-page_number={% page_number %} data-total={% articles.total_pages %} class="col-sm-12 text-right"></div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+

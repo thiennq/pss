@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block pre_include %}
+  <title>Giỏ hàng</title>
+{% endblock pre_include %}
+
+{% block post_include %}
+  <link rel="stylesheet" href="{{staticURI()}}/libs/toastr.min.css">
+  <script src="{{staticURI()}}/libs/libs/toastr.min.js"></script>
+{% endblock post_include %}
+
+{% block content %}
+  <div id="checkout-cart" class="container checkout">
+    {% if cart | count == 0 %}
+      <div class="checkout-title">GIỎ HÀNG HIỆN ĐANG TRỐNG
+        <div class="clearfix"></div>
+      </div>
+    {% else %}
+      <div class="checkout-title">
+        <div class="cart">GIỎ HÀNG</div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-xs-12 product-wrapper">
+        {% for item in cart %}
+          <div data-id={% item.product_id %} class="product-detail row">
+            <div style="background:url('/uploads/{{item.image | resize('240')}}')" class="image col-xs-3">
+              <span data-id={% item.product_id %} class="btn-remove-item-cart"><img src="{{themeURI()}}/img/i-close.png"></span></div>
+            <div class="info col-xs-9">
+              <div class="col-xs-7 product-info">
+                <a href="/san-pham/{% item.handle %}" class="product-title">{% item.title %}</a>
+                <br />
+                <a href="/san-pham/{% item.handle %}" class="product-title">{% item.variant %}</a>
+              </div>
+              <div class="col-xs-5 product-price">
+                <div class="col-sm-6 col-xs-12 quantity-select">
+                  <div data-id={% item.product_id %} data-price={% item.price %} class="quantity-btn btn-minus">
+                    <i aria-hidden="true" class="fa fa-minus"></i>
+                  </div>
+                  <input name="quantity" value={% item.quantity %} min="1" class="quantity-label">
+                  <div data-id={% item.product_id %} data-price={% item.price %} class="quantity-btn btn-plus">
+                    <i aria-hidden="true" class="fa fa-plus"></i>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12 price"><span class="main-price orange">{{item.subTotal | money}}</span></div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-xs-12 total">
+        <div class="col-xs-6 total-name">Tổng tiền</div>
+        <div class="col-xs-6 total-amount orange">{{total | money}}</div>
+      </div>
+      <div class="col-xs-12 col-sm-12 customer-wrapper">
+        <form class="customer-info clearfix">
+          <div class="row">
+            <div class="col-sm-6 col-xs-12 purchase"><a href="/checkout" class="btn btn-order btn-checkout"><span class="main">THANH TOÁN</span></a></div>
+          </div>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+{% endblock content %}
